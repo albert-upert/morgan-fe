@@ -1,0 +1,13 @@
+# Dependencies
+node_modules
+
+# Build output
+dist
+.output
+
+# Auto-generated files
+pnpm-lock.yaml
+src/routeTree.gen.ts
+
+# Storybook
+storybook-static

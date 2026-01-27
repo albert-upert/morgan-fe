@@ -1,0 +1,343 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ===== Red (CMYK) - Primary Color ===== */
+  /* Used for: buttons, links, active states, borders, CTAs */
+  --red-900: #5c0a0d;
+  --red-800: #810e12;
+  --red-700: #a51217; /* Button pressed */
+  --red-600: #ca161c;
+  --red-500: #e62129; /* Primary CTA */
+  --red-400: #eb474d;
+  --red-300: #ef6c70; /* Button hover */
+  --red-200: #f39194;
+  --red-100: #f7b6b8;
+  --red-50: #fbdadb; /* Tag background */
+
+  /* ===== Green Pear - Accent Color ===== */
+  /* Used for: buttons, links, active states, accents */
+  --green-900: #5b6416;
+  --green-800: #7a861d;
+  --green-700: #98a725;
+  --green-600: #b6c92c;
+  --green-500: #c2d43d; /* Primary accent */
+  --green-400: #d0de68;
+  --green-300: #dbe58a; /* Button hover */
+  --green-200: #e5edab;
+  --green-100: #eff4cd;
+  --green-50: #fafbee;
+
+  /* ===== Honolulu Blue - Success Color ===== */
+  /* Used for: success states, informational elements */
+  --blue-900: #001929;
+  --blue-800: #003252;
+  --blue-700: #004b7a;
+  --blue-600: #0065a3;
+  --blue-500: #0076be; /* Primary blue */
+  --blue-400: #0097f5;
+  --blue-300: #1fa9ff; /* Button hover */
+  --blue-200: #47b9ff;
+  --blue-100: #70c8ff;
+  --blue-50: #99d8ff;
+
+  /* ===== Beaver - Brown Tones ===== */
+  --beaver-900: #2f2a23;
+  --beaver-800: #463e34;
+  --beaver-700: #5e5345;
+  --beaver-600: #756857;
+  --beaver-500: #8a7a65;
+  --beaver-400: #a0917e;
+  --beaver-300: #b1a595;
+  --beaver-200: #c2b9ad;
+  --beaver-100: #d4cdc4;
+  --beaver-50: #e5e1dc;
+
+  /* ===== Neutral - Gray Scale ===== */
+  /* Used for: typography, icons, borders, backgrounds */
+  --gray-900: #1c1c1c;
+  --gray-800: #262626; /* Heading, dialog bg */
+  --gray-700: #595959;
+  --gray-600: #8c8c8c; /* Body text, icons */
+  --gray-500: #bfbfbf; /* Disabled text */
+  --gray-400: #d9d9d9; /* Border */
+  --gray-300: #e8e8e8; /* Border, disabled bg button */
+  --gray-200: #f5f5f5; /* Background divider */
+  --gray-100: #fafafa;
+  --gray-50: #ffffff; /* Background card */
+
+  /* ===== Yellow - Warning Color ===== */
+  /* Used for: warnings, callouts */
+  --yellow-600: #e6c530;
+  --yellow-500: #fdd835; /* Primary warning, border callout */
+  --yellow-400: #fde05d;
+  --yellow-100: #fef3c0;
+  --yellow-50: #fffbeb; /* Background callout */
+
+  /* ===== Callout Backgrounds ===== */
+  --callout-red-bg: #fbe8e6;
+  --callout-blue-bg: #e9edf4;
+
+  /* ===== Crayola - Rating & Official ===== */
+  --crayola-500: #f5a623;
+
+  /* ===== Semantic Color Mappings ===== */
+  --background: #ffffff;
+  --foreground: #262626;
+  --card: #ffffff;
+  --card-foreground: #262626;
+  --popover: #ffffff;
+  --popover-foreground: #262626;
+
+  /* Primary - Red */
+  --primary: #e62129;
+  --primary-foreground: #ffffff;
+  --primary-light: #f7b6b8;
+
+  /* Secondary - Green */
+  --secondary: #c2d43d;
+  --secondary-foreground: #262626;
+
+  /* Accent - Blue */
+  --accent: #0076be;
+  --accent-foreground: #ffffff;
+
+  --muted: #f5f5f5;
+  --muted-foreground: #8c8c8c;
+  --destructive: #e62129;
+  --destructive-foreground: #ffffff;
+  --border: #d9d9d9;
+  --input: #bfbfbf;
+  --ring: #0076be;
+
+  /* Component-specific Colors */
+  --sidebar-accent: #fbdadb;
+  --avatar-bg: #99d8ff;
+  --navbar-gradient-end: #ffeced;
+  --secondary-light: #fff5f5;
+
+  --chart-1: #e62129; /* Red - Primary */
+  --chart-2: #0076be; /* Blue - Accent */
+  --chart-3: #c2d43d; /* Green - Secondary */
+  --chart-4: #f5a623; /* Crayola - Warning */
+  --chart-5: #8a7a65; /* Beaver */
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.98 0.01 248);
+  --card: oklch(20.77% 0.0398 265.75);
+  --card-foreground: oklch(0.98 0.01 248);
+  --popover: oklch(20.77% 0.0398 265.75);
+  --popover-foreground: oklch(0.98 0.01 248);
+  --primary: oklch(0.98 0.01 248);
+  --primary-foreground: oklch(0.98 0.01 248);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.98 0.01 248);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(13.63% 0.0364 259.2);
+  --accent: oklch(0.371 0 0);
+  --accent-foreground: oklch(0.98 0.01 248);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.98 0.01 248);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: #ca161c; /* Red - Darker for dark mode */
+  --chart-2: #0097f5; /* Blue - Brighter for dark mode */
+  --chart-3: #d0de68; /* Green - Brighter for dark mode */
+  --chart-4: #f5a623; /* Crayola - Same */
+  --chart-5: #b1a595; /* Beaver - Lighter for dark mode */
+  --sidebar-accent: oklch(0.269 0 0);
+}
+
+@theme inline {
+  --font-sans: "Poppins", sans-serif;
+
+  /* Red Scale */
+  --color-red-900: var(--red-900);
+  --color-red-800: var(--red-800);
+  --color-red-700: var(--red-700);
+  --color-red-600: var(--red-600);
+  --color-red-500: var(--red-500);
+  --color-red-400: var(--red-400);
+  --color-red-300: var(--red-300);
+  --color-red-200: var(--red-200);
+  --color-red-100: var(--red-100);
+  --color-red-50: var(--red-50);
+
+  /* Green Scale */
+  --color-green-900: var(--green-900);
+  --color-green-800: var(--green-800);
+  --color-green-700: var(--green-700);
+  --color-green-600: var(--green-600);
+  --color-green-500: var(--green-500);
+  --color-green-400: var(--green-400);
+  --color-green-300: var(--green-300);
+  --color-green-200: var(--green-200);
+  --color-green-100: var(--green-100);
+  --color-green-50: var(--green-50);
+
+  /* Blue Scale */
+  --color-blue-900: var(--blue-900);
+  --color-blue-800: var(--blue-800);
+  --color-blue-700: var(--blue-700);
+  --color-blue-600: var(--blue-600);
+  --color-blue-500: var(--blue-500);
+  --color-blue-400: var(--blue-400);
+  --color-blue-300: var(--blue-300);
+  --color-blue-200: var(--blue-200);
+  --color-blue-100: var(--blue-100);
+  --color-blue-50: var(--blue-50);
+
+  /* Beaver Scale */
+  --color-beaver-900: var(--beaver-900);
+  --color-beaver-800: var(--beaver-800);
+  --color-beaver-700: var(--beaver-700);
+  --color-beaver-600: var(--beaver-600);
+  --color-beaver-500: var(--beaver-500);
+  --color-beaver-400: var(--beaver-400);
+  --color-beaver-300: var(--beaver-300);
+  --color-beaver-200: var(--beaver-200);
+  --color-beaver-100: var(--beaver-100);
+  --color-beaver-50: var(--beaver-50);
+
+  /* Gray Scale */
+  --color-gray-900: var(--gray-900);
+  --color-gray-800: var(--gray-800);
+  --color-gray-700: var(--gray-700);
+  --color-gray-600: var(--gray-600);
+  --color-gray-500: var(--gray-500);
+  --color-gray-400: var(--gray-400);
+  --color-gray-300: var(--gray-300);
+  --color-gray-200: var(--gray-200);
+  --color-gray-100: var(--gray-100);
+  --color-gray-50: var(--gray-50);
+
+  /* Yellow Scale */
+  --color-yellow-600: var(--yellow-600);
+  --color-yellow-500: var(--yellow-500);
+  --color-yellow-400: var(--yellow-400);
+  --color-yellow-100: var(--yellow-100);
+  --color-yellow-50: var(--yellow-50);
+
+  /* Callout Backgrounds */
+  --color-callout-red-bg: var(--callout-red-bg);
+  --color-callout-blue-bg: var(--callout-blue-bg);
+
+  /* Crayola */
+  --color-crayola-500: var(--crayola-500);
+
+  /* Semantic Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-light: var(--primary-light);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Component Colors */
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-avatar-bg: var(--avatar-bg);
+  --color-navbar-gradient-end: var(--navbar-gradient-end);
+  --color-secondary-light: var(--secondary-light);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  /* body {
+    @apply font-sans bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  } */
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+5. Use the user's configured `sans` font-feature-settings by default.
+6. Use the user's configured `sans` font-variation-settings by default.
+7. Disable tap highlights on iOS
+*/
+
+html,
+:host {
+  line-height: 1.5; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  -moz-tab-size: 4; /* 3 */
+  -o-tab-size: 4;
+  tab-size: 4; /* 3 */
+  font-family:
+    "Poppins", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 4 */
+  font-feature-settings: normal; /* 5 */
+  font-variation-settings: normal; /* 6 */
+  -webkit-tap-highlight-color: transparent; /* 7 */
+}
+
+/* Hide scrollbar but keep scrolling */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE / Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome / Safari */
+}
+
+/* Loading progress bar animation */
+@keyframes loading-progress {
+  0% {
+    width: 0%;
+    margin-left: 0%;
+  }
+  50% {
+    width: 60%;
+    margin-left: 20%;
+  }
+  100% {
+    width: 0%;
+    margin-left: 100%;
+  }
+}
+
+.animate-loading-progress {
+  animation: loading-progress 1.5s ease-in-out infinite;
+}
