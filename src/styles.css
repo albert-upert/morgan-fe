@@ -341,3 +341,26 @@ html,
 .animate-loading-progress {
   animation: loading-progress 1.5s ease-in-out infinite;
 }
+
+/* QR scan line animation */
+@keyframes qr-scan-line {
+  0% {
+    transform: translateY(-10%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110%);
+    opacity: 0;
+  }
+}
+
+.animate-qr-scan-line {
+  animation: qr-scan-line 2.1s ease-in-out infinite;
+  will-change: transform, opacity;
+}

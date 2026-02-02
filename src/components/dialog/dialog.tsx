@@ -3,6 +3,7 @@ import type { ComponentProps } from "react";
 import { Button } from "@/components/button";
 import { CloseIcon } from "@/components/icon";
 import Typography from "@/components/typography/typography";
+import type { TypographyVariant } from "@/components/typography/typography";
 import { cn } from "@/lib/utils";
 
 export function Dialog({
@@ -90,7 +91,7 @@ export function DialogHeader({ className, ...props }: ComponentProps<"div">) {
     <div
       data-slot="Dialog-header"
       className={cn(
-        "flex items-center gap-2.5 rounded-t-xl border border-b-0 border-input bg-muted px-5 py-5",
+        "flex items-center gap-2.5 rounded-t-xl border-b-0 bg-muted px-5 py-5",
         className
       )}
       {...props}
@@ -111,15 +112,20 @@ export function DialogFooter({ className, ...props }: ComponentProps<"div">) {
 export function DialogTitle({
   className,
   children,
+  textVariant = "h5",
+  textClassName,
   ...props
-}: ComponentProps<typeof DialogPrimitive.Title>) {
+}: ComponentProps<typeof DialogPrimitive.Title> & {
+  textVariant?: TypographyVariant;
+  textClassName?: string;
+}) {
   return (
     <DialogPrimitive.Title
       data-slot="Dialog-title"
       className={cn("flex-1 text-center", className)}
       {...props}
     >
-      <Typography variant="h5" as="span">
+      <Typography variant={textVariant} as="span" className={textClassName}>
         {children}
       </Typography>
     </DialogPrimitive.Title>

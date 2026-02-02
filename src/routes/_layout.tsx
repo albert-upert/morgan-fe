@@ -1,8 +1,14 @@
-import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
-import { useCallback, useMemo, useState } from "react";
-import Navbar from "@/components/navbar";
-import Sidebar from "@/components/sidebar";
-import { Toaster } from "@/components/toast";
+import {
+  Outlet,
+  createFileRoute,
+  redirect,
+  useLocation,
+} from "@tanstack/react-router";
+import { Header } from "@/components/header";
+import { NotificationIcon } from "@/components/icon/NotificationIcon";
+import { ProfileIcon } from "@/components/icon/ProfileIcon";
+import { SettingIcon } from "@/components/icon/SettingIcon";
+import { Typography } from "@/components/typography";
 import { getUser } from "@/lib/auth";
 
 export const Route = createFileRoute("/_layout")({
@@ -21,59 +27,74 @@ export const Route = createFileRoute("/_layout")({
 });
 
 function Layout() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
-  const toggleSidebar = useCallback(() => {
-    setIsCollapsed((prev) => !prev);
-  }, []);
-
-  const user = useMemo(
-    () => ({ name: "John Doe", type: "ADMIN", roles: [] }),
-    []
-  ); // --- IGNORE ---
-
-  const sidebarWidth = useMemo(
-    () => (isCollapsed ? "80px" : "280px"),
-    [isCollapsed]
-  );
+  const { pathname } = useLocation();
+  const isHomePage = pathname.endsWith("/home");
+  const isScanPage = pathname.endsWith("/scan");
+  const fullName = "Meredita Susanty";
+  const subtitle = "Dosen - Universitas Pertamina";
 
   return (
-    <div id="dashboard-layout" className="min-h-screen w-full">
-      {/* Fixed Sidebar */}
-      <div
-        className="fixed top-0 left-0 z-40 hidden h-screen border-r bg-muted/40 md:block"
-        style={{ width: sidebarWidth }}
-      >
-        <Sidebar
-          userType={user.type}
-          isCollapsed={isCollapsed}
-          onToggle={toggleSidebar}
-        />
-      </div>
+    <div
+      id="dashboard-layout"
+      className="mx-auto min-h-screen w-full max-w-[412px] bg-[#ffffff]"
+    >
+      {!isScanPage && (
+        <>
+          {isHomePage ? (
+            <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] bg-linear-to-l from-[#FFECED] to-[#FFFFFF]">
+              <Header />
+              <div className="mx-[24px] border-b border-[#D9D9D9]" />
+              <div className="mx-auto flex max-w-[412px] items-center justify-between border-b border-[#D9D9D9] px-[24px] py-[16px]">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
+                    <ProfileIcon className="h-6 w-6 text-blue-500" />
+                  </div>
+                  <div className="flex flex-col">
+                    <Typography
+                      variant="body-medium-bold"
+                      className="text-gray-800"
+                    >
+                      {fullName}
+                    </Typography>
+                    <Typography variant="pixie" className="text-gray-800">
+                      ({subtitle})
+                    </Typography>
+                  </div>
+                </div>
 
-      {/* Main content area with padding for fixed sidebar */}
-      <div
-        className="flex min-h-screen flex-col transition-all duration-300 md:ml-0"
-        style={{ marginLeft: `calc(${sidebarWidth} + 0px)` }}
-      >
-        {/* Fixed Navbar */}
-        <div
-          className="fixed top-0 right-0 z-30 transition-all duration-300"
-          style={{ left: sidebarWidth }}
-        >
-          <Navbar
-            userType={user.type}
-            isCollapsed={isCollapsed}
-            onToggle={toggleSidebar}
-          />
-        </div>
+                <div className="flex items-center gap-[8px]">
+                  <button
+                    type="button"
+                    className="rounded-full text-black"
+                    aria-label="Notifikasi"
+                  >
+                    <NotificationIcon className="h-[32px] w-[32px]" />
+                  </button>
+                  <button
+                    type="button"
+                    className="rounded-full text-black"
+                    aria-label="Pengaturan"
+                  >
+                    <SettingIcon className="h-[32px] w-[32px]" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] border-b border-[#D9D9D9]">
+              <Header />
+            </div>
+          )}
+        </>
+      )}
 
-        {/* Main content with top padding for fixed navbar */}
-        <main className="flex flex-1 flex-col gap-4 bg-muted p-4 pt-[145px] lg:gap-6 lg:p-6 lg:pt-[145px]">
-          <Outlet />
-        </main>
-        <Toaster />
-      </div>
+      <main
+        className={
+          isScanPage ? "min-h-screen" : "min-h-screen px-[24px] pt-[88px]"
+        }
+      >
+        <Outlet />
+      </main>
     </div>
   );
 }
