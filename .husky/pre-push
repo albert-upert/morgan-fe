@@ -1,8 +1,5 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 # Lint seluruh repo (warning tidak gagal)
-pnpm -s lint || exit 1
+pnpm -s lint -- --max-warnings 9999 || exit 1
 
 # Prettier check hanya untuk file yang berubah di branch ini (biar tidak keblok legacy formatting)
 UPSTREAM="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)"
