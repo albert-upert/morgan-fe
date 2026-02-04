@@ -20,6 +20,8 @@ import { Route as LayoutConfigurationIndexRouteImport } from './routes/_layout/c
 import { Route as LayoutAutoAssignIndexRouteImport } from './routes/_layout/auto-assign/index'
 import { Route as LayoutAcademicCalendarIndexRouteImport } from './routes/_layout/academic-calendar/index'
 import { Route as LayoutPetsCreateRouteImport } from './routes/_layout/pets/create'
+import { Route as LayoutFmItTicketListRouteImport } from './routes/_layout/fm-it/ticket-list'
+import { Route as LayoutFmItHomeRouteImport } from './routes/_layout/fm-it/home'
 import { Route as LayoutCurriculumCreateRouteImport } from './routes/_layout/curriculum/create'
 import { Route as LayoutCurriculumAssignCoursesRouteImport } from './routes/_layout/curriculum/assign-courses'
 import { Route as LayoutCurriculumTypeRouteImport } from './routes/_layout/curriculum/$type'
@@ -118,6 +120,16 @@ const LayoutAcademicCalendarIndexRoute =
 const LayoutPetsCreateRoute = LayoutPetsCreateRouteImport.update({
   id: '/pets/create',
   path: '/pets/create',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutFmItTicketListRoute = LayoutFmItTicketListRouteImport.update({
+  id: '/fm-it/ticket-list',
+  path: '/fm-it/ticket-list',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutFmItHomeRoute = LayoutFmItHomeRouteImport.update({
+  id: '/fm-it/home',
+  path: '/fm-it/home',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutCurriculumCreateRoute = LayoutCurriculumCreateRouteImport.update({
@@ -390,6 +402,8 @@ export interface FileRoutesByFullPath {
   '/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
+  '/fm-it/home': typeof LayoutFmItHomeRoute
+  '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
   '/pets/create': typeof LayoutPetsCreateRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
   '/auto-assign': typeof LayoutAutoAssignIndexRoute
@@ -444,6 +458,8 @@ export interface FileRoutesByTo {
   '/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
+  '/fm-it/home': typeof LayoutFmItHomeRoute
+  '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
   '/pets/create': typeof LayoutPetsCreateRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
   '/auto-assign': typeof LayoutAutoAssignIndexRoute
@@ -500,6 +516,8 @@ export interface FileRoutesById {
   '/_layout/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/_layout/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/_layout/curriculum/create': typeof LayoutCurriculumCreateRoute
+  '/_layout/fm-it/home': typeof LayoutFmItHomeRoute
+  '/_layout/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
   '/_layout/pets/create': typeof LayoutPetsCreateRoute
   '/_layout/academic-calendar/': typeof LayoutAcademicCalendarIndexRoute
   '/_layout/auto-assign/': typeof LayoutAutoAssignIndexRoute
@@ -556,6 +574,8 @@ export interface FileRouteTypes {
     | '/curriculum/$type'
     | '/curriculum/assign-courses'
     | '/curriculum/create'
+    | '/fm-it/home'
+    | '/fm-it/ticket-list'
     | '/pets/create'
     | '/academic-calendar'
     | '/auto-assign'
@@ -610,6 +630,8 @@ export interface FileRouteTypes {
     | '/curriculum/$type'
     | '/curriculum/assign-courses'
     | '/curriculum/create'
+    | '/fm-it/home'
+    | '/fm-it/ticket-list'
     | '/pets/create'
     | '/academic-calendar'
     | '/auto-assign'
@@ -665,6 +687,8 @@ export interface FileRouteTypes {
     | '/_layout/curriculum/$type'
     | '/_layout/curriculum/assign-courses'
     | '/_layout/curriculum/create'
+    | '/_layout/fm-it/home'
+    | '/_layout/fm-it/ticket-list'
     | '/_layout/pets/create'
     | '/_layout/academic-calendar/'
     | '/_layout/auto-assign/'
@@ -778,6 +802,20 @@ declare module '@tanstack/react-router' {
       path: '/pets/create'
       fullPath: '/pets/create'
       preLoaderRoute: typeof LayoutPetsCreateRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/fm-it/ticket-list': {
+      id: '/_layout/fm-it/ticket-list'
+      path: '/fm-it/ticket-list'
+      fullPath: '/fm-it/ticket-list'
+      preLoaderRoute: typeof LayoutFmItTicketListRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/fm-it/home': {
+      id: '/_layout/fm-it/home'
+      path: '/fm-it/home'
+      fullPath: '/fm-it/home'
+      preLoaderRoute: typeof LayoutFmItHomeRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/curriculum/create': {
@@ -1100,6 +1138,8 @@ interface LayoutRouteChildren {
   LayoutCurriculumTypeRoute: typeof LayoutCurriculumTypeRoute
   LayoutCurriculumAssignCoursesRoute: typeof LayoutCurriculumAssignCoursesRoute
   LayoutCurriculumCreateRoute: typeof LayoutCurriculumCreateRoute
+  LayoutFmItHomeRoute: typeof LayoutFmItHomeRoute
+  LayoutFmItTicketListRoute: typeof LayoutFmItTicketListRoute
   LayoutPetsCreateRoute: typeof LayoutPetsCreateRoute
   LayoutAcademicCalendarIndexRoute: typeof LayoutAcademicCalendarIndexRoute
   LayoutAutoAssignIndexRoute: typeof LayoutAutoAssignIndexRoute
@@ -1159,6 +1199,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCurriculumTypeRoute: LayoutCurriculumTypeRoute,
   LayoutCurriculumAssignCoursesRoute: LayoutCurriculumAssignCoursesRoute,
   LayoutCurriculumCreateRoute: LayoutCurriculumCreateRoute,
+  LayoutFmItHomeRoute: LayoutFmItHomeRoute,
+  LayoutFmItTicketListRoute: LayoutFmItTicketListRoute,
   LayoutPetsCreateRoute: LayoutPetsCreateRoute,
   LayoutAcademicCalendarIndexRoute: LayoutAcademicCalendarIndexRoute,
   LayoutAutoAssignIndexRoute: LayoutAutoAssignIndexRoute,
