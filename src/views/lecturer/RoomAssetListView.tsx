@@ -1,15 +1,17 @@
-import { Link } from "@tanstack/react-router";
+import { useMutation } from "@tanstack/react-query";
+import { Link, useNavigate, useParams } from "@tanstack/react-router";
+
 import { useEffect, useMemo, useState } from "react";
-import { Button } from "@/components/button";
-import { Card, CardContent } from "@/components/card";
-import { Checkbox } from "@/components/checkbox";
+import { Button } from "uper-ui/button";
+import { Card, CardContent } from "uper-ui/card";
+import { Checkbox } from "uper-ui/checkbox";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownSeparator,
   DropdownTrigger,
-} from "@/components/dropdown";
+} from "uper-ui/dropdown";
 import {
   ArrowLeftIcon,
   BuildingIcon,
@@ -18,10 +20,18 @@ import {
   FilterIcon,
   ProfileIcon,
   SearchIcon,
-} from "@/components/icon";
-import { Input } from "@/components/input";
-import Typography from "@/components/typography/typography";
-import { ReportIssueModal } from "@/views/dosen/report-issue-modal";
+} from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { toast } from "uper-ui/toast";
+import { Typography } from "uper-ui/typography";
+import { submitReportIssue } from "@/services/morgan/report-issue";
+import {
+  makeReportSuccessData,
+  saveLastReportSuccess,
+} from "@/services/morgan/report-success-store";
+import { ReportIssueModal } from "@/views/lecturer/report-issue-modal";
+import type { ReportIssuePayload } from "@/views/lecturer/report-issue-modal";
+import { ReportIssueValidationModal } from "@/views/lecturer/report-issue-validation-modal";
 
 type RoomAsset = {
   id: string;
@@ -54,12 +64,20 @@ const assetsSeed: Array<RoomAsset> = [
 ];
 
 export function RoomAssetListView() {
+  const navigate = useNavigate();
+  const { roomId } = useParams({
+    from: "/_layout/room-asset-list/$roomId",
+  });
   const [query, setQuery] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(() => new Set());
   const [sortMode, setSortMode] = useState<SortMode>("az");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [isOpen, setIsOpen] = useState(false);
   const [openReportModal, setOpenReportModal] = useState(false);
+  const [openValidationModal, setOpenValidationModal] = useState(false);
+  const [pendingPayload, setPendingPayload] =
+    useState<ReportIssuePayload | null>(null);
+  const [reportResetToken, setReportResetToken] = useState(0);
 
   const reportedIds = useMemo(
     () => new Set(assetsSeed.filter((a) => a.reported).map((a) => a.id)),
@@ -109,10 +127,40 @@ export function RoomAssetListView() {
       .map((a) => ({ id: a.id, name: a.name }));
   }, [selectedIds]);
 
+  const submitMutation = useMutation({
+    mutationFn: (payload: ReportIssuePayload) => submitReportIssue(payload),
+    onSuccess: (response, payload) => {
+      const assetNameById = Object.fromEntries(
+        selectedAssetsForReport.map((a) => [a.id, a.name])
+      );
+      const successData = makeReportSuccessData({
+        payload,
+        response,
+        assetNameById,
+        roomId,
+      });
+      saveLastReportSuccess(successData);
+
+      setOpenValidationModal(false);
+      setOpenReportModal(false);
+      setPendingPayload(null);
+      setReportResetToken((v) => v + 1);
+      setSelectedIds(new Set());
+
+      navigate({
+        to: "/lecturer/report-success/$roomId",
+        params: { roomId },
+      });
+    },
+    onError: () => {
+      toast.error("Gagal mengirim laporan. Coba lagi.");
+    },
+  });
+
   return (
     <div className="pt-[16px]">
       <Link
-        to="/dosen/home"
+        to="/lecturer/home"
         className="inline-flex items-center gap-2 text-red-500"
         aria-label="Kembali ke Beranda"
       >
@@ -136,7 +184,7 @@ export function RoomAssetListView() {
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
               <Typography variant="body-large-bold" className="text-gray-900">
-                Ruang 2805
+                Ruang {roomId}
               </Typography>
               <div className="mt-1 flex items-center gap-[4px] text-gray-600">
                 <BuildingIcon
@@ -317,7 +365,7 @@ export function RoomAssetListView() {
                   role="button"
                   aria-disabled={isReported}
                   tabIndex={isReported ? -1 : 0}
-                  className={`flex items-center gap-3 rounded-xl border border-[#BFBFBF] p-3 select-none ${
+                  className={`flex items-center gap-3 rounded-xl border border-input p-3 select-none ${
                     isReported
                       ? "cursor-not-allowed bg-gray-100 opacity-70"
                       : checked
@@ -404,6 +452,26 @@ export function RoomAssetListView() {
         open={openReportModal}
         onOpenChange={setOpenReportModal}
         assets={selectedAssetsForReport}
+        resetToken={reportResetToken}
+        onRequestSubmit={(payload) => {
+          setPendingPayload(payload);
+          setOpenReportModal(false);
+          setOpenValidationModal(true);
+        }}
+      />
+
+      <ReportIssueValidationModal
+        open={openValidationModal}
+        onOpenChange={setOpenValidationModal}
+        isSubmitting={submitMutation.isPending}
+        onBack={() => {
+          setOpenValidationModal(false);
+          setOpenReportModal(true);
+        }}
+        onConfirm={() => {
+          if (!pendingPayload) return;
+          submitMutation.mutate(pendingPayload);
+        }}
       />
     </div>
   );

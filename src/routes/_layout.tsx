@@ -4,11 +4,9 @@ import {
   redirect,
   useLocation,
 } from "@tanstack/react-router";
+import { NotificationIcon, ProfileIcon, SettingIcon } from "uper-ui/icon";
+import { Typography } from "uper-ui/typography";
 import { Header } from "@/components/header";
-import { NotificationIcon } from "@/components/icon/NotificationIcon";
-import { ProfileIcon } from "@/components/icon/ProfileIcon";
-import { SettingIcon } from "@/components/icon/SettingIcon";
-import { Typography } from "@/components/typography";
 import { getUser } from "@/lib/auth";
 
 export const Route = createFileRoute("/_layout")({
@@ -36,15 +34,15 @@ function Layout() {
   return (
     <div
       id="dashboard-layout"
-      className="mx-auto min-h-screen w-full max-w-[412px] bg-[#ffffff]"
+      className="mx-auto min-h-screen w-full max-w-[412px] bg-background"
     >
       {!isScanPage && (
         <>
           {isHomePage ? (
-            <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] bg-linear-to-l from-[#FFECED] to-[#FFFFFF]">
+            <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] bg-linear-to-l from-navbar-gradient-end to-background">
               <Header />
-              <div className="mx-[24px] border-b border-[#D9D9D9]" />
-              <div className="mx-auto flex max-w-[412px] items-center justify-between border-b border-[#D9D9D9] px-[24px] py-[16px]">
+              <div className="mx-[24px] border-b border-border" />
+              <div className="mx-auto flex max-w-[412px] items-center justify-between border-b border-border px-[24px] py-[16px]">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
                     <ProfileIcon className="h-6 w-6 text-blue-500" />
@@ -81,7 +79,7 @@ function Layout() {
               </div>
             </div>
           ) : (
-            <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] border-b border-[#D9D9D9]">
+            <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] border-b border-border">
               <Header />
             </div>
           )}

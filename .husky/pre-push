@@ -1,1 +1,26 @@
-pnpm lint && pnpm format:check
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Lint seluruh repo (warning tidak gagal)
+pnpm -s lint || exit 1
+
+# Prettier check hanya untuk file yang berubah di branch ini (biar tidak keblok legacy formatting)
+UPSTREAM="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)"
+
+if [ -n "$UPSTREAM" ]; then
+  CHANGED_FILES="$(git diff --name-only --diff-filter=ACMRTUXB "$UPSTREAM"...HEAD)"
+else
+  # fallback: minimal cek commit terakhir
+  CHANGED_FILES="$(git diff --name-only --diff-filter=ACMRTUXB HEAD~1..HEAD 2>/dev/null || true)"
+fi
+
+# filter file yang relevan untuk prettier
+FILES_TO_CHECK="$(printf "%s\n" "$CHANGED_FILES" | grep -E '\.(js|jsx|ts|tsx|json|css|md)$' || true)"
+
+if [ -z "$FILES_TO_CHECK" ]; then
+  echo "pre-push: no formatted files to check"
+  exit 0
+fi
+
+echo "pre-push: prettier --check on changed files"
+echo "$FILES_TO_CHECK" | xargs pnpm -s prettier --check

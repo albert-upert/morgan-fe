@@ -31,10 +31,10 @@ importers:
         version: 1.144.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@tanstack/react-router-devtools':
         specifier: ^1.144.0
-        version: 1.144.0(@tanstack/react-router@1.144.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@tanstack/router-core@1.144.0)(csstype@3.2.3)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(solid-js@1.9.9)
+        version: 1.144.0(@tanstack/react-router@1.144.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@tanstack/router-core@1.158.0)(csstype@3.2.3)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(solid-js@1.9.9)
       '@tanstack/react-router-ssr-query':
         specifier: ^1.144.0
-        version: 1.144.0(@tanstack/query-core@5.90.16)(@tanstack/react-query@5.90.16(react@19.2.3))(@tanstack/react-router@1.144.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@tanstack/router-core@1.144.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+        version: 1.144.0(@tanstack/query-core@5.90.16)(@tanstack/react-query@5.90.16(react@19.2.3))(@tanstack/react-router@1.144.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@tanstack/router-core@1.158.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@tanstack/react-start':
         specifier: ^1.145.3
         version: 1.145.3(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(vite@7.3.0(@types/node@22.18.12)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))
@@ -86,6 +86,9 @@ importers:
       tw-animate-css:
         specifier: ^1.4.0
         version: 1.4.0
+      uper-ui:
+        specifier: github:albert-upert/uper-mobile-component
+        version: git+https://git@github.com:albert-upert/uper-mobile-component.git#4e0cff8df8fae9c437ef3dfbba8199dcbdf36b06(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(redux@5.0.1)(tailwindcss@4.1.18)
       vite-tsconfig-paths:
         specifier: ^6.0.3
         version: 6.0.3(typescript@5.9.3)(vite@7.3.0(@types/node@22.18.12)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))
@@ -2166,6 +2169,10 @@ packages:
     resolution: {integrity: sha512-LS54XNyxyTs5m/pl1lkwlg7uZM3lvsv2FIIV1rsJgnfwVCnI+n4ZGZ2CcjNT13BPu/3hPP+iHmliBSscJxW5FQ==}
     engines: {node: '>=12'}
 
+  '@tanstack/history@1.154.14':
+    resolution: {integrity: sha512-xyIfof8eHBuub1CkBnbKNKQXeRZC4dClhmzePHVOEel4G7lk/dW+TQ16da7CFdeNLv6u6Owf5VoBQxoo6DFTSA==}
+    engines: {node: '>=12'}
+
   '@tanstack/match-sorter-utils@8.19.4':
     resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
     engines: {node: '>=12'}
@@ -2225,6 +2232,13 @@ packages:
       react: '>=18.0.0 || >=19.0.0'
       react-dom: '>=18.0.0 || >=19.0.0'
 
+  '@tanstack/react-router@1.158.0':
+    resolution: {integrity: sha512-kvTaO6zjq9WWPyo1wwSZx95AjJ9KOvu23cOMgKeDdDQWKF3Z9q3fwhToKMKJoC11T2Vuivz+o/anrxCcOvdRzw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=18.0.0 || >=19.0.0'
+      react-dom: '>=18.0.0 || >=19.0.0'
+
   '@tanstack/react-start-client@1.145.0':
     resolution: {integrity: sha512-UC/+ONaOzuFnlHbOEudYS+AHOrcwAJaqbnfh9zZ5pUtTkJToBawW3YabDbMnS3o6lEiKggc8uGpsiCglUJrBcA==}
     engines: {node: '>=22.12.0'}
@@ -2262,6 +2276,10 @@ packages:
 
   '@tanstack/router-core@1.144.0':
     resolution: {integrity: sha512-6oVERtK9XDHCP4XojgHsdHO56ZSj11YaWjF5g/zw39LhyA6Lx+/X86AEIHO4y0BUrMQaJfcjdAQMVSAs6Vjtdg==}
+    engines: {node: '>=12'}
+
+  '@tanstack/router-core@1.158.0':
+    resolution: {integrity: sha512-dRMcWY0UB/6OZqSCx/7iUvom0ol18rHSQladygVT8mlth7uxYx3n5BNse8C03efIE8y1Bx+VDOBAKpAZ9BgKog==}
     engines: {node: '>=12'}
 
   '@tanstack/router-devtools-core@1.144.0':
@@ -5408,6 +5426,14 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
+  uper-ui@git+https://git@github.com:albert-upert/uper-mobile-component.git#4e0cff8df8fae9c437ef3dfbba8199dcbdf36b06:
+    resolution: {commit: 4e0cff8df8fae9c437ef3dfbba8199dcbdf36b06, repo: git@github.com:albert-upert/uper-mobile-component.git, type: git}
+    version: 0.1.0
+    peerDependencies:
+      react: ^19.0.0
+      react-dom: ^19.0.0
+      tailwindcss: ^4.0.0
+
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
@@ -7657,6 +7683,8 @@ snapshots:
 
   '@tanstack/history@1.141.0': {}
 
+  '@tanstack/history@1.154.14': {}
+
   '@tanstack/match-sorter-utils@8.19.4':
     dependencies:
       remove-accents: 0.5.0
@@ -7689,24 +7717,24 @@ snapshots:
       '@tanstack/query-core': 5.90.16
       react: 19.2.3
 
-  '@tanstack/react-router-devtools@1.144.0(@tanstack/react-router@1.144.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@tanstack/router-core@1.144.0)(csstype@3.2.3)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(solid-js@1.9.9)':
+  '@tanstack/react-router-devtools@1.144.0(@tanstack/react-router@1.144.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@tanstack/router-core@1.158.0)(csstype@3.2.3)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(solid-js@1.9.9)':
     dependencies:
       '@tanstack/react-router': 1.144.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@tanstack/router-devtools-core': 1.144.0(@tanstack/router-core@1.144.0)(csstype@3.2.3)(solid-js@1.9.9)
+      '@tanstack/router-devtools-core': 1.144.0(@tanstack/router-core@1.158.0)(csstype@3.2.3)(solid-js@1.9.9)
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
     optionalDependencies:
-      '@tanstack/router-core': 1.144.0
+      '@tanstack/router-core': 1.158.0
     transitivePeerDependencies:
       - csstype
       - solid-js
 
-  '@tanstack/react-router-ssr-query@1.144.0(@tanstack/query-core@5.90.16)(@tanstack/react-query@5.90.16(react@19.2.3))(@tanstack/react-router@1.144.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@tanstack/router-core@1.144.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+  '@tanstack/react-router-ssr-query@1.144.0(@tanstack/query-core@5.90.16)(@tanstack/react-query@5.90.16(react@19.2.3))(@tanstack/react-router@1.144.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(@tanstack/router-core@1.158.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
     dependencies:
       '@tanstack/query-core': 5.90.16
       '@tanstack/react-query': 5.90.16(react@19.2.3)
       '@tanstack/react-router': 1.144.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@tanstack/router-ssr-query-core': 1.144.0(@tanstack/query-core@5.90.16)(@tanstack/router-core@1.144.0)
+      '@tanstack/router-ssr-query-core': 1.144.0(@tanstack/query-core@5.90.16)(@tanstack/router-core@1.158.0)
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
     transitivePeerDependencies:
@@ -7717,6 +7745,17 @@ snapshots:
       '@tanstack/history': 1.141.0
       '@tanstack/react-store': 0.8.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@tanstack/router-core': 1.144.0
+      isbot: 5.1.31
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      tiny-invariant: 1.3.3
+      tiny-warning: 1.0.3
+
+  '@tanstack/react-router@1.158.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@tanstack/history': 1.154.14
+      '@tanstack/react-store': 0.8.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@tanstack/router-core': 1.158.0
       isbot: 5.1.31
       react: 19.2.3
       react-dom: 19.2.3(react@19.2.3)
@@ -7788,9 +7827,19 @@ snapshots:
       tiny-invariant: 1.3.3
       tiny-warning: 1.0.3
 
-  '@tanstack/router-devtools-core@1.144.0(@tanstack/router-core@1.144.0)(csstype@3.2.3)(solid-js@1.9.9)':
+  '@tanstack/router-core@1.158.0':
     dependencies:
-      '@tanstack/router-core': 1.144.0
+      '@tanstack/history': 1.154.14
+      '@tanstack/store': 0.8.0
+      cookie-es: 2.0.0
+      seroval: 1.4.2
+      seroval-plugins: 1.4.2(seroval@1.4.2)
+      tiny-invariant: 1.3.3
+      tiny-warning: 1.0.3
+
+  '@tanstack/router-devtools-core@1.144.0(@tanstack/router-core@1.158.0)(csstype@3.2.3)(solid-js@1.9.9)':
+    dependencies:
+      '@tanstack/router-core': 1.158.0
       clsx: 2.1.1
       goober: 2.1.18(csstype@3.2.3)
       solid-js: 1.9.9
@@ -7833,10 +7882,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@tanstack/router-ssr-query-core@1.144.0(@tanstack/query-core@5.90.16)(@tanstack/router-core@1.144.0)':
+  '@tanstack/router-ssr-query-core@1.144.0(@tanstack/query-core@5.90.16)(@tanstack/router-core@1.158.0)':
     dependencies:
       '@tanstack/query-core': 5.90.16
-      '@tanstack/router-core': 1.144.0
+      '@tanstack/router-core': 1.158.0
 
   '@tanstack/router-utils@1.143.11':
     dependencies:
@@ -11224,6 +11273,24 @@ snapshots:
       browserslist: 4.27.0
       escalade: 3.2.0
       picocolors: 1.1.1
+
+  uper-ui@git+https://git@github.com:albert-upert/uper-mobile-component.git#4e0cff8df8fae9c437ef3dfbba8199dcbdf36b06(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(redux@5.0.1)(tailwindcss@4.1.18):
+    dependencies:
+      '@tanstack/react-router': 1.158.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      class-variance-authority: 0.7.1
+      clsx: 2.1.1
+      radix-ui: 1.4.3(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      recharts: 3.6.0(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(redux@5.0.1)
+      sonner: 2.0.7(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      tailwind-merge: 3.4.0
+      tailwindcss: 4.1.18
+    transitivePeerDependencies:
+      - '@types/react'
+      - '@types/react-dom'
+      - react-is
+      - redux
 
   uri-js@4.4.1:
     dependencies:

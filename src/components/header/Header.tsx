@@ -59,7 +59,7 @@ export function Header({
   return (
     <header
       className={cn(
-        "mx-auto max-w-[412px] bg-linear-to-l from-[#FFECED] to-[#FFFFFF]",
+        "mx-auto max-w-[412px] bg-linear-to-l from-navbar-gradient-end to-background",
         className
       )}
     >

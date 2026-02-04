@@ -1,28 +1,29 @@
-import { useCallback, useMemo, useState } from "react";
-import { Button } from "@/components/button";
-import { Callout } from "@/components/callout";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { Button } from "uper-ui/button";
+import { Callout } from "uper-ui/callout";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
+} from "uper-ui/dialog";
 import {
   CaretDownIcon,
   CaretUpIcon,
   ErrorIcon,
   UploadIcon,
-} from "@/components/icon";
-import { Textarea } from "@/components/textarea";
-import Typography from "@/components/typography/typography";
+} from "uper-ui/icon";
+import { Textarea } from "uper-ui/textarea";
+import { toast } from "uper-ui/toast";
+import { Typography } from "uper-ui/typography";
 
 export type ReportIssueAsset = {
   id: string;
   name: string;
 };
 
-type IssueType = "Rusak" | "Hilang" | "Kurang" | "Lainnya";
+export type IssueType = "Rusak" | "Hilang" | "Kurang" | "Lainnya";
 
 type AssetIssueDraft = {
   issueType: IssueType | null;
@@ -30,14 +31,27 @@ type AssetIssueDraft = {
   fileName?: string;
 };
 
+export type ReportIssuePayload = {
+  issues: Array<{
+    assetId: string;
+    issueType: IssueType;
+    detail: string;
+    fileName?: string;
+  }>;
+};
+
 export function ReportIssueModal({
   open,
   onOpenChange,
   assets,
+  resetToken = 0,
+  onRequestSubmit,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   assets: Array<ReportIssueAsset>;
+  resetToken?: number;
+  onRequestSubmit?: (payload: ReportIssuePayload) => void;
 }) {
   const [expandedId, setExpandedId] = useState<string | null>(
     assets[0]?.id ?? null
@@ -45,6 +59,11 @@ export function ReportIssueModal({
   const [drafts, setDrafts] = useState<
     Partial<Record<string, AssetIssueDraft>>
   >({});
+
+  useEffect(() => {
+    setDrafts({});
+    setExpandedId(assets[0]?.id ?? null);
+  }, [resetToken, assets]);
 
   const getDraft = useCallback(
     (assetId: string): AssetIssueDraft => {
@@ -102,7 +121,7 @@ export function ReportIssueModal({
         showCloseButton={false}
         className="w-full p-0 data-[side=center]:w-[calc(100%-48px)] data-[side=center]:max-w-[412px]"
       >
-        <DialogHeader className="border-b border-[#D9D9D9] bg-[#F5F5F5] px-5 py-4">
+        <DialogHeader className="border-b border-border bg-muted px-5 py-4">
           <DialogTitle textVariant="caption-bold" className="text-center">
             <Typography
               variant="body-medium"
@@ -123,7 +142,7 @@ export function ReportIssueModal({
               return (
                 <div
                   key={asset.id}
-                  className="rounded-xl border border-[#D9D9D9] bg-gray-100"
+                  className="rounded-xl border border-border bg-gray-100"
                 >
                   <button
                     type="button"
@@ -230,9 +249,11 @@ export function ReportIssueModal({
                             onChange={(e) => {
                               const f = e.target.files?.[0];
                               updateDraft(asset.id, { fileName: f?.name });
+                              if (f) toast.success("Foto berhasil diunggah!");
                             }}
                           />
                         </label>
+
                         {draft.fileName && (
                           <Typography
                             variant="caption"
@@ -242,14 +263,15 @@ export function ReportIssueModal({
                           </Typography>
                         )}
                       </div>
-
-                      <button
-                        type="button"
-                        className="mt-4 w-full text-right text-[12px] font-semibold text-primary"
-                        onClick={goNext}
-                      >
-                        Lanjut ke aset berikutnya →
-                      </button>
+                      {assets.length > 1 && (
+                        <button
+                          type="button"
+                          className="mt-4 w-full text-right text-[12px] font-semibold text-primary"
+                          onClick={goNext}
+                        >
+                          Lanjut ke aset berikutnya →
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>
@@ -269,7 +291,7 @@ export function ReportIssueModal({
           )}
         </div>
 
-        <DialogFooter className="flex items-center gap-3 border-t border-gray-200 bg-white px-5 py-4">
+        <DialogFooter className="flex items-center gap-3 rounded-b-xl bg-white px-5 py-4">
           <Button
             variant="secondary"
             className="flex-1"
@@ -281,6 +303,21 @@ export function ReportIssueModal({
             variant="primary"
             className="flex-1"
             disabled={!isAllComplete}
+            onClick={() => {
+              if (!isAllComplete) return;
+              const payload: ReportIssuePayload = {
+                issues: assets.map((a) => {
+                  const d = getDraft(a.id);
+                  return {
+                    assetId: a.id,
+                    issueType: d.issueType as IssueType,
+                    detail: d.detail.trim(),
+                    fileName: d.fileName,
+                  };
+                }),
+              };
+              onRequestSubmit?.(payload);
+            }}
           >
             Laporkan
           </Button>

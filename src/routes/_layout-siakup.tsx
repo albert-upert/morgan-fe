@@ -2,7 +2,6 @@ import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
-import { Toaster } from "@/components/toast";
 import { getUser } from "@/lib/auth";
 
 export const Route = createFileRoute("/_layout-siakup")({
@@ -72,7 +71,6 @@ function Layout() {
         <main className="flex flex-1 flex-col gap-4 bg-muted p-4 pt-[145px] lg:gap-6 lg:p-6 lg:pt-[145px]">
           <Outlet />
         </main>
-        <Toaster />
       </div>
     </div>
   );

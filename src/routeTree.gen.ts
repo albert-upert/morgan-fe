@@ -13,6 +13,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as LayoutSiakupRouteImport } from './routes/_layout-siakup'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
+import { Route as LayoutRoomAssetListRouteImport } from './routes/_layout/room-asset-list'
 import { Route as LayoutPetsIndexRouteImport } from './routes/_layout/pets/index'
 import { Route as LayoutCurriculumIndexRouteImport } from './routes/_layout/curriculum/index'
 import { Route as LayoutCourseIndexRouteImport } from './routes/_layout/course/index'
@@ -20,10 +21,12 @@ import { Route as LayoutCourseScheduleIndexRouteImport } from './routes/_layout/
 import { Route as LayoutConfigurationIndexRouteImport } from './routes/_layout/configuration/index'
 import { Route as LayoutAutoAssignIndexRouteImport } from './routes/_layout/auto-assign/index'
 import { Route as LayoutAcademicCalendarIndexRouteImport } from './routes/_layout/academic-calendar/index'
+import { Route as LayoutRoomAssetListRoomIdRouteImport } from './routes/_layout/room-asset-list.$roomId'
 import { Route as LayoutPetsCreateRouteImport } from './routes/_layout/pets/create'
-import { Route as LayoutDosenScanRouteImport } from './routes/_layout/dosen/scan'
-import { Route as LayoutDosenRoomAssetListRouteImport } from './routes/_layout/dosen/room-asset-list'
-import { Route as LayoutDosenHomeRouteImport } from './routes/_layout/dosen/home'
+import { Route as LayoutLecturerScanRouteImport } from './routes/_layout/lecturer/scan'
+import { Route as LayoutLecturerRoomAssetListRouteImport } from './routes/_layout/lecturer/room-asset-list'
+import { Route as LayoutLecturerReportSuccessRouteImport } from './routes/_layout/lecturer/report-success'
+import { Route as LayoutLecturerHomeRouteImport } from './routes/_layout/lecturer/home'
 import { Route as LayoutCurriculumCreateRouteImport } from './routes/_layout/curriculum/create'
 import { Route as LayoutCurriculumAssignCoursesRouteImport } from './routes/_layout/curriculum/assign-courses'
 import { Route as LayoutCurriculumTypeRouteImport } from './routes/_layout/curriculum/$type'
@@ -48,6 +51,8 @@ import { Route as LayoutAcademicCalendarIdRouteImport } from './routes/_layout/a
 import { Route as LayoutConfigurationUserManagementIndexRouteImport } from './routes/_layout/configuration/user-management/index'
 import { Route as LayoutConfigurationAcademicIndexRouteImport } from './routes/_layout/configuration/academic/index'
 import { Route as LayoutPetsIdEditRouteImport } from './routes/_layout/pets/$id.edit'
+import { Route as LayoutLecturerRoomAssetListRoomIdRouteImport } from './routes/_layout/lecturer/room-asset-list.$roomId'
+import { Route as LayoutLecturerReportSuccessRoomIdRouteImport } from './routes/_layout/lecturer/report-success.$roomId'
 import { Route as LayoutCurriculumEquivalenceUploadResultRouteImport } from './routes/_layout/curriculum/equivalence/upload-result'
 import { Route as LayoutCurriculumEquivalenceUploadRouteImport } from './routes/_layout/curriculum/equivalence/upload'
 import { Route as LayoutCurriculumEquivalenceCreateRouteImport } from './routes/_layout/curriculum/equivalence/create'
@@ -83,6 +88,11 @@ const LayoutRoute = LayoutRouteImport.update({
 const LayoutIndexRoute = LayoutIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutRoomAssetListRoute = LayoutRoomAssetListRouteImport.update({
+  id: '/room-asset-list',
+  path: '/room-asset-list',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutPetsIndexRoute = LayoutPetsIndexRouteImport.update({
@@ -123,25 +133,37 @@ const LayoutAcademicCalendarIndexRoute =
     path: '/academic-calendar/',
     getParentRoute: () => LayoutRoute,
   } as any)
+const LayoutRoomAssetListRoomIdRoute =
+  LayoutRoomAssetListRoomIdRouteImport.update({
+    id: '/$roomId',
+    path: '/$roomId',
+    getParentRoute: () => LayoutRoomAssetListRoute,
+  } as any)
 const LayoutPetsCreateRoute = LayoutPetsCreateRouteImport.update({
   id: '/pets/create',
   path: '/pets/create',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutDosenScanRoute = LayoutDosenScanRouteImport.update({
-  id: '/dosen/scan',
-  path: '/dosen/scan',
+const LayoutLecturerScanRoute = LayoutLecturerScanRouteImport.update({
+  id: '/lecturer/scan',
+  path: '/lecturer/scan',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutDosenRoomAssetListRoute =
-  LayoutDosenRoomAssetListRouteImport.update({
-    id: '/dosen/room-asset-list',
-    path: '/dosen/room-asset-list',
+const LayoutLecturerRoomAssetListRoute =
+  LayoutLecturerRoomAssetListRouteImport.update({
+    id: '/lecturer/room-asset-list',
+    path: '/lecturer/room-asset-list',
     getParentRoute: () => LayoutRoute,
   } as any)
-const LayoutDosenHomeRoute = LayoutDosenHomeRouteImport.update({
-  id: '/dosen/home',
-  path: '/dosen/home',
+const LayoutLecturerReportSuccessRoute =
+  LayoutLecturerReportSuccessRouteImport.update({
+    id: '/lecturer/report-success',
+    path: '/lecturer/report-success',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutLecturerHomeRoute = LayoutLecturerHomeRouteImport.update({
+  id: '/lecturer/home',
+  path: '/lecturer/home',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutCurriculumCreateRoute = LayoutCurriculumCreateRouteImport.update({
@@ -283,6 +305,18 @@ const LayoutPetsIdEditRoute = LayoutPetsIdEditRouteImport.update({
   path: '/pets/$id/edit',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutLecturerRoomAssetListRoomIdRoute =
+  LayoutLecturerRoomAssetListRoomIdRouteImport.update({
+    id: '/$roomId',
+    path: '/$roomId',
+    getParentRoute: () => LayoutLecturerRoomAssetListRoute,
+  } as any)
+const LayoutLecturerReportSuccessRoomIdRoute =
+  LayoutLecturerReportSuccessRoomIdRouteImport.update({
+    id: '/$roomId',
+    path: '/$roomId',
+    getParentRoute: () => LayoutLecturerReportSuccessRoute,
+  } as any)
 const LayoutCurriculumEquivalenceUploadResultRoute =
   LayoutCurriculumEquivalenceUploadResultRouteImport.update({
     id: '/curriculum/equivalence/upload-result',
@@ -392,6 +426,7 @@ const LayoutConfigurationAcademicEventIdEditRoute =
 
 export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
+  '/room-asset-list': typeof LayoutRoomAssetListRouteWithChildren
   '/': typeof LayoutIndexRoute
   '/academic-calendar/$id': typeof LayoutAcademicCalendarIdRoute
   '/academic-calendar/generate-academic-history': typeof LayoutAcademicCalendarGenerateAcademicHistoryRoute
@@ -414,10 +449,12 @@ export interface FileRoutesByFullPath {
   '/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
-  '/dosen/home': typeof LayoutDosenHomeRoute
-  '/dosen/room-asset-list': typeof LayoutDosenRoomAssetListRoute
-  '/dosen/scan': typeof LayoutDosenScanRoute
+  '/lecturer/home': typeof LayoutLecturerHomeRoute
+  '/lecturer/report-success': typeof LayoutLecturerReportSuccessRouteWithChildren
+  '/lecturer/room-asset-list': typeof LayoutLecturerRoomAssetListRouteWithChildren
+  '/lecturer/scan': typeof LayoutLecturerScanRoute
   '/pets/create': typeof LayoutPetsCreateRoute
+  '/room-asset-list/$roomId': typeof LayoutRoomAssetListRoomIdRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
   '/auto-assign': typeof LayoutAutoAssignIndexRoute
   '/configuration': typeof LayoutConfigurationIndexRoute
@@ -435,6 +472,8 @@ export interface FileRoutesByFullPath {
   '/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
   '/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
+  '/lecturer/report-success/$roomId': typeof LayoutLecturerReportSuccessRoomIdRoute
+  '/lecturer/room-asset-list/$roomId': typeof LayoutLecturerRoomAssetListRoomIdRoute
   '/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/configuration/academic': typeof LayoutConfigurationAcademicIndexRoute
   '/configuration/user-management': typeof LayoutConfigurationUserManagementIndexRoute
@@ -449,6 +488,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
+  '/room-asset-list': typeof LayoutRoomAssetListRouteWithChildren
   '/': typeof LayoutIndexRoute
   '/academic-calendar/$id': typeof LayoutAcademicCalendarIdRoute
   '/academic-calendar/generate-academic-history': typeof LayoutAcademicCalendarGenerateAcademicHistoryRoute
@@ -471,10 +511,12 @@ export interface FileRoutesByTo {
   '/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
-  '/dosen/home': typeof LayoutDosenHomeRoute
-  '/dosen/room-asset-list': typeof LayoutDosenRoomAssetListRoute
-  '/dosen/scan': typeof LayoutDosenScanRoute
+  '/lecturer/home': typeof LayoutLecturerHomeRoute
+  '/lecturer/report-success': typeof LayoutLecturerReportSuccessRouteWithChildren
+  '/lecturer/room-asset-list': typeof LayoutLecturerRoomAssetListRouteWithChildren
+  '/lecturer/scan': typeof LayoutLecturerScanRoute
   '/pets/create': typeof LayoutPetsCreateRoute
+  '/room-asset-list/$roomId': typeof LayoutRoomAssetListRoomIdRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
   '/auto-assign': typeof LayoutAutoAssignIndexRoute
   '/configuration': typeof LayoutConfigurationIndexRoute
@@ -492,6 +534,8 @@ export interface FileRoutesByTo {
   '/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
   '/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
+  '/lecturer/report-success/$roomId': typeof LayoutLecturerReportSuccessRoomIdRoute
+  '/lecturer/room-asset-list/$roomId': typeof LayoutLecturerRoomAssetListRoomIdRoute
   '/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/configuration/academic': typeof LayoutConfigurationAcademicIndexRoute
   '/configuration/user-management': typeof LayoutConfigurationUserManagementIndexRoute
@@ -509,6 +553,7 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/_layout-siakup': typeof LayoutSiakupRoute
   '/login': typeof LoginRoute
+  '/_layout/room-asset-list': typeof LayoutRoomAssetListRouteWithChildren
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/academic-calendar/$id': typeof LayoutAcademicCalendarIdRoute
   '/_layout/academic-calendar/generate-academic-history': typeof LayoutAcademicCalendarGenerateAcademicHistoryRoute
@@ -531,10 +576,12 @@ export interface FileRoutesById {
   '/_layout/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/_layout/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/_layout/curriculum/create': typeof LayoutCurriculumCreateRoute
-  '/_layout/dosen/home': typeof LayoutDosenHomeRoute
-  '/_layout/dosen/room-asset-list': typeof LayoutDosenRoomAssetListRoute
-  '/_layout/dosen/scan': typeof LayoutDosenScanRoute
+  '/_layout/lecturer/home': typeof LayoutLecturerHomeRoute
+  '/_layout/lecturer/report-success': typeof LayoutLecturerReportSuccessRouteWithChildren
+  '/_layout/lecturer/room-asset-list': typeof LayoutLecturerRoomAssetListRouteWithChildren
+  '/_layout/lecturer/scan': typeof LayoutLecturerScanRoute
   '/_layout/pets/create': typeof LayoutPetsCreateRoute
+  '/_layout/room-asset-list/$roomId': typeof LayoutRoomAssetListRoomIdRoute
   '/_layout/academic-calendar/': typeof LayoutAcademicCalendarIndexRoute
   '/_layout/auto-assign/': typeof LayoutAutoAssignIndexRoute
   '/_layout/configuration/': typeof LayoutConfigurationIndexRoute
@@ -552,6 +599,8 @@ export interface FileRoutesById {
   '/_layout/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
   '/_layout/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/_layout/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
+  '/_layout/lecturer/report-success/$roomId': typeof LayoutLecturerReportSuccessRoomIdRoute
+  '/_layout/lecturer/room-asset-list/$roomId': typeof LayoutLecturerRoomAssetListRoomIdRoute
   '/_layout/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/_layout/configuration/academic/': typeof LayoutConfigurationAcademicIndexRoute
   '/_layout/configuration/user-management/': typeof LayoutConfigurationUserManagementIndexRoute
@@ -568,6 +617,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/login'
+    | '/room-asset-list'
     | '/'
     | '/academic-calendar/$id'
     | '/academic-calendar/generate-academic-history'
@@ -590,10 +640,12 @@ export interface FileRouteTypes {
     | '/curriculum/$type'
     | '/curriculum/assign-courses'
     | '/curriculum/create'
-    | '/dosen/home'
-    | '/dosen/room-asset-list'
-    | '/dosen/scan'
+    | '/lecturer/home'
+    | '/lecturer/report-success'
+    | '/lecturer/room-asset-list'
+    | '/lecturer/scan'
     | '/pets/create'
+    | '/room-asset-list/$roomId'
     | '/academic-calendar'
     | '/auto-assign'
     | '/configuration'
@@ -611,6 +663,8 @@ export interface FileRouteTypes {
     | '/curriculum/equivalence/create'
     | '/curriculum/equivalence/upload'
     | '/curriculum/equivalence/upload-result'
+    | '/lecturer/report-success/$roomId'
+    | '/lecturer/room-asset-list/$roomId'
     | '/pets/$id/edit'
     | '/configuration/academic'
     | '/configuration/user-management'
@@ -625,6 +679,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
+    | '/room-asset-list'
     | '/'
     | '/academic-calendar/$id'
     | '/academic-calendar/generate-academic-history'
@@ -647,10 +702,12 @@ export interface FileRouteTypes {
     | '/curriculum/$type'
     | '/curriculum/assign-courses'
     | '/curriculum/create'
-    | '/dosen/home'
-    | '/dosen/room-asset-list'
-    | '/dosen/scan'
+    | '/lecturer/home'
+    | '/lecturer/report-success'
+    | '/lecturer/room-asset-list'
+    | '/lecturer/scan'
     | '/pets/create'
+    | '/room-asset-list/$roomId'
     | '/academic-calendar'
     | '/auto-assign'
     | '/configuration'
@@ -668,6 +725,8 @@ export interface FileRouteTypes {
     | '/curriculum/equivalence/create'
     | '/curriculum/equivalence/upload'
     | '/curriculum/equivalence/upload-result'
+    | '/lecturer/report-success/$roomId'
+    | '/lecturer/room-asset-list/$roomId'
     | '/pets/$id/edit'
     | '/configuration/academic'
     | '/configuration/user-management'
@@ -684,6 +743,7 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/_layout-siakup'
     | '/login'
+    | '/_layout/room-asset-list'
     | '/_layout/'
     | '/_layout/academic-calendar/$id'
     | '/_layout/academic-calendar/generate-academic-history'
@@ -706,10 +766,12 @@ export interface FileRouteTypes {
     | '/_layout/curriculum/$type'
     | '/_layout/curriculum/assign-courses'
     | '/_layout/curriculum/create'
-    | '/_layout/dosen/home'
-    | '/_layout/dosen/room-asset-list'
-    | '/_layout/dosen/scan'
+    | '/_layout/lecturer/home'
+    | '/_layout/lecturer/report-success'
+    | '/_layout/lecturer/room-asset-list'
+    | '/_layout/lecturer/scan'
     | '/_layout/pets/create'
+    | '/_layout/room-asset-list/$roomId'
     | '/_layout/academic-calendar/'
     | '/_layout/auto-assign/'
     | '/_layout/configuration/'
@@ -727,6 +789,8 @@ export interface FileRouteTypes {
     | '/_layout/curriculum/equivalence/create'
     | '/_layout/curriculum/equivalence/upload'
     | '/_layout/curriculum/equivalence/upload-result'
+    | '/_layout/lecturer/report-success/$roomId'
+    | '/_layout/lecturer/room-asset-list/$roomId'
     | '/_layout/pets/$id/edit'
     | '/_layout/configuration/academic/'
     | '/_layout/configuration/user-management/'
@@ -774,6 +838,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/room-asset-list': {
+      id: '/_layout/room-asset-list'
+      path: '/room-asset-list'
+      fullPath: '/room-asset-list'
+      preLoaderRoute: typeof LayoutRoomAssetListRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/pets/': {
@@ -825,6 +896,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAcademicCalendarIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/room-asset-list/$roomId': {
+      id: '/_layout/room-asset-list/$roomId'
+      path: '/$roomId'
+      fullPath: '/room-asset-list/$roomId'
+      preLoaderRoute: typeof LayoutRoomAssetListRoomIdRouteImport
+      parentRoute: typeof LayoutRoomAssetListRoute
+    }
     '/_layout/pets/create': {
       id: '/_layout/pets/create'
       path: '/pets/create'
@@ -832,25 +910,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPetsCreateRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/dosen/scan': {
-      id: '/_layout/dosen/scan'
-      path: '/dosen/scan'
-      fullPath: '/dosen/scan'
-      preLoaderRoute: typeof LayoutDosenScanRouteImport
+    '/_layout/lecturer/scan': {
+      id: '/_layout/lecturer/scan'
+      path: '/lecturer/scan'
+      fullPath: '/lecturer/scan'
+      preLoaderRoute: typeof LayoutLecturerScanRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/dosen/room-asset-list': {
-      id: '/_layout/dosen/room-asset-list'
-      path: '/dosen/room-asset-list'
-      fullPath: '/dosen/room-asset-list'
-      preLoaderRoute: typeof LayoutDosenRoomAssetListRouteImport
+    '/_layout/lecturer/room-asset-list': {
+      id: '/_layout/lecturer/room-asset-list'
+      path: '/lecturer/room-asset-list'
+      fullPath: '/lecturer/room-asset-list'
+      preLoaderRoute: typeof LayoutLecturerRoomAssetListRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/dosen/home': {
-      id: '/_layout/dosen/home'
-      path: '/dosen/home'
-      fullPath: '/dosen/home'
-      preLoaderRoute: typeof LayoutDosenHomeRouteImport
+    '/_layout/lecturer/report-success': {
+      id: '/_layout/lecturer/report-success'
+      path: '/lecturer/report-success'
+      fullPath: '/lecturer/report-success'
+      preLoaderRoute: typeof LayoutLecturerReportSuccessRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/lecturer/home': {
+      id: '/_layout/lecturer/home'
+      path: '/lecturer/home'
+      fullPath: '/lecturer/home'
+      preLoaderRoute: typeof LayoutLecturerHomeRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/curriculum/create': {
@@ -1021,6 +1106,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPetsIdEditRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/lecturer/room-asset-list/$roomId': {
+      id: '/_layout/lecturer/room-asset-list/$roomId'
+      path: '/$roomId'
+      fullPath: '/lecturer/room-asset-list/$roomId'
+      preLoaderRoute: typeof LayoutLecturerRoomAssetListRoomIdRouteImport
+      parentRoute: typeof LayoutLecturerRoomAssetListRoute
+    }
+    '/_layout/lecturer/report-success/$roomId': {
+      id: '/_layout/lecturer/report-success/$roomId'
+      path: '/$roomId'
+      fullPath: '/lecturer/report-success/$roomId'
+      preLoaderRoute: typeof LayoutLecturerReportSuccessRoomIdRouteImport
+      parentRoute: typeof LayoutLecturerReportSuccessRoute
+    }
     '/_layout/curriculum/equivalence/upload-result': {
       id: '/_layout/curriculum/equivalence/upload-result'
       path: '/curriculum/equivalence/upload-result'
@@ -1150,7 +1249,49 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LayoutRoomAssetListRouteChildren {
+  LayoutRoomAssetListRoomIdRoute: typeof LayoutRoomAssetListRoomIdRoute
+}
+
+const LayoutRoomAssetListRouteChildren: LayoutRoomAssetListRouteChildren = {
+  LayoutRoomAssetListRoomIdRoute: LayoutRoomAssetListRoomIdRoute,
+}
+
+const LayoutRoomAssetListRouteWithChildren =
+  LayoutRoomAssetListRoute._addFileChildren(LayoutRoomAssetListRouteChildren)
+
+interface LayoutLecturerReportSuccessRouteChildren {
+  LayoutLecturerReportSuccessRoomIdRoute: typeof LayoutLecturerReportSuccessRoomIdRoute
+}
+
+const LayoutLecturerReportSuccessRouteChildren: LayoutLecturerReportSuccessRouteChildren =
+  {
+    LayoutLecturerReportSuccessRoomIdRoute:
+      LayoutLecturerReportSuccessRoomIdRoute,
+  }
+
+const LayoutLecturerReportSuccessRouteWithChildren =
+  LayoutLecturerReportSuccessRoute._addFileChildren(
+    LayoutLecturerReportSuccessRouteChildren,
+  )
+
+interface LayoutLecturerRoomAssetListRouteChildren {
+  LayoutLecturerRoomAssetListRoomIdRoute: typeof LayoutLecturerRoomAssetListRoomIdRoute
+}
+
+const LayoutLecturerRoomAssetListRouteChildren: LayoutLecturerRoomAssetListRouteChildren =
+  {
+    LayoutLecturerRoomAssetListRoomIdRoute:
+      LayoutLecturerRoomAssetListRoomIdRoute,
+  }
+
+const LayoutLecturerRoomAssetListRouteWithChildren =
+  LayoutLecturerRoomAssetListRoute._addFileChildren(
+    LayoutLecturerRoomAssetListRouteChildren,
+  )
+
 interface LayoutRouteChildren {
+  LayoutRoomAssetListRoute: typeof LayoutRoomAssetListRouteWithChildren
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutAcademicCalendarIdRoute: typeof LayoutAcademicCalendarIdRoute
   LayoutAcademicCalendarGenerateAcademicHistoryRoute: typeof LayoutAcademicCalendarGenerateAcademicHistoryRoute
@@ -1173,9 +1314,10 @@ interface LayoutRouteChildren {
   LayoutCurriculumTypeRoute: typeof LayoutCurriculumTypeRoute
   LayoutCurriculumAssignCoursesRoute: typeof LayoutCurriculumAssignCoursesRoute
   LayoutCurriculumCreateRoute: typeof LayoutCurriculumCreateRoute
-  LayoutDosenHomeRoute: typeof LayoutDosenHomeRoute
-  LayoutDosenRoomAssetListRoute: typeof LayoutDosenRoomAssetListRoute
-  LayoutDosenScanRoute: typeof LayoutDosenScanRoute
+  LayoutLecturerHomeRoute: typeof LayoutLecturerHomeRoute
+  LayoutLecturerReportSuccessRoute: typeof LayoutLecturerReportSuccessRouteWithChildren
+  LayoutLecturerRoomAssetListRoute: typeof LayoutLecturerRoomAssetListRouteWithChildren
+  LayoutLecturerScanRoute: typeof LayoutLecturerScanRoute
   LayoutPetsCreateRoute: typeof LayoutPetsCreateRoute
   LayoutAcademicCalendarIndexRoute: typeof LayoutAcademicCalendarIndexRoute
   LayoutAutoAssignIndexRoute: typeof LayoutAutoAssignIndexRoute
@@ -1208,6 +1350,7 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutRoomAssetListRoute: LayoutRoomAssetListRouteWithChildren,
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutAcademicCalendarIdRoute: LayoutAcademicCalendarIdRoute,
   LayoutAcademicCalendarGenerateAcademicHistoryRoute:
@@ -1235,9 +1378,12 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCurriculumTypeRoute: LayoutCurriculumTypeRoute,
   LayoutCurriculumAssignCoursesRoute: LayoutCurriculumAssignCoursesRoute,
   LayoutCurriculumCreateRoute: LayoutCurriculumCreateRoute,
-  LayoutDosenHomeRoute: LayoutDosenHomeRoute,
-  LayoutDosenRoomAssetListRoute: LayoutDosenRoomAssetListRoute,
-  LayoutDosenScanRoute: LayoutDosenScanRoute,
+  LayoutLecturerHomeRoute: LayoutLecturerHomeRoute,
+  LayoutLecturerReportSuccessRoute:
+    LayoutLecturerReportSuccessRouteWithChildren,
+  LayoutLecturerRoomAssetListRoute:
+    LayoutLecturerRoomAssetListRouteWithChildren,
+  LayoutLecturerScanRoute: LayoutLecturerScanRoute,
   LayoutPetsCreateRoute: LayoutPetsCreateRoute,
   LayoutAcademicCalendarIndexRoute: LayoutAcademicCalendarIndexRoute,
   LayoutAutoAssignIndexRoute: LayoutAutoAssignIndexRoute,
