@@ -21,9 +21,14 @@ import { Route as LayoutConfigurationIndexRouteImport } from './routes/_layout/c
 import { Route as LayoutAutoAssignIndexRouteImport } from './routes/_layout/auto-assign/index'
 import { Route as LayoutAcademicCalendarIndexRouteImport } from './routes/_layout/academic-calendar/index'
 import { Route as LayoutPetsCreateRouteImport } from './routes/_layout/pets/create'
+<<<<<<< HEAD
 import { Route as LayoutHousekeepingScanRouteImport } from './routes/_layout/housekeeping/scan'
 import { Route as LayoutHousekeepingHomeRouteImport } from './routes/_layout/housekeeping/home'
 import { Route as LayoutHousekeepingChecklistDashboardRouteImport } from './routes/_layout/housekeeping/checklist-dashboard'
+=======
+import { Route as LayoutFmItTicketListRouteImport } from './routes/_layout/fm-it/ticket-list'
+import { Route as LayoutFmItHomeRouteImport } from './routes/_layout/fm-it/home'
+>>>>>>> caabd48 (SCRUM-22 [FE_Slicing_FM/IT_Ticket List_Accept & Recieve Ticket from Dosen] Home Page)
 import { Route as LayoutCurriculumCreateRouteImport } from './routes/_layout/curriculum/create'
 import { Route as LayoutCurriculumAssignCoursesRouteImport } from './routes/_layout/curriculum/assign-courses'
 import { Route as LayoutCurriculumTypeRouteImport } from './routes/_layout/curriculum/$type'
@@ -129,6 +134,7 @@ const LayoutPetsCreateRoute = LayoutPetsCreateRouteImport.update({
   path: '/pets/create',
   getParentRoute: () => LayoutRoute,
 } as any)
+<<<<<<< HEAD
 const LayoutHousekeepingScanRoute = LayoutHousekeepingScanRouteImport.update({
   id: '/housekeeping/scan',
   path: '/housekeeping/scan',
@@ -145,6 +151,18 @@ const LayoutHousekeepingChecklistDashboardRoute =
     path: '/housekeeping/checklist-dashboard',
     getParentRoute: () => LayoutRoute,
   } as any)
+=======
+const LayoutFmItTicketListRoute = LayoutFmItTicketListRouteImport.update({
+  id: '/fm-it/ticket-list',
+  path: '/fm-it/ticket-list',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutFmItHomeRoute = LayoutFmItHomeRouteImport.update({
+  id: '/fm-it/home',
+  path: '/fm-it/home',
+  getParentRoute: () => LayoutRoute,
+} as any)
+>>>>>>> caabd48 (SCRUM-22 [FE_Slicing_FM/IT_Ticket List_Accept & Recieve Ticket from Dosen] Home Page)
 const LayoutCurriculumCreateRoute = LayoutCurriculumCreateRouteImport.update({
   id: '/curriculum/create',
   path: '/curriculum/create',
@@ -421,9 +439,14 @@ export interface FileRoutesByFullPath {
   '/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
+<<<<<<< HEAD
   '/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
   '/housekeeping/home': typeof LayoutHousekeepingHomeRoute
   '/housekeeping/scan': typeof LayoutHousekeepingScanRoute
+=======
+  '/fm-it/home': typeof LayoutFmItHomeRoute
+  '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
+>>>>>>> caabd48 (SCRUM-22 [FE_Slicing_FM/IT_Ticket List_Accept & Recieve Ticket from Dosen] Home Page)
   '/pets/create': typeof LayoutPetsCreateRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
   '/auto-assign': typeof LayoutAutoAssignIndexRoute
@@ -479,9 +502,14 @@ export interface FileRoutesByTo {
   '/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
+<<<<<<< HEAD
   '/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
   '/housekeeping/home': typeof LayoutHousekeepingHomeRoute
   '/housekeeping/scan': typeof LayoutHousekeepingScanRoute
+=======
+  '/fm-it/home': typeof LayoutFmItHomeRoute
+  '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
+>>>>>>> caabd48 (SCRUM-22 [FE_Slicing_FM/IT_Ticket List_Accept & Recieve Ticket from Dosen] Home Page)
   '/pets/create': typeof LayoutPetsCreateRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
   '/auto-assign': typeof LayoutAutoAssignIndexRoute
@@ -540,9 +568,14 @@ export interface FileRoutesById {
   '/_layout/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/_layout/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/_layout/curriculum/create': typeof LayoutCurriculumCreateRoute
+<<<<<<< HEAD
   '/_layout/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
   '/_layout/housekeeping/home': typeof LayoutHousekeepingHomeRoute
   '/_layout/housekeeping/scan': typeof LayoutHousekeepingScanRoute
+=======
+  '/_layout/fm-it/home': typeof LayoutFmItHomeRoute
+  '/_layout/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
+>>>>>>> caabd48 (SCRUM-22 [FE_Slicing_FM/IT_Ticket List_Accept & Recieve Ticket from Dosen] Home Page)
   '/_layout/pets/create': typeof LayoutPetsCreateRoute
   '/_layout/academic-calendar/': typeof LayoutAcademicCalendarIndexRoute
   '/_layout/auto-assign/': typeof LayoutAutoAssignIndexRoute
@@ -600,9 +633,14 @@ export interface FileRouteTypes {
     | '/curriculum/$type'
     | '/curriculum/assign-courses'
     | '/curriculum/create'
+<<<<<<< HEAD
     | '/housekeeping/checklist-dashboard'
     | '/housekeeping/home'
     | '/housekeeping/scan'
+=======
+    | '/fm-it/home'
+    | '/fm-it/ticket-list'
+>>>>>>> caabd48 (SCRUM-22 [FE_Slicing_FM/IT_Ticket List_Accept & Recieve Ticket from Dosen] Home Page)
     | '/pets/create'
     | '/academic-calendar'
     | '/auto-assign'
@@ -658,9 +696,14 @@ export interface FileRouteTypes {
     | '/curriculum/$type'
     | '/curriculum/assign-courses'
     | '/curriculum/create'
+<<<<<<< HEAD
     | '/housekeeping/checklist-dashboard'
     | '/housekeeping/home'
     | '/housekeeping/scan'
+=======
+    | '/fm-it/home'
+    | '/fm-it/ticket-list'
+>>>>>>> caabd48 (SCRUM-22 [FE_Slicing_FM/IT_Ticket List_Accept & Recieve Ticket from Dosen] Home Page)
     | '/pets/create'
     | '/academic-calendar'
     | '/auto-assign'
@@ -718,9 +761,14 @@ export interface FileRouteTypes {
     | '/_layout/curriculum/$type'
     | '/_layout/curriculum/assign-courses'
     | '/_layout/curriculum/create'
+<<<<<<< HEAD
     | '/_layout/housekeeping/checklist-dashboard'
     | '/_layout/housekeeping/home'
     | '/_layout/housekeeping/scan'
+=======
+    | '/_layout/fm-it/home'
+    | '/_layout/fm-it/ticket-list'
+>>>>>>> caabd48 (SCRUM-22 [FE_Slicing_FM/IT_Ticket List_Accept & Recieve Ticket from Dosen] Home Page)
     | '/_layout/pets/create'
     | '/_layout/academic-calendar/'
     | '/_layout/auto-assign/'
@@ -845,6 +893,7 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPetsCreateRouteImport
       parentRoute: typeof LayoutRoute
     }
+<<<<<<< HEAD
     '/_layout/housekeeping/scan': {
       id: '/_layout/housekeeping/scan'
       path: '/housekeeping/scan'
@@ -864,6 +913,20 @@ declare module '@tanstack/react-router' {
       path: '/housekeeping/checklist-dashboard'
       fullPath: '/housekeeping/checklist-dashboard'
       preLoaderRoute: typeof LayoutHousekeepingChecklistDashboardRouteImport
+=======
+    '/_layout/fm-it/ticket-list': {
+      id: '/_layout/fm-it/ticket-list'
+      path: '/fm-it/ticket-list'
+      fullPath: '/fm-it/ticket-list'
+      preLoaderRoute: typeof LayoutFmItTicketListRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/fm-it/home': {
+      id: '/_layout/fm-it/home'
+      path: '/fm-it/home'
+      fullPath: '/fm-it/home'
+      preLoaderRoute: typeof LayoutFmItHomeRouteImport
+>>>>>>> caabd48 (SCRUM-22 [FE_Slicing_FM/IT_Ticket List_Accept & Recieve Ticket from Dosen] Home Page)
       parentRoute: typeof LayoutRoute
     }
     '/_layout/curriculum/create': {
@@ -1193,9 +1256,14 @@ interface LayoutRouteChildren {
   LayoutCurriculumTypeRoute: typeof LayoutCurriculumTypeRoute
   LayoutCurriculumAssignCoursesRoute: typeof LayoutCurriculumAssignCoursesRoute
   LayoutCurriculumCreateRoute: typeof LayoutCurriculumCreateRoute
+<<<<<<< HEAD
   LayoutHousekeepingChecklistDashboardRoute: typeof LayoutHousekeepingChecklistDashboardRoute
   LayoutHousekeepingHomeRoute: typeof LayoutHousekeepingHomeRoute
   LayoutHousekeepingScanRoute: typeof LayoutHousekeepingScanRoute
+=======
+  LayoutFmItHomeRoute: typeof LayoutFmItHomeRoute
+  LayoutFmItTicketListRoute: typeof LayoutFmItTicketListRoute
+>>>>>>> caabd48 (SCRUM-22 [FE_Slicing_FM/IT_Ticket List_Accept & Recieve Ticket from Dosen] Home Page)
   LayoutPetsCreateRoute: typeof LayoutPetsCreateRoute
   LayoutAcademicCalendarIndexRoute: typeof LayoutAcademicCalendarIndexRoute
   LayoutAutoAssignIndexRoute: typeof LayoutAutoAssignIndexRoute
@@ -1256,10 +1324,15 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCurriculumTypeRoute: LayoutCurriculumTypeRoute,
   LayoutCurriculumAssignCoursesRoute: LayoutCurriculumAssignCoursesRoute,
   LayoutCurriculumCreateRoute: LayoutCurriculumCreateRoute,
+<<<<<<< HEAD
   LayoutHousekeepingChecklistDashboardRoute:
     LayoutHousekeepingChecklistDashboardRoute,
   LayoutHousekeepingHomeRoute: LayoutHousekeepingHomeRoute,
   LayoutHousekeepingScanRoute: LayoutHousekeepingScanRoute,
+=======
+  LayoutFmItHomeRoute: LayoutFmItHomeRoute,
+  LayoutFmItTicketListRoute: LayoutFmItTicketListRoute,
+>>>>>>> caabd48 (SCRUM-22 [FE_Slicing_FM/IT_Ticket List_Accept & Recieve Ticket from Dosen] Home Page)
   LayoutPetsCreateRoute: LayoutPetsCreateRoute,
   LayoutAcademicCalendarIndexRoute: LayoutAcademicCalendarIndexRoute,
   LayoutAutoAssignIndexRoute: LayoutAutoAssignIndexRoute,
