@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
-export type CardElevation = "low" | "medium" | "high";
+export type CardElevation = "low" | "medium" | "high" | "none";
 
 export interface CardProps extends ComponentProps<"div"> {
   size?: "default" | "sm";
@@ -12,6 +12,7 @@ const elevationStyles: Record<CardElevation, string> = {
   low: "shadow-[0px_4px_8px_0px_rgba(61,65,81,0.2)]", // Product Card, Side Card
   medium: "shadow-[0px_8px_24px_0px_rgba(61,65,81,0.15)]", // Tooltip, Dropdown
   high: "shadow-[0px_16px_36px_0px_rgba(61,65,81,0.1)]", // Toast
+  none: "shadow-none", // None
 };
 
 export function Card({

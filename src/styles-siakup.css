@@ -2,6 +2,9 @@
 
 @import "tailwindcss";
 @source "../node_modules/uper-ui/dist/**/*.js";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
