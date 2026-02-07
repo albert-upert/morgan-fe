@@ -41,7 +41,7 @@ export function Table({ className, ...props }: ComponentProps<"table">) {
   return (
     <div
       data-slot="table-container"
-      className="relative no-scrollbar w-full overflow-x-auto rounded-xl border"
+      className="no-scrollbar relative w-full overflow-x-auto rounded-xl border"
     >
       <TableContent className={className} {...props} />
     </div>
@@ -61,7 +61,7 @@ export function TableWithCustomHeader({
     <div
       data-slot="table-container"
       className={cn(
-        "relative no-scrollbar w-full overflow-x-auto rounded-xl border",
+        "no-scrollbar relative w-full overflow-x-auto rounded-xl border",
         className
       )}
     >
