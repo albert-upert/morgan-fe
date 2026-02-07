@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as LayoutSiakupRouteImport } from './routes/_layout-siakup'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutPetsIndexRouteImport } from './routes/_layout/pets/index'
@@ -20,6 +21,7 @@ import { Route as LayoutConfigurationIndexRouteImport } from './routes/_layout/c
 import { Route as LayoutAutoAssignIndexRouteImport } from './routes/_layout/auto-assign/index'
 import { Route as LayoutAcademicCalendarIndexRouteImport } from './routes/_layout/academic-calendar/index'
 import { Route as LayoutPetsCreateRouteImport } from './routes/_layout/pets/create'
+import { Route as LayoutHousekeepingHomeRouteImport } from './routes/_layout/housekeeping/home'
 import { Route as LayoutCurriculumCreateRouteImport } from './routes/_layout/curriculum/create'
 import { Route as LayoutCurriculumAssignCoursesRouteImport } from './routes/_layout/curriculum/assign-courses'
 import { Route as LayoutCurriculumTypeRouteImport } from './routes/_layout/curriculum/$type'
@@ -66,6 +68,10 @@ import { Route as LayoutConfigurationAcademicEventIdEditRouteImport } from './ro
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LayoutSiakupRoute = LayoutSiakupRouteImport.update({
+  id: '/_layout-siakup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LayoutRoute = LayoutRouteImport.update({
@@ -118,6 +124,11 @@ const LayoutAcademicCalendarIndexRoute =
 const LayoutPetsCreateRoute = LayoutPetsCreateRouteImport.update({
   id: '/pets/create',
   path: '/pets/create',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutHousekeepingHomeRoute = LayoutHousekeepingHomeRouteImport.update({
+  id: '/housekeeping/home',
+  path: '/housekeeping/home',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutCurriculumCreateRoute = LayoutCurriculumCreateRouteImport.update({
@@ -390,6 +401,7 @@ export interface FileRoutesByFullPath {
   '/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
+  '/housekeeping/home': typeof LayoutHousekeepingHomeRoute
   '/pets/create': typeof LayoutPetsCreateRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
   '/auto-assign': typeof LayoutAutoAssignIndexRoute
@@ -444,6 +456,7 @@ export interface FileRoutesByTo {
   '/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
+  '/housekeeping/home': typeof LayoutHousekeepingHomeRoute
   '/pets/create': typeof LayoutPetsCreateRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
   '/auto-assign': typeof LayoutAutoAssignIndexRoute
@@ -477,6 +490,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
+  '/_layout-siakup': typeof LayoutSiakupRoute
   '/login': typeof LoginRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/academic-calendar/$id': typeof LayoutAcademicCalendarIdRoute
@@ -500,6 +514,7 @@ export interface FileRoutesById {
   '/_layout/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/_layout/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/_layout/curriculum/create': typeof LayoutCurriculumCreateRoute
+  '/_layout/housekeeping/home': typeof LayoutHousekeepingHomeRoute
   '/_layout/pets/create': typeof LayoutPetsCreateRoute
   '/_layout/academic-calendar/': typeof LayoutAcademicCalendarIndexRoute
   '/_layout/auto-assign/': typeof LayoutAutoAssignIndexRoute
@@ -556,6 +571,7 @@ export interface FileRouteTypes {
     | '/curriculum/$type'
     | '/curriculum/assign-courses'
     | '/curriculum/create'
+    | '/housekeeping/home'
     | '/pets/create'
     | '/academic-calendar'
     | '/auto-assign'
@@ -610,6 +626,7 @@ export interface FileRouteTypes {
     | '/curriculum/$type'
     | '/curriculum/assign-courses'
     | '/curriculum/create'
+    | '/housekeeping/home'
     | '/pets/create'
     | '/academic-calendar'
     | '/auto-assign'
@@ -642,6 +659,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_layout'
+    | '/_layout-siakup'
     | '/login'
     | '/_layout/'
     | '/_layout/academic-calendar/$id'
@@ -665,6 +683,7 @@ export interface FileRouteTypes {
     | '/_layout/curriculum/$type'
     | '/_layout/curriculum/assign-courses'
     | '/_layout/curriculum/create'
+    | '/_layout/housekeeping/home'
     | '/_layout/pets/create'
     | '/_layout/academic-calendar/'
     | '/_layout/auto-assign/'
@@ -698,6 +717,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
+  LayoutSiakupRoute: typeof LayoutSiakupRoute
   LoginRoute: typeof LoginRoute
 }
 
@@ -708,6 +728,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_layout-siakup': {
+      id: '/_layout-siakup'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutSiakupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_layout': {
@@ -778,6 +805,13 @@ declare module '@tanstack/react-router' {
       path: '/pets/create'
       fullPath: '/pets/create'
       preLoaderRoute: typeof LayoutPetsCreateRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/housekeeping/home': {
+      id: '/_layout/housekeeping/home'
+      path: '/housekeeping/home'
+      fullPath: '/housekeeping/home'
+      preLoaderRoute: typeof LayoutHousekeepingHomeRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/curriculum/create': {
@@ -1100,6 +1134,7 @@ interface LayoutRouteChildren {
   LayoutCurriculumTypeRoute: typeof LayoutCurriculumTypeRoute
   LayoutCurriculumAssignCoursesRoute: typeof LayoutCurriculumAssignCoursesRoute
   LayoutCurriculumCreateRoute: typeof LayoutCurriculumCreateRoute
+  LayoutHousekeepingHomeRoute: typeof LayoutHousekeepingHomeRoute
   LayoutPetsCreateRoute: typeof LayoutPetsCreateRoute
   LayoutAcademicCalendarIndexRoute: typeof LayoutAcademicCalendarIndexRoute
   LayoutAutoAssignIndexRoute: typeof LayoutAutoAssignIndexRoute
@@ -1159,6 +1194,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCurriculumTypeRoute: LayoutCurriculumTypeRoute,
   LayoutCurriculumAssignCoursesRoute: LayoutCurriculumAssignCoursesRoute,
   LayoutCurriculumCreateRoute: LayoutCurriculumCreateRoute,
+  LayoutHousekeepingHomeRoute: LayoutHousekeepingHomeRoute,
   LayoutPetsCreateRoute: LayoutPetsCreateRoute,
   LayoutAcademicCalendarIndexRoute: LayoutAcademicCalendarIndexRoute,
   LayoutAutoAssignIndexRoute: LayoutAutoAssignIndexRoute,
@@ -1210,6 +1246,7 @@ const LayoutRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
+  LayoutSiakupRoute: LayoutSiakupRoute,
   LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport
