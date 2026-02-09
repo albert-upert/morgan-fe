@@ -1,12 +1,14 @@
+import { useState } from "react";
 import { reportsSeed } from "@/services/mock/mockReport.ts";
 import type { Report } from "@/types/report";
 
 // Simulasi delay network (biar kerasa loading-nya)
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-let USE_MOCK = true;
+const [USE_MOCK, setusemock] = useState(true);
+
+setusemock(true);
 
 export const getReportById = async (id: string): Promise<Report> => {
-  USE_MOCK = true;
   // 1. Pura-pura loading 1 detik
   await delay(1000);
 
