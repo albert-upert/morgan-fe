@@ -21,7 +21,9 @@ import { Route as LayoutConfigurationIndexRouteImport } from './routes/_layout/c
 import { Route as LayoutAutoAssignIndexRouteImport } from './routes/_layout/auto-assign/index'
 import { Route as LayoutAcademicCalendarIndexRouteImport } from './routes/_layout/academic-calendar/index'
 import { Route as LayoutPetsCreateRouteImport } from './routes/_layout/pets/create'
+import { Route as LayoutHousekeepingScanRouteImport } from './routes/_layout/housekeeping/scan'
 import { Route as LayoutHousekeepingHomeRouteImport } from './routes/_layout/housekeeping/home'
+import { Route as LayoutHousekeepingChecklistDashboardRouteImport } from './routes/_layout/housekeeping/checklist-dashboard'
 import { Route as LayoutCurriculumCreateRouteImport } from './routes/_layout/curriculum/create'
 import { Route as LayoutCurriculumAssignCoursesRouteImport } from './routes/_layout/curriculum/assign-courses'
 import { Route as LayoutCurriculumTypeRouteImport } from './routes/_layout/curriculum/$type'
@@ -126,11 +128,22 @@ const LayoutPetsCreateRoute = LayoutPetsCreateRouteImport.update({
   path: '/pets/create',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutHousekeepingScanRoute = LayoutHousekeepingScanRouteImport.update({
+  id: '/housekeeping/scan',
+  path: '/housekeeping/scan',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutHousekeepingHomeRoute = LayoutHousekeepingHomeRouteImport.update({
   id: '/housekeeping/home',
   path: '/housekeeping/home',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutHousekeepingChecklistDashboardRoute =
+  LayoutHousekeepingChecklistDashboardRouteImport.update({
+    id: '/housekeeping/checklist-dashboard',
+    path: '/housekeeping/checklist-dashboard',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutCurriculumCreateRoute = LayoutCurriculumCreateRouteImport.update({
   id: '/curriculum/create',
   path: '/curriculum/create',
@@ -401,7 +414,9 @@ export interface FileRoutesByFullPath {
   '/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
+  '/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
   '/housekeeping/home': typeof LayoutHousekeepingHomeRoute
+  '/housekeeping/scan': typeof LayoutHousekeepingScanRoute
   '/pets/create': typeof LayoutPetsCreateRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
   '/auto-assign': typeof LayoutAutoAssignIndexRoute
@@ -456,7 +471,9 @@ export interface FileRoutesByTo {
   '/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
+  '/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
   '/housekeeping/home': typeof LayoutHousekeepingHomeRoute
+  '/housekeeping/scan': typeof LayoutHousekeepingScanRoute
   '/pets/create': typeof LayoutPetsCreateRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
   '/auto-assign': typeof LayoutAutoAssignIndexRoute
@@ -514,7 +531,9 @@ export interface FileRoutesById {
   '/_layout/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/_layout/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/_layout/curriculum/create': typeof LayoutCurriculumCreateRoute
+  '/_layout/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
   '/_layout/housekeeping/home': typeof LayoutHousekeepingHomeRoute
+  '/_layout/housekeeping/scan': typeof LayoutHousekeepingScanRoute
   '/_layout/pets/create': typeof LayoutPetsCreateRoute
   '/_layout/academic-calendar/': typeof LayoutAcademicCalendarIndexRoute
   '/_layout/auto-assign/': typeof LayoutAutoAssignIndexRoute
@@ -571,7 +590,9 @@ export interface FileRouteTypes {
     | '/curriculum/$type'
     | '/curriculum/assign-courses'
     | '/curriculum/create'
+    | '/housekeeping/checklist-dashboard'
     | '/housekeeping/home'
+    | '/housekeeping/scan'
     | '/pets/create'
     | '/academic-calendar'
     | '/auto-assign'
@@ -626,7 +647,9 @@ export interface FileRouteTypes {
     | '/curriculum/$type'
     | '/curriculum/assign-courses'
     | '/curriculum/create'
+    | '/housekeeping/checklist-dashboard'
     | '/housekeeping/home'
+    | '/housekeeping/scan'
     | '/pets/create'
     | '/academic-calendar'
     | '/auto-assign'
@@ -683,7 +706,9 @@ export interface FileRouteTypes {
     | '/_layout/curriculum/$type'
     | '/_layout/curriculum/assign-courses'
     | '/_layout/curriculum/create'
+    | '/_layout/housekeeping/checklist-dashboard'
     | '/_layout/housekeeping/home'
+    | '/_layout/housekeeping/scan'
     | '/_layout/pets/create'
     | '/_layout/academic-calendar/'
     | '/_layout/auto-assign/'
@@ -807,11 +832,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPetsCreateRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/housekeeping/scan': {
+      id: '/_layout/housekeeping/scan'
+      path: '/housekeeping/scan'
+      fullPath: '/housekeeping/scan'
+      preLoaderRoute: typeof LayoutHousekeepingScanRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/housekeeping/home': {
       id: '/_layout/housekeeping/home'
       path: '/housekeeping/home'
       fullPath: '/housekeeping/home'
       preLoaderRoute: typeof LayoutHousekeepingHomeRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/housekeeping/checklist-dashboard': {
+      id: '/_layout/housekeeping/checklist-dashboard'
+      path: '/housekeeping/checklist-dashboard'
+      fullPath: '/housekeeping/checklist-dashboard'
+      preLoaderRoute: typeof LayoutHousekeepingChecklistDashboardRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/curriculum/create': {
@@ -1134,7 +1173,9 @@ interface LayoutRouteChildren {
   LayoutCurriculumTypeRoute: typeof LayoutCurriculumTypeRoute
   LayoutCurriculumAssignCoursesRoute: typeof LayoutCurriculumAssignCoursesRoute
   LayoutCurriculumCreateRoute: typeof LayoutCurriculumCreateRoute
+  LayoutHousekeepingChecklistDashboardRoute: typeof LayoutHousekeepingChecklistDashboardRoute
   LayoutHousekeepingHomeRoute: typeof LayoutHousekeepingHomeRoute
+  LayoutHousekeepingScanRoute: typeof LayoutHousekeepingScanRoute
   LayoutPetsCreateRoute: typeof LayoutPetsCreateRoute
   LayoutAcademicCalendarIndexRoute: typeof LayoutAcademicCalendarIndexRoute
   LayoutAutoAssignIndexRoute: typeof LayoutAutoAssignIndexRoute
@@ -1194,7 +1235,10 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCurriculumTypeRoute: LayoutCurriculumTypeRoute,
   LayoutCurriculumAssignCoursesRoute: LayoutCurriculumAssignCoursesRoute,
   LayoutCurriculumCreateRoute: LayoutCurriculumCreateRoute,
+  LayoutHousekeepingChecklistDashboardRoute:
+    LayoutHousekeepingChecklistDashboardRoute,
   LayoutHousekeepingHomeRoute: LayoutHousekeepingHomeRoute,
+  LayoutHousekeepingScanRoute: LayoutHousekeepingScanRoute,
   LayoutPetsCreateRoute: LayoutPetsCreateRoute,
   LayoutAcademicCalendarIndexRoute: LayoutAcademicCalendarIndexRoute,
   LayoutAutoAssignIndexRoute: LayoutAutoAssignIndexRoute,

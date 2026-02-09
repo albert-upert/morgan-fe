@@ -47,11 +47,13 @@ export function HousekeepingHomePage() {
           title="Lihat Daftar Ruangan"
           description="Daftar ruangan yang harus di cek"
           icon={<DashboardIcon className="h-10 w-10" color="white" />}
+          href="/housekeeping/checklist-dashboard"
         />
         <ActionLink
           title="Daftar Laporan"
           description="Lihat daftar laporan anda"
           icon={<MailIcon className="h-10 w-10" color="white" />}
+          href="/housekeeping/reports"
         />
       </div>
     </div>
