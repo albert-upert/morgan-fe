@@ -53,7 +53,11 @@ import { Route as LayoutAcademicCalendarIdRouteImport } from './routes/_layout/a
 import { Route as LayoutConfigurationUserManagementIndexRouteImport } from './routes/_layout/configuration/user-management/index'
 import { Route as LayoutConfigurationAcademicIndexRouteImport } from './routes/_layout/configuration/academic/index'
 import { Route as LayoutPetsIdEditRouteImport } from './routes/_layout/pets/$id.edit'
+<<<<<<< HEAD
 import { Route as LayoutHousekeepingRoomDetailRoomIdRouteImport } from './routes/_layout/housekeeping/room-detail.$roomId'
+=======
+import { Route as LayoutFmItTicketDetailIdRouteImport } from './routes/_layout/fm-it/ticket-detail.$id'
+>>>>>>> 9c9011d (SCRUM-18 [FE_Slicing_FM/IT_Ticket List_Travel & Resolve Issue] Ticket Detail Page-Detail Tiket)
 import { Route as LayoutCurriculumEquivalenceUploadResultRouteImport } from './routes/_layout/curriculum/equivalence/upload-result'
 import { Route as LayoutCurriculumEquivalenceUploadRouteImport } from './routes/_layout/curriculum/equivalence/upload'
 import { Route as LayoutCurriculumEquivalenceCreateRouteImport } from './routes/_layout/curriculum/equivalence/create'
@@ -302,10 +306,17 @@ const LayoutPetsIdEditRoute = LayoutPetsIdEditRouteImport.update({
   path: '/pets/$id/edit',
   getParentRoute: () => LayoutRoute,
 } as any)
+<<<<<<< HEAD
 const LayoutHousekeepingRoomDetailRoomIdRoute =
   LayoutHousekeepingRoomDetailRoomIdRouteImport.update({
     id: '/housekeeping/room-detail/$roomId',
     path: '/housekeeping/room-detail/$roomId',
+=======
+const LayoutFmItTicketDetailIdRoute =
+  LayoutFmItTicketDetailIdRouteImport.update({
+    id: '/fm-it/ticket-detail/$id',
+    path: '/fm-it/ticket-detail/$id',
+>>>>>>> 9c9011d (SCRUM-18 [FE_Slicing_FM/IT_Ticket List_Travel & Resolve Issue] Ticket Detail Page-Detail Tiket)
     getParentRoute: () => LayoutRoute,
   } as any)
 const LayoutCurriculumEquivalenceUploadResultRoute =
@@ -465,7 +476,11 @@ export interface FileRoutesByFullPath {
   '/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
   '/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
+<<<<<<< HEAD
   '/housekeeping/room-detail/$roomId': typeof LayoutHousekeepingRoomDetailRoomIdRoute
+=======
+  '/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
+>>>>>>> 9c9011d (SCRUM-18 [FE_Slicing_FM/IT_Ticket List_Travel & Resolve Issue] Ticket Detail Page-Detail Tiket)
   '/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/configuration/academic': typeof LayoutConfigurationAcademicIndexRoute
   '/configuration/user-management': typeof LayoutConfigurationUserManagementIndexRoute
@@ -528,7 +543,11 @@ export interface FileRoutesByTo {
   '/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
   '/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
+<<<<<<< HEAD
   '/housekeeping/room-detail/$roomId': typeof LayoutHousekeepingRoomDetailRoomIdRoute
+=======
+  '/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
+>>>>>>> 9c9011d (SCRUM-18 [FE_Slicing_FM/IT_Ticket List_Travel & Resolve Issue] Ticket Detail Page-Detail Tiket)
   '/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/configuration/academic': typeof LayoutConfigurationAcademicIndexRoute
   '/configuration/user-management': typeof LayoutConfigurationUserManagementIndexRoute
@@ -594,7 +613,11 @@ export interface FileRoutesById {
   '/_layout/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
   '/_layout/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/_layout/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
+<<<<<<< HEAD
   '/_layout/housekeeping/room-detail/$roomId': typeof LayoutHousekeepingRoomDetailRoomIdRoute
+=======
+  '/_layout/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
+>>>>>>> 9c9011d (SCRUM-18 [FE_Slicing_FM/IT_Ticket List_Travel & Resolve Issue] Ticket Detail Page-Detail Tiket)
   '/_layout/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/_layout/configuration/academic/': typeof LayoutConfigurationAcademicIndexRoute
   '/_layout/configuration/user-management/': typeof LayoutConfigurationUserManagementIndexRoute
@@ -659,7 +682,11 @@ export interface FileRouteTypes {
     | '/curriculum/equivalence/create'
     | '/curriculum/equivalence/upload'
     | '/curriculum/equivalence/upload-result'
+<<<<<<< HEAD
     | '/housekeeping/room-detail/$roomId'
+=======
+    | '/fm-it/ticket-detail/$id'
+>>>>>>> 9c9011d (SCRUM-18 [FE_Slicing_FM/IT_Ticket List_Travel & Resolve Issue] Ticket Detail Page-Detail Tiket)
     | '/pets/$id/edit'
     | '/configuration/academic'
     | '/configuration/user-management'
@@ -722,7 +749,11 @@ export interface FileRouteTypes {
     | '/curriculum/equivalence/create'
     | '/curriculum/equivalence/upload'
     | '/curriculum/equivalence/upload-result'
+<<<<<<< HEAD
     | '/housekeeping/room-detail/$roomId'
+=======
+    | '/fm-it/ticket-detail/$id'
+>>>>>>> 9c9011d (SCRUM-18 [FE_Slicing_FM/IT_Ticket List_Travel & Resolve Issue] Ticket Detail Page-Detail Tiket)
     | '/pets/$id/edit'
     | '/configuration/academic'
     | '/configuration/user-management'
@@ -787,7 +818,11 @@ export interface FileRouteTypes {
     | '/_layout/curriculum/equivalence/create'
     | '/_layout/curriculum/equivalence/upload'
     | '/_layout/curriculum/equivalence/upload-result'
+<<<<<<< HEAD
     | '/_layout/housekeeping/room-detail/$roomId'
+=======
+    | '/_layout/fm-it/ticket-detail/$id'
+>>>>>>> 9c9011d (SCRUM-18 [FE_Slicing_FM/IT_Ticket List_Travel & Resolve Issue] Ticket Detail Page-Detail Tiket)
     | '/_layout/pets/$id/edit'
     | '/_layout/configuration/academic/'
     | '/_layout/configuration/user-management/'
@@ -1097,11 +1132,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPetsIdEditRouteImport
       parentRoute: typeof LayoutRoute
     }
+<<<<<<< HEAD
     '/_layout/housekeeping/room-detail/$roomId': {
       id: '/_layout/housekeeping/room-detail/$roomId'
       path: '/housekeeping/room-detail/$roomId'
       fullPath: '/housekeeping/room-detail/$roomId'
       preLoaderRoute: typeof LayoutHousekeepingRoomDetailRoomIdRouteImport
+=======
+    '/_layout/fm-it/ticket-detail/$id': {
+      id: '/_layout/fm-it/ticket-detail/$id'
+      path: '/fm-it/ticket-detail/$id'
+      fullPath: '/fm-it/ticket-detail/$id'
+      preLoaderRoute: typeof LayoutFmItTicketDetailIdRouteImport
+>>>>>>> 9c9011d (SCRUM-18 [FE_Slicing_FM/IT_Ticket List_Travel & Resolve Issue] Ticket Detail Page-Detail Tiket)
       parentRoute: typeof LayoutRoute
     }
     '/_layout/curriculum/equivalence/upload-result': {
@@ -1282,7 +1325,11 @@ interface LayoutRouteChildren {
   LayoutCurriculumEquivalenceCreateRoute: typeof LayoutCurriculumEquivalenceCreateRoute
   LayoutCurriculumEquivalenceUploadRoute: typeof LayoutCurriculumEquivalenceUploadRoute
   LayoutCurriculumEquivalenceUploadResultRoute: typeof LayoutCurriculumEquivalenceUploadResultRoute
+<<<<<<< HEAD
   LayoutHousekeepingRoomDetailRoomIdRoute: typeof LayoutHousekeepingRoomDetailRoomIdRoute
+=======
+  LayoutFmItTicketDetailIdRoute: typeof LayoutFmItTicketDetailIdRoute
+>>>>>>> 9c9011d (SCRUM-18 [FE_Slicing_FM/IT_Ticket List_Travel & Resolve Issue] Ticket Detail Page-Detail Tiket)
   LayoutPetsIdEditRoute: typeof LayoutPetsIdEditRoute
   LayoutConfigurationAcademicIndexRoute: typeof LayoutConfigurationAcademicIndexRoute
   LayoutConfigurationUserManagementIndexRoute: typeof LayoutConfigurationUserManagementIndexRoute
@@ -1357,8 +1404,12 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutCurriculumEquivalenceUploadRoute,
   LayoutCurriculumEquivalenceUploadResultRoute:
     LayoutCurriculumEquivalenceUploadResultRoute,
+<<<<<<< HEAD
   LayoutHousekeepingRoomDetailRoomIdRoute:
     LayoutHousekeepingRoomDetailRoomIdRoute,
+=======
+  LayoutFmItTicketDetailIdRoute: LayoutFmItTicketDetailIdRoute,
+>>>>>>> 9c9011d (SCRUM-18 [FE_Slicing_FM/IT_Ticket List_Travel & Resolve Issue] Ticket Detail Page-Detail Tiket)
   LayoutPetsIdEditRoute: LayoutPetsIdEditRoute,
   LayoutConfigurationAcademicIndexRoute: LayoutConfigurationAcademicIndexRoute,
   LayoutConfigurationUserManagementIndexRoute:
