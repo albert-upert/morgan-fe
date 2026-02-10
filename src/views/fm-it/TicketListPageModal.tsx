@@ -32,7 +32,7 @@ import { Textarea } from "uper-ui/textarea";
 import { Typography } from "uper-ui/typography";
 import type { Report } from "@/types/report";
 
-export function TicketDetailModal({
+export function TicketListModal({
   open,
   onOpenChange,
   reportDetail,
@@ -69,13 +69,18 @@ export function TicketDetailModal({
     setShowPreview(false);
     setLocation(null);
     onRequestSubmit?.(reportDetail);
+
+    if (selected) {
+      sessionStorage.setItem("user_location", selected);
+    }
+
     navigate({
       to: "/fm-it/ticket-detail/$id",
       params: {
         id: String(reportDetail.id),
       },
     });
-  }, []);
+  }, [navigate, onOpenChange, onRequestSubmit, reportDetail, selected]);
 
   return (
     <Dialog
