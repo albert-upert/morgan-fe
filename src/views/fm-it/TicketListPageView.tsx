@@ -15,7 +15,7 @@ import { Tag } from "uper-ui/tags";
 import { Typography } from "uper-ui/typography";
 import { getAllReports } from "@/services/api/reportService";
 import type { Report } from "@/types/report";
-import { TicketDetailModal } from "./TicketListPageModal";
+import { TicketListModal } from "./TicketListPageModal";
 
 export function TicketListView() {
   const [reports, setReports] = useState<Array<Report>>([]);
@@ -172,7 +172,7 @@ export function TicketListView() {
       </div>
 
       {selectedReport && (
-        <TicketDetailModal
+        <TicketListModal
           open={openDetailModal}
           onOpenChange={setOpenDetailModal}
           reportDetail={selectedReport}
