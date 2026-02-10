@@ -63,7 +63,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
           className={cn(
             checkboxVariants({ size }),
             isChecked
-              ? "border-primary bg-primary"
+              ? disabled
+                ? "border-[#8C8C8C] bg-[#8C8C8C]"
+                : "border-primary bg-primary"
               : "border-input bg-background",
             disabled && "opacity-50",
             className

@@ -3,6 +3,7 @@ import type { ComponentProps } from "react";
 import { Button } from "@/components/button";
 import { CloseIcon } from "@/components/icon";
 import Typography from "@/components/typography/typography";
+import type { TypographyVariant } from "@/components/typography/typography";
 import { cn } from "@/lib/utils";
 
 export function Dialog({
@@ -37,7 +38,7 @@ export function DialogOverlay({
     <DialogPrimitive.Overlay
       data-slot="Dialog-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-black/10 duration-100 data-ending-style:opacity-0 data-starting-style:opacity-0 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0",
+        "data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0 fixed inset-0 z-50 bg-black/10 duration-100 data-ending-style:opacity-0 data-starting-style:opacity-0 supports-backdrop-filter:backdrop-blur-xs",
         className
       )}
       {...props}
@@ -62,7 +63,7 @@ export function DialogContent({
         data-slot="Dialog-content"
         data-side={side}
         className={cn(
-          "fixed z-50 gap-4 bg-background bg-clip-padding shadow-lg transition duration-200 ease-in-out data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:h-auto data-[side=bottom]:border-t data-[side=bottom]:p-6 data-[side=center]:top-1/2 data-[side=center]:left-1/2 data-[side=center]:w-full data-[side=center]:max-w-lg data-[side=center]:-translate-x-1/2 data-[side=center]:-translate-y-1/2 data-[side=center]:rounded-xl data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-r data-[side=left]:p-6 data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-l data-[side=right]:p-6 data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:h-auto data-[side=top]:border-b data-[side=top]:p-6 data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-[side=bottom]:data-open:slide-in-from-bottom-10 data-[side=center]:data-open:zoom-in-95 data-[side=left]:data-open:slide-in-from-left-10 data-[side=right]:data-open:slide-in-from-right-10 data-[side=top]:data-open:slide-in-from-top-10 data-closed:animate-out data-closed:fade-out-0 data-[side=bottom]:data-closed:slide-out-to-bottom-10 data-[side=center]:data-closed:zoom-out-95 data-[side=left]:data-closed:slide-out-to-left-10 data-[side=right]:data-closed:slide-out-to-right-10 data-[side=top]:data-closed:slide-out-to-top-10",
+          "data-open:animate-in data-open:fade-in-0 data-[side=bottom]:data-open:slide-in-from-bottom-10 data-[side=center]:data-open:zoom-in-95 data-[side=left]:data-open:slide-in-from-left-10 data-[side=right]:data-open:slide-in-from-right-10 data-[side=top]:data-open:slide-in-from-top-10 data-closed:animate-out data-closed:fade-out-0 data-[side=bottom]:data-closed:slide-out-to-bottom-10 data-[side=center]:data-closed:zoom-out-95 data-[side=left]:data-closed:slide-out-to-left-10 data-[side=right]:data-closed:slide-out-to-right-10 data-[side=top]:data-closed:slide-out-to-top-10 fixed z-50 gap-4 bg-background bg-clip-padding shadow-lg transition duration-200 ease-in-out data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:h-auto data-[side=bottom]:border-t data-[side=bottom]:p-6 data-[side=center]:top-1/2 data-[side=center]:left-1/2 data-[side=center]:w-full data-[side=center]:max-w-lg data-[side=center]:-translate-x-1/2 data-[side=center]:-translate-y-1/2 data-[side=center]:rounded-xl data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-r data-[side=left]:p-6 data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-l data-[side=right]:p-6 data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:h-auto data-[side=top]:border-b data-[side=top]:p-6 data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm",
           className
         )}
         {...props}
@@ -90,7 +91,7 @@ export function DialogHeader({ className, ...props }: ComponentProps<"div">) {
     <div
       data-slot="Dialog-header"
       className={cn(
-        "flex items-center gap-2.5 rounded-t-xl border border-b-0 border-input bg-muted px-5 py-5",
+        "flex items-center gap-2.5 rounded-t-xl border-b-0 bg-muted px-5 py-5",
         className
       )}
       {...props}
@@ -111,15 +112,20 @@ export function DialogFooter({ className, ...props }: ComponentProps<"div">) {
 export function DialogTitle({
   className,
   children,
+  textVariant = "h5",
+  textClassName,
   ...props
-}: ComponentProps<typeof DialogPrimitive.Title>) {
+}: ComponentProps<typeof DialogPrimitive.Title> & {
+  textVariant?: TypographyVariant;
+  textClassName?: string;
+}) {
   return (
     <DialogPrimitive.Title
       data-slot="Dialog-title"
       className={cn("flex-1 text-center", className)}
       {...props}
     >
-      <Typography variant="h5" as="span">
+      <Typography variant={textVariant} as="span" className={textClassName}>
         {children}
       </Typography>
     </DialogPrimitive.Title>
