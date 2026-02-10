@@ -1,3 +1,4 @@
+import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "uper-ui/button";
 import {
@@ -29,32 +30,19 @@ import { Separator } from "uper-ui/separator";
 import { Tag } from "uper-ui/tags";
 import { Textarea } from "uper-ui/textarea";
 import { Typography } from "uper-ui/typography";
-
-type Report = {
-  id: string;
-  status: string;
-  assets: Array<string>;
-  room: string;
-  building: string;
-  date: string;
-  time: string;
-  reporter: string;
-  reporterRole: string;
-  photo: File | null;
-  description: string;
-};
+import type { Report } from "@/types/report";
 
 export function TicketDetailModal({
   open,
   onOpenChange,
   reportDetail,
-  // onRequestSubmit,
+  onRequestSubmit,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   reportDetail: Report;
   resetToken?: number;
-  // onRequestSubmit?: (payload: ReportIssuePayload) => void;
+  onRequestSubmit?: (payload: Report) => void;
 }) {
   const [selected, setLocation] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(false);
@@ -62,17 +50,31 @@ export function TicketDetailModal({
   const validLocation = selected !== null;
 
   useEffect(() => {
-    if (reportDetail.photo) {
-      const url = URL.createObjectURL(reportDetail.photo);
+    if (reportDetail.photoUrl) {
+      const url = reportDetail.photoUrl;
       setPhotoUrl(url);
       return () => URL.revokeObjectURL(url);
     }
-  }, [reportDetail.photo]);
+  }, [reportDetail.photoUrl]);
 
   const cancel = useCallback(() => {
     onOpenChange(false);
     setShowPreview(false);
     setLocation(null);
+  }, []);
+
+  const navigate = useNavigate();
+  const accept = useCallback(() => {
+    onOpenChange(false);
+    setShowPreview(false);
+    setLocation(null);
+    onRequestSubmit?.(reportDetail);
+    navigate({
+      to: "/fm-it/ticket-detail/$id",
+      params: {
+        id: String(reportDetail.id),
+      },
+    });
   }, []);
 
   return (
@@ -166,7 +168,7 @@ export function TicketDetailModal({
                   {/* File Attachment */}
                   <Button
                     onClick={() => {
-                      if (reportDetail.photo) setShowPreview(true);
+                      if (reportDetail.photoUrl) setShowPreview(true);
                     }}
                     className="flex w-full flex-row items-center justify-between gap-3"
                     variant="outline"
@@ -176,7 +178,7 @@ export function TicketDetailModal({
                     </div>
 
                     <div className="flex grow justify-start">
-                      {reportDetail.photo?.name}
+                      {reportDetail.photoUrl}
                     </div>
 
                     <div>
@@ -269,6 +271,7 @@ export function TicketDetailModal({
                 className="w-full"
                 variant="primary"
                 disabled={!validLocation}
+                onClick={accept}
               >
                 Terima Tiket
               </Button>
