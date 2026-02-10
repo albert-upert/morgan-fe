@@ -57,6 +57,8 @@ export { GradeIcon } from "./GradeIcon";
 export { GraduationIcon } from "./GraduationIcon";
 export { GreaterThanIcon } from "./GreaterThanIcon";
 export { GuardianshipIcon } from "./GuardianshipIcon";
+export { FlashlightIcon } from "./FlashlightIcon";
+export { GalleryIcon } from "./GalleryIcon";
 export { HideIcon } from "./HideIcon";
 export { HomeIcon } from "./HomeIcon";
 export { IdeaIcon } from "./IdeaIcon";

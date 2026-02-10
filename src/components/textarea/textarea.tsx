@@ -31,7 +31,7 @@ export function Textarea({
   return (
     <div className={cn("flex w-full flex-col gap-0.5", wrapperClassName)}>
       {label && (
-        <label className="text-sm leading-[22px] text-foreground">
+        <label className="text-[12px] leading-[22px] font-semibold text-gray-600">
           {label}
         </label>
       )}
@@ -60,7 +60,7 @@ export function Textarea({
         )}
       </div>
       {(helperText || showCount) && (
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-end gap-2">
           {helperText && (
             <span
               className={cn(
@@ -72,8 +72,8 @@ export function Textarea({
             </span>
           )}
           {showCount && maxLength && (
-            <span className="text-xs leading-5 whitespace-nowrap text-muted-foreground">
-              {textLength}/{maxLength}
+            <span className="text-[12px] leading-5 whitespace-nowrap text-muted-foreground">
+              {textLength}/{maxLength} Karakter
             </span>
           )}
         </div>

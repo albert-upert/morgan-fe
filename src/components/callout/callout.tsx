@@ -86,12 +86,14 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
         {...props}
       >
         {showIcon && (
-          <ErrorIcon className={cn("size-6 shrink-0", styles.icon)} />
+          <ErrorIcon
+            className={cn("h-[14px] w-[14px] shrink-0", styles.icon)}
+          />
         )}
 
         <div className="flex flex-1 items-center gap-4">
           <Typography
-            variant="body-medium"
+            variant="pixie"
             className={cn("text-inherit", styles.message)}
             as="p"
           >
@@ -104,7 +106,7 @@ export const Callout = forwardRef<HTMLDivElement, CalloutProps>(
               className={cn("shrink-0 hover:underline", styles.action)}
               type="button"
             >
-              <Typography variant="body-medium-bold" className="text-inherit">
+              <Typography variant="pixie-bold" className="text-inherit">
                 {action}
               </Typography>
             </button>
