@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "uper-ui/button";
 import { Card, CardContent } from "uper-ui/card";
 import {
@@ -14,7 +15,7 @@ import { Tag } from "uper-ui/tags";
 import { Typography } from "uper-ui/typography";
 import { getAllReports } from "@/services/api/reportService";
 import type { Report } from "@/types/report";
-import { TicketDetailModal } from "./TicketDetailModal";
+import { TicketDetailModal } from "./TicketListPageModal";
 
 export function TicketListView() {
   const [reports, setReports] = useState<Array<Report>>([]);
@@ -40,6 +41,13 @@ export function TicketListView() {
     fetchAll();
   }, []);
 
+  const navigate = useNavigate();
+  const home = useCallback(() => {
+    navigate({
+      to: "/fm-it/home",
+    });
+  }, []);
+
   const name = "Budi Santoso";
   const shift = "08.00 - 14.00 WIB";
   const area = "Griya Legita, Rektorat";
@@ -51,9 +59,12 @@ export function TicketListView() {
   return (
     <div className="flex flex-col gap-6">
       {/* Back */}
-      <div className="ml-8">
-        <Button size="icon" variant="tertiary">
-          <ArrowLeftIcon /> Beranda
+      <div className="">
+        <Button variant="tertiary" onClick={home}>
+          <React.Fragment key=".0">
+            <ArrowLeftIcon />
+            Beranda
+          </React.Fragment>
         </Button>
       </div>
 
