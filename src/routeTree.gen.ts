@@ -46,6 +46,7 @@ import { Route as LayoutAcademicCalendarIdRouteImport } from './routes/_layout/a
 import { Route as LayoutConfigurationUserManagementIndexRouteImport } from './routes/_layout/configuration/user-management/index'
 import { Route as LayoutConfigurationAcademicIndexRouteImport } from './routes/_layout/configuration/academic/index'
 import { Route as LayoutPetsIdEditRouteImport } from './routes/_layout/pets/$id.edit'
+import { Route as LayoutFmItTicketDetailIdRouteImport } from './routes/_layout/fm-it/ticket-detail.$id'
 import { Route as LayoutCurriculumEquivalenceUploadResultRouteImport } from './routes/_layout/curriculum/equivalence/upload-result'
 import { Route as LayoutCurriculumEquivalenceUploadRouteImport } from './routes/_layout/curriculum/equivalence/upload'
 import { Route as LayoutCurriculumEquivalenceCreateRouteImport } from './routes/_layout/curriculum/equivalence/create'
@@ -271,6 +272,12 @@ const LayoutPetsIdEditRoute = LayoutPetsIdEditRouteImport.update({
   path: '/pets/$id/edit',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutFmItTicketDetailIdRoute =
+  LayoutFmItTicketDetailIdRouteImport.update({
+    id: '/fm-it/ticket-detail/$id',
+    path: '/fm-it/ticket-detail/$id',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutCurriculumEquivalenceUploadResultRoute =
   LayoutCurriculumEquivalenceUploadResultRouteImport.update({
     id: '/curriculum/equivalence/upload-result',
@@ -422,6 +429,7 @@ export interface FileRoutesByFullPath {
   '/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
   '/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
+  '/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
   '/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/configuration/academic': typeof LayoutConfigurationAcademicIndexRoute
   '/configuration/user-management': typeof LayoutConfigurationUserManagementIndexRoute
@@ -478,6 +486,7 @@ export interface FileRoutesByTo {
   '/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
   '/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
+  '/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
   '/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/configuration/academic': typeof LayoutConfigurationAcademicIndexRoute
   '/configuration/user-management': typeof LayoutConfigurationUserManagementIndexRoute
@@ -536,6 +545,7 @@ export interface FileRoutesById {
   '/_layout/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
   '/_layout/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/_layout/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
+  '/_layout/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
   '/_layout/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/_layout/configuration/academic/': typeof LayoutConfigurationAcademicIndexRoute
   '/_layout/configuration/user-management/': typeof LayoutConfigurationUserManagementIndexRoute
@@ -594,6 +604,7 @@ export interface FileRouteTypes {
     | '/curriculum/equivalence/create'
     | '/curriculum/equivalence/upload'
     | '/curriculum/equivalence/upload-result'
+    | '/fm-it/ticket-detail/$id'
     | '/pets/$id/edit'
     | '/configuration/academic'
     | '/configuration/user-management'
@@ -650,6 +661,7 @@ export interface FileRouteTypes {
     | '/curriculum/equivalence/create'
     | '/curriculum/equivalence/upload'
     | '/curriculum/equivalence/upload-result'
+    | '/fm-it/ticket-detail/$id'
     | '/pets/$id/edit'
     | '/configuration/academic'
     | '/configuration/user-management'
@@ -707,6 +719,7 @@ export interface FileRouteTypes {
     | '/_layout/curriculum/equivalence/create'
     | '/_layout/curriculum/equivalence/upload'
     | '/_layout/curriculum/equivalence/upload-result'
+    | '/_layout/fm-it/ticket-detail/$id'
     | '/_layout/pets/$id/edit'
     | '/_layout/configuration/academic/'
     | '/_layout/configuration/user-management/'
@@ -986,6 +999,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPetsIdEditRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/fm-it/ticket-detail/$id': {
+      id: '/_layout/fm-it/ticket-detail/$id'
+      path: '/fm-it/ticket-detail/$id'
+      fullPath: '/fm-it/ticket-detail/$id'
+      preLoaderRoute: typeof LayoutFmItTicketDetailIdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/curriculum/equivalence/upload-result': {
       id: '/_layout/curriculum/equivalence/upload-result'
       path: '/curriculum/equivalence/upload-result'
@@ -1158,6 +1178,7 @@ interface LayoutRouteChildren {
   LayoutCurriculumEquivalenceCreateRoute: typeof LayoutCurriculumEquivalenceCreateRoute
   LayoutCurriculumEquivalenceUploadRoute: typeof LayoutCurriculumEquivalenceUploadRoute
   LayoutCurriculumEquivalenceUploadResultRoute: typeof LayoutCurriculumEquivalenceUploadResultRoute
+  LayoutFmItTicketDetailIdRoute: typeof LayoutFmItTicketDetailIdRoute
   LayoutPetsIdEditRoute: typeof LayoutPetsIdEditRoute
   LayoutConfigurationAcademicIndexRoute: typeof LayoutConfigurationAcademicIndexRoute
   LayoutConfigurationUserManagementIndexRoute: typeof LayoutConfigurationUserManagementIndexRoute
@@ -1225,6 +1246,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
     LayoutCurriculumEquivalenceUploadRoute,
   LayoutCurriculumEquivalenceUploadResultRoute:
     LayoutCurriculumEquivalenceUploadResultRoute,
+  LayoutFmItTicketDetailIdRoute: LayoutFmItTicketDetailIdRoute,
   LayoutPetsIdEditRoute: LayoutPetsIdEditRoute,
   LayoutConfigurationAcademicIndexRoute: LayoutConfigurationAcademicIndexRoute,
   LayoutConfigurationUserManagementIndexRoute:
