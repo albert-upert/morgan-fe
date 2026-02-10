@@ -1,7 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import { BrowserQRCodeReader } from "@zxing/browser";
 import { NotFoundException } from "@zxing/library";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeftIcon } from "uper-ui/icon";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
@@ -13,6 +13,19 @@ export function ScanQrView() {
   const readerRef = useRef<BrowserQRCodeReader | null>(null);
   const handledRef = useRef(false);
   const [cameraError, setCameraError] = useState<string | null>(null);
+
+  // Handlers with useCallback
+  const handleNavigateBack = useCallback(() => {
+    navigate({ to: "/housekeeping/checklist-dashboard" });
+  }, [navigate]);
+
+  const handleFlashlight = useCallback(() => {
+    // TODO: Implement flashlight toggle
+  }, []);
+
+  const handleGallery = useCallback(() => {
+    // TODO: Implement gallery/upload QR from image
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -43,7 +56,7 @@ export function ScanQrView() {
           if (result) {
             if (handledRef.current) return;
             handledRef.current = true;
-            // const text = result.getText(); // keep if you want to parse QR payload later
+            const qrText = result.getText();
             toast.success("QR terdeteksi");
 
             // stop camera ASAP to avoid repeated scans
@@ -54,11 +67,11 @@ export function ScanQrView() {
               // ignore
             }
 
-            // Demo: langsung ke halaman list detail aset
-            // navigate({
-            //   to: "/room-asset-list/$roomId",
-            //   params: { roomId: "0001" },
-            // });
+            // Navigate to room detail page dengan room ID dari QR code
+            navigate({
+              to: "/housekeeping/room-detail/$roomId",
+              params: { roomId: qrText || "0001" },
+            });
           } else if (err && !(err instanceof NotFoundException)) {
             // NotFoundException = frame belum ada QR, aman di-ignore
             setCameraError("Gagal membaca QR. Coba lagi.");
@@ -116,7 +129,7 @@ export function ScanQrView() {
       <div className="absolute top-0 right-0 left-0 z-20 mt-[72px] px-6">
         <button
           type="button"
-          onClick={() => navigate({ to: "/housekeeping/checklist-dashboard" })}
+          onClick={handleNavigateBack}
           className="inline-flex items-center gap-2 text-white"
           aria-label="Kembali ke Beranda"
         >
@@ -155,6 +168,7 @@ export function ScanQrView() {
       <div className="absolute right-0 bottom-10 left-0 z-20 flex items-center justify-between gap-16 px-[50px]">
         <button
           type="button"
+          onClick={handleFlashlight}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-black shadow-lg"
           aria-label="Flashlight"
         >
@@ -162,6 +176,7 @@ export function ScanQrView() {
         </button>
         <button
           type="button"
+          onClick={handleGallery}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-black shadow-lg"
           aria-label="Galeri"
         >
