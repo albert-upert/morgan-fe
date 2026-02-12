@@ -1,5 +1,5 @@
 import type { MouseEventHandler, ReactNode } from "react";
-import Typography from "@/components/typography/typography";
+import { Typography } from "uper-ui/typography";
 import { cn } from "@/lib/utils";
 
 export type HeaderVariant = "default" | "home";
@@ -54,12 +54,12 @@ export function Header({
   maxWidthClassName,
   className,
 }: HeaderProps) {
-  const resolvedMaxWidth = maxWidthClassName || "max-w-5xl";
+  const resolvedMaxWidth = maxWidthClassName || "max-w-auto";
 
   return (
     <header
       className={cn(
-        "mx-auto max-w-[412px] bg-linear-to-l from-navbar-gradient-end to-background",
+        "max-w-auto bg-linear-to-l from-navbar-gradient-end to-background",
         className
       )}
     >
