@@ -39,15 +39,15 @@ function Layout() {
   return (
     <div
       id="dashboard-layout"
-      className="mx-auto min-h-screen w-full max-w-[412px] bg-background"
+      className="max-w-auto mx-auto min-h-screen w-full bg-background"
     >
       {!isScanPage && (
         <>
           {isHomePage ? (
-            <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] bg-linear-to-l from-navbar-gradient-end to-background">
+            <div className="max-w-auto fixed top-0 right-0 left-0 z-30 mx-auto bg-linear-to-l from-navbar-gradient-end to-background">
               <Header />
               <div className="mx-[24px] border-b border-border" />
-              <div className="mx-auto flex max-w-[412px] items-center justify-between border-b border-border px-[24px] py-[16px]">
+              <div className="max-w-auto mx-auto flex items-center justify-between border-b border-border px-[24px] py-[16px]">
                 <div className="flex items-center gap-3">
                   <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100">
                     <ProfileIcon className="h-6 w-6 text-blue-500" />
@@ -84,7 +84,7 @@ function Layout() {
               </div>
             </div>
           ) : (
-            <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] border-b border-border">
+            <div className="max-w-auto fixed top-0 right-0 left-0 z-30 mx-auto border-b border-border">
               <Header />
             </div>
           )}
