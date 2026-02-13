@@ -30,11 +30,6 @@ function Layout() {
   const isScanPage = pathname.endsWith("/scan");
   const fullName = "Meredita Susanty";
   const subtitle = "Dosen - Universitas Pertamina";
-  const { pathname } = useLocation();
-  const isHomePage = pathname.endsWith("/home");
-  const isScanPage = pathname.endsWith("/scan");
-  const fullName = "Meredita Susanty";
-  const subtitle = "Dosen - Universitas Pertamina";
 
   return (
     <div
