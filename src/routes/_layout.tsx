@@ -79,7 +79,7 @@ function Layout() {
               </div>
             </div>
           ) : (
-            <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] border-b border-border">
+            <div className="max-w-auto fixed top-0 right-0 left-0 z-30 mx-auto border-b border-border">
               <Header />
             </div>
           )}
