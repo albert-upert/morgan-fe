@@ -142,7 +142,7 @@ export default function Navbar({ userType }: NavbarProps) {
                     {user.name}
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="caption-small"
                     className="text-gray-600 capitalize"
                     as="p"
                   >
@@ -186,7 +186,7 @@ export default function Navbar({ userType }: NavbarProps) {
           <Typography variant="body-small" className="text-gray-600" as="p">
             {formattedDate}
           </Typography>
-          <Typography variant="pixie" className="text-gray-600" as="p">
+          <Typography variant="caption-pixie" className="text-gray-600" as="p">
             {formattedTime}
           </Typography>
         </div>
@@ -211,7 +211,7 @@ export default function Navbar({ userType }: NavbarProps) {
                   {user.name}
                 </Typography>
                 <Typography
-                  variant="caption"
+                  variant="caption-small"
                   className="text-gray-600 capitalize"
                   as="p"
                 >
@@ -241,10 +241,10 @@ export default function Navbar({ userType }: NavbarProps) {
 
         {/* Academic Period Info */}
         <div className="flex flex-col gap-1">
-          <Typography variant="caption" className="text-gray-600" as="p">
+          <Typography variant="caption-small" className="text-gray-600" as="p">
             Periode Akademik: 2024 - 2025
           </Typography>
-          <Typography variant="pixie" className="text-gray-600" as="p">
+          <Typography variant="caption-pixie" className="text-gray-600" as="p">
             (Admin - Universitas Pertamina)
           </Typography>
         </div>

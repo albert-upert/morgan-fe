@@ -216,7 +216,7 @@ export default function Sidebar({
           <div className="flex flex-col items-center gap-0.5">
             {/* Text */}
             <Typography
-              variant="caption"
+              variant="caption-small"
               className="text-center text-accent"
               as="p"
             >
@@ -374,7 +374,7 @@ export default function Sidebar({
       {/* Footer */}
       {!isCollapsed && (
         <div className="border-t border-r border-border bg-white px-[6px] py-10">
-          <Typography variant="caption" className="text-center" as="p">
+          <Typography variant="caption-small" className="text-center" as="p">
             Copyright © 2025 Universitas Pertamina.
             <br />
             All Rights Reserved.

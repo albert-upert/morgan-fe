@@ -380,7 +380,7 @@ export function CreateCourseView({ mode = "create" }: CreateCourseViewProps) {
                   onChange={(e) => setSemester(e.target.value)}
                   type="number"
                 />
-                <Typography variant="caption" className="text-muted-foreground">
+                <Typography variant="caption-small" className="text-muted-foreground">
                   Semester harus pada rentang 1-8
                 </Typography>
               </div>
