@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeftIcon } from "uper-ui/icon";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
-import { FlashlightIcon, GalleryIcon } from "@/components/icon";
+// import { FlashlightIcon, GalleryIcon } from "uper-ui/icon";
 
 export function ScanQrView() {
   const navigate = useNavigate();
@@ -147,7 +147,7 @@ export function ScanQrView() {
             Pindai QR untuk melihat detail aset.
           </Typography>
           {cameraError && (
-            <Typography variant="pixie" className="mt-2 text-white/80">
+            <Typography variant="caption-pixie" className="mt-2 text-white/80">
               {cameraError}
             </Typography>
           )}
@@ -172,7 +172,7 @@ export function ScanQrView() {
           className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-black shadow-lg"
           aria-label="Flashlight"
         >
-          <FlashlightIcon className="h-10 w-10" color="currentColor" />
+          {/* <FlashlightIcon className="h-10 w-10" color="currentColor" /> */}
         </button>
         <button
           type="button"
@@ -180,7 +180,7 @@ export function ScanQrView() {
           className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-black shadow-lg"
           aria-label="Galeri"
         >
-          <GalleryIcon className="h-10 w-10" color="currentColor" />
+          {/* <GalleryIcon className="h-10 w-10" color="currentColor" /> */}
         </button>
       </div>
     </div>

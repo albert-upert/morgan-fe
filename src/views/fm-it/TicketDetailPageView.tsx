@@ -182,7 +182,7 @@ export function TicketDetailView() {
               <div className="flex flex-col gap-2">
                 <div className="flex flex-row items-center gap-3">
                   <NoteIcon className="h-6 w-6" color="red" />
-                  <Typography variant="caption-bold">
+                  <Typography variant="caption-small-bold">
                     Nomor Tiket:
                   </Typography>{" "}
                   {report.id}
@@ -190,25 +190,27 @@ export function TicketDetailView() {
 
                 <div className="flex flex-row items-center gap-3">
                   <BuildingIcon className="h-6 w-6" color="red" />
-                  <Typography variant="caption-bold">Ruang:</Typography>{" "}
+                  <Typography variant="caption-small-bold">
+                    Ruang:
+                  </Typography>{" "}
                   {report.room} - {report.building}
                 </div>
 
                 <div className="flex flex-row items-center gap-3">
                   <CautionIcon className="h-6 w-6" color="red" />
-                  <Typography variant="caption-bold">Aset:</Typography>
+                  <Typography variant="caption-small-bold">Aset:</Typography>
                   {report.assets.join(", ")}
                 </div>
 
                 <div className="flex flex-row items-center gap-3">
                   <ScheduleIcon className="h-6 w-6" color="red" />
-                  <Typography variant="caption-bold">Tanggal:</Typography>
+                  <Typography variant="caption-small-bold">Tanggal:</Typography>
                   {report.date} | {report.time}
                 </div>
 
                 <div className="flex flex-row items-center gap-3">
                   <RegistrationIcon className="h-6 w-6" color="red" />
-                  <Typography variant="caption-bold">Pelapor:</Typography>
+                  <Typography variant="caption-small-bold">Pelapor:</Typography>
                   {report.reporter} ({report.reporterRole})
                 </div>
 
@@ -289,13 +291,13 @@ export function TicketDetailView() {
           <div className="flex flex-col gap-2">
             <div className="flex flex-row items-center gap-3">
               <InfoIcon className="h-6 w-6" />
-              <Typography variant="caption-bold">Posisi Anda:</Typography>
+              <Typography variant="caption-small-bold">Posisi Anda:</Typography>
               {userLocation}
             </div>
 
             <div className="flex flex-row items-center gap-3">
               <ClockIcon className="h-6 w-6" />
-              <Typography variant="caption-bold">
+              <Typography variant="caption-small-bold">
                 Estimasi Perjalanan:
               </Typography>
               - 5 Menit
@@ -343,18 +345,18 @@ export function TicketDetailView() {
                   {/* Time */}
                   <div className="flex w-15 flex-col pt-1">
                     <Typography
-                      variant="pixie-bold"
+                      variant="caption-pixie-bold"
                       className="font-bold text-gray-900"
                     >
                       {formatTime(item.timestamp)}
                     </Typography>
                     <Typography
-                      variant="pixie"
+                      variant="caption-pixie"
                       className="text-xs text-gray-500"
                     >
                       {formatDate(item.timestamp)}
                     </Typography>
-                    {/* {!isLastItem && <Typography variant="pixie" className="text-xs text-gray-500 mt-2">0j 2m</Typography>} */}
+                    {/* {!isLastItem && <Typography variant="caption-pixie" className="text-xs text-gray-500 mt-2">0j 2m</Typography>} */}
                   </div>
 
                   {/* TimeLine */}
@@ -380,7 +382,10 @@ export function TicketDetailView() {
                       size="md"
                       rounded="pill"
                     >
-                      <Typography variant="caption" className={colors.text}>
+                      <Typography
+                        variant="caption-small"
+                        className={colors.text}
+                      >
                         {item.status}
                       </Typography>
                     </Tag>

@@ -1,14 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
+} from "uper-ui/dropdown";
 import {
   CaretDownIcon,
   PencilIcon,
@@ -17,9 +17,9 @@ import {
   SortIcon,
   TrashIcon,
   UploadIcon,
-} from "@/components/icon";
-import { Input } from "@/components/input";
-import { Pagination } from "@/components/pagination";
+} from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { Pagination } from "uper-ui/pagination";
 import {
   Table,
   TableBody,
@@ -27,8 +27,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 
 import type { CourseDetail } from "./ViewCourseDialog";
 import { ViewCourseDialog } from "./ViewCourseDialog";
@@ -189,7 +189,7 @@ export function CourseListView() {
   }, []);
 
   const handleDelete = useCallback((course: Course) => {
-    console.log("Delete course:", course);
+    console.warn("Delete course:", course);
   }, []);
 
   return (

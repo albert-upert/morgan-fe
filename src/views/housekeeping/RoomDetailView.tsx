@@ -14,14 +14,14 @@ import {
   BuildingIcon,
   CalendarIcon,
   RegistrationIcon,
-} from "@/components/icon";
+} from "uper-ui/icon";
 
 function StatusBadge({ isReported }: { isReported: boolean }) {
   if (!isReported) return null;
 
   return (
     <span className="inline-flex items-center rounded-full border border-yellow-500 bg-yellow-100 px-2.5 py-0.5">
-      <Typography variant="caption" className="text-gray-900">
+      <Typography variant="caption-small" className="text-gray-900">
         Sudah Dilaporkan
       </Typography>
     </span>
@@ -39,10 +39,10 @@ function InfoRow({ icon: Icon, label, value }: InfoRowProps) {
     <div className="flex items-start gap-2">
       <Icon className="h-5 w-5 flex-shrink-0 text-primary" />
       <div className="flex items-baseline gap-1">
-        <Typography variant="caption-bold" className="text-gray-800">
+        <Typography variant="caption-small-bold" className="text-gray-800">
           {label}:
         </Typography>
-        <Typography variant="caption" className="text-gray-800">
+        <Typography variant="caption-small" className="text-gray-800">
           {value}
         </Typography>
       </div>
@@ -224,7 +224,7 @@ export function RoomDetailView() {
                   />
                   <div className="flex flex-1 items-center justify-between">
                     <Typography
-                      variant="caption"
+                      variant="caption-small"
                       className={
                         asset.isReported ? "text-gray-600" : "text-gray-800"
                       }
@@ -239,7 +239,7 @@ export function RoomDetailView() {
 
             {/* Warning text inside Card */}
             <div className="px-4 py-1">
-              <Typography variant="pixie" className="text-gray-800">
+              <Typography variant="caption-pixie" className="text-gray-800">
                 <span className="font-bold">** Jangan</span> centang aset yang
                 bermasalah / tidak sesuai.
               </Typography>

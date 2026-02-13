@@ -1,22 +1,22 @@
 import type { ReactNode } from "react";
 import { useCallback, useState } from "react";
-import { Button } from "@/components/button";
-import { DatePicker } from "@/components/date-picker";
+import { Button } from "uper-ui/button";
+import { DatePicker } from "uper-ui/date-picker";
 import {
   Dialog,
   DialogBody,
   DialogClose,
   DialogContent,
   DialogFooter,
-} from "@/components/dialog";
+} from "uper-ui/dialog";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
-import { CaretDownIcon } from "@/components/icon";
-import { Typography } from "@/components/typography";
+} from "uper-ui/dropdown";
+import { CaretDownIcon } from "uper-ui/icon";
+import { Typography } from "uper-ui/typography";
 import { CreateConfirmationDialog } from "./CreateConfirmationDialog";
 
 interface CreateEventProps {
@@ -46,7 +46,7 @@ export function CreateEventCalendarDialog({
 
   const [confirmation, setConfirmation] = useState<boolean>(false);
   const handleSave = useCallback(() => {
-    console.log("Tersimpan");
+    console.warn("Tersimpan");
     setOpen(false);
     setConfirmation(true);
   }, []);

@@ -1,13 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import type { ReactNode } from "react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { Checkbox } from "@/components/checkbox";
-import { ArrowLeftIcon } from "@/components/icon";
-import { Input } from "@/components/input";
-import { Switch } from "@/components/switch";
-import { Typography } from "@/components/typography";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { Checkbox } from "uper-ui/checkbox";
+import { ArrowLeftIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { Switch } from "uper-ui/switch";
+import { Typography } from "uper-ui/typography";
 
 interface EventFlag {
   nilai: boolean;

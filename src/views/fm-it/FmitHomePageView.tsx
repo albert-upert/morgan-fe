@@ -25,7 +25,7 @@ export function FmitHomePageView() {
               <Typography variant="body-medium-bold" className="text-white">
                 Lihat dan Ambil Tiket
               </Typography>
-              <Typography variant="caption" className="text-white">
+              <Typography variant="caption-small" className="text-white">
                 Lihat daftar laporan tiket
               </Typography>
             </div>
@@ -47,7 +47,7 @@ export function FmitHomePageView() {
               <Typography variant="body-medium-bold" className="text-white">
                 Tiket Anda
               </Typography>
-              <Typography variant="caption" className="text-white">
+              <Typography variant="caption-small" className="text-white">
                 Lihat detail status tiket yang anda kerjakan
               </Typography>
             </div>
@@ -69,7 +69,7 @@ export function FmitHomePageView() {
               <Typography variant="body-medium-bold" className="text-white">
                 Riwayat Tiket Anda
               </Typography>
-              <Typography variant="caption" className="text-white">
+              <Typography variant="caption-small" className="text-white">
                 Daftar laporan yang pernah anda kerjakan
               </Typography>
             </div>

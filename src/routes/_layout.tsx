@@ -54,7 +54,10 @@ function Layout() {
                     >
                       {fullName}
                     </Typography>
-                    <Typography variant="pixie" className="text-gray-800">
+                    <Typography
+                      variant="caption-pixie"
+                      className="text-gray-800"
+                    >
                       ({subtitle})
                     </Typography>
                   </div>

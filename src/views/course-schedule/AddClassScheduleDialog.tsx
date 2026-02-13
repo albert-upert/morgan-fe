@@ -1,22 +1,22 @@
 import { useCallback, useState } from "react";
 
-import { Button } from "@/components/button";
-import { TimePicker } from "@/components/date-picker";
+import { Button } from "uper-ui/button";
+import { TimePicker } from "uper-ui/date-picker";
 import {
   Dialog,
   DialogBody,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
+} from "uper-ui/dialog";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
-import { CaretDownIcon } from "@/components/icon";
-import { Typography } from "@/components/typography";
+} from "uper-ui/dropdown";
+import { CaretDownIcon } from "uper-ui/icon";
+import { Typography } from "uper-ui/typography";
 
 export interface ClassSchedule {
   id: number;

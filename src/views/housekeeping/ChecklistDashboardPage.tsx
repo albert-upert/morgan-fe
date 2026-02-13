@@ -1,0 +1,288 @@
+import { Link } from "@tanstack/react-router";
+import { useMemo } from "react";
+import { Button } from "uper-ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "uper-ui/card";
+import { ArrowLeftIcon, BuildingIcon, ProfileIcon } from "uper-ui/icon";
+import { Tag } from "uper-ui/tags";
+import { Typography } from "uper-ui/typography";
+
+interface Room {
+  id: string;
+  code: string;
+  name: string;
+  status: "not-checked" | "checked";
+}
+
+interface RoomListData {
+  workArea: string;
+  janitor: string;
+  totalRooms: number;
+  completedRooms: number;
+  rooms: Array<Room>;
+}
+
+type RoomStatusLabelProps = {
+  status: Room["status"];
+};
+
+function RoomStatusLabel({ status }: RoomStatusLabelProps) {
+  const isChecked = status === "checked";
+
+  return (
+    <Tag
+      type="monochrome"
+      rounded="pill"
+      className={`inline-flex items-center px-3 py-1 ${
+        isChecked ? "bg-green-500" : "bg-red-500"
+      }`}
+    >
+      <Typography
+        variant="caption-small"
+        className={isChecked ? "text-gray-900" : "text-white"}
+      >
+        {isChecked ? "Sudah Dicek" : "Belum Dicek"}
+      </Typography>
+    </Tag>
+  );
+}
+
+type RoomItemProps = {
+  room: Room;
+};
+
+function RoomItem({ room }: RoomItemProps) {
+  const isChecked = room.status === "checked";
+
+  return (
+    <div
+      className={`flex items-center justify-between gap-4 rounded-xl border p-3 ${
+        isChecked
+          ? "border-green-500 bg-linear-to-r from-green-400 to-white"
+          : "border-red-500 bg-linear-to-r from-red-100 to-white"
+      }`}
+    >
+      <div className="flex items-center gap-3">
+        <div className="flex h-8 w-8 items-center justify-center">
+          <BuildingIcon className="h-6 w-6 text-gray-800" />
+        </div>
+        <div className="flex flex-col">
+          <Typography variant="body-small-semibold" className="text-gray-900">
+            {room.code} - {room.name}
+          </Typography>
+        </div>
+      </div>
+      <RoomStatusLabel status={room.status} />
+    </div>
+  );
+}
+
+// Mock data untuk sementara
+const MOCK_ROOM_DATA: RoomListData = {
+  workArea: "Griya Legita Lt. 2, Lt. 3, Lt. 4",
+  janitor: "Agus Bagus",
+  totalRooms: 7,
+  completedRooms: 4,
+  rooms: [
+    { id: "1", code: "2402", name: "Griya Legita", status: "not-checked" },
+    { id: "2", code: "2403", name: "Griya Legita", status: "not-checked" },
+    { id: "3", code: "2404", name: "Griya Legita", status: "not-checked" },
+    { id: "4", code: "2301", name: "Griya Legita", status: "checked" },
+    { id: "5", code: "2302", name: "Griya Legita", status: "checked" },
+    { id: "6", code: "2303", name: "Griya Legita", status: "checked" },
+    { id: "7", code: "2304", name: "Griya Legita", status: "checked" },
+    { id: "8", code: "2305", name: "Griya Legita", status: "checked" },
+    { id: "9", code: "2306", name: "Griya Legita", status: "checked" },
+    { id: "10", code: "2307", name: "Griya Legita", status: "checked" },
+  ],
+};
+
+export function RoomListView() {
+  const data = MOCK_ROOM_DATA;
+
+  const progressPercentage = (data.completedRooms / data.totalRooms) * 100;
+
+  const sortedRooms = useMemo(() => {
+    const unchecked = data.rooms.filter(
+      (room) => room.status === "not-checked"
+    );
+    const checked = data.rooms.filter((room) => room.status === "checked");
+    return [...unchecked, ...checked];
+  }, [data.rooms]);
+
+  return (
+    <div className="flex flex-col gap-4">
+      {/* Header */}
+      <div className="flex flex-col gap-4">
+        <Link
+          to="/housekeeping/home"
+          className="inline-flex w-fit items-start gap-2 text-red-500"
+          aria-label="Kembali ke Beranda"
+        >
+          <ArrowLeftIcon className="h-5 w-5" color="currentColor" />
+          <Typography variant="body-small" className="text-red-500">
+            Beranda
+          </Typography>
+        </Link>
+
+        <Typography variant="h4-semibold" className="text-gray-900">
+          Daftar Ruangan
+        </Typography>
+      </div>
+
+      {/* Info Card */}
+      <Card className="border border-gray-400 bg-gray-100 p-2" elevation="none">
+        <CardContent className="flex flex-col gap-4 p-2">
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100">
+              <ProfileIcon className="h-5 w-5 text-blue-500" />
+            </div>
+
+            <Typography
+              variant="body-medium-semibold"
+              className="text-gray-800"
+            >
+              {data.janitor}
+            </Typography>
+
+            <Tag
+              color="red"
+              type="monochrome"
+              rounded="pill"
+              className="ml-auto bg-red-50 px-3 py-1"
+            >
+              <Typography variant="caption-small" className="text-red-600">
+                Janitor
+              </Typography>
+            </Tag>
+          </div>
+
+          <div className="flex items-center justify-start gap-2">
+            <BuildingIcon className="h-6 w-6" />
+            <div className="flex items-baseline gap-1">
+              <Typography
+                variant="body-small-semibold"
+                className="text-gray-800"
+              >
+                Area Tanggung Jawab
+              </Typography>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <Tag
+              type="with-border"
+              className="w-full justify-between rounded-sm border-gray-400 bg-gray-200 px-2 py-1"
+            >
+              <Typography variant="caption-small">
+                Gedung Griya Legita
+              </Typography>
+              <div className="flex gap-1">
+                <Tag
+                  type="with-border"
+                  className="rounded-sm border-gray-400 bg-gray-300 px-1 py-1"
+                >
+                  <Typography variant="caption-pixie-semibold">
+                    Lt. 2
+                  </Typography>
+                </Tag>
+                <Tag
+                  type="with-border"
+                  className="rounded-sm border-gray-400 bg-gray-300 px-1 py-1"
+                >
+                  <Typography variant="caption-pixie-semibold">
+                    Lt. 3
+                  </Typography>
+                </Tag>
+                <Tag
+                  type="with-border"
+                  className="rounded-sm border-gray-400 bg-gray-300 px-1 py-1"
+                >
+                  <Typography variant="caption-pixie-semibold">
+                    Lt. 4
+                  </Typography>
+                </Tag>
+              </div>
+            </Tag>
+
+            <Tag
+              type="with-border"
+              className="w-full justify-between rounded-sm border-gray-400 bg-gray-200 px-2 py-1"
+            >
+              <Typography variant="caption-small">Gedung Rektorat</Typography>
+              <div className="flex gap-1">
+                <Tag
+                  type="with-border"
+                  className="rounded-sm border-gray-400 bg-gray-300 px-1 py-1"
+                >
+                  <Typography variant="caption-pixie-semibold">
+                    Lt. 1
+                  </Typography>
+                </Tag>
+              </div>
+            </Tag>
+          </div>
+
+          <div className="border-t border-gray-400">
+            <div className="flex items-center justify-between">
+              <Typography
+                variant="body-small-semibold"
+                className="pt-2 pb-1 text-gray-800"
+              >
+                Progres Harian:
+              </Typography>
+              <Typography variant="caption-small" className="text-gray-800">
+                {data.completedRooms}/{data.totalRooms} Ruangan Selesai
+              </Typography>
+            </div>
+            <div className="h-2 w-full overflow-hidden rounded-full bg-gray-300">
+              <div
+                className="h-full bg-blue-500 transition-all duration-300"
+                style={{ width: `${progressPercentage}%` }}
+              />
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="gap-1 bg-red-400 px-0 py-5">
+        <CardHeader>
+          <CardTitle>
+            <Typography variant="body-large-semibold" className="text-white">
+              Pindai QR Ruangan
+            </Typography>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Typography variant="caption-small" className="text-white">
+            Pindai kode QR yang tertera pada ruangan
+          </Typography>
+        </CardContent>
+        <CardFooter>
+          <Link to="/housekeeping/scan" className="w-full">
+            <Button
+              variant="primary"
+              className="w-full bg-white hover:bg-gray-100"
+            >
+              <Typography variant="body-medium" className="text-red-500">
+                Pindai Kode QR
+              </Typography>
+            </Button>
+          </Link>
+        </CardFooter>
+      </Card>
+
+      {/* Room List */}
+      <div className="space-y-3 pb-4">
+        {sortedRooms.map((room) => (
+          <RoomItem key={room.id} room={room} />
+        ))}
+      </div>
+    </div>
+  );
+}

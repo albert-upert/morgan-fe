@@ -80,17 +80,23 @@ export function TicketListView() {
               <div className="flex flex-col gap-2">
                 <div className="flex flex-row items-center gap-3">
                   <RegistrationIcon className="h-6 w-6" color="red" />
-                  <Typography variant="caption-bold">FM/IT:</Typography> {name}
+                  <Typography variant="caption-small-bold">
+                    FM/IT:
+                  </Typography>{" "}
+                  {name}
                 </div>
 
                 <div className="flex flex-row items-center gap-3">
                   <ClockIcon className="h-6 w-6" color="red" />
-                  <Typography variant="caption-bold">Shift:</Typography> {shift}
+                  <Typography variant="caption-small-bold">
+                    Shift:
+                  </Typography>{" "}
+                  {shift}
                 </div>
 
                 <div className="flex flex-row items-center gap-3">
                   <BuildingIcon className="h-6 w-6" color="red" />
-                  <Typography variant="caption-bold">
+                  <Typography variant="caption-small-bold">
                     Area Kerja:
                   </Typography>{" "}
                   {area}
@@ -133,19 +139,19 @@ export function TicketListView() {
                   </div>
                   <div className="flex flex-row items-center gap-3">
                     <CautionIcon className="h-6 w-6" />
-                    <Typography variant="caption-bold">
+                    <Typography variant="caption-small-bold">
                       {report.assets.join(", ")}
                     </Typography>
                   </div>
                   <div className="flex flex-row items-center gap-3">
                     <BuildingIcon className="h-6 w-6" />
-                    <Typography variant="caption-bold">
+                    <Typography variant="caption-small-bold">
                       {report.room} - {report.building}
                     </Typography>
                   </div>
                   <div className="flex flex-row items-center gap-3">
                     <ClockIcon className="h-6 w-6" />
-                    <Typography variant="caption-bold">
+                    <Typography variant="caption-small-bold">
                       {report.date} | {report.time}
                     </Typography>
                   </div>

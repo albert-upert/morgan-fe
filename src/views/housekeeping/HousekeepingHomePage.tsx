@@ -1,26 +1,27 @@
 import { Link } from "@tanstack/react-router";
-import { DashboardIcon, MailIcon } from "uper-ui/icon";
+import type { ReactNode } from "react";
+import { MailIcon } from "uper-ui/icon";
 import { Typography } from "uper-ui/typography";
 
 interface ActionLinkProps {
   title: string;
   description: string;
-  icon: React.ReactNode;
+  icon: ReactNode;
   href?: string;
 }
 
 function ActionLink({ title, description, icon, href = "#" }: ActionLinkProps) {
   return (
     <Link to={href} className="block">
-      <div className="flex items-center gap-3 rounded-2xl bg-primary p-4 text-white">
+      <div className="flex items-center gap-3 rounded-2xl bg-red-400 p-4 text-white">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl">
           {icon}
         </div>
         <div className="flex flex-col">
-          <Typography variant="body-medium-bold" className="text-white">
+          <Typography variant="body-large-semibold" className="text-white">
             {title}
           </Typography>
-          <Typography variant="caption" className="text-white">
+          <Typography variant="caption-small" className="text-white">
             {description}
           </Typography>
         </div>
@@ -33,10 +34,10 @@ export function HousekeepingHomePage() {
   const name = "Agus";
 
   return (
-    <div className="">
+    <div className="flex flex-col gap-8">
       {/* Greeting */}
-      <div className="mt-[90px] mb-[32px]">
-        <Typography variant="body-medium" className="text-gray-800">
+      <div className="mt-28">
+        <Typography variant="body-medium-semibold" className="text-gray-800">
           Selamat Datang, {name}!
         </Typography>
       </div>
@@ -44,9 +45,9 @@ export function HousekeepingHomePage() {
       {/* Buttons */}
       <div className="flex flex-col gap-4">
         <ActionLink
-          title="Lihat Daftar Ruangan"
-          description="Daftar ruangan yang harus di cek"
-          icon={<DashboardIcon className="h-10 w-10" color="white" />}
+          title="Daftar Ruangan"
+          description="Lihat daftar ruangan yang harus di cek"
+          icon={<MailIcon className="h-10 w-10" color="white" />}
           href="/housekeeping/checklist-dashboard"
         />
         <ActionLink

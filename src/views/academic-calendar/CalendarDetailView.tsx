@@ -1,13 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
+} from "uper-ui/dropdown";
 import {
   CaretDownIcon,
   CaretLeftIcon,
@@ -15,7 +15,7 @@ import {
   SyncIcon,
   TrashIcon,
   UploadIcon,
-} from "@/components/icon";
+} from "uper-ui/icon";
 import {
   TableBody,
   TableCell,
@@ -25,9 +25,9 @@ import {
   TableHeader,
   TableRow,
   TableWithCustomHeader,
-} from "@/components/table";
-import { Tag } from "@/components/tags";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Tag } from "uper-ui/tags";
+import { Typography } from "uper-ui/typography";
 import { CreateEventCalendarDialog } from "./CreateEventCalendarDialog";
 import { DeleteEventCalendarDialog } from "./DeleteEventCalendarDialog";
 
@@ -83,8 +83,8 @@ export function CalendarDetailView() {
   const [selectedEvent, setSelectedEvent] = useState<number | null>(null);
 
   const handleCreate = useCallback(
-    (eventId: number | null, mode: "create" | "edit") => {
-      setMode(mode);
+    (eventId: number | null, nextMode: "create" | "edit") => {
+      setMode(nextMode);
       setCreate(true);
       setSelectedEvent(eventId);
     },

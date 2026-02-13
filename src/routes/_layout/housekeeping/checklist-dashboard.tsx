@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getUser } from "@/lib/auth";
-import { RoomListView } from "@/views/housekeeping/RoomListView";
+import { RoomListView } from "@/views/housekeeping/ChecklistDashboardPage";
 
 export const Route = createFileRoute(
   "/_layout/housekeeping/checklist-dashboard"

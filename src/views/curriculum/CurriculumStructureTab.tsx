@@ -1,14 +1,14 @@
 import { useCallback, useState } from "react";
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
-import { CaretDownIcon, CaretUpIcon } from "@/components/icon";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/tabs";
-import { Typography } from "@/components/typography";
+} from "uper-ui/dropdown";
+import { CaretDownIcon, CaretUpIcon } from "uper-ui/icon";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "uper-ui/tabs";
+import { Typography } from "uper-ui/typography";
 
 interface Course {
   id: number;

@@ -1,23 +1,23 @@
 import { Link, useParams } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { DatePicker } from "@/components/date-picker";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { DatePicker } from "uper-ui/date-picker";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
+} from "uper-ui/dropdown";
 import {
   CaretDownIcon,
   CaretLeftIcon,
   CourseIcon,
   PencilIcon,
   TrashIcon,
-} from "@/components/icon";
-import { Input } from "@/components/input";
+} from "uper-ui/icon";
+import { Input } from "uper-ui/input";
 import {
   Table,
   TableBody,
@@ -25,8 +25,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 
 import type { ClassSchedule as ClassScheduleData } from "./AddClassScheduleDialog";
 import { AddClassScheduleDialog } from "./AddClassScheduleDialog";
@@ -129,7 +129,7 @@ export function CreateCourseScheduleView({
   }, []);
 
   const handleEditInstructor = useCallback((instructor: Instructor) => {
-    console.log("Edit instructor:", instructor);
+    console.warn("Edit instructor:", instructor);
   }, []);
 
   const handleDeleteInstructor = useCallback((id: number) => {
@@ -157,7 +157,7 @@ export function CreateCourseScheduleView({
   );
 
   const handleEditClassSchedule = useCallback((schedule: ClassSchedule) => {
-    console.log("Edit schedule:", schedule);
+    console.warn("Edit schedule:", schedule);
   }, []);
 
   const handleDeleteClassSchedule = useCallback((id: number) => {
@@ -174,11 +174,11 @@ export function CreateCourseScheduleView({
   }, []);
 
   const handleCancel = useCallback(() => {
-    console.log("Cancel");
+    console.warn("Cancel");
   }, []);
 
   const handleSave = useCallback(() => {
-    console.log("Save course schedule", {
+    console.warn("Save course schedule", {
       selectedPeriod,
       selectedLectureType,
       selectedStudyProgram,

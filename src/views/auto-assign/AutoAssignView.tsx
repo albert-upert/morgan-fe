@@ -1,16 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
-import { CaretDownIcon, ExternalLinkIcon } from "@/components/icon";
-import { Input } from "@/components/input";
+} from "uper-ui/dropdown";
+import { CaretDownIcon, ExternalLinkIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
 import {
   Table,
   TableBody,
@@ -18,8 +18,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 
 const programOptions = [
   { label: "Reguler", value: "regular" },
@@ -80,7 +80,7 @@ export function AutoAssignView() {
 
   const handleBack = useCallback(() => {
     // Handle back action
-    console.log("Back clicked");
+    console.warn("Back clicked");
   }, []);
 
   const handleAssign = useCallback(() => {
@@ -92,7 +92,7 @@ export function AutoAssignView() {
         batch: selectedBatch,
       };
       setAssignedData([...assignedData, newItem]);
-      console.log("Assign clicked", {
+      console.warn("Assign clicked", {
         program: selectedProgram,
         period: selectedPeriod,
         batch: selectedBatch,
@@ -101,7 +101,7 @@ export function AutoAssignView() {
   }, [selectedProgram, selectedPeriod, selectedBatch, assignedData]);
 
   const handleViewClassList = useCallback(() => {
-    console.log("View class list clicked");
+    console.warn("View class list clicked");
   }, []);
 
   return (

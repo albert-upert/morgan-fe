@@ -144,25 +144,25 @@ export function TicketListModal({
                   </div>
                   <div className="flex flex-row items-center gap-3">
                     <CautionIcon className="h-6 w-6" />
-                    <Typography variant="caption-bold">
+                    <Typography variant="caption-small-bold">
                       {reportDetail.assets.join(", ")}
                     </Typography>
                   </div>
                   <div className="flex flex-row items-center gap-3">
                     <BuildingIcon className="h-6 w-6" />
-                    <Typography variant="caption-bold">
+                    <Typography variant="caption-small-bold">
                       {reportDetail.room} - {reportDetail.building}
                     </Typography>
                   </div>
                   <div className="flex flex-row items-center gap-3">
                     <ClockIcon className="h-6 w-6" />
-                    <Typography variant="caption-bold">
+                    <Typography variant="caption-small-bold">
                       {reportDetail.date} | {reportDetail.time}
                     </Typography>
                   </div>
                   <div className="flex flex-row items-center gap-3">
                     <RegistrationIcon className="h-6 w-6" />
-                    <Typography variant="caption-bold">
+                    <Typography variant="caption-small-bold">
                       Pelapor: {reportDetail.reporter} (
                       {reportDetail.reporterRole})
                     </Typography>
