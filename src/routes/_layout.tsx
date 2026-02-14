@@ -5,6 +5,7 @@ import {
   useLocation,
 } from "@tanstack/react-router";
 import { NotificationIcon, ProfileIcon, SettingIcon } from "uper-ui/icon";
+import { Toaster } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
 import { Header } from "@/components/header";
 import { getUser } from "@/lib/auth";
@@ -96,6 +97,7 @@ function Layout() {
       >
         <Outlet />
       </main>
+      <Toaster />
     </div>
   );
 }

@@ -49,7 +49,7 @@ import { Route as LayoutAcademicCalendarIdRouteImport } from './routes/_layout/a
 import { Route as LayoutConfigurationUserManagementIndexRouteImport } from './routes/_layout/configuration/user-management/index'
 import { Route as LayoutConfigurationAcademicIndexRouteImport } from './routes/_layout/configuration/academic/index'
 import { Route as LayoutPetsIdEditRouteImport } from './routes/_layout/pets/$id.edit'
-import { Route as LayoutHousekeepingRoomDetailRoomIdRouteImport } from './routes/_layout/housekeeping/room-detail.$roomId'
+import { Route as LayoutHousekeepingRoomChecklistRoomIdRouteImport } from './routes/_layout/housekeeping/room-checklist.$roomId'
 import { Route as LayoutFmItTicketDetailIdRouteImport } from './routes/_layout/fm-it/ticket-detail.$id'
 import { Route as LayoutCurriculumEquivalenceUploadResultRouteImport } from './routes/_layout/curriculum/equivalence/upload-result'
 import { Route as LayoutCurriculumEquivalenceUploadRouteImport } from './routes/_layout/curriculum/equivalence/upload'
@@ -292,10 +292,10 @@ const LayoutPetsIdEditRoute = LayoutPetsIdEditRouteImport.update({
   path: '/pets/$id/edit',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutHousekeepingRoomDetailRoomIdRoute =
-  LayoutHousekeepingRoomDetailRoomIdRouteImport.update({
-    id: '/housekeeping/room-detail/$roomId',
-    path: '/housekeeping/room-detail/$roomId',
+const LayoutHousekeepingRoomChecklistRoomIdRoute =
+  LayoutHousekeepingRoomChecklistRoomIdRouteImport.update({
+    id: '/housekeeping/room-checklist/$roomId',
+    path: '/housekeeping/room-checklist/$roomId',
     getParentRoute: () => LayoutRoute,
   } as any)
 const LayoutFmItTicketDetailIdRoute =
@@ -459,7 +459,7 @@ export interface FileRoutesByFullPath {
   '/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
   '/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
-  '/housekeeping/room-detail/$roomId': typeof LayoutHousekeepingRoomDetailRoomIdRoute
+  '/housekeeping/room-checklist/$roomId': typeof LayoutHousekeepingRoomChecklistRoomIdRoute
   '/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/configuration/academic': typeof LayoutConfigurationAcademicIndexRoute
   '/configuration/user-management': typeof LayoutConfigurationUserManagementIndexRoute
@@ -520,7 +520,7 @@ export interface FileRoutesByTo {
   '/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
   '/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
-  '/housekeeping/room-detail/$roomId': typeof LayoutHousekeepingRoomDetailRoomIdRoute
+  '/housekeeping/room-checklist/$roomId': typeof LayoutHousekeepingRoomChecklistRoomIdRoute
   '/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/configuration/academic': typeof LayoutConfigurationAcademicIndexRoute
   '/configuration/user-management': typeof LayoutConfigurationUserManagementIndexRoute
@@ -583,7 +583,7 @@ export interface FileRoutesById {
   '/_layout/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/_layout/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
   '/_layout/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
-  '/_layout/housekeeping/room-detail/$roomId': typeof LayoutHousekeepingRoomDetailRoomIdRoute
+  '/_layout/housekeeping/room-checklist/$roomId': typeof LayoutHousekeepingRoomChecklistRoomIdRoute
   '/_layout/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/_layout/configuration/academic/': typeof LayoutConfigurationAcademicIndexRoute
   '/_layout/configuration/user-management/': typeof LayoutConfigurationUserManagementIndexRoute
@@ -646,7 +646,7 @@ export interface FileRouteTypes {
     | '/curriculum/equivalence/upload'
     | '/curriculum/equivalence/upload-result'
     | '/fm-it/ticket-detail/$id'
-    | '/housekeeping/room-detail/$roomId'
+    | '/housekeeping/room-checklist/$roomId'
     | '/pets/$id/edit'
     | '/configuration/academic'
     | '/configuration/user-management'
@@ -707,7 +707,7 @@ export interface FileRouteTypes {
     | '/curriculum/equivalence/upload'
     | '/curriculum/equivalence/upload-result'
     | '/fm-it/ticket-detail/$id'
-    | '/housekeeping/room-detail/$roomId'
+    | '/housekeeping/room-checklist/$roomId'
     | '/pets/$id/edit'
     | '/configuration/academic'
     | '/configuration/user-management'
@@ -769,7 +769,7 @@ export interface FileRouteTypes {
     | '/_layout/curriculum/equivalence/upload'
     | '/_layout/curriculum/equivalence/upload-result'
     | '/_layout/fm-it/ticket-detail/$id'
-    | '/_layout/housekeeping/room-detail/$roomId'
+    | '/_layout/housekeeping/room-checklist/$roomId'
     | '/_layout/pets/$id/edit'
     | '/_layout/configuration/academic/'
     | '/_layout/configuration/user-management/'
@@ -1070,11 +1070,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPetsIdEditRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/housekeeping/room-detail/$roomId': {
-      id: '/_layout/housekeeping/room-detail/$roomId'
-      path: '/housekeeping/room-detail/$roomId'
-      fullPath: '/housekeeping/room-detail/$roomId'
-      preLoaderRoute: typeof LayoutHousekeepingRoomDetailRoomIdRouteImport
+    '/_layout/housekeeping/room-checklist/$roomId': {
+      id: '/_layout/housekeeping/room-checklist/$roomId'
+      path: '/housekeeping/room-checklist/$roomId'
+      fullPath: '/housekeeping/room-checklist/$roomId'
+      preLoaderRoute: typeof LayoutHousekeepingRoomChecklistRoomIdRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/fm-it/ticket-detail/$id': {
@@ -1260,7 +1260,7 @@ interface LayoutRouteChildren {
   LayoutCurriculumEquivalenceUploadRoute: typeof LayoutCurriculumEquivalenceUploadRoute
   LayoutCurriculumEquivalenceUploadResultRoute: typeof LayoutCurriculumEquivalenceUploadResultRoute
   LayoutFmItTicketDetailIdRoute: typeof LayoutFmItTicketDetailIdRoute
-  LayoutHousekeepingRoomDetailRoomIdRoute: typeof LayoutHousekeepingRoomDetailRoomIdRoute
+  LayoutHousekeepingRoomChecklistRoomIdRoute: typeof LayoutHousekeepingRoomChecklistRoomIdRoute
   LayoutPetsIdEditRoute: typeof LayoutPetsIdEditRoute
   LayoutConfigurationAcademicIndexRoute: typeof LayoutConfigurationAcademicIndexRoute
   LayoutConfigurationUserManagementIndexRoute: typeof LayoutConfigurationUserManagementIndexRoute
@@ -1333,8 +1333,8 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCurriculumEquivalenceUploadResultRoute:
     LayoutCurriculumEquivalenceUploadResultRoute,
   LayoutFmItTicketDetailIdRoute: LayoutFmItTicketDetailIdRoute,
-  LayoutHousekeepingRoomDetailRoomIdRoute:
-    LayoutHousekeepingRoomDetailRoomIdRoute,
+  LayoutHousekeepingRoomChecklistRoomIdRoute:
+    LayoutHousekeepingRoomChecklistRoomIdRoute,
   LayoutPetsIdEditRoute: LayoutPetsIdEditRoute,
   LayoutConfigurationAcademicIndexRoute: LayoutConfigurationAcademicIndexRoute,
   LayoutConfigurationUserManagementIndexRoute:

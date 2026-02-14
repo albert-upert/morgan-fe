@@ -1,9 +1,9 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getUser } from "@/lib/auth";
-import { RoomDetailView } from "@/views/housekeeping/RoomDetailView";
+import { RoomDetailView } from "@/views/housekeeping/RoomChecklistPage";
 
 export const Route = createFileRoute(
-  "/_layout/housekeeping/room-detail/$roomId"
+  "/_layout/housekeeping/room-checklist/$roomId"
 )({
   beforeLoad: async ({ location, context }) => {
     const user = await getUser(context.queryClient);

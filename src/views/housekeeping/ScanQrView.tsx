@@ -69,7 +69,7 @@ export function ScanQrView() {
 
             // Navigate to room detail page dengan room ID dari QR code
             navigate({
-              to: "/housekeeping/room-detail/$roomId",
+              to: "/housekeeping/room-checklist/$roomId",
               params: { roomId: qrText || "0001" },
             });
           } else if (err && !(err instanceof NotFoundException)) {
