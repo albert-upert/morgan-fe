@@ -9,6 +9,7 @@ import {
   BuildingIcon,
   CalendarIcon,
   ControlIcon,
+  DispensationIcon,
   ErrorIcon,
   SearchIcon,
 } from "uper-ui/icon";
@@ -551,14 +552,14 @@ export function RoomDetailView() {
                 return (
                   <div
                     key={asset.id}
-                    className={`flex flex-col rounded-xl border px-2 py-1 ${
+                    className={`flex flex-col rounded-xl border ${
                       isReported
-                        ? "border-gray-300 bg-white"
+                        ? "border-gray-300 bg-white px-2 py-2"
                         : isReporting
-                          ? "border-red-300 bg-red-50"
+                          ? "border-red-300 bg-red-50 px-2 py-1"
                           : isSelected
-                            ? "border-green-300 bg-green-50"
-                            : "border-gray-300 bg-white"
+                            ? "border-green-300 bg-green-50 px-2 py-1"
+                            : "border-gray-300 bg-white px-2 py-1"
                     }`}
                   >
                     <div className="flex items-center justify-between gap-3">
@@ -721,6 +722,9 @@ export function RoomDetailView() {
                     className="w-full"
                     onClick={isComplete ? handleSubmit : undefined}
                   >
+                    {isComplete && (
+                      <DispensationIcon className="h-5 w-5 text-white" />
+                    )}
                     <Typography
                       variant="body-medium"
                       className={isComplete ? "text-white" : "text-gray-600"}
