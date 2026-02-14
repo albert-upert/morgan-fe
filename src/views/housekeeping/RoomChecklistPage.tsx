@@ -419,7 +419,10 @@ export function RoomDetailView() {
       {/* Page content */}
       <div className="flex flex-col gap-4">
         {/* Room info card */}
-        <Card className="flex flex-col gap-3 border border-gray-300 bg-gray-100 px-4 py-3">
+        <Card
+          className="flex flex-col gap-3 border border-gray-300 bg-gray-100 px-4 py-3"
+          elevation="none"
+        >
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-col gap-1">
               <Typography variant="h5" className="text-gray-900">
@@ -450,7 +453,10 @@ export function RoomDetailView() {
         </Card>
 
         {/* Asset list section */}
-        <Card className="flex flex-col gap-3 border border-gray-300 bg-gray-100 py-0">
+        <Card
+          className="flex flex-col gap-3 border border-gray-300 bg-gray-100 py-0"
+          elevation="none"
+        >
           <CardContent className="p-0">
             {/* Asset header */}
             <div className="flex flex-col gap-3 px-4 py-3">
