@@ -80,12 +80,18 @@ export function TicketListView() {
               <div className="flex flex-col gap-2">
                 <div className="flex flex-row items-center gap-3">
                   <RegistrationIcon className="h-6 w-6" color="red" />
-                  <Typography variant="caption-small-bold">FM/IT:</Typography> {name}
+                  <Typography variant="caption-small-bold">
+                    FM/IT:
+                  </Typography>{" "}
+                  {name}
                 </div>
 
                 <div className="flex flex-row items-center gap-3">
                   <ClockIcon className="h-6 w-6" color="red" />
-                  <Typography variant="caption-small-bold">Shift:</Typography> {shift}
+                  <Typography variant="caption-small-bold">
+                    Shift:
+                  </Typography>{" "}
+                  {shift}
                 </div>
 
                 <div className="flex flex-row items-center gap-3">
