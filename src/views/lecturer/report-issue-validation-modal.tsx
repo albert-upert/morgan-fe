@@ -1,11 +1,4 @@
 import { Button } from "uper-ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "uper-ui/dialog";
 import { Typography } from "uper-ui/typography";
 
 export function ReportIssueValidationModal({
@@ -21,62 +14,79 @@ export function ReportIssueValidationModal({
   onConfirm: () => void;
   isSubmitting?: boolean;
 }) {
+  if (!open) return null;
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        side="center"
-        showCloseButton={false}
-        className="w-full p-0 data-[side=center]:w-[calc(100%-48px)] data-[side=center]:max-w-[412px]"
-      >
-        <DialogHeader className="border-b border-border bg-muted px-5 py-[16px]">
-          <DialogTitle className="text-center">
-            <Typography
-              variant="body-medium"
-              className="w-full text-center font-semibold"
-            >
-              Tunggu Sebentar
-            </Typography>
-          </DialogTitle>
-        </DialogHeader>
+    <div className="fixed inset-0 z-9999">
+      <button
+        type="button"
+        className="absolute inset-0 cursor-default bg-black/20"
+        aria-label="Tutup modal"
+        onClick={() => onOpenChange(false)}
+      />
 
-        <div className="px-5 py-[12px]">
-          <Typography
-            variant="body-small"
-            className="text-center text-gray-800"
-          >
-            Apakah anda yakin sudah mengisi semua kendala aset dengan benar?
-          </Typography>
+      <div className="absolute inset-0 flex items-center justify-center px-6">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="report-issue-validation-title"
+          aria-describedby="report-issue-validation-desc"
+          className="w-full max-w-[412px] overflow-hidden rounded-xl bg-white shadow-lg"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="border-b border-border bg-muted px-5 py-[16px]">
+            <div id="report-issue-validation-title">
+              <Typography
+                variant="body-medium"
+                className="w-full text-center font-semibold"
+              >
+                Tunggu Sebentar
+              </Typography>
+            </div>
+            <p id="report-issue-validation-desc" className="sr-only">
+              Konfirmasi sebelum mengirim laporan kendala aset.
+            </p>
+          </div>
+
+          <div className="px-5 py-[12px]">
+            <Typography
+              variant="body-small"
+              className="text-center text-gray-800"
+            >
+              Apakah anda yakin sudah mengisi semua kendala aset dengan benar?
+            </Typography>
+          </div>
+
+          <div className="flex items-center gap-3 bg-white px-5 py-4">
+            <Button
+              variant="secondary"
+              className="flex-1"
+              disabled={isSubmitting}
+              onClick={onBack}
+            >
+              <Typography
+                variant="body-medium"
+                className="text-center text-primary"
+              >
+                Cek Kembali
+              </Typography>
+            </Button>
+            <Button
+              variant="primary"
+              className="flex-1"
+              disabled={isSubmitting}
+              onClick={onConfirm}
+            >
+              <Typography
+                variant="body-medium"
+                className="text-center text-white"
+              >
+                {isSubmitting ? "Mengirim..." : "Ya, Laporkan"}
+              </Typography>
+            </Button>
+          </div>
         </div>
-
-        <DialogFooter className="flex items-center gap-3 rounded-b-xl bg-white px-5 py-4">
-          <Button
-            variant="secondary"
-            className="flex-1"
-            disabled={isSubmitting}
-            onClick={onBack}
-          >
-            <Typography
-              variant="body-medium"
-              className="text-center text-primary"
-            >
-              Cek Kembali
-            </Typography>
-          </Button>
-          <Button
-            variant="primary"
-            className="flex-1"
-            disabled={isSubmitting}
-            onClick={onConfirm}
-          >
-            <Typography
-              variant="body-medium"
-              className="text-center text-white"
-            >
-              {isSubmitting ? "Mengirim..." : "Ya, Laporkan"}
-            </Typography>
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
 }
