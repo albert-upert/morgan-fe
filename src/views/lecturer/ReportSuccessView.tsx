@@ -1,6 +1,5 @@
 import { Link, useParams } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
-import { Callout } from "uper-ui/callout";
+import { useMemo, useState } from "react";
 import { Card, CardContent } from "uper-ui/card";
 import {
   ArrowLeftIcon,
@@ -11,7 +10,6 @@ import {
   ErrorIcon,
   FileIcon,
   OpenIcon,
-  ProfileIcon,
 } from "uper-ui/icon";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
@@ -35,15 +33,12 @@ export function ReportSuccessView() {
   const { roomId } = useParams({ strict: false });
   const data = useMemo(() => readLastReportSuccess(), []);
   const [openAssetId, setOpenAssetId] = useState<string | null>(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(true);
   const roomNameLabel = roomId ? `Ruang ${roomId}` : data?.roomName || "";
-
-  useEffect(() => {
-    toast.success("Laporan berhasil dibuat");
-  }, []);
 
   if (!data) {
     return (
-      <div className="pt-[16px]">
+      <div className="px-6 pt-4">
         <Link
           to="/lecturer/home"
           className="inline-flex items-center gap-2 text-red-500"
@@ -68,7 +63,24 @@ export function ReportSuccessView() {
   }
 
   return (
-    <div className="pt-[16px]">
+    <div className="pt-4 pb-6">
+      {snackbarOpen && (
+        <div className="fixed top-24 left-1/2 z-50 w-[calc(100%-48px)] max-w-[412px] -translate-x-1/2">
+          <div className="flex items-center justify-between gap-3 rounded-lg bg-gray-900 px-4 py-3 text-white shadow-lg">
+            <Typography variant="body-small" className="text-white">
+              Laporan berhasil diunggah!
+            </Typography>
+            <button
+              type="button"
+              className="shrink-0 rounded-md bg-white/10 px-3 py-1 text-[12px] font-semibold text-white hover:bg-white/20"
+              onClick={() => setSnackbarOpen(false)}
+            >
+              Oke
+            </button>
+          </div>
+        </div>
+      )}
+
       <Link
         to="/lecturer/home"
         className="inline-flex items-center gap-2 text-red-500"
@@ -86,7 +98,7 @@ export function ReportSuccessView() {
         </Typography>
       </div>
 
-      <Card className="mt-4 bg-gray-100" elevation="low">
+      <Card className="my-5 border border-border bg-white py-4" elevation="low">
         <CardContent className="px-4">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
@@ -96,45 +108,28 @@ export function ReportSuccessView() {
               >
                 {roomNameLabel || data.roomName}
               </Typography>
-              <div className="mt-1 flex items-center gap-[4px] text-gray-600">
+              <div className="flex items-center gap-[4px] text-gray-600">
                 <BuildingIcon
                   className="h-[20px] w-[20px]"
                   color="currentColor"
                 />
-                <Typography variant="caption-small" className="text-gray-600">
+                <Typography
+                  variant="body-small"
+                  className="text-[12px] text-gray-600"
+                >
                   {data.buildingName}
                 </Typography>
               </div>
             </div>
             <div className="shrink-0 rounded-full bg-red-50 px-3 py-[2px]">
               <Typography variant="caption-small" className="text-primary">
-                Lantai 8
+                {data.ticketId}
               </Typography>
             </div>
           </div>
 
           <div className="mt-4 space-y-2">
-            <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 p-3">
-              <div className="mt-0.5 text-gray-600">
-                <ProfileIcon
-                  className="h-[32px] w-[32px] rounded-[8px] bg-gray-300 p-[6px]"
-                  color="currentColor"
-                />
-              </div>
-              <div className="flex flex-col">
-                <Typography
-                  variant="caption-small-semibold"
-                  className="text-gray-600"
-                >
-                  Pelapor
-                </Typography>
-                <Typography variant="body-small" className="text-gray-900">
-                  {data.reporterName} ({data.reporterRoleLabel})
-                </Typography>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 p-3">
+            <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-2">
               <div className="mt-0.5 text-gray-600">
                 <CalendarIcon
                   className="h-[32px] w-[32px] rounded-[8px] bg-gray-300 p-[6px]"
@@ -142,13 +137,10 @@ export function ReportSuccessView() {
                 />
               </div>
               <div className="flex flex-col">
-                <Typography
-                  variant="caption-small-semibold"
-                  className="text-gray-600"
-                >
+                <Typography variant="caption-small" className="text-gray-600">
                   Tanggal
                 </Typography>
-                <Typography variant="body-small" className="text-gray-900">
+                <Typography variant="caption-small" className="text-gray-900">
                   {formatDateTime(data.createdAt)}
                 </Typography>
               </div>
@@ -157,111 +149,116 @@ export function ReportSuccessView() {
         </CardContent>
       </Card>
 
-      <div className="mt-5">
-        <Typography variant="body-medium-semibold" className="text-gray-900">
-          Daftar Aset Bermasalah
-        </Typography>
-      </div>
-      <div className="mt-3 space-y-2">
-        {data.issues.map((issue: ReportSuccessIssue) => {
-          const isOpen = openAssetId === issue.assetId;
-          return (
-            <div
-              key={issue.assetId}
-              className="rounded-xl border border-border bg-gray-100"
-            >
-              <button
-                type="button"
-                className="flex w-full items-center gap-3 px-4 py-3 text-left"
-                onClick={() => {
-                  setOpenAssetId((prev) =>
-                    prev === issue.assetId ? null : issue.assetId
-                  );
-                }}
-              >
-                <ErrorIcon className="h-5 w-5 text-red-600" />
-                <div className="flex min-w-0 flex-1 flex-col gap-1">
-                  <Typography
-                    variant="body-small"
-                    className="truncate font-semibold text-gray-900"
+      <Card className="border border-border bg-white py-4" elevation="low">
+        <CardContent className="px-4">
+          <Typography variant="body-medium-semibold" className="text-gray-900">
+            Daftar Aset Bermasalah
+          </Typography>
+
+          <div className="mt-3 space-y-2">
+            {data.issues.map((issue: ReportSuccessIssue) => {
+              const isOpen = openAssetId === issue.assetId;
+              return (
+                <div
+                  key={issue.assetId}
+                  className="rounded-xl border border-border bg-white"
+                >
+                  <button
+                    type="button"
+                    className="flex w-full items-center gap-3 px-4 py-3 text-left"
+                    onClick={() => {
+                      setOpenAssetId((prev) =>
+                        prev === issue.assetId ? null : issue.assetId
+                      );
+                    }}
                   >
-                    {issue.assetName}
-                  </Typography>
-                </div>
-                <div className="shrink-0 rounded-full bg-gray-100 p-2">
-                  {isOpen ? (
-                    <CaretUpIcon className="h-4 w-4" />
-                  ) : (
-                    <CaretDownIcon className="h-4 w-4" />
-                  )}
-                </div>
-              </button>
+                    <ErrorIcon className="h-4 w-4 text-red-600" />
+                    <div className="flex min-w-0 flex-1 flex-col gap-1">
+                      <Typography
+                        variant="body-small-semibold"
+                        className="truncate text-gray-900"
+                      >
+                        {issue.assetName}
+                      </Typography>
+                    </div>
+                    <div className="shrink-0 text-gray-700">
+                      {isOpen ? (
+                        <CaretUpIcon className="h-4 w-4" />
+                      ) : (
+                        <CaretDownIcon className="h-4 w-4" />
+                      )}
+                    </div>
+                  </button>
 
-              {isOpen && (
-                <div className="px-4 pb-4">
-                  <Typography
-                    variant="caption-small-semibold"
-                    className="text-gray-600"
-                  >
-                    Jenis Masalah
-                  </Typography>
-                  <div className="mt-2">
-                    <span className="inline-flex items-center rounded-lg bg-primary px-3 py-1 text-[12px] font-semibold text-white">
-                      {issue.issueType}
-                    </span>
-                  </div>
+                  {isOpen && (
+                    <div className="border-t border-border bg-white px-4 pt-3 pb-4">
+                      <Typography
+                        variant="caption-small-semibold"
+                        className="text-gray-600"
+                      >
+                        Jenis Masalah
+                      </Typography>
+                      <div className="mt-2">
+                        <span className="inline-flex items-center rounded-lg bg-primary px-3 py-1 text-[12px] font-semibold text-white">
+                          {issue.issueType}
+                        </span>
+                      </div>
 
-                  <Typography
-                    variant="caption-small-semibold"
-                    className="mt-3 text-gray-600"
-                  >
-                    Detail Kendala
-                  </Typography>
-
-                  <div className="mt-2 rounded-lg border border-gray-200 bg-white px-3 py-2">
-                    <Typography variant="body-small" className="text-gray-900">
-                      {issue.detail}
-                    </Typography>
-                  </div>
-
-                  {issue.fileName && (
-                    <>
                       <Typography
                         variant="caption-small-semibold"
                         className="mt-3 text-gray-600"
                       >
-                        Bukti Foto
+                        Detail Kendala
                       </Typography>
-                      <button
-                        type="button"
-                        className="mt-2 flex w-full items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-left"
-                        onClick={() =>
-                          toast.info("Preview foto belum tersedia")
-                        }
-                      >
-                        <FileIcon className="h-5 w-5 text-gray-600" />
+
+                      <div className="mt-2 rounded-lg border border-gray-200 bg-white px-3 py-2">
                         <Typography
                           variant="body-small"
-                          className="min-w-0 flex-1 truncate text-gray-900"
+                          className="text-gray-900"
                         >
-                          {issue.fileName}
+                          {issue.detail}
                         </Typography>
-                        <OpenIcon className="h-5 w-5 text-gray-600" />
-                      </button>
-                    </>
+                      </div>
+
+                      {issue.fileName && (
+                        <>
+                          <Typography
+                            variant="caption-small-semibold"
+                            className="mt-3 text-gray-600"
+                          >
+                            Bukti Foto
+                          </Typography>
+                          <button
+                            type="button"
+                            className="mt-2 flex w-full items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-left"
+                            onClick={() =>
+                              toast.info("Preview foto belum tersedia")
+                            }
+                          >
+                            <FileIcon className="h-5 w-5 text-gray-600" />
+                            <Typography
+                              variant="body-small"
+                              className="min-w-0 flex-1 truncate text-gray-900"
+                            >
+                              {issue.fileName}
+                            </Typography>
+                            <OpenIcon className="h-5 w-5 text-gray-600" />
+                          </button>
+                        </>
+                      )}
+                    </div>
                   )}
                 </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
 
-      <Card className="mt-3 bg-gray-100" elevation="low">
+      <Card className="mt-6 border border-border bg-white py-4" elevation="low">
         <CardContent className="px-4">
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <div className="mt-5" />
               <Typography
                 variant="body-medium-semibold"
                 className="text-gray-900"
@@ -290,13 +287,15 @@ export function ReportSuccessView() {
             </div>
           </div>
 
-          <div className="mt-3">
-            <Callout
-              variant="yellow"
-              showClose={false}
-              message="Aset akan memasuki notifikasi setelah laporan sudah diterima oleh petugas."
-              className="px-4 py-3"
-            />
+          <div className="mt-3 flex items-start gap-2 rounded-xl border border-yellow-200 bg-yellow-50 px-3 py-2">
+            <ErrorIcon className="mt-px h-4 w-4 text-yellow-700" />
+            <Typography
+              variant="body-small"
+              className="text-[12px] text-gray-700"
+            >
+              Aset akan memasuki notifikasi setelah laporan sudah diterima oleh
+              petugas.
+            </Typography>
           </div>
         </CardContent>
       </Card>
@@ -307,7 +306,7 @@ export function ReportSuccessView() {
         </Typography>
       </div>
 
-      <Card className="mt-3 bg-gray-100" elevation="low">
+      <Card className="mt-3 border border-border bg-white py-4" elevation="low">
         <CardContent className="px-4">
           {[
             {

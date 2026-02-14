@@ -48,7 +48,7 @@ export function ReportIssueValidationModal({
             </p>
           </div>
 
-          <div className="px-5 py-[12px]">
+          <div className="px-5 pt-[10px]">
             <Typography
               variant="body-small"
               className="text-center text-gray-800"

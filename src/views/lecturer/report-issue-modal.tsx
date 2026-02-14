@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "uper-ui/button";
-import { Callout } from "uper-ui/callout";
 import {
   CaretDownIcon,
   CaretUpIcon,
@@ -49,6 +48,7 @@ export function ReportIssueModal({
   const [expandedId, setExpandedId] = useState<string | null>(
     assets[0]?.id ?? null
   );
+  const [uploadNotice, setUploadNotice] = useState<string | null>(null);
   const [drafts, setDrafts] = useState<
     Partial<Record<string, AssetIssueDraft>>
   >({});
@@ -56,6 +56,7 @@ export function ReportIssueModal({
   useEffect(() => {
     setDrafts({});
     setExpandedId(assets[0]?.id ?? null);
+    setUploadNotice(null);
   }, [resetToken, assets]);
 
   const getDraft = useCallback(
@@ -87,6 +88,15 @@ export function ReportIssueModal({
       const d = drafts[a.id];
       if (!d) return false;
       return !!d.issueType && !!d.detail.trim();
+    });
+  }, [assets, drafts]);
+
+  const isAllIssueTypeSelected = useMemo(() => {
+    if (assets.length === 0) return false;
+    return assets.every((a) => {
+      const d = drafts[a.id];
+      if (!d) return false;
+      return !!d.issueType;
     });
   }, [assets, drafts]);
 
@@ -128,12 +138,24 @@ export function ReportIssueModal({
           className="w-full max-w-[412px] overflow-hidden rounded-xl bg-white shadow-lg"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="border-b border-border bg-muted px-5 py-4">
-            <div id="report-issue-title">
-              <Typography
-                variant="body-medium"
-                className="text-center font-semibold"
+          {uploadNotice && (
+            <div className="absolute top-3 right-3 left-3 z-10 flex items-center justify-between gap-3 rounded-lg bg-gray-900 px-4 py-3 text-white shadow-lg">
+              <Typography variant="body-small" className="text-white">
+                {uploadNotice}
+              </Typography>
+              <button
+                type="button"
+                className="shrink-0 rounded-md bg-white/10 px-3 py-1 text-[12px] font-semibold text-white hover:bg-white/20"
+                onClick={() => setUploadNotice(null)}
               >
+                Oke
+              </button>
+            </div>
+          )}
+
+          <div className="border-b border-border bg-[#F5F5F5] px-4 py-3">
+            <div id="report-issue-title">
+              <Typography variant="body-large-semibold" className="text-center">
                 Lapor Ketidaksesuaian Aset
               </Typography>
             </div>
@@ -143,8 +165,8 @@ export function ReportIssueModal({
             </p>
           </div>
 
-          <div className="max-h-[70vh] overflow-auto px-5 pb-4">
-            <div className="mt-3 space-y-3">
+          <div className="max-h-[70vh] overflow-auto px-4 pb-3">
+            <div className="mt-3 space-y-2">
               {assets.map((asset) => {
                 const isExpanded = expandedId === asset.id;
                 const draft = getDraft(asset.id);
@@ -153,7 +175,7 @@ export function ReportIssueModal({
                 return (
                   <div
                     key={asset.id}
-                    className="rounded-xl border border-border bg-gray-100"
+                    className="rounded-xl border border-border bg-white"
                   >
                     <button
                       type="button"
@@ -167,7 +189,7 @@ export function ReportIssueModal({
                       <div className="flex min-w-0 flex-1 flex-col gap-1">
                         <div className="flex items-center gap-2">
                           <span
-                            className={`rounded-full border px-2 py-0.5 text-[10px] ${
+                            className={`rounded-full border px-2 py-0.5 text-[9px] ${
                               isComplete
                                 ? "border-green-600 bg-green-50 text-green-700"
                                 : "border-red-400 bg-red-50 text-red-600"
@@ -179,14 +201,14 @@ export function ReportIssueModal({
                         <div className="flex items-center gap-2">
                           <ErrorIcon className="h-4 w-4 text-red-600" />
                           <Typography
-                            variant="body-small"
-                            className="truncate font-semibold text-gray-900"
+                            variant="body-small-semibold"
+                            className="truncate text-gray-900"
                           >
                             {asset.name}
                           </Typography>
                         </div>
                       </div>
-                      <div className="shrink-0 rounded-full bg-gray-100 p-2">
+                      <div className="shrink-0 text-gray-700">
                         {isExpanded ? (
                           <CaretUpIcon className="h-4 w-4" />
                         ) : (
@@ -196,7 +218,7 @@ export function ReportIssueModal({
                     </button>
 
                     {isExpanded && (
-                      <div className="px-4 pb-4">
+                      <div className="border-t border-border bg-white px-4 pt-3 pb-4">
                         <Typography
                           variant="caption-small"
                           className="font-semibold text-gray-600"
@@ -237,7 +259,7 @@ export function ReportIssueModal({
                             maxLength={150}
                             showCount
                             placeholder="Contoh: Lampu proyektor mati total saat dinyalakan"
-                            className="min-h-[120px]"
+                            className="min-h-[96px]"
                           />
                         </div>
 
@@ -260,7 +282,10 @@ export function ReportIssueModal({
                               onChange={(e) => {
                                 const f = e.target.files?.[0];
                                 updateDraft(asset.id, { fileName: f?.name });
-                                if (f) toast.success("Foto berhasil diunggah!");
+                                if (f) {
+                                  setUploadNotice("Foto berhasil diunggah!");
+                                  toast.success("Foto berhasil diunggah!");
+                                }
                               }}
                             />
                           </label>
@@ -291,18 +316,19 @@ export function ReportIssueModal({
             </div>
 
             {!isAllComplete && (
-              <div className="mt-4">
-                <Callout
-                  variant="yellow"
-                  showClose={false}
-                  message="Silahkan isi detail masing-masing kendala terlebih dahulu."
-                  className="px-4 py-3"
-                />
+              <div className="mt-3 flex items-start gap-2 rounded-xl border border-yellow-200 bg-yellow-50 px-3 py-2">
+                <ErrorIcon className="mt-px h-4 w-4 text-yellow-700" />
+                <Typography
+                  variant="body-small"
+                  className="text-[12px] text-gray-700"
+                >
+                  Silahkan isi detail masing-masing kendala terlebih dahulu.
+                </Typography>
               </div>
             )}
           </div>
 
-          <div className="flex items-center gap-3 bg-white px-5 py-4">
+          <div className="flex items-center gap-3 border-t border-border bg-white px-4 py-3">
             <Button
               variant="secondary"
               className="flex-1"
@@ -312,10 +338,10 @@ export function ReportIssueModal({
             </Button>
             <Button
               variant="primary"
-              className="flex-1"
-              disabled={!isAllComplete}
+              className="flex-1 disabled:bg-gray-200 disabled:text-gray-600 disabled:hover:bg-gray-300"
+              disabled={!isAllIssueTypeSelected}
               onClick={() => {
-                if (!isAllComplete) return;
+                if (!isAllIssueTypeSelected) return;
                 const payload: ReportIssuePayload = {
                   issues: assets.map((a) => {
                     const d = getDraft(a.id);
