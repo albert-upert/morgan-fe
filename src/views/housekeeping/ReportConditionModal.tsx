@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  ArrowDownIcon,
   Button,
   CloseIcon,
   Dialog,
@@ -8,15 +7,13 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  Dropdown,
-  DropdownContent,
-  DropdownItem,
-  DropdownTrigger,
   ErrorIcon,
   FileIcon,
   OpenIcon,
+  Tag,
   Textarea,
   Typography,
+  UploadIcon,
 } from "uper-ui";
 import { Accordion } from "uper-ui/accordion";
 
@@ -103,12 +100,7 @@ function useMismatchValidation(
     if (assets.length === 0) return false;
     return assets.every((asset) => {
       const draft = drafts[asset.id];
-      return (
-        draft &&
-        draft.issueType &&
-        draft.detail.trim().length > 0 &&
-        draft.fileName
-      );
+      return draft && draft.issueType && draft.detail.trim().length > 0;
     });
   }, [assets, drafts]);
 
@@ -148,8 +140,8 @@ function useAccordionNavigation(assets: Array<MismatchAsset>) {
 function ReportMismatchHeader() {
   return (
     <DialogHeader className="justify-center border-b border-gray-300 bg-gray-100 px-5 py-4">
-      <Typography variant="body-medium-semibold" className="text-gray-900">
-        Laporkan Ketidaksesuaian Aset
+      <Typography variant="h5" className="text-gray-800">
+        Isi Masalah Aset
       </Typography>
     </DialogHeader>
   );
@@ -183,27 +175,66 @@ function AssetMismatchItem({
   onFileSelect,
   onFileRemove,
 }: AssetItemProps) {
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(false);
+
   const handleFileInput = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (file) {
         onFileSelect(file);
+        // Create preview URL
+        const url = URL.createObjectURL(file);
+        setImagePreviewUrl(url);
       }
     },
     [onFileSelect]
   );
 
+  const handleRemoveFile = useCallback(() => {
+    onFileRemove();
+    // Clean up preview URL
+    if (imagePreviewUrl) {
+      URL.revokeObjectURL(imagePreviewUrl);
+      setImagePreviewUrl(null);
+    }
+  }, [onFileRemove, imagePreviewUrl]);
+
+  // Cleanup URL on unmount
+  useEffect(() => {
+    return () => {
+      if (imagePreviewUrl) {
+        URL.revokeObjectURL(imagePreviewUrl);
+      }
+    };
+  }, [imagePreviewUrl]);
+
+  // Check if asset is complete (issueType and detail filled)
+  const isComplete = issueType && detail.trim().length > 0;
+
   const accordionTitle = (
     <div className="flex flex-col items-start gap-1">
-      <div className="inline-flex items-center rounded-l border border-red-500 bg-red-50 px-2 py-0.5">
-        <Typography variant="caption-pixie" className="text-red-500">
-          Isi Detail
+      <Tag
+        type="with-border"
+        size="md"
+        rounded="pill"
+        className={
+          isComplete
+            ? "border border-green-400 bg-green-50"
+            : "border border-red-400 bg-red-50"
+        }
+      >
+        <Typography
+          variant="caption-pixie"
+          className={isComplete ? "text-green-600" : "text-red-600"}
+        >
+          {isComplete ? "Sudah Lengkap" : "Belum Lengkap"}
         </Typography>
-      </div>
+      </Tag>
       <div className="inline-flex items-center gap-2">
         <ErrorIcon className="h-4 w-4 text-red-500" />
-        <Typography variant="body-small-bold" className="text-gray-900">
-          Aset: {asset.name}
+        <Typography variant="body-small-semibold" className="text-gray-800">
+          {asset.name}
         </Typography>
       </div>
     </div>
@@ -218,63 +249,69 @@ function AssetMismatchItem({
           onToggle();
         }
       }}
-      className="rounded-xl border border-red-500 bg-red-50 transition-all duration-300"
+      className="rounded-xl border border-gray-400 bg-gray-100 !p-0 transition-all duration-300"
     >
-      <div className="animate-in space-y-3 p-3 duration-300 fade-in slide-in-from-top-2">
-        {/* Issue Type Dropdown */}
+      <div className="animate-in space-y-2 duration-300 fade-in slide-in-from-top-2">
+        {/* Issue Type Buttons */}
         <div className="space-y-1.5">
-          <Typography variant="body-small-semibold" className="text-gray-800">
+          <Typography
+            variant="caption-small-semibold"
+            className="text-gray-600"
+          >
             Jenis Masalah
           </Typography>
-          <Dropdown>
-            <DropdownTrigger asChild>
+          <div className="flex flex-wrap gap-2">
+            {ISSUE_TYPES.map((type) => (
               <button
+                key={type}
                 type="button"
-                className="flex w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-3 py-2.5 transition-colors hover:border-gray-400"
+                onClick={() => onIssueTypeChange(type)}
+                className={`rounded-lg border px-3 py-1 transition-colors ${
+                  issueType === type
+                    ? "border-red-500 bg-red-500"
+                    : "border-red-500 bg-white hover:bg-red-50"
+                }`}
               >
                 <Typography
                   variant="body-small"
-                  className={issueType ? "text-gray-900" : "text-gray-500"}
-                >
-                  {issueType ? issueType : "Pilih Jenis Masalah"}
-                </Typography>
-                <ArrowDownIcon className="h-4 w-4 text-gray-600" />
-              </button>
-            </DropdownTrigger>
-            <DropdownContent align="start" className="w-56">
-              {ISSUE_TYPES.map((type) => (
-                <DropdownItem
-                  key={type}
-                  onSelect={() => onIssueTypeChange(type)}
-                  className="text-gray-800 hover:!bg-red-50 hover:!text-red-600"
+                  className={
+                    issueType === type ? "text-gray-50" : "text-red-500"
+                  }
                 >
                   {type}
-                </DropdownItem>
-              ))}
-            </DropdownContent>
-          </Dropdown>
+                </Typography>
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Detail Textarea */}
         <div className="space-y-1.5">
-          <Typography variant="body-small-semibold" className="text-gray-800">
-            Detail Masalah
+          <Typography
+            variant="caption-small-semibold"
+            className="text-gray-600"
+          >
+            Detail Kendala
           </Typography>
           <Textarea
             label=""
             value={detail}
             onChange={(e) => onDetailChange(e.target.value)}
-            placeholder="Tuliskan detail masalah..."
-            className="!placeholder:text-gray-500 border-gray-300 bg-white"
-            maxLength={100}
+            placeholder="Contoh: Lampu proyektor mati total saat dinyalakan"
+            className="border-gray-400 bg-white placeholder:text-gray-600 focus:!border-gray-500"
+            maxLength={150}
             showCount
+            helperText=" "
           />
         </div>
 
         {/* File Upload */}
         <div className="space-y-1.5">
-          <Typography variant="body-small-semibold" className="text-gray-800">
-            Lampiran Foto
+          <Typography
+            variant="caption-small-semibold"
+            className="text-gray-600"
+          >
+            Bukti Foto (Opsional)
           </Typography>
           <input
             type="file"
@@ -290,11 +327,14 @@ function AssetMismatchItem({
                 onClick={() =>
                   document.getElementById(`file-upload-${asset.id}`)?.click()
                 }
-                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border-2 border-dashed border-gray-300 bg-white px-4 py-3 text-gray-600 transition-colors hover:border-red-400 hover:bg-red-50"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-400 bg-gray-50 px-4 py-3 text-gray-600 transition-colors hover:border-gray-400 hover:bg-gray-50"
               >
-                <FileIcon className="h-5 w-5" />
-                <Typography variant="body-small" className="text-gray-700">
-                  Pilih Foto
+                <UploadIcon className="h-5 w-5 text-gray-600" />
+                <Typography
+                  variant="caption-small-semibold"
+                  className="text-gray-600"
+                >
+                  Ambil / Pilih Foto
                 </Typography>
               </button>
             </label>
@@ -303,19 +343,23 @@ function AssetMismatchItem({
           {/* File Preview */}
           {fileName && (
             <div className="flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-3 py-2.5">
-              <FileIcon className="h-5 w-5 flex-shrink-0 text-red-500" />
+              <FileIcon className="h-5 w-5 flex-shrink-0 text-gray-600" />
               <Typography
                 variant="body-small"
                 className="flex-1 truncate text-gray-900"
               >
                 {fileName}
               </Typography>
-              <button type="button" className="rounded p-1 hover:bg-gray-100">
+              <button
+                type="button"
+                onClick={() => setShowPreview(true)}
+                className="rounded p-1 hover:bg-gray-100"
+              >
                 <OpenIcon className="h-5 w-5 text-gray-600" />
               </button>
               <button
                 type="button"
-                onClick={onFileRemove}
+                onClick={handleRemoveFile}
                 className="rounded p-1 hover:bg-gray-100"
               >
                 <CloseIcon className="h-5 w-5 text-gray-600" />
@@ -324,6 +368,29 @@ function AssetMismatchItem({
           )}
         </div>
       </div>
+
+      {/* Image Preview Modal */}
+      {showPreview && imagePreviewUrl && (
+        <Dialog open={showPreview} onOpenChange={setShowPreview}>
+          <DialogContent
+            className="rounded-2xl p-0 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm"
+            showCloseButton={true}
+          >
+            <DialogHeader className="rounded-t-2xl border-b border-gray-300 bg-gray-100 px-5 py-4">
+              <Typography variant="h5" className="text-gray-800">
+                Preview Foto
+              </Typography>
+            </DialogHeader>
+            <div className="rounded-b-2xl bg-white p-4">
+              <img
+                src={imagePreviewUrl}
+                alt={fileName}
+                className="h-auto w-full object-contain"
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </Accordion>
   );
 }
@@ -353,7 +420,7 @@ function ReportMismatchBody({
   onFileRemove,
 }: BodyProps) {
   return (
-    <DialogBody className="max-h-[60vh] items-stretch gap-4 overflow-y-auto border-0 bg-white px-5 py-4">
+    <DialogBody className="max-h-140 items-stretch gap-4 overflow-y-auto border-0 bg-white px-5 py-4">
       <div className="animate-in space-y-3 duration-500 fade-in">
         {assets.map((asset, idx) => {
           const draft = drafts[asset.id] ?? {
@@ -386,9 +453,12 @@ function ReportMismatchBody({
         })}
       </div>
 
-      <Typography variant="caption-pixie" className="text-gray-800">
-        ** Isi detail kendala semua aset.
-      </Typography>
+      <div className="flex items-start gap-2 rounded-lg border border-yellow-500 bg-yellow-50 px-3 py-2">
+        <ErrorIcon className="h-4 w-4 text-yellow-600" />
+        <Typography variant="caption-pixie" className="text-gray-800">
+          Silahkan isi detail masing-masing kendala terlebih dahulu.
+        </Typography>
+      </div>
     </DialogBody>
   );
 }
@@ -416,7 +486,7 @@ function ReportMismatchFooter({
         className="flex-1 border border-red-500 bg-white text-red-500 hover:bg-red-50"
       >
         <Typography variant="body-medium" className="text-red-500">
-          Batal
+          Kembali
         </Typography>
       </Button>
       <Button
@@ -432,7 +502,7 @@ function ReportMismatchFooter({
           variant="body-medium"
           className={isComplete ? "text-white" : "text-gray-600"}
         >
-          {isSubmitting ? "Mengirim..." : "Kirim"}
+          {isSubmitting ? "Mengirim..." : "Kirim Laporan"}
         </Typography>
       </Button>
     </DialogFooter>
