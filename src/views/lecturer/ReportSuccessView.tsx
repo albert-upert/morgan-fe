@@ -16,6 +16,7 @@ import {
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
 import { readLastReportSuccess } from "@/services/morgan/report-success-store";
+import type { ReportSuccessIssue } from "@/services/morgan/report-success-store";
 
 function formatDateTime(iso: string) {
   const d = new Date(iso);
@@ -162,7 +163,7 @@ export function ReportSuccessView() {
         </Typography>
       </div>
       <div className="mt-3 space-y-2">
-        {data.issues.map((issue) => {
+        {data.issues.map((issue: ReportSuccessIssue) => {
           const isOpen = openAssetId === issue.assetId;
           return (
             <div
