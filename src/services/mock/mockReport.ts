@@ -3,7 +3,7 @@ import type { Report } from "@/types/report.tsx";
 export const reportsSeed: Array<Report> = [
   {
     id: "#FM-2025-0103",
-    status: "Menunggu Diterima oleh Petugas",
+    status: "Menunggu Petugas",
     assets: ["Proyektor Epson", "Air Conditioner (AC)"],
     room: "2805",
     building: "Griya Legita",
@@ -17,7 +17,7 @@ export const reportsSeed: Array<Report> = [
   },
   {
     id: "#FM-2025-0102",
-    status: "Menunggu Diterima oleh Petugas",
+    status: "Menunggu Petugas",
     assets: ["Fingerprint"],
     room: "2808",
     building: "Griya Legita",

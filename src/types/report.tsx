@@ -1,7 +1,7 @@
 export type Report = {
   id: string;
   status:
-    | "Menunggu Diterima oleh Petugas"
+    | "Menunggu Petugas"
     | "Petugas dalam Perjalanan"
     | "Sedang Dikerjakan"
     | "Laporan Selesai";
