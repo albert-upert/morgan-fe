@@ -4,10 +4,18 @@ import type { ComponentType } from "react";
 import { Button, Card, CardContent, Checkbox, Typography } from "uper-ui";
 import { Accordion } from "uper-ui/accordion";
 import {
+  Dropdown,
+  DropdownContent,
+  DropdownItem,
+  DropdownTrigger,
+} from "uper-ui/dropdown";
+import {
   ArrowDownIcon,
   ArrowLeftIcon,
   BuildingIcon,
   CalendarIcon,
+  CaretDownIcon,
+  CaretUpIcon,
   ControlIcon,
   DispensationIcon,
   ErrorIcon,
@@ -50,11 +58,14 @@ function InfoRow({ icon: Icon, label, value }: InfoRowProps) {
 
 // Mock data
 type AssetStatus = "reported" | "unchecked";
+type AssetCategory = "all" | "elektronik" | "furniture" | "lainnya";
+type SortOrder = "asc" | "desc";
 
 interface RoomAsset {
   id: string;
   name: string;
   status: AssetStatus;
+  category?: AssetCategory;
   notes?: string;
   sopItems?: Array<string>;
   defaultExpanded?: boolean;
@@ -82,6 +93,7 @@ const MOCK_ROOM_DATA: Room = {
       id: "asset-2",
       name: "Fingerprint Absensi",
       status: "unchecked",
+      category: "elektronik",
       sopItems: [
         "Hembusan angin terasa dingin",
         "Swing berfungsi normal",
@@ -93,6 +105,7 @@ const MOCK_ROOM_DATA: Room = {
       id: "asset-3",
       name: "Kursi Kuliah (40 Unit)",
       status: "unchecked",
+      category: "furniture",
       sopItems: [
         "Jumlah kursi sesuai kebutuhan",
         "Tidak ada kursi rusak",
@@ -103,66 +116,79 @@ const MOCK_ROOM_DATA: Room = {
       id: "asset-4",
       name: "Meja Dosen",
       status: "unchecked",
+      category: "furniture",
     },
     {
       id: "asset-5",
       name: "Proyektor Epson EB-X05",
       status: "unchecked",
+      category: "elektronik",
     },
     {
       id: "asset-6",
       name: "Remote AC",
       status: "unchecked",
+      category: "elektronik",
     },
     {
       id: "asset-7",
       name: "Smartboard Samsung Flip",
       status: "unchecked",
+      category: "elektronik",
     },
     {
       id: "asset-8",
       name: "Tas Penyimpanan",
       status: "unchecked",
+      category: "furniture",
     },
     {
       id: "asset-9",
       name: "Tas Penyimpanan",
       status: "unchecked",
+      category: "lainnya",
     },
     {
       id: "asset-10",
       name: "Tas Penyimpanan",
       status: "unchecked",
+      category: "lainnya",
     },
     {
       id: "asset-11",
       name: "Tas Penyimpanan",
       status: "unchecked",
+      category: "lainnya",
     },
     {
       id: "asset-12",
       name: "Tas Penyimpanan",
       status: "unchecked",
+      category: "furniture",
     },
     {
       id: "asset-13",
       name: "Tas Penyimpanan",
       status: "unchecked",
+      category: "lainnya",
     },
     {
       id: "asset-14",
       name: "Tas Penyimpanan",
       status: "unchecked",
+      category: "lainnya",
     },
     {
       id: "asset-15",
       name: "Tas Penyimpanan",
       status: "unchecked",
+      category: "furniture",
     },
     {
       id: "asset-16",
       name: "Tas Penyimpanan",
       status: "unchecked",
+      category: "lainnya",
     },
   ],
 };
@@ -210,6 +236,29 @@ function filterAssetsByQuery(assets: Array<RoomAsset>, query: string) {
   );
 }
 
+function filterAssetsByCategory(
+  assets: Array<RoomAsset>,
+  category: AssetCategory
+) {
+  if (category === "all") return assets;
+  return assets.filter((asset) => asset.category === category);
+}
+
+function sortAssets(
+  assets: Array<RoomAsset>,
+  order: SortOrder
+): Array<RoomAsset> {
+  const sorted = [...assets].sort((a, b) => {
+    const nameA = a.name.toLowerCase();
+    const nameB = b.name.toLowerCase();
+    if (order === "asc") {
+      return nameA.localeCompare(nameB);
+    }
+    return nameB.localeCompare(nameA);
+  });
+  return sorted;
+}
+
 function paginateAssets(
   assets: Array<RoomAsset>,
   currentPage: number,
@@ -230,25 +279,40 @@ export function RoomDetailView() {
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState<AssetCategory>("all");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
+  const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
   const [reportingAssets, setReportingAssets] = useState<Array<MismatchAsset>>(
     []
   );
   const pageSize = 6;
 
-  // Data: room detail source
-  const [assets] = useState<Array<RoomAsset>>(MOCK_ROOM_DATA.assets);
+  const categoryOptions = [
+    { label: "Semua Kategori", value: "all" as const },
+    { label: "Elektronik", value: "elektronik" as const },
+    { label: "Furniture", value: "furniture" as const },
+    { label: "Lainnya", value: "lainnya" as const },
+  ];
 
-  const room = useMemo(() => ({ ...MOCK_ROOM_DATA, assets }), [assets]);
+  // Data: room detail source
+  const [roomAssets] = useState<Array<RoomAsset>>(MOCK_ROOM_DATA.assets);
+
+  const room = useMemo(
+    () => ({ ...MOCK_ROOM_DATA, assets: roomAssets }),
+    [roomAssets]
+  );
 
   // Derived: formatted timestamp
   const nowLabel = useMemo(() => formatNowLabel(), []);
 
-  // Derived: filtered list
-  const filteredAssets = useMemo(
-    () => filterAssetsByQuery(room.assets, searchQuery),
-    [room.assets, searchQuery]
-  );
+  // Derived: filtered and sorted list
+  const filteredAssets = useMemo(() => {
+    let assets = filterAssetsByQuery(room.assets, searchQuery);
+    assets = filterAssetsByCategory(assets, categoryFilter);
+    assets = sortAssets(assets, sortOrder);
+    return assets;
+  }, [room.assets, searchQuery, categoryFilter, sortOrder]);
 
   // Derived: count helpers
   const uncheckedAssets = useMemo(
@@ -298,7 +362,7 @@ export function RoomDetailView() {
   const handleSubmit = useCallback(() => {
     // Jika ada aset bermasalah, buka modal untuk input detail
     if (reportingIds.size > 0) {
-      const problematicAssets = assets
+      const problematicAssets = roomAssets
         .filter((asset) => reportingIds.has(asset.id))
         .map((asset) => ({ id: asset.id, name: asset.name }));
 
@@ -316,7 +380,7 @@ export function RoomDetailView() {
     // Jika tidak ada masalah, langsung kirim
     toast.success(`${selectedIds.size} aset dilaporkan`);
     // TODO: Send to API, then navigate back
-  }, [selectedIds, reportingIds, assets]);
+  }, [selectedIds, reportingIds, roomAssets]);
 
   // Handlers: accordion
   const handleToggleExpanded = useCallback((assetId: string) => {
@@ -481,17 +545,18 @@ export function RoomDetailView() {
 
                 <Tag
                   color="red"
-                  type="with-border"
+                  type="monochrome"
                   size="md"
                   rounded="pill"
                   className="bg-red-50 px-2 py-1"
                 >
-                  <Typography variant="caption-small" className="text-red-500">
+                  <Typography variant="caption-small" className="text-red-600">
                     {room.code.replace("Ruang ", "R. ")}
                   </Typography>
                 </Tag>
               </div>
 
+              {/* Search bar with category filter */}
               <div className="flex items-center justify-between gap-2">
                 <Input
                   startIcon={<SearchIcon className="h-4 w-4 text-gray-600" />}
@@ -501,12 +566,41 @@ export function RoomDetailView() {
                   value={searchQuery}
                   onChange={(event) => handleSearchChange(event.target.value)}
                 />
-                <Button
-                  variant="secondary"
-                  className="h-10 w-10 border-red-300 text-red-500"
+
+                {/* Category filter dropdown */}
+                <Dropdown
+                  open={isFilterDropdownOpen}
+                  onOpenChange={setIsFilterDropdownOpen}
                 >
-                  <ControlIcon className="h-4 w-4" />
-                </Button>
+                  <DropdownTrigger asChild>
+                    <Button
+                      variant="secondary"
+                      className={`flex h-10 w-10 items-center gap-2 border-red-300 px-3 text-red-500 ${
+                        isFilterDropdownOpen ? "bg-red-100" : "hover:bg-red-100"
+                      }`}
+                    >
+                      <ControlIcon className="h-4 w-4" />
+                    </Button>
+                  </DropdownTrigger>
+                  <DropdownContent>
+                    {categoryOptions.map((option) => (
+                      <DropdownItem
+                        key={option.value}
+                        onSelect={() => {
+                          setCategoryFilter(option.value);
+                          setCurrentPage(1);
+                        }}
+                        className={
+                          categoryFilter === option.value
+                            ? "bg-red-400 text-gray-50"
+                            : ""
+                        }
+                      >
+                        {option.label}
+                      </DropdownItem>
+                    ))}
+                  </DropdownContent>
+                </Dropdown>
               </div>
 
               <Tag
@@ -524,6 +618,19 @@ export function RoomDetailView() {
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
+                  <button
+                    onClick={() =>
+                      setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+                    }
+                    className="flex h-6 w-6 items-center justify-center rounded transition-colors"
+                    title={`Urut ${sortOrder === "asc" ? "A-Z" : "Z-A"}`}
+                  >
+                    {sortOrder === "asc" ? (
+                      <CaretUpIcon className="h-5 w-5 text-red-500" />
+                    ) : (
+                      <CaretDownIcon className="h-5 w-5 text-red-500" />
+                    )}
+                  </button>
                   <Typography variant="caption-small" className="text-gray-800">
                     ({selectableCount}) aset belum di cek
                   </Typography>

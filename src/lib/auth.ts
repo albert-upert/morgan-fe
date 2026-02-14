@@ -2,11 +2,17 @@ import type { QueryClient } from "@tanstack/react-query";
 
 export const getTokenSync = () => {
   if (typeof window === "undefined") return;
-  return localStorage.getItem("auth_token");
+  let token = localStorage.getItem("auth_token");
+  // Auto-set demo token for FE Slicing
+  if (!token) {
+    token = "demo-token-dev-" + Date.now();
+    localStorage.setItem("auth_token", token);
+  }
+  return token;
 };
 
 export const getToken = () => {
-  return Promise.resolve(localStorage.getItem("auth_token"));
+  return Promise.resolve(getTokenSync());
 };
 
 export const getUser = (_queryClient: QueryClient) => {
@@ -16,8 +22,8 @@ export const getUser = (_queryClient: QueryClient) => {
 
   return {
     id: 1,
-    name: "Demo User",
-    email: "demo@petstore.com",
+    name: "Agus Kurniawan",
+    email: "agus@pertamina.ac.id",
     type: "ADMIN",
     roles: [],
   };
