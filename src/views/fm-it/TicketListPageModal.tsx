@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
-import { Accordion, AccordionRow } from "uper-ui/accordion";
+import { Accordion } from "uper-ui/accordion";
 import { Button } from "uper-ui/button";
 import { Callout } from "uper-ui/callout";
 import {
@@ -19,6 +19,8 @@ import {
 } from "uper-ui/dropdown";
 import {
   CaretDownIcon,
+  CaretUpIcon,
+  CautionIcon,
   CloseIcon,
   FileIcon,
   OpenIcon,
@@ -72,13 +74,20 @@ export function TicketListModal({
       sessionStorage.setItem("user_location", selected);
     }
 
+    sessionStorage.setItem("show_ticket_accepted_toast", "true");
+
     navigate({
       to: "/fm-it/ticket-detail/$id",
       params: {
         id: String(reportDetail.id),
       },
     });
-  }, [navigate, onOpenChange, onRequestSubmit, reportDetail, selected]);
+  }, [selected]);
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
+
+  const toggleAccordion = useCallback((id: string) => {
+    setExpandedItems((prev) => ({ ...prev, [id]: !prev[id] }));
+  }, []);
 
   return (
     <Dialog
@@ -125,51 +134,79 @@ export function TicketListModal({
             <DialogBody className="flex flex-col gap-3 px-4 py-3">
               <div className="flex w-full flex-col gap-3">
                 {reportDetail.assets.map((item, index) => {
+                  const isExpanded = expandedItems[item[index]] || false;
                   return (
-                    <Accordion title={item} key={index} className="bg-gray-100">
-                      <div className="flex flex-col gap-3">
-                        <div className="flex flex-col items-start gap-1">
-                          <Typography variant="caption-small-semibold"  className="text-gray-600">Jenis Masalah</Typography>
-                          <Tag color="red" type="filled" size="lg" rounded="default" className="px-3">
-                            <Typography variant="body-small" className="text-white">
-                              Rusak
-                            </Typography>
-                          </Tag>
-                        </div>
-
-                        <div className="flex flex-col items-start gap-1">
-                          <Typography variant="caption-small-semibold"  className="text-gray-600">Detail Kendala</Typography>
-                          <Textarea
-                            className="bg-white"
-                            value={reportDetail.description}
-                            disabled
-                          />                  
-                        </div>
-
-                        <div className="flex flex-col items-start gap-1">
-                          <Typography variant="caption-small-semibold"  className="text-gray-600">Bukti Foto</Typography>
-                          <Button
-                            onClick={() => {
-                              if (reportDetail.photoUrl) setShowPreview(true);
-                            }}
-                            className="flex w-full flex-row items-center justify-between gap-3"
-                            variant="outline"
-                          >
-                            <div>
-                              <FileIcon />
+                    <div className="w-full border border-gray-400 bg-gray-100 rounded-lg">
+                      <Button 
+                        size="lg"
+                        variant="ghost"
+                        className="w-full h-full p-4 flex flex-row items-center justify-between"
+                        onClick={() =>  toggleAccordion(item[index])}
+                      >
+                          <div className="flex items-center justify-start gap-2 w-full h-full">
+                            <div className="h-5 w-5 flex justify-center items-center">
+                              <CautionIcon className="h-4 w-4" color="red"/> 
                             </div>
-
-                            <div className="flex grow justify-start">
-                              {reportDetail.photoUrl}
+                            <Typography variant="caption-small-semibold">{item}</Typography>
+                            <div className="h-5 w-5 flex justify-center items-center ml-auto">
+                              {isExpanded ? 
+                                <CaretUpIcon className="h-4 w-4"/> 
+                                : <CaretDownIcon className="h-4 w-4"/>
+                              }
                             </div>
-
-                            <div>
-                              <OpenIcon />
-                            </div>
-                          </Button>
+                          </div>
+                      </Button>
+                      <Accordion 
+                        title="" 
+                        key={index} 
+                        className="border-0 bg-transparent [&_[data-slot=accordion-content]]:px-0 [&_[data-slot=accordion-header]]:hidden"
+                        expanded={isExpanded}
+                      >
+                        <div className="flex flex-col gap-3">
+                          <div className="flex flex-col items-start gap-1">
+                            <Typography variant="caption-small-semibold"  className="text-gray-600">Jenis Masalah</Typography>
+                            <Tag color="red" type="filled" size="lg" rounded="default" className="px-3">
+                              <Typography variant="body-small" className="text-white">
+                                Rusak
+                              </Typography>
+                            </Tag>
+                          </div>
+    
+                          <div className="flex flex-col items-start gap-1">
+                            <Typography variant="caption-small-semibold"  className="text-gray-600">Detail Kendala</Typography>
+                            <Textarea
+                              className="bg-white"
+                              value={reportDetail.description}
+                              disabled
+                            />                  
+                          </div>
+    
+                          <div className="flex flex-col items-start gap-1">
+                            <Typography variant="caption-small-semibold"  className="text-gray-600">Bukti Foto</Typography>
+                            <Button
+                              onClick={() => {
+                                setShowPreview(true);
+                                setPhotoUrl(reportDetail.photoUrl);
+                              }}
+                              className="flex w-full flex-row items-center justify-between gap-3"
+                              variant="outline"
+                            >
+                              <div>
+                                <FileIcon />
+                              </div>
+    
+                              <div className="flex grow justify-start">
+                                {reportDetail.photoUrl}
+                              </div>
+    
+                              <div>
+                                <OpenIcon />
+                              </div>
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-                    </Accordion>
+                      </Accordion>
+                    </div>
                 )})}
               </div>
 
