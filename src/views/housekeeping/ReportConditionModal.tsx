@@ -262,14 +262,13 @@ function AssetMismatchItem({
           </Typography>
           <div className="flex flex-wrap gap-2">
             {ISSUE_TYPES.map((type) => (
-              <button
+              <Button
                 key={type}
-                type="button"
                 onClick={() => onIssueTypeChange(type)}
-                className={`rounded-lg border px-3 py-1 transition-colors ${
+                className={`rounded-lg border px-2 py-1 transition-colors ${
                   issueType === type
-                    ? "border-red-500 bg-red-500"
-                    : "border-red-500 bg-white hover:bg-red-50"
+                    ? "border-red-500 bg-red-500 hover:bg-red-500 focus:bg-red-500 active:bg-red-500"
+                    : "border-red-500 bg-white hover:bg-white focus:bg-white active:bg-red-50"
                 }`}
               >
                 <Typography
@@ -280,7 +279,7 @@ function AssetMismatchItem({
                 >
                   {type}
                 </Typography>
-              </button>
+              </Button>
             ))}
           </div>
         </div>
@@ -322,12 +321,12 @@ function AssetMismatchItem({
           />
           {!fileName && (
             <label htmlFor={`file-upload-${asset.id}`} className="block">
-              <button
+              <Button
                 type="button"
                 onClick={() =>
                   document.getElementById(`file-upload-${asset.id}`)?.click()
                 }
-                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-400 bg-gray-50 px-4 py-3 text-gray-600 transition-colors hover:border-gray-400 hover:bg-gray-50"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-400 bg-gray-50 px-4 py-3 text-gray-600 transition-colors hover:border-gray-400 hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-50"
               >
                 <UploadIcon className="h-5 w-5 text-gray-600" />
                 <Typography
@@ -336,7 +335,7 @@ function AssetMismatchItem({
                 >
                   Ambil / Pilih Foto
                 </Typography>
-              </button>
+              </Button>
             </label>
           )}
 
@@ -350,20 +349,20 @@ function AssetMismatchItem({
               >
                 {fileName}
               </Typography>
-              <button
+              <Button
                 type="button"
                 onClick={() => setShowPreview(true)}
-                className="rounded p-1 hover:bg-gray-100"
+                className="rounded bg-transparent p-1 hover:bg-transparent focus:bg-transparent active:bg-transparent"
               >
                 <OpenIcon className="h-5 w-5 text-gray-600" />
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
                 onClick={handleRemoveFile}
-                className="rounded p-1 hover:bg-gray-100"
+                className="rounded bg-transparent p-1 hover:bg-transparent focus:bg-transparent active:bg-transparent"
               >
                 <CloseIcon className="h-5 w-5 text-gray-600" />
-              </button>
+              </Button>
             </div>
           )}
         </div>
@@ -483,7 +482,7 @@ function ReportMismatchFooter({
     <DialogFooter className="flex gap-3 rounded-b-lg bg-white px-5 py-4">
       <Button
         onClick={onCancel}
-        className="flex-1 border border-red-500 bg-white text-red-500 hover:bg-red-50"
+        className="flex-1 border border-red-500 bg-white text-red-500 hover:bg-white focus:bg-white active:bg-red-50"
       >
         <Typography variant="body-medium" className="text-red-500">
           Kembali
@@ -494,7 +493,7 @@ function ReportMismatchFooter({
         disabled={!isComplete || isSubmitting}
         className={`flex-1 ${
           isComplete
-            ? "bg-red-500 text-white hover:bg-red-600"
+            ? "bg-red-500 text-white hover:bg-red-500 focus:bg-red-600 active:bg-red-600"
             : "cursor-not-allowed bg-gray-300 text-gray-600"
         }`}
       >
@@ -502,7 +501,7 @@ function ReportMismatchFooter({
           variant="body-medium"
           className={isComplete ? "text-white" : "text-gray-600"}
         >
-          {isSubmitting ? "Mengirim..." : "Kirim Laporan"}
+          Kirim Laporan
         </Typography>
       </Button>
     </DialogFooter>
@@ -519,6 +518,7 @@ export function ReportMismatchDialog({
   onSubmit,
   isSubmitting = false,
 }: ReportMismatchDialogProps) {
+  const [showConfirm, setShowConfirm] = useState(false);
   const {
     drafts,
     getDraft,
@@ -536,10 +536,11 @@ export function ReportMismatchDialog({
     if (open) {
       resetDrafts();
       resetAccordion();
+      setShowConfirm(false);
     }
   }, [open, resetDrafts, resetAccordion]);
 
-  const handleSubmit = useCallback(() => {
+  const handleConfirmSubmit = useCallback(() => {
     const payload: ReportMismatchPayload = {
       issues: assets.map((asset) => {
         const draft = getDraft(asset.id);
@@ -554,38 +555,82 @@ export function ReportMismatchDialog({
     onSubmit(payload);
   }, [assets, getDraft, onSubmit]);
 
+  const handleOpenConfirm = useCallback(() => {
+    setShowConfirm(true);
+  }, []);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className="w-full rounded-2xl border border-gray-200 p-0 data-[side=center]:top-1/2 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm data-[side=center]:-translate-y-1/2"
-        showCloseButton={false}
-      >
-        <ReportMismatchHeader />
-        <ReportMismatchBody
-          assets={assets}
-          expandedId={expandedId}
-          drafts={drafts}
-          onToggleAccordion={toggle}
-          onChangeIssueType={(assetId, type) =>
-            updateDraft(assetId, { issueType: type })
-          }
-          onChangeDraft={(assetId, value) =>
-            updateDraft(assetId, { detail: value })
-          }
-          onFileSelect={(assetId, file) =>
-            updateDraft(assetId, { fileName: file.name })
-          }
-          onFileRemove={(assetId) =>
-            updateDraft(assetId, { fileName: undefined })
-          }
-        />
-        <ReportMismatchFooter
-          isComplete={isAllComplete}
-          isSubmitting={isSubmitting}
-          onCancel={() => onOpenChange(false)}
-          onSubmit={handleSubmit}
-        />
-      </DialogContent>
+      {showConfirm ? (
+        <DialogContent
+          className="w-full rounded-2xl p-0 data-[side=center]:top-1/2 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm data-[side=center]:-translate-y-1/2"
+          showCloseButton={false}
+        >
+          <DialogHeader className="justify-center border-b border-gray-300 bg-gray-100 px-5 py-4">
+            <Typography variant="h5" className="text-gray-800">
+              Tunggu Sebentar
+            </Typography>
+          </DialogHeader>
+          <DialogBody className="items-stretch gap-3 border-0 bg-white px-5 py-4">
+            <Typography
+              variant="body-medium"
+              className="text-center text-gray-800"
+            >
+              Apakah anda yakin sudah mengisi semua kendala aset dengan benar?
+            </Typography>
+          </DialogBody>
+          <DialogFooter className="flex gap-3 rounded-b-lg bg-white px-5 py-4">
+            <Button
+              onClick={() => setShowConfirm(false)}
+              className="flex-1 border border-red-500 bg-white text-red-500 hover:bg-white focus:bg-white active:bg-red-50"
+            >
+              <Typography variant="body-medium" className="text-red-500">
+                Cek Kembali
+              </Typography>
+            </Button>
+            <Button
+              onClick={handleConfirmSubmit}
+              disabled={isSubmitting}
+              className="flex-1 bg-red-500 text-white hover:bg-red-500 active:bg-red-600"
+            >
+              <Typography variant="body-medium" className="text-white">
+                {isSubmitting ? "Mengirim..." : "Ya, Laporkan"}
+              </Typography>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      ) : (
+        <DialogContent
+          className="w-full rounded-2xl border border-gray-200 p-0 data-[side=center]:top-1/2 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm data-[side=center]:-translate-y-1/2"
+          showCloseButton={false}
+        >
+          <ReportMismatchHeader />
+          <ReportMismatchBody
+            assets={assets}
+            expandedId={expandedId}
+            drafts={drafts}
+            onToggleAccordion={toggle}
+            onChangeIssueType={(assetId, type) =>
+              updateDraft(assetId, { issueType: type })
+            }
+            onChangeDraft={(assetId, value) =>
+              updateDraft(assetId, { detail: value })
+            }
+            onFileSelect={(assetId, file) =>
+              updateDraft(assetId, { fileName: file.name })
+            }
+            onFileRemove={(assetId) =>
+              updateDraft(assetId, { fileName: undefined })
+            }
+          />
+          <ReportMismatchFooter
+            isComplete={isAllComplete}
+            isSubmitting={isSubmitting}
+            onCancel={() => onOpenChange(false)}
+            onSubmit={handleOpenConfirm}
+          />
+        </DialogContent>
+      )}
     </Dialog>
   );
 }

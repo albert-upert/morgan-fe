@@ -1,7 +1,18 @@
-import { useParams } from "@tanstack/react-router";
+import { useNavigate, useParams } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
 import type { ComponentType } from "react";
-import { Button, Card, CardContent, Checkbox, Typography } from "uper-ui";
+import {
+  Button,
+  Card,
+  CardContent,
+  Checkbox,
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  Typography,
+} from "uper-ui";
 import { Accordion } from "uper-ui/accordion";
 import {
   Dropdown,
@@ -272,6 +283,7 @@ export function RoomDetailView() {
   const { roomId: _roomId } = useParams({
     from: "/_layout/housekeeping/room-checklist/$roomId",
   });
+  const navigate = useNavigate();
 
   // State: user interactions
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -283,6 +295,7 @@ export function RoomDetailView() {
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
+  const [showAllOkConfirm, setShowAllOkConfirm] = useState(false);
   const [reportingAssets, setReportingAssets] = useState<Array<MismatchAsset>>(
     []
   );
@@ -377,9 +390,8 @@ export function RoomDetailView() {
       return;
     }
 
-    // Jika tidak ada masalah, langsung kirim
-    toast.success(`${selectedIds.size} aset dilaporkan`);
-    // TODO: Send to API, then navigate back
+    // Jika tidak ada masalah, tampilkan konfirmasi
+    setShowAllOkConfirm(true);
   }, [selectedIds, reportingIds, roomAssets]);
 
   // Handlers: accordion
@@ -424,17 +436,25 @@ export function RoomDetailView() {
   );
 
   // Handlers: submit report
-  const handleSubmitReport = useCallback((payload: ReportMismatchPayload) => {
-    toast.success(
-      `Laporan berhasil dikirim! ${payload.issues.length} aset bermasalah telah dilaporkan`
-    );
+  const handleSubmitReport = useCallback(
+    (payload: ReportMismatchPayload) => {
+      toast.success(
+        `Laporan berhasil dikirim! ${payload.issues.length} aset bermasalah telah dilaporkan`
+      );
 
-    // Reset state
-    setShowReportModal(false);
-    setReportingAssets([]);
-    setReportingIds(new Set()); // Clear reporting IDs after submit
-    // TODO: Send to API (both checked assets from selectedIds and problematic assets from payload)
-  }, []);
+      // Reset state
+      setShowReportModal(false);
+      setReportingAssets([]);
+      setReportingIds(new Set()); // Clear reporting IDs after submit
+      navigate({
+        to: "/housekeeping/checklist-report/$roomId",
+        params: { roomId: _roomId },
+        search: { status: "issue" },
+      });
+      // TODO: Send to API (both checked assets from selectedIds and problematic assets from payload)
+    },
+    [navigate, _roomId]
+  );
 
   // Handlers: modal close
   const handleModalClose = useCallback((open: boolean) => {
@@ -444,6 +464,15 @@ export function RoomDetailView() {
     }
     setShowReportModal(open);
   }, []);
+
+  const handleConfirmAllOk = useCallback(() => {
+    setShowAllOkConfirm(false);
+    navigate({
+      to: "/housekeeping/checklist-report/$roomId",
+      params: { roomId: _roomId },
+      search: { status: "ok" },
+    });
+  }, [navigate, _roomId]);
 
   // Handlers: pagination
   const handlePageChange = useCallback(
@@ -874,6 +903,46 @@ export function RoomDetailView() {
         assets={reportingAssets}
         onSubmit={handleSubmitReport}
       />
+
+      {/* All OK Confirm Modal */}
+      <Dialog open={showAllOkConfirm} onOpenChange={setShowAllOkConfirm}>
+        <DialogContent
+          className="w-full rounded-2xl p-0 data-[side=center]:top-1/2 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm data-[side=center]:-translate-y-1/2"
+          showCloseButton={false}
+        >
+          <DialogHeader className="justify-center border-b border-gray-300 bg-gray-100">
+            <Typography variant="h5" className="text-gray-800">
+              Tunggu Sebentar
+            </Typography>
+          </DialogHeader>
+          <DialogBody className="border-0 bg-white">
+            <Typography
+              variant="body-medium"
+              className="text-center text-gray-800"
+            >
+              Apakah anda yakin semua aset telah memenuhi standar SOP?
+            </Typography>
+          </DialogBody>
+          <DialogFooter className="flex gap-3 rounded-b-lg bg-white px-4 pb-3">
+            <Button
+              onClick={() => setShowAllOkConfirm(false)}
+              className="flex-1 border border-red-500 bg-white text-red-500 active:bg-white"
+            >
+              <Typography variant="body-medium" className="text-red-500">
+                Cek Kembali
+              </Typography>
+            </Button>
+            <Button
+              onClick={handleConfirmAllOk}
+              className="flex-1 bg-red-500 text-white hover:bg-red-600 active:bg-red-500"
+            >
+              <Typography variant="body-medium" className="text-white">
+                Ya, Laporkan
+              </Typography>
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
