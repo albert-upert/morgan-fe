@@ -96,7 +96,7 @@ export function DosenHomePageView() {
                   </div>
 
                   <div className="mt-2 flex flex-wrap items-center gap-x-10 gap-y-2 text-gray-600">
-                    <div className="inline-flex items-center gap-2">
+                    <div className="inline-flex items-center gap-1">
                       <BuildingIcon className="h-5 w-5" color="currentColor" />
                       <Typography
                         variant="caption-pixie-semibold"
@@ -105,7 +105,7 @@ export function DosenHomePageView() {
                         {item.location}
                       </Typography>
                     </div>
-                    <div className="inline-flex items-center gap-2">
+                    <div className="inline-flex items-center gap-1">
                       <CalendarIcon className="h-5 w-5" color="currentColor" />
                       <Typography
                         variant="caption-pixie-semibold"

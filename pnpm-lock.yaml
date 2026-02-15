@@ -87,8 +87,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       uper-ui:
-        specifier: github:albert-upert/uper-mobile-component#b24450c30bcb45528b42c4c63d101b9a269235d4
-        version: git+https://git@github.com:albert-upert/uper-mobile-component.git#b24450c30bcb45528b42c4c63d101b9a269235d4(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(redux@5.0.1)(tailwindcss@4.1.18)
+        specifier: github:albert-upert/uper-mobile-component#c117e9b61eab11d435c1a1680192dab3ea957b4c
+        version: git+https://git@github.com:albert-upert/uper-mobile-component.git#c117e9b61eab11d435c1a1680192dab3ea957b4c(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(redux@5.0.1)(tailwindcss@4.1.18)
       vite-tsconfig-paths:
         specifier: ^6.0.3
         version: 6.0.3(typescript@5.9.3)(vite@7.3.0(@types/node@22.18.12)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))
@@ -5426,8 +5426,8 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
-  uper-ui@git+https://git@github.com:albert-upert/uper-mobile-component.git#b24450c30bcb45528b42c4c63d101b9a269235d4:
-    resolution: {commit: b24450c30bcb45528b42c4c63d101b9a269235d4, repo: git@github.com:albert-upert/uper-mobile-component.git, type: git}
+  uper-ui@git+https://git@github.com:albert-upert/uper-mobile-component.git#c117e9b61eab11d435c1a1680192dab3ea957b4c:
+    resolution: {commit: c117e9b61eab11d435c1a1680192dab3ea957b4c, repo: git@github.com:albert-upert/uper-mobile-component.git, type: git}
     version: 0.1.0
     peerDependencies:
       react: ^19.0.0
@@ -11274,7 +11274,7 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
-  uper-ui@git+https://git@github.com:albert-upert/uper-mobile-component.git#b24450c30bcb45528b42c4c63d101b9a269235d4(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(redux@5.0.1)(tailwindcss@4.1.18):
+  uper-ui@git+https://git@github.com:albert-upert/uper-mobile-component.git#c117e9b61eab11d435c1a1680192dab3ea957b4c(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(redux@5.0.1)(tailwindcss@4.1.18):
     dependencies:
       '@tanstack/react-router': 1.159.10(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       class-variance-authority: 0.7.1

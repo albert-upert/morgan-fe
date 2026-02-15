@@ -170,7 +170,7 @@ export function ReportIssueModal({
               {assets.map((asset) => {
                 const isExpanded = expandedId === asset.id;
                 const draft = getDraft(asset.id);
-                const isComplete = !!draft.issueType && !!draft.detail.trim();
+                const isComplete = !!draft.issueType;
 
                 return (
                   <div
@@ -209,11 +209,17 @@ export function ReportIssueModal({
                         </div>
                       </div>
                       <div className="shrink-0 text-gray-700">
-                        {isExpanded ? (
-                          <CaretUpIcon className="h-4 w-4" />
-                        ) : (
-                          <CaretDownIcon className="h-4 w-4" />
-                        )}
+                        <div
+                          className={
+                            isExpanded ? "rounded-full bg-gray-300" : ""
+                          }
+                        >
+                          {isExpanded ? (
+                            <CaretUpIcon className="h-10 w-10 p-0" />
+                          ) : (
+                            <CaretDownIcon className="h-10 w-10 p-0" />
+                          )}
+                        </div>
                       </div>
                     </button>
 
@@ -299,15 +305,16 @@ export function ReportIssueModal({
                             </Typography>
                           )}
                         </div>
-                        {assets.length > 1 && (
-                          <button
-                            type="button"
-                            className="mt-4 w-full text-right text-[12px] font-semibold text-primary"
-                            onClick={goNext}
-                          >
-                            Lanjut ke aset berikutnya →
-                          </button>
-                        )}
+                        {assets.length > 1 &&
+                          asset.id !== assets[assets.length - 1].id && (
+                            <button
+                              type="button"
+                              className="mt-4 w-full text-right text-[12px] font-semibold text-primary"
+                              onClick={goNext}
+                            >
+                              Lanjut ke aset berikutnya →
+                            </button>
+                          )}
                       </div>
                     )}
                   </div>
@@ -317,7 +324,7 @@ export function ReportIssueModal({
 
             {!isAllComplete && (
               <div className="mt-3 flex items-start gap-2 rounded-xl border border-yellow-200 bg-yellow-50 px-3 py-2">
-                <ErrorIcon className="mt-px h-4 w-4 text-yellow-700" />
+                <ErrorIcon className="mt-px h-5 w-5 text-yellow-700" />
                 <Typography
                   variant="body-small"
                   className="text-[12px] text-gray-700"

@@ -2,7 +2,7 @@ import { Link, useParams } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Card, CardContent } from "uper-ui/card";
 import {
-  ArrowLeftIcon,
+  ArrowBackIcon,
   BuildingIcon,
   CalendarIcon,
   CaretDownIcon,
@@ -44,7 +44,7 @@ export function ReportSuccessView() {
           className="inline-flex items-center gap-2 text-red-500"
           aria-label="Kembali ke Beranda"
         >
-          <ArrowLeftIcon className="h-[20px] w-[20px]" color="currentColor" />
+          <ArrowBackIcon className="h-[20px] w-[20px]" color="currentColor" />
           <Typography variant="body-small" className="text-red-500">
             Daftar Laporan
           </Typography>
@@ -86,7 +86,7 @@ export function ReportSuccessView() {
         className="inline-flex items-center gap-2 text-red-500"
         aria-label="Kembali ke Beranda"
       >
-        <ArrowLeftIcon className="h-[20px] w-[20px]" color="currentColor" />
+        <ArrowBackIcon className="h-[20px] w-[20px]" color="currentColor" />
         <Typography variant="body-small" className="text-red-500">
           Daftar Laporan
         </Typography>
@@ -151,7 +151,7 @@ export function ReportSuccessView() {
 
       <Card className="border border-border bg-white py-4" elevation="low">
         <CardContent className="px-4">
-          <Typography variant="body-medium-semibold" className="text-gray-900">
+          <Typography variant="body-large-semibold" className="text-gray-900">
             Daftar Aset Bermasalah
           </Typography>
 
@@ -182,11 +182,13 @@ export function ReportSuccessView() {
                       </Typography>
                     </div>
                     <div className="shrink-0 text-gray-700">
-                      {isOpen ? (
-                        <CaretUpIcon className="h-4 w-4" />
-                      ) : (
-                        <CaretDownIcon className="h-4 w-4" />
-                      )}
+                      <div className={isOpen ? "rounded-full bg-gray-300" : ""}>
+                        {isOpen ? (
+                          <CaretUpIcon className="h-10 w-10 p-0" />
+                        ) : (
+                          <CaretDownIcon className="h-10 w-10 p-0" />
+                        )}
+                      </div>
                     </div>
                   </button>
 
@@ -198,9 +200,14 @@ export function ReportSuccessView() {
                       >
                         Jenis Masalah
                       </Typography>
-                      <div className="mt-2">
-                        <span className="inline-flex items-center rounded-lg bg-primary px-3 py-1 text-[12px] font-semibold text-white">
-                          {issue.issueType}
+                      <div className="my-1">
+                        <span className="inline-flex items-center rounded-lg bg-primary px-3 py-1">
+                          <Typography
+                            variant="caption-small"
+                            className="text-white"
+                          >
+                            {issue.issueType}
+                          </Typography>
                         </span>
                       </div>
 
@@ -211,7 +218,7 @@ export function ReportSuccessView() {
                         Detail Kendala
                       </Typography>
 
-                      <div className="mt-2 rounded-lg border border-gray-200 bg-white px-3 py-2">
+                      <div className="mt-2 rounded-lg border border-border bg-white px-3 py-2">
                         <Typography
                           variant="body-small"
                           className="text-gray-900"
