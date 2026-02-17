@@ -21,6 +21,7 @@ import { Route as LayoutAutoAssignIndexRouteImport } from './routes/_layout/auto
 import { Route as LayoutAcademicCalendarIndexRouteImport } from './routes/_layout/academic-calendar/index'
 import { Route as LayoutPetsCreateRouteImport } from './routes/_layout/pets/create'
 import { Route as LayoutHousekeepingScanRouteImport } from './routes/_layout/housekeeping/scan'
+import { Route as LayoutHousekeepingReportsRouteImport } from './routes/_layout/housekeeping/reports'
 import { Route as LayoutHousekeepingHomeRouteImport } from './routes/_layout/housekeeping/home'
 import { Route as LayoutHousekeepingChecklistDashboardRouteImport } from './routes/_layout/housekeeping/checklist-dashboard'
 import { Route as LayoutFmItTicketListRouteImport } from './routes/_layout/fm-it/ticket-list'
@@ -133,6 +134,12 @@ const LayoutHousekeepingScanRoute = LayoutHousekeepingScanRouteImport.update({
   path: '/housekeeping/scan',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutHousekeepingReportsRoute =
+  LayoutHousekeepingReportsRouteImport.update({
+    id: '/housekeeping/reports',
+    path: '/housekeeping/reports',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutHousekeepingHomeRoute = LayoutHousekeepingHomeRouteImport.update({
   id: '/housekeeping/home',
   path: '/housekeeping/home',
@@ -446,6 +453,7 @@ export interface FileRoutesByFullPath {
   '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
   '/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
   '/housekeeping/home': typeof LayoutHousekeepingHomeRoute
+  '/housekeeping/reports': typeof LayoutHousekeepingReportsRoute
   '/housekeeping/scan': typeof LayoutHousekeepingScanRoute
   '/pets/create': typeof LayoutPetsCreateRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
@@ -508,6 +516,7 @@ export interface FileRoutesByTo {
   '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
   '/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
   '/housekeeping/home': typeof LayoutHousekeepingHomeRoute
+  '/housekeeping/reports': typeof LayoutHousekeepingReportsRoute
   '/housekeeping/scan': typeof LayoutHousekeepingScanRoute
   '/pets/create': typeof LayoutPetsCreateRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
@@ -572,6 +581,7 @@ export interface FileRoutesById {
   '/_layout/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
   '/_layout/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
   '/_layout/housekeeping/home': typeof LayoutHousekeepingHomeRoute
+  '/_layout/housekeeping/reports': typeof LayoutHousekeepingReportsRoute
   '/_layout/housekeeping/scan': typeof LayoutHousekeepingScanRoute
   '/_layout/pets/create': typeof LayoutPetsCreateRoute
   '/_layout/academic-calendar/': typeof LayoutAcademicCalendarIndexRoute
@@ -636,6 +646,7 @@ export interface FileRouteTypes {
     | '/fm-it/ticket-list'
     | '/housekeeping/checklist-dashboard'
     | '/housekeeping/home'
+    | '/housekeeping/reports'
     | '/housekeeping/scan'
     | '/pets/create'
     | '/academic-calendar'
@@ -698,6 +709,7 @@ export interface FileRouteTypes {
     | '/fm-it/ticket-list'
     | '/housekeeping/checklist-dashboard'
     | '/housekeeping/home'
+    | '/housekeeping/reports'
     | '/housekeeping/scan'
     | '/pets/create'
     | '/academic-calendar'
@@ -761,6 +773,7 @@ export interface FileRouteTypes {
     | '/_layout/fm-it/ticket-list'
     | '/_layout/housekeeping/checklist-dashboard'
     | '/_layout/housekeeping/home'
+    | '/_layout/housekeeping/reports'
     | '/_layout/housekeeping/scan'
     | '/_layout/pets/create'
     | '/_layout/academic-calendar/'
@@ -885,6 +898,13 @@ declare module '@tanstack/react-router' {
       path: '/housekeeping/scan'
       fullPath: '/housekeeping/scan'
       preLoaderRoute: typeof LayoutHousekeepingScanRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/housekeeping/reports': {
+      id: '/_layout/housekeeping/reports'
+      path: '/housekeeping/reports'
+      fullPath: '/housekeeping/reports'
+      preLoaderRoute: typeof LayoutHousekeepingReportsRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/housekeeping/home': {
@@ -1260,6 +1280,7 @@ interface LayoutRouteChildren {
   LayoutFmItTicketListRoute: typeof LayoutFmItTicketListRoute
   LayoutHousekeepingChecklistDashboardRoute: typeof LayoutHousekeepingChecklistDashboardRoute
   LayoutHousekeepingHomeRoute: typeof LayoutHousekeepingHomeRoute
+  LayoutHousekeepingReportsRoute: typeof LayoutHousekeepingReportsRoute
   LayoutHousekeepingScanRoute: typeof LayoutHousekeepingScanRoute
   LayoutPetsCreateRoute: typeof LayoutPetsCreateRoute
   LayoutAcademicCalendarIndexRoute: typeof LayoutAcademicCalendarIndexRoute
@@ -1328,6 +1349,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutHousekeepingChecklistDashboardRoute:
     LayoutHousekeepingChecklistDashboardRoute,
   LayoutHousekeepingHomeRoute: LayoutHousekeepingHomeRoute,
+  LayoutHousekeepingReportsRoute: LayoutHousekeepingReportsRoute,
   LayoutHousekeepingScanRoute: LayoutHousekeepingScanRoute,
   LayoutPetsCreateRoute: LayoutPetsCreateRoute,
   LayoutAcademicCalendarIndexRoute: LayoutAcademicCalendarIndexRoute,
