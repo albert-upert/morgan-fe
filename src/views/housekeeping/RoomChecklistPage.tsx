@@ -22,11 +22,11 @@ import {
 } from "uper-ui/dropdown";
 import {
   ArrowDownIcon,
+  ArrowDownIconFilter,
   ArrowLeftIcon,
+  ArrowUpIconFilter,
   BuildingIcon,
   CalendarIcon,
-  CaretDownIcon,
-  CaretUpIcon,
   ControlIcon,
   DispensationIcon,
   ErrorIcon,
@@ -53,7 +53,7 @@ function InfoRow({ icon: Icon, label, value }: InfoRowProps) {
   return (
     <div className="flex items-start gap-2">
       <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-300">
-        <Icon className="h-5 w-5 text-gray-600" />
+        <Icon className="h-6 w-6 text-gray-600" />
       </div>
       <div className="flex flex-col items-baseline gap-1">
         <Typography variant="caption-small-semibold" className="text-gray-600">
@@ -495,7 +495,7 @@ export function RoomDetailView() {
       <div className="flex flex-col gap-4">
         <Link
           to="/housekeeping/checklist-dashboard"
-          className="inline-flex items-center gap-2 text-red-500"
+          className="inline-flex w-fit items-center gap-2 text-red-500"
           aria-label="Kembali ke Daftar Ruangan"
         >
           <ArrowLeftIcon className="h-5 w-5" color="currentColor" />
@@ -646,7 +646,7 @@ export function RoomDetailView() {
               </Tag>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1">
                   <button
                     onClick={() =>
                       setSortOrder(sortOrder === "asc" ? "desc" : "asc")
@@ -654,11 +654,14 @@ export function RoomDetailView() {
                     className="flex h-6 w-6 items-center justify-center rounded transition-colors"
                     title={`Urut ${sortOrder === "asc" ? "A-Z" : "Z-A"}`}
                   >
-                    {sortOrder === "asc" ? (
-                      <CaretUpIcon className="h-5 w-5 text-red-500" />
-                    ) : (
-                      <CaretDownIcon className="h-5 w-5 text-red-500" />
-                    )}
+                    <div className="flex flex-col gap-0">
+                      <ArrowUpIconFilter
+                        className={`h-2 w-2 ${sortOrder === "asc" ? "text-gray-600" : "text-red-500"} `}
+                      />
+                      <ArrowDownIconFilter
+                        className={`h-2 w-2 ${sortOrder === "asc" ? "text-red-500" : "text-gray-600"} `}
+                      />
+                    </div>
                   </button>
                   <Typography variant="caption-small" className="text-gray-800">
                     ({selectableCount}) aset belum di cek
@@ -667,7 +670,7 @@ export function RoomDetailView() {
                 <Button
                   variant="tertiary"
                   size="md"
-                  className="px-0 text-red-500"
+                  className="px-0 text-red-500 hover:bg-transparent focus:bg-transparent active:bg-transparent"
                   onClick={handleToggleAll}
                 >
                   <Typography
@@ -698,13 +701,15 @@ export function RoomDetailView() {
                       isReported
                         ? "border-gray-300 bg-white px-2 py-2"
                         : isReporting
-                          ? "border-red-300 bg-red-50 px-2 py-1"
+                          ? `border-red-500 bg-red-50 ${isExpanded ? "!bg-gray-200" : ""}`
                           : isSelected
-                            ? "border-green-300 bg-green-50 px-2 py-1"
-                            : "border-gray-300 bg-white px-2 py-1"
+                            ? `border-green-500 bg-green-50 ${isExpanded ? "!bg-gray-200" : ""}`
+                            : "border-gray-300 bg-white"
                     }`}
                   >
-                    <div className="flex items-center justify-between gap-3">
+                    <div
+                      className={`flex items-center justify-between gap-3 px-2 py-1 ${isExpanded ? "rounded-xl border-b " + (isReporting ? "border-red-500 bg-red-50" : "border-green-500 bg-green-50") : ""} `}
+                    >
                       <div className="flex items-center justify-start gap-3">
                         {isReporting ? (
                           <div className="flex h-5 w-5 items-center justify-center">
@@ -801,9 +806,9 @@ export function RoomDetailView() {
                         <Accordion
                           title=""
                           expanded={isExpanded}
-                          className="border-0 bg-transparent [&_[data-slot=accordion-content]]:px-0 [&_[data-slot=accordion-header]]:hidden"
+                          className="border-0 bg-gray-200 [&_[data-slot=accordion-content]]:px-0 [&_[data-slot=accordion-header]]:hidden"
                         >
-                          <div className="flex flex-col gap-2">
+                          <div className="flex flex-col gap-2 pt-2">
                             {hasSop ? (
                               <>
                                 <Typography
@@ -861,7 +866,7 @@ export function RoomDetailView() {
                 return (
                   <Button
                     variant={isComplete ? "primary" : "secondary"}
-                    className="w-full"
+                    className={`w-full ${isComplete ? "bg-red-500" : "border-0 bg-gray-300 text-gray-600 hover:bg-gray-300 focus:bg-gray-300 active:bg-gray-300"}`}
                     onClick={isComplete ? handleSubmit : undefined}
                   >
                     {isComplete && (
@@ -883,6 +888,7 @@ export function RoomDetailView() {
             {/* Pagination */}
             <div className="flex items-center justify-center px-4 pb-4">
               <Pagination
+                variant="simple"
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={handlePageChange}
