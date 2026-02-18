@@ -88,7 +88,7 @@ importers:
         version: 1.4.0
       uper-ui:
         specifier: github:albert-upert/uper-mobile-component
-        version: git+https://git@github.com:albert-upert/uper-mobile-component.git#f464d595f747f98377a96239413d1b38d2f8f807(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(redux@5.0.1)(tailwindcss@4.1.18)
+        version: git+https://github.com/albert-upert/uper-mobile-component.git#474dc7d60e8f149f8783013600c179fb72be34b8(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(redux@5.0.1)(tailwindcss@4.1.18)
       vite-tsconfig-paths:
         specifier: ^6.0.3
         version: 6.0.3(typescript@5.9.3)(vite@7.3.0(@types/node@22.18.12)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.20.6)(yaml@2.8.2))
@@ -5441,8 +5441,8 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
-  uper-ui@git+https://git@github.com:albert-upert/uper-mobile-component.git#f464d595f747f98377a96239413d1b38d2f8f807:
-    resolution: {commit: f464d595f747f98377a96239413d1b38d2f8f807, repo: git@github.com:albert-upert/uper-mobile-component.git, type: git}
+  uper-ui@git+https://github.com/albert-upert/uper-mobile-component.git#474dc7d60e8f149f8783013600c179fb72be34b8:
+    resolution: {commit: 474dc7d60e8f149f8783013600c179fb72be34b8, repo: https://github.com/albert-upert/uper-mobile-component.git, type: git}
     version: 0.1.0
     peerDependencies:
       react: ^19.0.0
@@ -11297,7 +11297,7 @@ snapshots:
       escalade: 3.2.0
       picocolors: 1.1.1
 
-  uper-ui@git+https://git@github.com:albert-upert/uper-mobile-component.git#f464d595f747f98377a96239413d1b38d2f8f807(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(redux@5.0.1)(tailwindcss@4.1.18):
+  uper-ui@git+https://github.com/albert-upert/uper-mobile-component.git#474dc7d60e8f149f8783013600c179fb72be34b8(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react-is@19.2.3)(react@19.2.3)(redux@5.0.1)(tailwindcss@4.1.18):
     dependencies:
       '@tanstack/react-router': 1.160.2(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       class-variance-authority: 0.7.1

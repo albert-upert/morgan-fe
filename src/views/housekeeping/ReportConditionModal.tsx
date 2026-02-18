@@ -1,21 +1,18 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Button,
-  CloseIcon,
   Dialog,
   DialogBody,
   DialogContent,
   DialogFooter,
   DialogHeader,
   ErrorIcon,
-  FileIcon,
-  OpenIcon,
   Tag,
   Textarea,
   Typography,
-  UploadIcon,
 } from "uper-ui";
 import { Accordion } from "uper-ui/accordion";
+import { FileUpload } from "uper-ui/file-upload";
 
 /**
  * Domain Types
@@ -176,12 +173,14 @@ function AssetMismatchItem({
   onFileRemove,
 }: AssetItemProps) {
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
-  const [showPreview, setShowPreview] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleFileInput = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (file) {
+  // Handle file selection from FileUpload
+  const handleFilesChange = useCallback(
+    (files: Array<File>) => {
+      if (files.length > 0) {
+        const file = files[0];
+        setSelectedFile(file);
         onFileSelect(file);
         // Create preview URL
         const url = URL.createObjectURL(file);
@@ -191,8 +190,10 @@ function AssetMismatchItem({
     [onFileSelect]
   );
 
+  // Handle file removal
   const handleRemoveFile = useCallback(() => {
     onFileRemove();
+    setSelectedFile(null);
     // Clean up preview URL
     if (imagePreviewUrl) {
       URL.revokeObjectURL(imagePreviewUrl);
@@ -306,90 +307,18 @@ function AssetMismatchItem({
 
         {/* File Upload */}
         <div className="space-y-1.5">
-          <Typography
-            variant="caption-small-semibold"
-            className="text-gray-600"
-          >
-            Bukti Foto (Opsional)
-          </Typography>
-          <input
-            type="file"
-            id={`file-upload-${asset.id}`}
+          <FileUpload
+            label="Bukti Foto (Opsional)"
             accept="image/*"
-            onChange={handleFileInput}
-            className="hidden"
+            maxSize={10}
+            variant="button"
+            buttonLabel={fileName ? "Ganti Foto" : "Ambil / Pilih Foto"}
+            files={selectedFile ? [selectedFile] : []}
+            onFilesChange={handleFilesChange}
+            onRemoveFile={handleRemoveFile}
           />
-          {!fileName && (
-            <label htmlFor={`file-upload-${asset.id}`} className="block">
-              <Button
-                type="button"
-                onClick={() =>
-                  document.getElementById(`file-upload-${asset.id}`)?.click()
-                }
-                className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-gray-400 bg-gray-50 px-4 py-3 text-gray-600 transition-colors hover:border-gray-400 hover:bg-gray-50 focus:bg-gray-50 active:bg-gray-50"
-              >
-                <UploadIcon className="h-5 w-5 text-gray-600" />
-                <Typography
-                  variant="caption-small-semibold"
-                  className="text-gray-600"
-                >
-                  Ambil / Pilih Foto
-                </Typography>
-              </Button>
-            </label>
-          )}
-
-          {/* File Preview */}
-          {fileName && (
-            <div className="flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-3 py-2.5">
-              <FileIcon className="h-5 w-5 flex-shrink-0 text-gray-600" />
-              <Typography
-                variant="body-small"
-                className="flex-1 truncate text-gray-900"
-              >
-                {fileName}
-              </Typography>
-              <Button
-                type="button"
-                onClick={() => setShowPreview(true)}
-                className="rounded bg-transparent p-1 hover:bg-transparent focus:bg-transparent active:bg-transparent"
-              >
-                <OpenIcon className="h-5 w-5 text-gray-600" />
-              </Button>
-              <Button
-                type="button"
-                onClick={handleRemoveFile}
-                className="rounded bg-transparent p-1 hover:bg-transparent focus:bg-transparent active:bg-transparent"
-              >
-                <CloseIcon className="h-5 w-5 text-gray-600" />
-              </Button>
-            </div>
-          )}
         </div>
       </div>
-
-      {/* Image Preview Modal */}
-      {showPreview && imagePreviewUrl && (
-        <Dialog open={showPreview} onOpenChange={setShowPreview}>
-          <DialogContent
-            className="rounded-2xl p-0 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm"
-            showCloseButton={true}
-          >
-            <DialogHeader className="rounded-t-2xl border-b border-gray-300 bg-gray-100 px-5 py-4">
-              <Typography variant="h5" className="text-gray-800">
-                Preview Foto
-              </Typography>
-            </DialogHeader>
-            <div className="rounded-b-2xl bg-white p-4">
-              <img
-                src={imagePreviewUrl}
-                alt={fileName}
-                className="h-auto w-full object-contain"
-              />
-            </div>
-          </DialogContent>
-        </Dialog>
-      )}
     </Accordion>
   );
 }

@@ -1,5 +1,5 @@
 import { useParams, useSearch } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -21,7 +21,6 @@ import {
 } from "uper-ui/icon";
 import { Link } from "uper-ui/link";
 import { Tag } from "uper-ui/tags";
-import { toast } from "uper-ui/toast";
 
 const MOCK_REPORT = {
   roomCode: "Ruang 2805",
@@ -61,17 +60,13 @@ export function ChecklistReportView() {
     name: string;
   } | null>(null);
 
-  useEffect(() => {
-    toast.success("Laporan berhasil dikirim!");
-  }, []);
-
   return (
     <div className="flex flex-col gap-4 pb-4">
       {/* Header */}
       <div className="flex flex-col gap-4">
         <Link
-          to="/housekeeping/checklist-dashboard"
-          className="inline-flex items-center gap-2 text-red-500"
+          to="/housekeeping/home"
+          className="inline-flex w-fit items-center gap-2 text-red-500"
           aria-label="Kembali ke Beranda"
         >
           <ArrowLeftIcon className="h-5 w-5" color="currentColor" />

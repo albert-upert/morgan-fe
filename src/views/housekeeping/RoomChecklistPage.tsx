@@ -437,10 +437,8 @@ export function RoomDetailView() {
 
   // Handlers: submit report
   const handleSubmitReport = useCallback(
-    (payload: ReportMismatchPayload) => {
-      toast.success(
-        `Laporan berhasil dikirim! ${payload.issues.length} aset bermasalah telah dilaporkan`
-      );
+    (_payload: ReportMismatchPayload) => {
+      toast.success("Laporan berhasil dikirim!");
 
       // Reset state
       setShowReportModal(false);
@@ -466,6 +464,7 @@ export function RoomDetailView() {
   }, []);
 
   const handleConfirmAllOk = useCallback(() => {
+    toast.success("Laporan berhasil dikirim!");
     setShowAllOkConfirm(false);
     navigate({
       to: "/housekeeping/checklist-report/$roomId",
@@ -699,7 +698,7 @@ export function RoomDetailView() {
                     key={asset.id}
                     className={`flex flex-col rounded-xl border ${
                       isReported
-                        ? "border-gray-300 bg-white px-2 py-2"
+                        ? "border-gray-300 bg-white py-1"
                         : isReporting
                           ? `border-red-500 bg-red-50 ${isExpanded ? "!bg-gray-200" : ""}`
                           : isSelected
