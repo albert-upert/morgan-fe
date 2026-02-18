@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { Button } from "uper-ui/button";
 import {
@@ -9,6 +8,7 @@ import {
   CardTitle,
 } from "uper-ui/card";
 import { ArrowLeftIcon, BuildingIcon, ProfileIcon } from "uper-ui/icon";
+import { Link } from "uper-ui/link";
 import { Tag } from "uper-ui/tags";
 import { Typography } from "uper-ui/typography";
 
@@ -20,11 +20,15 @@ interface Room {
 }
 
 interface RoomListData {
-  workArea: string;
   janitor: string;
-  totalRooms: number;
-  completedRooms: number;
+  workAreas: Array<WorkArea>;
   rooms: Array<Room>;
+}
+
+interface WorkArea {
+  id: string;
+  building: string;
+  floors: Array<string>;
 }
 
 type RoomStatusLabelProps = {
@@ -39,7 +43,7 @@ function RoomStatusLabel({ status }: RoomStatusLabelProps) {
       type="monochrome"
       rounded="pill"
       className={`inline-flex items-center px-3 py-1 ${
-        isChecked ? "bg-green-500" : "bg-red-500"
+        isChecked ? "bg-green-400" : "bg-red-400"
       }`}
     >
       <Typography
@@ -82,12 +86,47 @@ function RoomItem({ room }: RoomItemProps) {
   );
 }
 
+type WorkAreaItemProps = {
+  area: WorkArea;
+};
+
+function WorkAreaItem({ area }: WorkAreaItemProps) {
+  return (
+    <Tag
+      type="with-border"
+      className="w-full justify-between rounded-sm border-gray-400 bg-gray-200 px-2 py-1"
+    >
+      <Typography variant="caption-small">{area.building}</Typography>
+      <div className="flex gap-1">
+        {area.floors.map((floor) => (
+          <Tag
+            key={floor}
+            type="with-border"
+            className="rounded-sm border-gray-400 bg-gray-300 px-1 py-1"
+          >
+            <Typography variant="caption-pixie-semibold">{floor}</Typography>
+          </Tag>
+        ))}
+      </div>
+    </Tag>
+  );
+}
+
 // Mock data untuk sementara
 const MOCK_ROOM_DATA: RoomListData = {
-  workArea: "Griya Legita Lt. 2, Lt. 3, Lt. 4",
   janitor: "Agus Bagus",
-  totalRooms: 7,
-  completedRooms: 4,
+  workAreas: [
+    {
+      id: "area-1",
+      building: "Gedung Griya Legita",
+      floors: ["Lt. 2", "Lt. 3", "Lt. 4"],
+    },
+    {
+      id: "area-2",
+      building: "Gedung Rektorat",
+      floors: ["Lt. 1"],
+    },
+  ],
   rooms: [
     { id: "1", code: "2402", name: "Griya Legita", status: "not-checked" },
     { id: "2", code: "2403", name: "Griya Legita", status: "not-checked" },
@@ -95,17 +134,20 @@ const MOCK_ROOM_DATA: RoomListData = {
     { id: "4", code: "2301", name: "Griya Legita", status: "checked" },
     { id: "5", code: "2302", name: "Griya Legita", status: "checked" },
     { id: "6", code: "2303", name: "Griya Legita", status: "checked" },
-    { id: "7", code: "2304", name: "Griya Legita", status: "checked" },
-    { id: "8", code: "2305", name: "Griya Legita", status: "checked" },
-    { id: "9", code: "2306", name: "Griya Legita", status: "checked" },
-    { id: "10", code: "2307", name: "Griya Legita", status: "checked" },
+    { id: "7", code: "1101", name: "Rektorat", status: "checked" },
   ],
 };
 
 export function RoomListView() {
   const data = MOCK_ROOM_DATA;
 
-  const progressPercentage = (data.completedRooms / data.totalRooms) * 100;
+  const totalRooms = data.rooms.length;
+  const completedRooms = data.rooms.filter(
+    (room) => room.status === "checked"
+  ).length;
+
+  const progressPercentage =
+    totalRooms === 0 ? 0 : (completedRooms / totalRooms) * 100;
 
   const sortedRooms = useMemo(() => {
     const unchecked = data.rooms.filter(
@@ -175,57 +217,9 @@ export function RoomListView() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <Tag
-              type="with-border"
-              className="w-full justify-between rounded-sm border-gray-400 bg-gray-200 px-2 py-1"
-            >
-              <Typography variant="caption-small">
-                Gedung Griya Legita
-              </Typography>
-              <div className="flex gap-1">
-                <Tag
-                  type="with-border"
-                  className="rounded-sm border-gray-400 bg-gray-300 px-1 py-1"
-                >
-                  <Typography variant="caption-pixie-semibold">
-                    Lt. 2
-                  </Typography>
-                </Tag>
-                <Tag
-                  type="with-border"
-                  className="rounded-sm border-gray-400 bg-gray-300 px-1 py-1"
-                >
-                  <Typography variant="caption-pixie-semibold">
-                    Lt. 3
-                  </Typography>
-                </Tag>
-                <Tag
-                  type="with-border"
-                  className="rounded-sm border-gray-400 bg-gray-300 px-1 py-1"
-                >
-                  <Typography variant="caption-pixie-semibold">
-                    Lt. 4
-                  </Typography>
-                </Tag>
-              </div>
-            </Tag>
-
-            <Tag
-              type="with-border"
-              className="w-full justify-between rounded-sm border-gray-400 bg-gray-200 px-2 py-1"
-            >
-              <Typography variant="caption-small">Gedung Rektorat</Typography>
-              <div className="flex gap-1">
-                <Tag
-                  type="with-border"
-                  className="rounded-sm border-gray-400 bg-gray-300 px-1 py-1"
-                >
-                  <Typography variant="caption-pixie-semibold">
-                    Lt. 1
-                  </Typography>
-                </Tag>
-              </div>
-            </Tag>
+            {data.workAreas.map((area) => (
+              <WorkAreaItem key={area.id} area={area} />
+            ))}
           </div>
 
           <div className="border-t border-gray-400">
@@ -237,7 +231,7 @@ export function RoomListView() {
                 Progres Harian:
               </Typography>
               <Typography variant="caption-small" className="text-gray-800">
-                {data.completedRooms}/{data.totalRooms} Ruangan Selesai
+                {completedRooms}/{totalRooms} Ruangan Selesai
               </Typography>
             </div>
             <div className="h-2 w-full overflow-hidden rounded-full bg-gray-300">
@@ -250,6 +244,7 @@ export function RoomListView() {
         </CardContent>
       </Card>
 
+      {/* QR Card */}
       <Card className="gap-1 bg-red-400 px-0 py-5">
         <CardHeader>
           <CardTitle>
@@ -277,7 +272,7 @@ export function RoomListView() {
         </CardFooter>
       </Card>
 
-      {/* Room List */}
+      {/* Room List sort by status not-checked to checked */}
       <div className="space-y-3 pb-4">
         {sortedRooms.map((room) => (
           <RoomItem key={room.id} room={room} />

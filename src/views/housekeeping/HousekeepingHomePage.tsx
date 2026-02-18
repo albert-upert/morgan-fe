@@ -54,7 +54,7 @@ export function HousekeepingHomePage() {
           title="Daftar Laporan"
           description="Lihat daftar laporan anda"
           icon={<MailIcon className="h-10 w-10" color="white" />}
-          href="/housekeeping/reports"
+          href="/housekeeping/report-history"
         />
       </div>
     </div>
