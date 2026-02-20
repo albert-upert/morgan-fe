@@ -1,4 +1,4 @@
-import { useParams, useSearch } from "@tanstack/react-router";
+import { useSearch } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Card,
@@ -47,9 +47,6 @@ const MOCK_REPORT = {
 };
 
 export function ChecklistReportView() {
-  const { roomId } = useParams({
-    from: "/_layout/housekeeping/checklist-report/$roomId",
-  });
   const search = useSearch({
     from: "/_layout/housekeeping/checklist-report/$roomId",
   });
@@ -183,8 +180,8 @@ export function ChecklistReportView() {
             >
               Daftar Aset Bermasalah
             </Typography>
-            <div className="flex animate-in flex-col gap-3 duration-500 fade-in">
-              {MOCK_REPORT.issues.map((issue, idx) => {
+            <div className="flex flex-col gap-3">
+              {MOCK_REPORT.issues.map((issue) => {
                 const accordionTitle = (
                   <div className="inline-flex items-center gap-2">
                     <ErrorIcon className="h-4 w-4 text-red-500" />
@@ -198,87 +195,82 @@ export function ChecklistReportView() {
                 );
 
                 return (
-                  <div
+                  <Accordion
                     key={issue.id}
-                    className="animate-in duration-300 fade-in slide-in-from-left-2"
-                    style={{ animationDelay: `${idx * 100}ms` }}
+                    title={accordionTitle as unknown as string}
+                    className="rounded-xl border border-gray-400 bg-gray-100 !p-0 transition-all duration-300"
                   >
-                    <Accordion
-                      title={accordionTitle as unknown as string}
-                      className="rounded-xl border border-gray-400 bg-gray-100 !p-0 transition-all duration-300"
-                    >
-                      <div className="animate-in space-y-2 duration-300 fade-in slide-in-from-top-2">
-                        {/* Issue Type */}
-                        <div className="space-y-1.5">
-                          <Typography
-                            variant="caption-small"
-                            className="text-gray-600"
-                          >
-                            Jenis Masalah
-                          </Typography>
-                          <div className="flex flex-wrap gap-2">
-                            <Tag color="red" type="filled">
-                              <Typography
-                                variant="body-small"
-                                className="text-white"
-                              >
-                                {issue.issueType}
-                              </Typography>
-                            </Tag>
-                          </div>
-                        </div>
-
-                        {/* Detail */}
-                        <div className="space-y-1.5">
-                          <Typography
-                            variant="caption-small"
-                            className="text-gray-600"
-                          >
-                            Detail Kendala
-                          </Typography>
-                          <div className="rounded-lg border border-gray-400 bg-white px-3 py-2">
+                    <div className="animate-in space-y-2 duration-300 fade-in slide-in-from-top-2">
+                      {/* Issue Type */}
+                      <div className="space-y-1.5">
+                        <Typography
+                          variant="caption-small"
+                          className="text-gray-600"
+                        >
+                          Jenis Masalah
+                        </Typography>
+                        <div className="flex flex-wrap gap-2">
+                          <Tag color="red" type="filled">
                             <Typography
                               variant="body-small"
-                              className="text-gray-800"
+                              className="text-white"
                             >
-                              {issue.detail}
+                              {issue.issueType}
                             </Typography>
-                          </div>
-                        </div>
-
-                        {/* File Preview */}
-                        <div className="space-y-1.5">
-                          <Typography
-                            variant="caption-small"
-                            className="text-gray-600"
-                          >
-                            Bukti Foto
-                          </Typography>
-                          <div className="flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-3 py-2.5">
-                            <FileIcon className="h-5 w-5 flex-shrink-0 text-gray-600" />
-                            <Typography
-                              variant="body-small"
-                              className="flex-1 truncate text-gray-900"
-                            >
-                              {issue.fileName}
-                            </Typography>
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setPreviewImage({
-                                  url: `/path/to/${issue.fileName}`,
-                                  name: issue.fileName,
-                                })
-                              }
-                              className="rounded p-1 hover:bg-gray-100"
-                            >
-                              <OpenIcon className="h-5 w-5 text-gray-600" />
-                            </button>
-                          </div>
+                          </Tag>
                         </div>
                       </div>
-                    </Accordion>
-                  </div>
+
+                      {/* Detail */}
+                      <div className="space-y-1.5">
+                        <Typography
+                          variant="caption-small"
+                          className="text-gray-600"
+                        >
+                          Detail Kendala
+                        </Typography>
+                        <div className="rounded-lg border border-gray-400 bg-white px-3 py-2">
+                          <Typography
+                            variant="body-small"
+                            className="text-gray-800"
+                          >
+                            {issue.detail}
+                          </Typography>
+                        </div>
+                      </div>
+
+                      {/* File Preview */}
+                      <div className="space-y-1.5">
+                        <Typography
+                          variant="caption-small"
+                          className="text-gray-600"
+                        >
+                          Bukti Foto
+                        </Typography>
+                        <div className="flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-3 py-2.5">
+                          <FileIcon className="h-5 w-5 flex-shrink-0 text-gray-600" />
+                          <Typography
+                            variant="body-small"
+                            className="flex-1 truncate text-gray-900"
+                          >
+                            {issue.fileName}
+                          </Typography>
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setPreviewImage({
+                                url: `/path/to/${issue.fileName}`,
+                                name: issue.fileName,
+                              })
+                            }
+                            className="rounded p-1 hover:bg-gray-100"
+                          >
+                            <OpenIcon className="h-5 w-5 text-gray-600" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </Accordion>
                 );
               })}
             </div>
@@ -311,11 +303,6 @@ export function ChecklistReportView() {
           </DialogContent>
         </Dialog>
       )}
-
-      {/* Debug */}
-      <div className="hidden">
-        <Typography variant="caption-pixie">Room ID: {roomId}</Typography>
-      </div>
     </div>
   );
 }
