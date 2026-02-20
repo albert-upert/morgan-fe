@@ -1,19 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/card";
+} from "uper-ui/card";
 import {
   PackageIcon,
   PawPrintIcon,
   ShoppingCartIcon,
   TrendingUpIcon,
-} from "@/components/icon";
+} from "uper-ui/icon";
 import {
   findPetsByStatusOptions,
   getInventoryOptions,
