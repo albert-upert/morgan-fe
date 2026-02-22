@@ -150,10 +150,9 @@ export function TicketDetailView() {
       const updatedReport = await getReportById(id);
       setData(updatedReport);
 
-      alert("Status berhasil diubah");
       setOpenModal(false);
     } catch (_error) {
-      alert("Gagal mengubah status");
+      console.error("Gagal mengubah status");
     } finally {
       setUpdatingProgressTicket(false);
     }
