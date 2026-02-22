@@ -1,5 +1,12 @@
+import { Link } from "@tanstack/react-router";
 import type { MouseEventHandler, ReactNode } from "react";
-import { ProfileIcon } from "uper-ui/icon";
+import {
+  Dropdown,
+  DropdownContent,
+  DropdownItem,
+  DropdownTrigger,
+} from "uper-ui/dropdown";
+import { LogoutIcon, NotificationIcon, ProfileIcon, SettingIcon } from "uper-ui/icon";
 import { Typography } from "uper-ui/typography";
 import { cn } from "@/lib/utils";
 
@@ -95,16 +102,36 @@ export function Header({
             </Typography>
           </div>
           
-          <div className="ml-auto flex items-center gap-1">
-              <div className="flex items-center justify-center h-8 w-8 bg-blue-100 rounded-full">
-                <ProfileIcon/>
-              </div>
+          <Dropdown>
+            <DropdownTrigger asChild>
+              <button className="ml-auto flex items-center gap-1 outline-none">
+                <div className="flex items-center justify-center h-8 w-8 bg-blue-100 rounded-full">
+                  <ProfileIcon />
+                </div>
 
-              <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center">
                   <Typography variant="body-large-semibold">{name}</Typography>
                   <Typography variant="caption-pixie">{role}</Typography>
-              </div>
-          </div>
+                </div>
+              </button>
+            </DropdownTrigger>
+            <DropdownContent align="end" className="w-48">
+              <DropdownItem className="gap-2">
+                <Link to="/fm-it/notification" className="flex items-center gap-2">
+                  <NotificationIcon className="h-5 w-5" />
+                  <Typography variant="body-small">Notifikasi</Typography>
+                </Link>
+              </DropdownItem>
+              <DropdownItem className="gap-2">
+                <SettingIcon className="h-5 w-5" />
+                <Typography variant="body-small">Pengaturan</Typography>
+              </DropdownItem>
+              <DropdownItem className="gap-2">
+                <LogoutIcon className="h-5 w-5" />
+                <Typography variant="body-small">Keluar</Typography>
+              </DropdownItem>
+            </DropdownContent>
+          </Dropdown>
         </div>
       </div>
     </header>
