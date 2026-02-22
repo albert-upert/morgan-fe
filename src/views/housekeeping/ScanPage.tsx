@@ -1,7 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
 import { BrowserQRCodeReader } from "@zxing/browser";
 import { NotFoundException } from "@zxing/library";
-import type { ReactNode } from "react";
+import type { ReactNode, RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowBackIcon, GalleryIcon, GladiIcon } from "uper-ui/icon";
 import { toast } from "uper-ui/toast";
@@ -9,7 +9,7 @@ import { Typography } from "uper-ui/typography";
 
 // Custom hook for QR code reader setup
 function useQRCodeReader(
-  videoRef: React.RefObject<HTMLVideoElement | null>,
+  videoRef: RefObject<HTMLVideoElement | null>,
   onQRDetected: (qrText: string) => void,
   onError: (error: string) => void
 ) {
@@ -143,7 +143,7 @@ export function ScanQrView() {
 function CameraPreview({
   videoRef,
 }: {
-  videoRef: React.RefObject<HTMLVideoElement | null>;
+  videoRef: RefObject<HTMLVideoElement | null>;
 }) {
   return (
     <>
