@@ -3,7 +3,7 @@ import { BrowserQRCodeReader } from "@zxing/browser";
 import { NotFoundException } from "@zxing/library";
 import type { ReactNode } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ArrowLeftIcon, GalleryIcon, GladiIcon } from "uper-ui/icon";
+import { ArrowBackIcon, GalleryIcon, GladiIcon } from "uper-ui/icon";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
 
@@ -174,7 +174,7 @@ function ScanHeader({
         className="inline-flex items-center gap-2 py-12 text-white"
         aria-label="Kembali ke Daftar Ruangan"
       >
-        <ArrowLeftIcon className="h-5 w-5" color="white" />
+        <ArrowBackIcon className="h-5 w-5" color="white" />
         <Typography variant="body-small" className="text-white">
           Daftar Ruangan
         </Typography>

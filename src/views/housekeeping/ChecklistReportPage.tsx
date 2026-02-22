@@ -1,22 +1,13 @@
 import { useSearch } from "@tanstack/react-router";
-import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  Dialog,
-  DialogBody,
-  DialogContent,
-  DialogHeader,
-  Typography,
-} from "uper-ui";
+import { useMemo, useState } from "react";
+import { Card, CardContent, Typography } from "uper-ui";
 import { Accordion } from "uper-ui/accordion";
+import { FileUpload } from "uper-ui/file-upload";
 import {
-  ArrowLeftIcon,
+  ArrowBackIcon,
   BuildingIcon,
   CalendarIcon,
   ErrorIcon,
-  FileIcon,
-  OpenIcon,
   ProfileIcon,
 } from "uper-ui/icon";
 import { Link } from "uper-ui/link";
@@ -52,10 +43,30 @@ export function ChecklistReportView() {
   });
 
   const hasIssues = search.status === "issue";
-  const [previewImage, setPreviewImage] = useState<{
-    url: string;
-    name: string;
-  } | null>(null);
+  const [issueFiles, setIssueFiles] = useState<Record<string, Array<File>>>({});
+
+  // Inisialisasi mock files untuk setiap issue
+  const initializedIssueFiles = useMemo(() => {
+    if (Object.keys(issueFiles).length === 0) {
+      return MOCK_REPORT.issues.reduce(
+        (acc, issue) => {
+          acc[issue.id] = [
+            new File(["mock"], issue.fileName, { type: "image/jpeg" }),
+          ];
+          return acc;
+        },
+        {} as Record<string, Array<File>>
+      );
+    }
+    return issueFiles;
+  }, [issueFiles]);
+
+  const handleFilesChange = (issueId: string, files: Array<File>) => {
+    setIssueFiles((prev) => ({
+      ...prev,
+      [issueId]: files,
+    }));
+  };
 
   return (
     <div className="flex flex-col gap-4 pb-4">
@@ -66,7 +77,7 @@ export function ChecklistReportView() {
           className="inline-flex w-fit items-center gap-2 text-red-500"
           aria-label="Kembali ke Beranda"
         >
-          <ArrowLeftIcon className="h-5 w-5" color="currentColor" />
+          <ArrowBackIcon className="h-5 w-5" color="currentColor" />
           <Typography variant="body-small" className="text-red-500">
             Beranda
           </Typography>
@@ -247,27 +258,17 @@ export function ChecklistReportView() {
                         >
                           Bukti Foto
                         </Typography>
-                        <div className="flex items-center gap-3 rounded-lg border border-gray-300 bg-white px-3 py-2.5">
-                          <FileIcon className="h-5 w-5 flex-shrink-0 text-gray-600" />
-                          <Typography
-                            variant="body-small"
-                            className="flex-1 truncate text-gray-900"
-                          >
-                            {issue.fileName}
-                          </Typography>
-                          <button
-                            type="button"
-                            onClick={() =>
-                              setPreviewImage({
-                                url: `/path/to/${issue.fileName}`,
-                                name: issue.fileName,
-                              })
-                            }
-                            className="rounded p-1 hover:bg-gray-100"
-                          >
-                            <OpenIcon className="h-5 w-5 text-gray-600" />
-                          </button>
-                        </div>
+                        <FileUpload
+                          files={initializedIssueFiles[issue.id]}
+                          onFilesChange={(files) =>
+                            handleFilesChange(issue.id, files)
+                          }
+                          accept=".jpg,.jpeg,.png"
+                          variant="button"
+                          buttonLabel="Pilih Bukti Foto"
+                          imagePreviewModal
+                          maxSize={10}
+                        />
                       </div>
                     </div>
                   </Accordion>
@@ -276,32 +277,6 @@ export function ChecklistReportView() {
             </div>
           </CardContent>
         </Card>
-      )}
-
-      {/* Image Preview Modal */}
-      {previewImage && (
-        <Dialog
-          open={!!previewImage}
-          onOpenChange={(open) => !open && setPreviewImage(null)}
-        >
-          <DialogContent
-            className="rounded-2xl p-0 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm"
-            showCloseButton={true}
-          >
-            <DialogHeader className="!rounded-b-2xl border-b border-gray-300 bg-gray-100 px-5 py-4">
-              <Typography variant="h5" className="text-gray-800">
-                Preview Foto
-              </Typography>
-            </DialogHeader>
-            <DialogBody className="items-stretch gap-0 border-0 bg-white p-4">
-              <img
-                src={previewImage.url}
-                alt={previewImage.name}
-                className="h-auto w-full rounded-lg object-contain"
-              />
-            </DialogBody>
-          </DialogContent>
-        </Dialog>
       )}
     </div>
   );

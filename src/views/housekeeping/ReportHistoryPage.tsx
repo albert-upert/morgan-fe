@@ -1,5 +1,5 @@
 import { Card, CardContent, Tag, Typography } from "uper-ui";
-import { ArrowLeftIcon, BuildingIcon } from "uper-ui/icon";
+import { ArrowBackIcon, BuildingIcon } from "uper-ui/icon";
 import { Link } from "uper-ui/link";
 
 const REPORTS = [
@@ -27,7 +27,7 @@ export function ReportHistoryPage() {
           className="inline-flex items-center gap-2 text-red-500"
           aria-label="Kembali ke Beranda"
         >
-          <ArrowLeftIcon className="h-5 w-5" color="currentColor" />
+          <ArrowBackIcon className="h-5 w-5" color="currentColor" />
           <Typography variant="body-small" className="text-red-500">
             Beranda
           </Typography>

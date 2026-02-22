@@ -310,6 +310,7 @@ function AssetMismatchItem({
           <FileUpload
             label="Bukti Foto (Opsional)"
             accept="image/*"
+            imagePreviewModal
             maxSize={10}
             variant="button"
             buttonLabel={fileName ? "Ganti Foto" : "Ambil / Pilih Foto"}

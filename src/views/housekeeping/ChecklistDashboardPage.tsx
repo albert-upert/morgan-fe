@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "uper-ui/card";
-import { ArrowLeftIcon, BuildingIcon, ProfileIcon } from "uper-ui/icon";
+import { ArrowBackIcon, BuildingIcon, ProfileIcon } from "uper-ui/icon";
 import { Link } from "uper-ui/link";
 import { Tag } from "uper-ui/tags";
 import { Typography } from "uper-ui/typography";
@@ -166,7 +166,7 @@ export function RoomListView() {
           className="inline-flex w-fit items-start gap-2 text-red-500"
           aria-label="Kembali ke Beranda"
         >
-          <ArrowLeftIcon className="h-5 w-5" color="currentColor" />
+          <ArrowBackIcon className="h-5 w-5" color="currentColor" />
           <Typography variant="body-small" className="text-red-500">
             Beranda
           </Typography>

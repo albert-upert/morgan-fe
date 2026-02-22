@@ -21,9 +21,9 @@ import {
   DropdownTrigger,
 } from "uper-ui/dropdown";
 import {
+  ArrowBackIcon,
   ArrowDownIcon,
   ArrowDownIconFilter,
-  ArrowLeftIcon,
   ArrowUpIconFilter,
   BuildingIcon,
   CalendarIcon,
@@ -497,7 +497,7 @@ export function RoomDetailView() {
           className="inline-flex w-fit items-center gap-2 text-red-500"
           aria-label="Kembali ke Daftar Ruangan"
         >
-          <ArrowLeftIcon className="h-5 w-5" color="currentColor" />
+          <ArrowBackIcon className="h-5 w-5" color="currentColor" />
           <Typography variant="body-small" className="text-red-500">
             Daftar Ruangan
           </Typography>
