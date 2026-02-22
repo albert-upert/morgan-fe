@@ -1,5 +1,6 @@
 export type Report = {
   id: string;
+  pic?: string;
   status:
     | "Menunggu Petugas"
     | "Petugas dalam Perjalanan"

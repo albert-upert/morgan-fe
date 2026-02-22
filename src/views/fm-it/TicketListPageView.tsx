@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate, useLocation } from "@tanstack/react-router";
 import React, { useCallback, useEffect, useState } from "react";
 import { Accordion } from "uper-ui/accordion";
 import { Button } from "uper-ui/button";
@@ -16,6 +16,12 @@ import {
   StarIcon,
 } from "uper-ui/icon";
 import { Input } from "uper-ui/input";
+import {
+  Dropdown,
+  DropdownContent,
+  DropdownItem,
+  DropdownTrigger,
+} from "uper-ui/dropdown";
 // import { Loading } from "uper-ui/loading";
 import { Pagination } from "uper-ui/pagination";
 import { Tag } from "uper-ui/tags";
@@ -28,6 +34,16 @@ export type Building = {
   name: string;
   floors: Array<string>;
 }
+const name = "Budi Santoso";
+const shift = "07.00 - 13.00 WIB";
+const sesi = "Pagi";
+const rating = 4.8;
+const taskDone = 80;
+const area: Array<Building> = [
+  { name: "Gedung Griya Legita", floors: ["Lt.1", "Lt.2"] },
+  { name: "Gedung Rektorat", floors: ["Lt.1"] },
+];
+const role = "IT Support";
 
 export function TicketListView() {
   const [reports, setReports] = useState<Array<Report> >([]);
@@ -37,6 +53,42 @@ export function TicketListView() {
   const [openDetailModal, setOpenDetailModal] = useState(false);
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedBuilding, setSelectedBuilding] = useState<string | null>(null);
+  const itemsPerPage = 3;
+
+  const location = useLocation();
+  const filter = location.search?.filter;
+
+  const filteredReports = React.useMemo(() => reports.filter((item) => {
+    if (filter === "available") {
+      return item.status === "Menunggu Petugas";
+    }
+    if (filter === "history") {
+      return item.status === "Laporan Selesai" || item.status === "Pelapor Memberikan Feedback";
+    }
+    if (filter === "active") {
+      return item.status === "Petugas dalam Perjalanan" || item.status === "Sedang Dikerjakan";
+    }
+    return true;
+  }), [reports, filter]);
+
+  const finalReports = React.useMemo(() => {
+    if (selectedBuilding) {
+      return filteredReports.filter((item) => item.building === selectedBuilding);
+    }
+    return filteredReports;
+  }, [filteredReports, selectedBuilding]);
+
+  const totalPages = Math.ceil(finalReports.length / itemsPerPage);
+  const paginatedReports = finalReports.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter, selectedBuilding]);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -58,27 +110,40 @@ export function TicketListView() {
   }, []);
 
   const navigate = useNavigate();
-  const home = useCallback(() => {
+  const home = () => {
     navigate({
       to: "/fm-it/home",
     });
-  }, []);
+  };
 
   const toggleAccordion = useCallback((id: string) => {
     setExpandedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   }, []);
 
+  const hasActiveTicket = reports.some(
+    (r) =>
+      r.status === "Petugas dalam Perjalanan" || r.status === "Sedang Dikerjakan"
+  );
 
-  const name = "Budi Santoso";
-  const shift = "07.00 - 13.00 WIB";
-  const sesi = "Pagi";
-  const rating = 4.8;
-  const taskDone = 80;
-  const area: Array<Building> = [
-    { name: "Gedung Griya Legita", floors: ["Lt.1", "Lt.2"] },
-    { name: "Gedung Rektorat", floors: ["Lt.1"] },
-  ];
-  const role = "IT Support";
+  const lihatDetail = useCallback((item: Report) => {
+    if (item.status === "Menunggu Petugas") {
+      if (hasActiveTicket) {
+        alert("Anda sedang mengerjakan tiket lain. Selesaikan terlebih dahulu sebelum mengambil tiket baru.");
+        return;
+      }
+      setOpenDetailModal(true);
+      setSelectedReport(item);
+    } else {
+      navigate({
+        to: "/fm-it/ticket-detail/$id",
+        params: {
+          id: String(item.id),
+        },
+      });
+    }
+  }, [navigate, hasActiveTicket]);
+
+
 
   // if (loading)
   //   return (
@@ -214,9 +279,25 @@ export function TicketListView() {
                   <Input size="lg" placeholder="Cari laporan..." startIcon={<SearchIcon className="size-5 text-muted-foreground" />}/> 
                 </div>
 
-                <div className="flex items-center justify-center h-10 w-10 rounded-lg border border-primary">
-                  <FilterIcon className="h-5 w-5"color="red"/>
-                </div>
+                <Dropdown>
+                  <DropdownTrigger asChild>
+                    <button className="flex items-center justify-center h-10 w-10 rounded-lg border border-primary bg-white">
+                      <FilterIcon className="h-5 w-5" color="red" />
+                    </button>
+                  </DropdownTrigger>
+                  <DropdownContent align="end">
+                    <DropdownItem onSelect={() => setSelectedBuilding(null)}>
+                      Semua Gedung
+                    </DropdownItem>
+                    {Array.from(new Set(filteredReports.map((item) => item.building)))
+                      .filter(Boolean)
+                      .map((building) => (
+                        <DropdownItem key={building} onSelect={() => setSelectedBuilding(building as string)}>
+                          {building}
+                        </DropdownItem>
+                      ))}
+                  </DropdownContent>
+                </Dropdown>
               </div>
 
               <div className="flex items-center">
@@ -227,14 +308,14 @@ export function TicketListView() {
 
                 <div className="flex items-center">
                   <Typography variant="caption-small">
-                    ({reports.length}) Laporan ditemukan
+                    ({finalReports.length}) Laporan ditemukan
                   </Typography>
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col gap-2">
-              {reports.map((item, index) => {
+              {paginatedReports.map((item, index) => {
                 const isExpanded = expandedItems[item.id] || false;
                 return (
                   <Card key={index} className="bg-gray-100" elevation="none">
@@ -250,7 +331,7 @@ export function TicketListView() {
                           <div className="flex items-center">
                             <Tag color="red" type="filled" size="md" rounded="pill">
                               <Typography variant="caption-small" className="text-white">
-                                {item.status}
+                                {item.status !== "Pelapor Memberikan Feedback" ? item.status : "Laporan Selesai"}
                               </Typography>
                             </Tag>
                           </div>
@@ -342,21 +423,10 @@ export function TicketListView() {
                             variant="primary"
                             className="w-full h-7"
                             size="lg"
-                            onClick={() => {
-                              setOpenDetailModal(true);
-                              setSelectedReport(item);
-                            }}
+                            onClick={() => lihatDetail(item)}
                           >
                             <Typography variant="body-small" className="text-white">Lihat Detail Laporan</Typography>
                           </Button>
-
-                        {selectedReport && (
-                          <TicketListModal
-                            open={openDetailModal}
-                            onOpenChange={setOpenDetailModal}
-                            reportDetail={selectedReport}
-                          />
-                        )}
                         </div>
                       </div>
                     </CardContent>
@@ -364,10 +434,21 @@ export function TicketListView() {
                 )
               })}
             </div>
-              <Pagination currentPage={1} totalPages={2} onPageChange={number => {}}></Pagination>
-            <div>
-
-            </div>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages || 1}
+                onPageChange={setCurrentPage}
+                variant="simple"
+                className="flex flex-row justify-between"
+              />
+            
+            {selectedReport && (
+              <TicketListModal
+                open={openDetailModal}
+                onOpenChange={setOpenDetailModal}
+                reportDetail={selectedReport}
+              />
+            )}
           </div>
         </CardContent>
       </Card>
