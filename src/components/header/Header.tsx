@@ -8,6 +8,7 @@ import {
 } from "uper-ui/dropdown";
 import { LogoutIcon, NotificationIcon, ProfileIcon, SettingIcon } from "uper-ui/icon";
 import { Typography } from "uper-ui/typography";
+
 import { cn } from "@/lib/utils";
 
 export type HeaderVariant = "default" | "home";
@@ -51,6 +52,7 @@ export interface HeaderProps {
   notificationHasDot?: boolean;
   onNotificationClick?: MouseEventHandler<HTMLButtonElement>;
   onSettingsClick?: MouseEventHandler<HTMLButtonElement>;
+  onLogoutClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export function Header({
@@ -61,6 +63,9 @@ export function Header({
   subtitle = "Sistem Pelaporan Aset",
   maxWidthClassName,
   className,
+  onNotificationClick,
+  onSettingsClick,
+  onLogoutClick,
 }: HeaderProps) {
   const resolvedMaxWidth = maxWidthClassName || "max-w-auto";
   const name = "Agus";
@@ -69,17 +74,22 @@ export function Header({
   return (
     <header
       className={cn(
-        "max-w-auto bg-linear-to-l from-navbar-gradient-end to-background",
+        "mx-auto max-w-[412px] bg-linear-to-l from-navbar-gradient-end to-background",
         className
       )}
     >
-      <div className={cn("px-[24px] py-[16px]", resolvedMaxWidth)}>
+      <div
+        className={cn(
+          "flex items-center justify-between px-[24px] py-[12px]",
+          resolvedMaxWidth
+        )}
+      >
         {/* Top row */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-[4px]">
           <img
             src={logoSrc}
             alt={logoAlt}
-            className="h-[40px] w-[62.81px] shrink-0 object-contain"
+            className="h-[33.44px] w-[47.81px] shrink-0 object-contain"
           />
           <div className="flex flex-col content-between gap-1">
             <div className="flex flex-row justify-between">
@@ -129,6 +139,87 @@ export function Header({
               <DropdownItem className="gap-2">
                 <LogoutIcon className="h-5 w-5" />
                 <Typography variant="body-small">Keluar</Typography>
+              </DropdownItem>
+            </DropdownContent>
+          </Dropdown>
+        </div>
+
+        <div className="flex items-center gap-[6px]">
+          <Dropdown open={openMenu} onOpenChange={setOpenMenu} modal={false}>
+            <DropdownTrigger asChild>
+              <button
+                type="button"
+                className="flex items-center gap-[6px] rounded-lg"
+                aria-label="Buka menu profil"
+              >
+                <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-blue-100">
+                  <ProfileIcon className="h-[32px] w-[32px] text-blue-500" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <Typography
+                    variant="body-large-semibold"
+                    className="text-gray-800"
+                  >
+                    {fullName.length > 8 ? fullName.slice(0, 8) : fullName}
+                  </Typography>
+                  <Typography variant="caption-pixie" className="text-gray-800">
+                    {role}
+                  </Typography>
+                </div>
+              </button>
+            </DropdownTrigger>
+
+            <DropdownContent
+              align="end"
+              sideOffset={2}
+              className="w-[200px] rounded-xl border border-border bg-white p-2 shadow-lg"
+            >
+              <DropdownItem
+                className="flex items-center gap-3 rounded-lg px-3 py-2"
+                onSelect={(e) => {
+                  e.preventDefault();
+                  setOpenMenu(false);
+                  onNotificationClick?.(
+                    e as unknown as React.MouseEvent<HTMLButtonElement>
+                  );
+                }}
+              >
+                <NotificationIcon className="h-5 w-5" />
+                <Typography variant="body-small" className="text-gray-800">
+                  Notifikasi
+                </Typography>
+              </DropdownItem>
+
+              <DropdownItem
+                className="flex items-center gap-3 rounded-lg px-3 py-2"
+                onSelect={(e) => {
+                  e.preventDefault();
+                  setOpenMenu(false);
+                  onSettingsClick?.(
+                    e as unknown as React.MouseEvent<HTMLButtonElement>
+                  );
+                }}
+              >
+                <SettingIcon className="h-5 w-5" />
+                <Typography variant="body-small" className="text-gray-800">
+                  Pengaturan
+                </Typography>
+              </DropdownItem>
+
+              <DropdownItem
+                className="flex items-center gap-3 rounded-lg px-3 py-2"
+                onSelect={(e) => {
+                  e.preventDefault();
+                  setOpenMenu(false);
+                  onLogoutClick?.(
+                    e as unknown as React.MouseEvent<HTMLButtonElement>
+                  );
+                }}
+              >
+                <LogoutIcon className="h-5 w-5" />
+                <Typography variant="body-small" className="text-gray-800">
+                  Keluar
+                </Typography>
               </DropdownItem>
             </DropdownContent>
           </Dropdown>

@@ -25,13 +25,12 @@ export const Route = createFileRoute("/_layout")({
 
 function Layout() {
   const { pathname } = useLocation();
-  const isHomePage = pathname.endsWith("/home");
   const isScanPage = pathname.endsWith("/scan");
 
   return (
     <div
       id="dashboard-layout"
-      className="max-w-auto mx-auto min-h-screen w-full bg-background"
+      className="mx-auto min-h-screen w-full max-w-[412px] bg-background"
     >
       {!isScanPage && (
         <>
