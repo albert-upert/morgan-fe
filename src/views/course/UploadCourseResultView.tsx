@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useCallback } from "react";
 
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { CaretLeftIcon, InfoIcon } from "@/components/icon";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { CaretLeftIcon, InfoIcon } from "uper-ui/icon";
 import {
   Table,
   TableBody,
@@ -11,8 +11,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 
 interface UploadedCourse {
   id: number;
@@ -114,7 +114,7 @@ export function UploadCourseResultView() {
   }, [navigate]);
 
   const handleSave = useCallback(() => {
-    console.log("Save courses:", uploadedCourseData);
+    console.warn("Save courses:", uploadedCourseData);
     navigate({ to: "/course" });
   }, [navigate]);
 

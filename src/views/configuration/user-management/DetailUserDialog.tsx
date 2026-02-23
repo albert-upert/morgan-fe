@@ -1,4 +1,4 @@
-import { Accordion } from "@/components/accordion";
+import { Accordion } from "uper-ui/accordion";
 import {
   Dialog,
   DialogBody,
@@ -6,8 +6,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
-import { Input } from "@/components/input";
+} from "uper-ui/dialog";
+import { Input } from "uper-ui/input";
 import {
   Table,
   TableBody,
@@ -15,8 +15,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 
 const userRoles = [
   {

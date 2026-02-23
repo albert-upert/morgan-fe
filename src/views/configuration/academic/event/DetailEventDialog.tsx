@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Checkbox } from "@/components/checkbox";
+import { Checkbox } from "uper-ui/checkbox";
 import {
   Dialog,
   DialogBody,
@@ -7,11 +7,11 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
-import { InfoIcon } from "@/components/icon";
-import { Input } from "@/components/input";
-import { Switch } from "@/components/switch";
-import { Typography } from "@/components/typography";
+} from "uper-ui/dialog";
+import { InfoIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { Switch } from "uper-ui/switch";
+import { Typography } from "uper-ui/typography";
 
 interface DetailEventDialogProps {
   open: boolean;

@@ -1,17 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { Checkbox } from "@/components/checkbox";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { Checkbox } from "uper-ui/checkbox";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
-import { CaretDownIcon, CaretLeftIcon, SearchIcon } from "@/components/icon";
-import { Input } from "@/components/input";
-import { Pagination } from "@/components/pagination";
+} from "uper-ui/dropdown";
+import { CaretDownIcon, CaretLeftIcon, SearchIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { Pagination } from "uper-ui/pagination";
 import {
   Table,
   TableBody,
@@ -19,8 +19,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 
 interface Course {
   id: number;
@@ -287,7 +287,7 @@ export function AssignCurriculumCoursesView({
   }, []);
 
   const handleAssign = useCallback(() => {
-    console.log("Assigning courses:", Array.from(selectedCourses));
+    console.warn("Assigning courses:", Array.from(selectedCourses));
   }, [selectedCourses]);
 
   return (

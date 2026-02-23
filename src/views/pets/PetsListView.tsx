@@ -1,14 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/card";
+} from "uper-ui/card";
 import {
   Dialog,
   DialogContent,
@@ -16,10 +16,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
-import { PencilIcon, PlusIcon, TrashIcon } from "@/components/icon";
-import { Table } from "@/components/table";
-import { Tag } from "@/components/tags";
+} from "uper-ui/dialog";
+import { PencilIcon, PlusIcon, TrashIcon } from "uper-ui/icon";
+import { Table } from "uper-ui/table";
+import { Tag } from "uper-ui/tags";
 import {
   deletePetMutation,
   findPetsByStatusOptions,

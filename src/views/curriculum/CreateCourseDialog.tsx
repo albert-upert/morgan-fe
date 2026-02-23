@@ -1,23 +1,23 @@
 import { useCallback, useState } from "react";
 
-import { Button } from "@/components/button";
-import { Checkbox } from "@/components/checkbox";
+import { Button } from "uper-ui/button";
+import { Checkbox } from "uper-ui/checkbox";
 import {
   Dialog,
   DialogBody,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
+} from "uper-ui/dialog";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
-import { CaretDownIcon } from "@/components/icon";
-import { Input } from "@/components/input";
-import { Pagination } from "@/components/pagination";
+} from "uper-ui/dropdown";
+import { CaretDownIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { Pagination } from "uper-ui/pagination";
 import {
   Table,
   TableBody,
@@ -25,8 +25,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 
 export interface Course {
   id: number;
@@ -127,7 +127,7 @@ export function CreateCourseDialog({
   );
 
   const handleSearch = useCallback(() => {
-    console.log("Search:", {
+    console.warn("Search:", {
       courseType: selectedCourseType,
       query: searchQuery,
     });
