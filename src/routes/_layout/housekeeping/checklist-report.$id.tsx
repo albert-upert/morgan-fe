@@ -1,8 +1,16 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { z } from "zod";
 import { getUser } from "@/lib/auth";
-import { RoomAssetListView } from "@/views/lecturer/RoomAssetListView";
+import { ChecklistReportView } from "@/views/housekeeping/ChecklistReportPage";
 
-export const Route = createFileRoute("/_layout/room-asset-list/$roomId")({
+const searchSchema = z.object({
+  status: z.enum(["ok", "issue"]).optional(),
+});
+
+export const Route = createFileRoute(
+  "/_layout/housekeeping/checklist-report/$id"
+)({
+  validateSearch: searchSchema,
   beforeLoad: async ({ location, context }) => {
     const user = await getUser(context.queryClient);
     if (!user) {
@@ -14,5 +22,5 @@ export const Route = createFileRoute("/_layout/room-asset-list/$roomId")({
       });
     }
   },
-  component: RoomAssetListView,
+  component: ChecklistReportView,
 });

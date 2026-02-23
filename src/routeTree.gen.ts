@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as LayoutSiakupRouteImport } from './routes/_layout-siakup'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutRoomAssetListRouteImport } from './routes/_layout/room-asset-list'
@@ -21,19 +20,20 @@ import { Route as LayoutCourseScheduleIndexRouteImport } from './routes/_layout/
 import { Route as LayoutConfigurationIndexRouteImport } from './routes/_layout/configuration/index'
 import { Route as LayoutAutoAssignIndexRouteImport } from './routes/_layout/auto-assign/index'
 import { Route as LayoutAcademicCalendarIndexRouteImport } from './routes/_layout/academic-calendar/index'
-import { Route as LayoutRoomAssetListRoomIdRouteImport } from './routes/_layout/room-asset-list.$roomId'
+import { Route as LayoutRoomAssetListIdRouteImport } from './routes/_layout/room-asset-list.$id'
 import { Route as LayoutPetsCreateRouteImport } from './routes/_layout/pets/create'
 import { Route as LayoutLecturerScanRouteImport } from './routes/_layout/lecturer/scan'
-<<<<<<< HEAD
 import { Route as LayoutLecturerRoomAssetListRouteImport } from './routes/_layout/lecturer/room-asset-list'
 import { Route as LayoutLecturerReportSuccessRouteImport } from './routes/_layout/lecturer/report-success'
+import { Route as LayoutLecturerMyReportRouteImport } from './routes/_layout/lecturer/my-report'
 import { Route as LayoutLecturerHomeRouteImport } from './routes/_layout/lecturer/home'
-=======
-import { Route as LayoutLecturerHomeRouteImport } from './routes/_layout/lecturer/home'
+import { Route as LayoutHousekeepingScanRouteImport } from './routes/_layout/housekeeping/scan'
+import { Route as LayoutHousekeepingReportHistoryRouteImport } from './routes/_layout/housekeeping/report-history'
+import { Route as LayoutHousekeepingHomeRouteImport } from './routes/_layout/housekeeping/home'
+import { Route as LayoutHousekeepingChecklistDashboardRouteImport } from './routes/_layout/housekeeping/checklist-dashboard'
 import { Route as LayoutFmItTicketListRouteImport } from './routes/_layout/fm-it/ticket-list'
 import { Route as LayoutFmItNotificationRouteImport } from './routes/_layout/fm-it/notification'
 import { Route as LayoutFmItHomeRouteImport } from './routes/_layout/fm-it/home'
->>>>>>> origin/main
 import { Route as LayoutCurriculumCreateRouteImport } from './routes/_layout/curriculum/create'
 import { Route as LayoutCurriculumAssignCoursesRouteImport } from './routes/_layout/curriculum/assign-courses'
 import { Route as LayoutCurriculumTypeRouteImport } from './routes/_layout/curriculum/$type'
@@ -58,12 +58,12 @@ import { Route as LayoutAcademicCalendarIdRouteImport } from './routes/_layout/a
 import { Route as LayoutConfigurationUserManagementIndexRouteImport } from './routes/_layout/configuration/user-management/index'
 import { Route as LayoutConfigurationAcademicIndexRouteImport } from './routes/_layout/configuration/academic/index'
 import { Route as LayoutPetsIdEditRouteImport } from './routes/_layout/pets/$id.edit'
-import { Route as LayoutLecturerRoomAssetListRoomIdRouteImport } from './routes/_layout/lecturer/room-asset-list.$roomId'
-import { Route as LayoutLecturerReportSuccessRoomIdRouteImport } from './routes/_layout/lecturer/report-success.$roomId'
-<<<<<<< HEAD
-=======
+import { Route as LayoutLecturerRoomAssetListIdRouteImport } from './routes/_layout/lecturer/room-asset-list.$id'
+import { Route as LayoutLecturerReportSuccessIdRouteImport } from './routes/_layout/lecturer/report-success.$id'
+import { Route as LayoutLecturerReportDetailPageIdRouteImport } from './routes/_layout/lecturer/report-detail-page.$id'
+import { Route as LayoutHousekeepingRoomChecklistIdRouteImport } from './routes/_layout/housekeeping/room-checklist.$id'
+import { Route as LayoutHousekeepingChecklistReportIdRouteImport } from './routes/_layout/housekeeping/checklist-report.$id'
 import { Route as LayoutFmItTicketDetailIdRouteImport } from './routes/_layout/fm-it/ticket-detail.$id'
->>>>>>> origin/main
 import { Route as LayoutCurriculumEquivalenceUploadResultRouteImport } from './routes/_layout/curriculum/equivalence/upload-result'
 import { Route as LayoutCurriculumEquivalenceUploadRouteImport } from './routes/_layout/curriculum/equivalence/upload'
 import { Route as LayoutCurriculumEquivalenceCreateRouteImport } from './routes/_layout/curriculum/equivalence/create'
@@ -86,10 +86,6 @@ import { Route as LayoutConfigurationAcademicEventIdEditRouteImport } from './ro
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LayoutSiakupRoute = LayoutSiakupRouteImport.update({
-  id: '/_layout-siakup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LayoutRoute = LayoutRouteImport.update({
@@ -144,12 +140,11 @@ const LayoutAcademicCalendarIndexRoute =
     path: '/academic-calendar/',
     getParentRoute: () => LayoutRoute,
   } as any)
-const LayoutRoomAssetListRoomIdRoute =
-  LayoutRoomAssetListRoomIdRouteImport.update({
-    id: '/$roomId',
-    path: '/$roomId',
-    getParentRoute: () => LayoutRoomAssetListRoute,
-  } as any)
+const LayoutRoomAssetListIdRoute = LayoutRoomAssetListIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => LayoutRoomAssetListRoute,
+} as any)
 const LayoutPetsCreateRoute = LayoutPetsCreateRouteImport.update({
   id: '/pets/create',
   path: '/pets/create',
@@ -160,7 +155,6 @@ const LayoutLecturerScanRoute = LayoutLecturerScanRouteImport.update({
   path: '/lecturer/scan',
   getParentRoute: () => LayoutRoute,
 } as any)
-<<<<<<< HEAD
 const LayoutLecturerRoomAssetListRoute =
   LayoutLecturerRoomAssetListRouteImport.update({
     id: '/lecturer/room-asset-list',
@@ -173,15 +167,38 @@ const LayoutLecturerReportSuccessRoute =
     path: '/lecturer/report-success',
     getParentRoute: () => LayoutRoute,
   } as any)
-=======
->>>>>>> origin/main
+const LayoutLecturerMyReportRoute = LayoutLecturerMyReportRouteImport.update({
+  id: '/lecturer/my-report',
+  path: '/lecturer/my-report',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutLecturerHomeRoute = LayoutLecturerHomeRouteImport.update({
   id: '/lecturer/home',
   path: '/lecturer/home',
   getParentRoute: () => LayoutRoute,
 } as any)
-<<<<<<< HEAD
-=======
+const LayoutHousekeepingScanRoute = LayoutHousekeepingScanRouteImport.update({
+  id: '/housekeeping/scan',
+  path: '/housekeeping/scan',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutHousekeepingReportHistoryRoute =
+  LayoutHousekeepingReportHistoryRouteImport.update({
+    id: '/housekeeping/report-history',
+    path: '/housekeeping/report-history',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutHousekeepingHomeRoute = LayoutHousekeepingHomeRouteImport.update({
+  id: '/housekeeping/home',
+  path: '/housekeeping/home',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutHousekeepingChecklistDashboardRoute =
+  LayoutHousekeepingChecklistDashboardRouteImport.update({
+    id: '/housekeeping/checklist-dashboard',
+    path: '/housekeeping/checklist-dashboard',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 const LayoutFmItTicketListRoute = LayoutFmItTicketListRouteImport.update({
   id: '/fm-it/ticket-list',
   path: '/fm-it/ticket-list',
@@ -197,7 +214,6 @@ const LayoutFmItHomeRoute = LayoutFmItHomeRouteImport.update({
   path: '/fm-it/home',
   getParentRoute: () => LayoutRoute,
 } as any)
->>>>>>> origin/main
 const LayoutCurriculumCreateRoute = LayoutCurriculumCreateRouteImport.update({
   id: '/curriculum/create',
   path: '/curriculum/create',
@@ -337,27 +353,34 @@ const LayoutPetsIdEditRoute = LayoutPetsIdEditRouteImport.update({
   path: '/pets/$id/edit',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutLecturerRoomAssetListRoomIdRoute =
-  LayoutLecturerRoomAssetListRoomIdRouteImport.update({
-<<<<<<< HEAD
-    id: '/$roomId',
-    path: '/$roomId',
+const LayoutLecturerRoomAssetListIdRoute =
+  LayoutLecturerRoomAssetListIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
     getParentRoute: () => LayoutLecturerRoomAssetListRoute,
   } as any)
-const LayoutLecturerReportSuccessRoomIdRoute =
-  LayoutLecturerReportSuccessRoomIdRouteImport.update({
-    id: '/$roomId',
-    path: '/$roomId',
+const LayoutLecturerReportSuccessIdRoute =
+  LayoutLecturerReportSuccessIdRouteImport.update({
+    id: '/$id',
+    path: '/$id',
     getParentRoute: () => LayoutLecturerReportSuccessRoute,
-=======
-    id: '/lecturer/room-asset-list/$roomId',
-    path: '/lecturer/room-asset-list/$roomId',
+  } as any)
+const LayoutLecturerReportDetailPageIdRoute =
+  LayoutLecturerReportDetailPageIdRouteImport.update({
+    id: '/lecturer/report-detail-page/$id',
+    path: '/lecturer/report-detail-page/$id',
     getParentRoute: () => LayoutRoute,
   } as any)
-const LayoutLecturerReportSuccessRoomIdRoute =
-  LayoutLecturerReportSuccessRoomIdRouteImport.update({
-    id: '/lecturer/report-success/$roomId',
-    path: '/lecturer/report-success/$roomId',
+const LayoutHousekeepingRoomChecklistIdRoute =
+  LayoutHousekeepingRoomChecklistIdRouteImport.update({
+    id: '/housekeeping/room-checklist/$id',
+    path: '/housekeeping/room-checklist/$id',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutHousekeepingChecklistReportIdRoute =
+  LayoutHousekeepingChecklistReportIdRouteImport.update({
+    id: '/housekeeping/checklist-report/$id',
+    path: '/housekeeping/checklist-report/$id',
     getParentRoute: () => LayoutRoute,
   } as any)
 const LayoutFmItTicketDetailIdRoute =
@@ -365,7 +388,6 @@ const LayoutFmItTicketDetailIdRoute =
     id: '/fm-it/ticket-detail/$id',
     path: '/fm-it/ticket-detail/$id',
     getParentRoute: () => LayoutRoute,
->>>>>>> origin/main
   } as any)
 const LayoutCurriculumEquivalenceUploadResultRoute =
   LayoutCurriculumEquivalenceUploadResultRouteImport.update({
@@ -475,9 +497,9 @@ const LayoutConfigurationAcademicEventIdEditRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof LayoutIndexRoute
   '/login': typeof LoginRoute
   '/room-asset-list': typeof LayoutRoomAssetListRouteWithChildren
-  '/': typeof LayoutIndexRoute
   '/academic-calendar/$id': typeof LayoutAcademicCalendarIdRoute
   '/academic-calendar/generate-academic-history': typeof LayoutAcademicCalendarGenerateAcademicHistoryRoute
   '/academic-calendar/upload': typeof LayoutAcademicCalendarUploadRoute
@@ -499,26 +521,27 @@ export interface FileRoutesByFullPath {
   '/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
-<<<<<<< HEAD
-  '/lecturer/home': typeof LayoutLecturerHomeRoute
-  '/lecturer/report-success': typeof LayoutLecturerReportSuccessRouteWithChildren
-  '/lecturer/room-asset-list': typeof LayoutLecturerRoomAssetListRouteWithChildren
-=======
   '/fm-it/home': typeof LayoutFmItHomeRoute
   '/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
+  '/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
+  '/housekeeping/home': typeof LayoutHousekeepingHomeRoute
+  '/housekeeping/report-history': typeof LayoutHousekeepingReportHistoryRoute
+  '/housekeeping/scan': typeof LayoutHousekeepingScanRoute
   '/lecturer/home': typeof LayoutLecturerHomeRoute
->>>>>>> origin/main
+  '/lecturer/my-report': typeof LayoutLecturerMyReportRoute
+  '/lecturer/report-success': typeof LayoutLecturerReportSuccessRouteWithChildren
+  '/lecturer/room-asset-list': typeof LayoutLecturerRoomAssetListRouteWithChildren
   '/lecturer/scan': typeof LayoutLecturerScanRoute
   '/pets/create': typeof LayoutPetsCreateRoute
-  '/room-asset-list/$roomId': typeof LayoutRoomAssetListRoomIdRoute
-  '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
-  '/auto-assign': typeof LayoutAutoAssignIndexRoute
-  '/configuration': typeof LayoutConfigurationIndexRoute
-  '/course-schedule': typeof LayoutCourseScheduleIndexRoute
-  '/course': typeof LayoutCourseIndexRoute
-  '/curriculum': typeof LayoutCurriculumIndexRoute
-  '/pets': typeof LayoutPetsIndexRoute
+  '/room-asset-list/$id': typeof LayoutRoomAssetListIdRoute
+  '/academic-calendar/': typeof LayoutAcademicCalendarIndexRoute
+  '/auto-assign/': typeof LayoutAutoAssignIndexRoute
+  '/configuration/': typeof LayoutConfigurationIndexRoute
+  '/course-schedule/': typeof LayoutCourseScheduleIndexRoute
+  '/course/': typeof LayoutCourseIndexRoute
+  '/curriculum/': typeof LayoutCurriculumIndexRoute
+  '/pets/': typeof LayoutPetsIndexRoute
   '/auto-assign/participants-approved/$classId': typeof LayoutAutoAssignParticipantsApprovedClassIdRoute
   '/auto-assign/participants-filled/$classId': typeof LayoutAutoAssignParticipantsFilledClassIdRoute
   '/configuration/academic/$type': typeof LayoutConfigurationAcademicTypeRoute
@@ -529,15 +552,15 @@ export interface FileRoutesByFullPath {
   '/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
   '/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
-<<<<<<< HEAD
-=======
   '/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
->>>>>>> origin/main
-  '/lecturer/report-success/$roomId': typeof LayoutLecturerReportSuccessRoomIdRoute
-  '/lecturer/room-asset-list/$roomId': typeof LayoutLecturerRoomAssetListRoomIdRoute
+  '/housekeeping/checklist-report/$id': typeof LayoutHousekeepingChecklistReportIdRoute
+  '/housekeeping/room-checklist/$id': typeof LayoutHousekeepingRoomChecklistIdRoute
+  '/lecturer/report-detail-page/$id': typeof LayoutLecturerReportDetailPageIdRoute
+  '/lecturer/report-success/$id': typeof LayoutLecturerReportSuccessIdRoute
+  '/lecturer/room-asset-list/$id': typeof LayoutLecturerRoomAssetListIdRoute
   '/pets/$id/edit': typeof LayoutPetsIdEditRoute
-  '/configuration/academic': typeof LayoutConfigurationAcademicIndexRoute
-  '/configuration/user-management': typeof LayoutConfigurationUserManagementIndexRoute
+  '/configuration/academic/': typeof LayoutConfigurationAcademicIndexRoute
+  '/configuration/user-management/': typeof LayoutConfigurationUserManagementIndexRoute
   '/configuration/academic/event/create': typeof LayoutConfigurationAcademicEventCreateRoute
   '/configuration/academic/event/upload': typeof LayoutConfigurationAcademicEventUploadRoute
   '/configuration/academic/event/upload-result': typeof LayoutConfigurationAcademicEventUploadResultRoute
@@ -572,19 +595,20 @@ export interface FileRoutesByTo {
   '/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
-<<<<<<< HEAD
-  '/lecturer/home': typeof LayoutLecturerHomeRoute
-  '/lecturer/report-success': typeof LayoutLecturerReportSuccessRouteWithChildren
-  '/lecturer/room-asset-list': typeof LayoutLecturerRoomAssetListRouteWithChildren
-=======
   '/fm-it/home': typeof LayoutFmItHomeRoute
   '/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
+  '/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
+  '/housekeeping/home': typeof LayoutHousekeepingHomeRoute
+  '/housekeeping/report-history': typeof LayoutHousekeepingReportHistoryRoute
+  '/housekeeping/scan': typeof LayoutHousekeepingScanRoute
   '/lecturer/home': typeof LayoutLecturerHomeRoute
->>>>>>> origin/main
+  '/lecturer/my-report': typeof LayoutLecturerMyReportRoute
+  '/lecturer/report-success': typeof LayoutLecturerReportSuccessRouteWithChildren
+  '/lecturer/room-asset-list': typeof LayoutLecturerRoomAssetListRouteWithChildren
   '/lecturer/scan': typeof LayoutLecturerScanRoute
   '/pets/create': typeof LayoutPetsCreateRoute
-  '/room-asset-list/$roomId': typeof LayoutRoomAssetListRoomIdRoute
+  '/room-asset-list/$id': typeof LayoutRoomAssetListIdRoute
   '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
   '/auto-assign': typeof LayoutAutoAssignIndexRoute
   '/configuration': typeof LayoutConfigurationIndexRoute
@@ -602,12 +626,12 @@ export interface FileRoutesByTo {
   '/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
   '/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
-<<<<<<< HEAD
-=======
   '/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
->>>>>>> origin/main
-  '/lecturer/report-success/$roomId': typeof LayoutLecturerReportSuccessRoomIdRoute
-  '/lecturer/room-asset-list/$roomId': typeof LayoutLecturerRoomAssetListRoomIdRoute
+  '/housekeeping/checklist-report/$id': typeof LayoutHousekeepingChecklistReportIdRoute
+  '/housekeeping/room-checklist/$id': typeof LayoutHousekeepingRoomChecklistIdRoute
+  '/lecturer/report-detail-page/$id': typeof LayoutLecturerReportDetailPageIdRoute
+  '/lecturer/report-success/$id': typeof LayoutLecturerReportSuccessIdRoute
+  '/lecturer/room-asset-list/$id': typeof LayoutLecturerRoomAssetListIdRoute
   '/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/configuration/academic': typeof LayoutConfigurationAcademicIndexRoute
   '/configuration/user-management': typeof LayoutConfigurationUserManagementIndexRoute
@@ -623,7 +647,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
-  '/_layout-siakup': typeof LayoutSiakupRoute
   '/login': typeof LoginRoute
   '/_layout/room-asset-list': typeof LayoutRoomAssetListRouteWithChildren
   '/_layout/': typeof LayoutIndexRoute
@@ -648,19 +671,20 @@ export interface FileRoutesById {
   '/_layout/curriculum/$type': typeof LayoutCurriculumTypeRoute
   '/_layout/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/_layout/curriculum/create': typeof LayoutCurriculumCreateRoute
-<<<<<<< HEAD
-  '/_layout/lecturer/home': typeof LayoutLecturerHomeRoute
-  '/_layout/lecturer/report-success': typeof LayoutLecturerReportSuccessRouteWithChildren
-  '/_layout/lecturer/room-asset-list': typeof LayoutLecturerRoomAssetListRouteWithChildren
-=======
   '/_layout/fm-it/home': typeof LayoutFmItHomeRoute
   '/_layout/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/_layout/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
+  '/_layout/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
+  '/_layout/housekeeping/home': typeof LayoutHousekeepingHomeRoute
+  '/_layout/housekeeping/report-history': typeof LayoutHousekeepingReportHistoryRoute
+  '/_layout/housekeeping/scan': typeof LayoutHousekeepingScanRoute
   '/_layout/lecturer/home': typeof LayoutLecturerHomeRoute
->>>>>>> origin/main
+  '/_layout/lecturer/my-report': typeof LayoutLecturerMyReportRoute
+  '/_layout/lecturer/report-success': typeof LayoutLecturerReportSuccessRouteWithChildren
+  '/_layout/lecturer/room-asset-list': typeof LayoutLecturerRoomAssetListRouteWithChildren
   '/_layout/lecturer/scan': typeof LayoutLecturerScanRoute
   '/_layout/pets/create': typeof LayoutPetsCreateRoute
-  '/_layout/room-asset-list/$roomId': typeof LayoutRoomAssetListRoomIdRoute
+  '/_layout/room-asset-list/$id': typeof LayoutRoomAssetListIdRoute
   '/_layout/academic-calendar/': typeof LayoutAcademicCalendarIndexRoute
   '/_layout/auto-assign/': typeof LayoutAutoAssignIndexRoute
   '/_layout/configuration/': typeof LayoutConfigurationIndexRoute
@@ -678,12 +702,12 @@ export interface FileRoutesById {
   '/_layout/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
   '/_layout/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
   '/_layout/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
-<<<<<<< HEAD
-=======
   '/_layout/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
->>>>>>> origin/main
-  '/_layout/lecturer/report-success/$roomId': typeof LayoutLecturerReportSuccessRoomIdRoute
-  '/_layout/lecturer/room-asset-list/$roomId': typeof LayoutLecturerRoomAssetListRoomIdRoute
+  '/_layout/housekeeping/checklist-report/$id': typeof LayoutHousekeepingChecklistReportIdRoute
+  '/_layout/housekeeping/room-checklist/$id': typeof LayoutHousekeepingRoomChecklistIdRoute
+  '/_layout/lecturer/report-detail-page/$id': typeof LayoutLecturerReportDetailPageIdRoute
+  '/_layout/lecturer/report-success/$id': typeof LayoutLecturerReportSuccessIdRoute
+  '/_layout/lecturer/room-asset-list/$id': typeof LayoutLecturerRoomAssetListIdRoute
   '/_layout/pets/$id/edit': typeof LayoutPetsIdEditRoute
   '/_layout/configuration/academic/': typeof LayoutConfigurationAcademicIndexRoute
   '/_layout/configuration/user-management/': typeof LayoutConfigurationUserManagementIndexRoute
@@ -699,9 +723,9 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/'
     | '/login'
     | '/room-asset-list'
-    | '/'
     | '/academic-calendar/$id'
     | '/academic-calendar/generate-academic-history'
     | '/academic-calendar/upload'
@@ -723,26 +747,27 @@ export interface FileRouteTypes {
     | '/curriculum/$type'
     | '/curriculum/assign-courses'
     | '/curriculum/create'
-<<<<<<< HEAD
-    | '/lecturer/home'
-    | '/lecturer/report-success'
-    | '/lecturer/room-asset-list'
-=======
     | '/fm-it/home'
     | '/fm-it/notification'
     | '/fm-it/ticket-list'
+    | '/housekeeping/checklist-dashboard'
+    | '/housekeeping/home'
+    | '/housekeeping/report-history'
+    | '/housekeeping/scan'
     | '/lecturer/home'
->>>>>>> origin/main
+    | '/lecturer/my-report'
+    | '/lecturer/report-success'
+    | '/lecturer/room-asset-list'
     | '/lecturer/scan'
     | '/pets/create'
-    | '/room-asset-list/$roomId'
-    | '/academic-calendar'
-    | '/auto-assign'
-    | '/configuration'
-    | '/course-schedule'
-    | '/course'
-    | '/curriculum'
-    | '/pets'
+    | '/room-asset-list/$id'
+    | '/academic-calendar/'
+    | '/auto-assign/'
+    | '/configuration/'
+    | '/course-schedule/'
+    | '/course/'
+    | '/curriculum/'
+    | '/pets/'
     | '/auto-assign/participants-approved/$classId'
     | '/auto-assign/participants-filled/$classId'
     | '/configuration/academic/$type'
@@ -753,15 +778,15 @@ export interface FileRouteTypes {
     | '/curriculum/equivalence/create'
     | '/curriculum/equivalence/upload'
     | '/curriculum/equivalence/upload-result'
-<<<<<<< HEAD
-=======
     | '/fm-it/ticket-detail/$id'
->>>>>>> origin/main
-    | '/lecturer/report-success/$roomId'
-    | '/lecturer/room-asset-list/$roomId'
+    | '/housekeeping/checklist-report/$id'
+    | '/housekeeping/room-checklist/$id'
+    | '/lecturer/report-detail-page/$id'
+    | '/lecturer/report-success/$id'
+    | '/lecturer/room-asset-list/$id'
     | '/pets/$id/edit'
-    | '/configuration/academic'
-    | '/configuration/user-management'
+    | '/configuration/academic/'
+    | '/configuration/user-management/'
     | '/configuration/academic/event/create'
     | '/configuration/academic/event/upload'
     | '/configuration/academic/event/upload-result'
@@ -796,19 +821,20 @@ export interface FileRouteTypes {
     | '/curriculum/$type'
     | '/curriculum/assign-courses'
     | '/curriculum/create'
-<<<<<<< HEAD
-    | '/lecturer/home'
-    | '/lecturer/report-success'
-    | '/lecturer/room-asset-list'
-=======
     | '/fm-it/home'
     | '/fm-it/notification'
     | '/fm-it/ticket-list'
+    | '/housekeeping/checklist-dashboard'
+    | '/housekeeping/home'
+    | '/housekeeping/report-history'
+    | '/housekeeping/scan'
     | '/lecturer/home'
->>>>>>> origin/main
+    | '/lecturer/my-report'
+    | '/lecturer/report-success'
+    | '/lecturer/room-asset-list'
     | '/lecturer/scan'
     | '/pets/create'
-    | '/room-asset-list/$roomId'
+    | '/room-asset-list/$id'
     | '/academic-calendar'
     | '/auto-assign'
     | '/configuration'
@@ -826,12 +852,12 @@ export interface FileRouteTypes {
     | '/curriculum/equivalence/create'
     | '/curriculum/equivalence/upload'
     | '/curriculum/equivalence/upload-result'
-<<<<<<< HEAD
-=======
     | '/fm-it/ticket-detail/$id'
->>>>>>> origin/main
-    | '/lecturer/report-success/$roomId'
-    | '/lecturer/room-asset-list/$roomId'
+    | '/housekeeping/checklist-report/$id'
+    | '/housekeeping/room-checklist/$id'
+    | '/lecturer/report-detail-page/$id'
+    | '/lecturer/report-success/$id'
+    | '/lecturer/room-asset-list/$id'
     | '/pets/$id/edit'
     | '/configuration/academic'
     | '/configuration/user-management'
@@ -846,7 +872,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_layout'
-    | '/_layout-siakup'
     | '/login'
     | '/_layout/room-asset-list'
     | '/_layout/'
@@ -871,19 +896,20 @@ export interface FileRouteTypes {
     | '/_layout/curriculum/$type'
     | '/_layout/curriculum/assign-courses'
     | '/_layout/curriculum/create'
-<<<<<<< HEAD
-    | '/_layout/lecturer/home'
-    | '/_layout/lecturer/report-success'
-    | '/_layout/lecturer/room-asset-list'
-=======
     | '/_layout/fm-it/home'
     | '/_layout/fm-it/notification'
     | '/_layout/fm-it/ticket-list'
+    | '/_layout/housekeeping/checklist-dashboard'
+    | '/_layout/housekeeping/home'
+    | '/_layout/housekeeping/report-history'
+    | '/_layout/housekeeping/scan'
     | '/_layout/lecturer/home'
->>>>>>> origin/main
+    | '/_layout/lecturer/my-report'
+    | '/_layout/lecturer/report-success'
+    | '/_layout/lecturer/room-asset-list'
     | '/_layout/lecturer/scan'
     | '/_layout/pets/create'
-    | '/_layout/room-asset-list/$roomId'
+    | '/_layout/room-asset-list/$id'
     | '/_layout/academic-calendar/'
     | '/_layout/auto-assign/'
     | '/_layout/configuration/'
@@ -901,12 +927,12 @@ export interface FileRouteTypes {
     | '/_layout/curriculum/equivalence/create'
     | '/_layout/curriculum/equivalence/upload'
     | '/_layout/curriculum/equivalence/upload-result'
-<<<<<<< HEAD
-=======
     | '/_layout/fm-it/ticket-detail/$id'
->>>>>>> origin/main
-    | '/_layout/lecturer/report-success/$roomId'
-    | '/_layout/lecturer/room-asset-list/$roomId'
+    | '/_layout/housekeeping/checklist-report/$id'
+    | '/_layout/housekeeping/room-checklist/$id'
+    | '/_layout/lecturer/report-detail-page/$id'
+    | '/_layout/lecturer/report-success/$id'
+    | '/_layout/lecturer/room-asset-list/$id'
     | '/_layout/pets/$id/edit'
     | '/_layout/configuration/academic/'
     | '/_layout/configuration/user-management/'
@@ -922,7 +948,6 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
-  LayoutSiakupRoute: typeof LayoutSiakupRoute
   LoginRoute: typeof LoginRoute
 }
 
@@ -935,17 +960,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_layout-siakup': {
-      id: '/_layout-siakup'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof LayoutSiakupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_layout': {
       id: '/_layout'
       path: ''
-      fullPath: ''
+      fullPath: '/'
       preLoaderRoute: typeof LayoutRouteImport
       parentRoute: typeof rootRouteImport
     }
@@ -966,57 +984,57 @@ declare module '@tanstack/react-router' {
     '/_layout/pets/': {
       id: '/_layout/pets/'
       path: '/pets'
-      fullPath: '/pets'
+      fullPath: '/pets/'
       preLoaderRoute: typeof LayoutPetsIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/curriculum/': {
       id: '/_layout/curriculum/'
       path: '/curriculum'
-      fullPath: '/curriculum'
+      fullPath: '/curriculum/'
       preLoaderRoute: typeof LayoutCurriculumIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/course/': {
       id: '/_layout/course/'
       path: '/course'
-      fullPath: '/course'
+      fullPath: '/course/'
       preLoaderRoute: typeof LayoutCourseIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/course-schedule/': {
       id: '/_layout/course-schedule/'
       path: '/course-schedule'
-      fullPath: '/course-schedule'
+      fullPath: '/course-schedule/'
       preLoaderRoute: typeof LayoutCourseScheduleIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/configuration/': {
       id: '/_layout/configuration/'
       path: '/configuration'
-      fullPath: '/configuration'
+      fullPath: '/configuration/'
       preLoaderRoute: typeof LayoutConfigurationIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/auto-assign/': {
       id: '/_layout/auto-assign/'
       path: '/auto-assign'
-      fullPath: '/auto-assign'
+      fullPath: '/auto-assign/'
       preLoaderRoute: typeof LayoutAutoAssignIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/academic-calendar/': {
       id: '/_layout/academic-calendar/'
       path: '/academic-calendar'
-      fullPath: '/academic-calendar'
+      fullPath: '/academic-calendar/'
       preLoaderRoute: typeof LayoutAcademicCalendarIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/room-asset-list/$roomId': {
-      id: '/_layout/room-asset-list/$roomId'
-      path: '/$roomId'
-      fullPath: '/room-asset-list/$roomId'
-      preLoaderRoute: typeof LayoutRoomAssetListRoomIdRouteImport
+    '/_layout/room-asset-list/$id': {
+      id: '/_layout/room-asset-list/$id'
+      path: '/$id'
+      fullPath: '/room-asset-list/$id'
+      preLoaderRoute: typeof LayoutRoomAssetListIdRouteImport
       parentRoute: typeof LayoutRoomAssetListRoute
     }
     '/_layout/pets/create': {
@@ -1033,7 +1051,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLecturerScanRouteImport
       parentRoute: typeof LayoutRoute
     }
-<<<<<<< HEAD
     '/_layout/lecturer/room-asset-list': {
       id: '/_layout/lecturer/room-asset-list'
       path: '/lecturer/room-asset-list'
@@ -1048,8 +1065,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLecturerReportSuccessRouteImport
       parentRoute: typeof LayoutRoute
     }
-=======
->>>>>>> origin/main
+    '/_layout/lecturer/my-report': {
+      id: '/_layout/lecturer/my-report'
+      path: '/lecturer/my-report'
+      fullPath: '/lecturer/my-report'
+      preLoaderRoute: typeof LayoutLecturerMyReportRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/lecturer/home': {
       id: '/_layout/lecturer/home'
       path: '/lecturer/home'
@@ -1057,8 +1079,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutLecturerHomeRouteImport
       parentRoute: typeof LayoutRoute
     }
-<<<<<<< HEAD
-=======
+    '/_layout/housekeeping/scan': {
+      id: '/_layout/housekeeping/scan'
+      path: '/housekeeping/scan'
+      fullPath: '/housekeeping/scan'
+      preLoaderRoute: typeof LayoutHousekeepingScanRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/housekeeping/report-history': {
+      id: '/_layout/housekeeping/report-history'
+      path: '/housekeeping/report-history'
+      fullPath: '/housekeeping/report-history'
+      preLoaderRoute: typeof LayoutHousekeepingReportHistoryRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/housekeeping/home': {
+      id: '/_layout/housekeeping/home'
+      path: '/housekeeping/home'
+      fullPath: '/housekeeping/home'
+      preLoaderRoute: typeof LayoutHousekeepingHomeRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/housekeeping/checklist-dashboard': {
+      id: '/_layout/housekeeping/checklist-dashboard'
+      path: '/housekeeping/checklist-dashboard'
+      fullPath: '/housekeeping/checklist-dashboard'
+      preLoaderRoute: typeof LayoutHousekeepingChecklistDashboardRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/fm-it/ticket-list': {
       id: '/_layout/fm-it/ticket-list'
       path: '/fm-it/ticket-list'
@@ -1080,7 +1128,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutFmItHomeRouteImport
       parentRoute: typeof LayoutRoute
     }
->>>>>>> origin/main
     '/_layout/curriculum/create': {
       id: '/_layout/curriculum/create'
       path: '/curriculum/create'
@@ -1231,14 +1278,14 @@ declare module '@tanstack/react-router' {
     '/_layout/configuration/user-management/': {
       id: '/_layout/configuration/user-management/'
       path: '/configuration/user-management'
-      fullPath: '/configuration/user-management'
+      fullPath: '/configuration/user-management/'
       preLoaderRoute: typeof LayoutConfigurationUserManagementIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/configuration/academic/': {
       id: '/_layout/configuration/academic/'
       path: '/configuration/academic'
-      fullPath: '/configuration/academic'
+      fullPath: '/configuration/academic/'
       preLoaderRoute: typeof LayoutConfigurationAcademicIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
@@ -1249,31 +1296,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutPetsIdEditRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/lecturer/room-asset-list/$roomId': {
-      id: '/_layout/lecturer/room-asset-list/$roomId'
-<<<<<<< HEAD
-      path: '/$roomId'
-      fullPath: '/lecturer/room-asset-list/$roomId'
-      preLoaderRoute: typeof LayoutLecturerRoomAssetListRoomIdRouteImport
+    '/_layout/lecturer/room-asset-list/$id': {
+      id: '/_layout/lecturer/room-asset-list/$id'
+      path: '/$id'
+      fullPath: '/lecturer/room-asset-list/$id'
+      preLoaderRoute: typeof LayoutLecturerRoomAssetListIdRouteImport
       parentRoute: typeof LayoutLecturerRoomAssetListRoute
     }
-    '/_layout/lecturer/report-success/$roomId': {
-      id: '/_layout/lecturer/report-success/$roomId'
-      path: '/$roomId'
-      fullPath: '/lecturer/report-success/$roomId'
-      preLoaderRoute: typeof LayoutLecturerReportSuccessRoomIdRouteImport
+    '/_layout/lecturer/report-success/$id': {
+      id: '/_layout/lecturer/report-success/$id'
+      path: '/$id'
+      fullPath: '/lecturer/report-success/$id'
+      preLoaderRoute: typeof LayoutLecturerReportSuccessIdRouteImport
       parentRoute: typeof LayoutLecturerReportSuccessRoute
-=======
-      path: '/lecturer/room-asset-list/$roomId'
-      fullPath: '/lecturer/room-asset-list/$roomId'
-      preLoaderRoute: typeof LayoutLecturerRoomAssetListRoomIdRouteImport
+    }
+    '/_layout/lecturer/report-detail-page/$id': {
+      id: '/_layout/lecturer/report-detail-page/$id'
+      path: '/lecturer/report-detail-page/$id'
+      fullPath: '/lecturer/report-detail-page/$id'
+      preLoaderRoute: typeof LayoutLecturerReportDetailPageIdRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/lecturer/report-success/$roomId': {
-      id: '/_layout/lecturer/report-success/$roomId'
-      path: '/lecturer/report-success/$roomId'
-      fullPath: '/lecturer/report-success/$roomId'
-      preLoaderRoute: typeof LayoutLecturerReportSuccessRoomIdRouteImport
+    '/_layout/housekeeping/room-checklist/$id': {
+      id: '/_layout/housekeeping/room-checklist/$id'
+      path: '/housekeeping/room-checklist/$id'
+      fullPath: '/housekeeping/room-checklist/$id'
+      preLoaderRoute: typeof LayoutHousekeepingRoomChecklistIdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/housekeeping/checklist-report/$id': {
+      id: '/_layout/housekeeping/checklist-report/$id'
+      path: '/housekeeping/checklist-report/$id'
+      fullPath: '/housekeeping/checklist-report/$id'
+      preLoaderRoute: typeof LayoutHousekeepingChecklistReportIdRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/fm-it/ticket-detail/$id': {
@@ -1282,7 +1337,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/fm-it/ticket-detail/$id'
       preLoaderRoute: typeof LayoutFmItTicketDetailIdRouteImport
       parentRoute: typeof LayoutRoute
->>>>>>> origin/main
     }
     '/_layout/curriculum/equivalence/upload-result': {
       id: '/_layout/curriculum/equivalence/upload-result'
@@ -1414,24 +1468,23 @@ declare module '@tanstack/react-router' {
 }
 
 interface LayoutRoomAssetListRouteChildren {
-  LayoutRoomAssetListRoomIdRoute: typeof LayoutRoomAssetListRoomIdRoute
+  LayoutRoomAssetListIdRoute: typeof LayoutRoomAssetListIdRoute
 }
 
 const LayoutRoomAssetListRouteChildren: LayoutRoomAssetListRouteChildren = {
-  LayoutRoomAssetListRoomIdRoute: LayoutRoomAssetListRoomIdRoute,
+  LayoutRoomAssetListIdRoute: LayoutRoomAssetListIdRoute,
 }
 
 const LayoutRoomAssetListRouteWithChildren =
   LayoutRoomAssetListRoute._addFileChildren(LayoutRoomAssetListRouteChildren)
 
 interface LayoutLecturerReportSuccessRouteChildren {
-  LayoutLecturerReportSuccessRoomIdRoute: typeof LayoutLecturerReportSuccessRoomIdRoute
+  LayoutLecturerReportSuccessIdRoute: typeof LayoutLecturerReportSuccessIdRoute
 }
 
 const LayoutLecturerReportSuccessRouteChildren: LayoutLecturerReportSuccessRouteChildren =
   {
-    LayoutLecturerReportSuccessRoomIdRoute:
-      LayoutLecturerReportSuccessRoomIdRoute,
+    LayoutLecturerReportSuccessIdRoute: LayoutLecturerReportSuccessIdRoute,
   }
 
 const LayoutLecturerReportSuccessRouteWithChildren =
@@ -1440,13 +1493,12 @@ const LayoutLecturerReportSuccessRouteWithChildren =
   )
 
 interface LayoutLecturerRoomAssetListRouteChildren {
-  LayoutLecturerRoomAssetListRoomIdRoute: typeof LayoutLecturerRoomAssetListRoomIdRoute
+  LayoutLecturerRoomAssetListIdRoute: typeof LayoutLecturerRoomAssetListIdRoute
 }
 
 const LayoutLecturerRoomAssetListRouteChildren: LayoutLecturerRoomAssetListRouteChildren =
   {
-    LayoutLecturerRoomAssetListRoomIdRoute:
-      LayoutLecturerRoomAssetListRoomIdRoute,
+    LayoutLecturerRoomAssetListIdRoute: LayoutLecturerRoomAssetListIdRoute,
   }
 
 const LayoutLecturerRoomAssetListRouteWithChildren =
@@ -1478,16 +1530,17 @@ interface LayoutRouteChildren {
   LayoutCurriculumTypeRoute: typeof LayoutCurriculumTypeRoute
   LayoutCurriculumAssignCoursesRoute: typeof LayoutCurriculumAssignCoursesRoute
   LayoutCurriculumCreateRoute: typeof LayoutCurriculumCreateRoute
-<<<<<<< HEAD
-  LayoutLecturerHomeRoute: typeof LayoutLecturerHomeRoute
-  LayoutLecturerReportSuccessRoute: typeof LayoutLecturerReportSuccessRouteWithChildren
-  LayoutLecturerRoomAssetListRoute: typeof LayoutLecturerRoomAssetListRouteWithChildren
-=======
   LayoutFmItHomeRoute: typeof LayoutFmItHomeRoute
   LayoutFmItNotificationRoute: typeof LayoutFmItNotificationRoute
   LayoutFmItTicketListRoute: typeof LayoutFmItTicketListRoute
+  LayoutHousekeepingChecklistDashboardRoute: typeof LayoutHousekeepingChecklistDashboardRoute
+  LayoutHousekeepingHomeRoute: typeof LayoutHousekeepingHomeRoute
+  LayoutHousekeepingReportHistoryRoute: typeof LayoutHousekeepingReportHistoryRoute
+  LayoutHousekeepingScanRoute: typeof LayoutHousekeepingScanRoute
   LayoutLecturerHomeRoute: typeof LayoutLecturerHomeRoute
->>>>>>> origin/main
+  LayoutLecturerMyReportRoute: typeof LayoutLecturerMyReportRoute
+  LayoutLecturerReportSuccessRoute: typeof LayoutLecturerReportSuccessRouteWithChildren
+  LayoutLecturerRoomAssetListRoute: typeof LayoutLecturerRoomAssetListRouteWithChildren
   LayoutLecturerScanRoute: typeof LayoutLecturerScanRoute
   LayoutPetsCreateRoute: typeof LayoutPetsCreateRoute
   LayoutAcademicCalendarIndexRoute: typeof LayoutAcademicCalendarIndexRoute
@@ -1508,8 +1561,9 @@ interface LayoutRouteChildren {
   LayoutCurriculumEquivalenceUploadRoute: typeof LayoutCurriculumEquivalenceUploadRoute
   LayoutCurriculumEquivalenceUploadResultRoute: typeof LayoutCurriculumEquivalenceUploadResultRoute
   LayoutFmItTicketDetailIdRoute: typeof LayoutFmItTicketDetailIdRoute
-  LayoutLecturerReportSuccessRoomIdRoute: typeof LayoutLecturerReportSuccessRoomIdRoute
-  LayoutLecturerRoomAssetListRoomIdRoute: typeof LayoutLecturerRoomAssetListRoomIdRoute
+  LayoutHousekeepingChecklistReportIdRoute: typeof LayoutHousekeepingChecklistReportIdRoute
+  LayoutHousekeepingRoomChecklistIdRoute: typeof LayoutHousekeepingRoomChecklistIdRoute
+  LayoutLecturerReportDetailPageIdRoute: typeof LayoutLecturerReportDetailPageIdRoute
   LayoutPetsIdEditRoute: typeof LayoutPetsIdEditRoute
   LayoutConfigurationAcademicIndexRoute: typeof LayoutConfigurationAcademicIndexRoute
   LayoutConfigurationUserManagementIndexRoute: typeof LayoutConfigurationUserManagementIndexRoute
@@ -1552,18 +1606,20 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCurriculumTypeRoute: LayoutCurriculumTypeRoute,
   LayoutCurriculumAssignCoursesRoute: LayoutCurriculumAssignCoursesRoute,
   LayoutCurriculumCreateRoute: LayoutCurriculumCreateRoute,
-<<<<<<< HEAD
+  LayoutFmItHomeRoute: LayoutFmItHomeRoute,
+  LayoutFmItNotificationRoute: LayoutFmItNotificationRoute,
+  LayoutFmItTicketListRoute: LayoutFmItTicketListRoute,
+  LayoutHousekeepingChecklistDashboardRoute:
+    LayoutHousekeepingChecklistDashboardRoute,
+  LayoutHousekeepingHomeRoute: LayoutHousekeepingHomeRoute,
+  LayoutHousekeepingReportHistoryRoute: LayoutHousekeepingReportHistoryRoute,
+  LayoutHousekeepingScanRoute: LayoutHousekeepingScanRoute,
   LayoutLecturerHomeRoute: LayoutLecturerHomeRoute,
+  LayoutLecturerMyReportRoute: LayoutLecturerMyReportRoute,
   LayoutLecturerReportSuccessRoute:
     LayoutLecturerReportSuccessRouteWithChildren,
   LayoutLecturerRoomAssetListRoute:
     LayoutLecturerRoomAssetListRouteWithChildren,
-=======
-  LayoutFmItHomeRoute: LayoutFmItHomeRoute,
-  LayoutFmItNotificationRoute: LayoutFmItNotificationRoute,
-  LayoutFmItTicketListRoute: LayoutFmItTicketListRoute,
-  LayoutLecturerHomeRoute: LayoutLecturerHomeRoute,
->>>>>>> origin/main
   LayoutLecturerScanRoute: LayoutLecturerScanRoute,
   LayoutPetsCreateRoute: LayoutPetsCreateRoute,
   LayoutAcademicCalendarIndexRoute: LayoutAcademicCalendarIndexRoute,
@@ -1590,10 +1646,11 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCurriculumEquivalenceUploadResultRoute:
     LayoutCurriculumEquivalenceUploadResultRoute,
   LayoutFmItTicketDetailIdRoute: LayoutFmItTicketDetailIdRoute,
-  LayoutLecturerReportSuccessRoomIdRoute:
-    LayoutLecturerReportSuccessRoomIdRoute,
-  LayoutLecturerRoomAssetListRoomIdRoute:
-    LayoutLecturerRoomAssetListRoomIdRoute,
+  LayoutHousekeepingChecklistReportIdRoute:
+    LayoutHousekeepingChecklistReportIdRoute,
+  LayoutHousekeepingRoomChecklistIdRoute:
+    LayoutHousekeepingRoomChecklistIdRoute,
+  LayoutLecturerReportDetailPageIdRoute: LayoutLecturerReportDetailPageIdRoute,
   LayoutPetsIdEditRoute: LayoutPetsIdEditRoute,
   LayoutConfigurationAcademicIndexRoute: LayoutConfigurationAcademicIndexRoute,
   LayoutConfigurationUserManagementIndexRoute:
@@ -1621,7 +1678,6 @@ const LayoutRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
-  LayoutSiakupRoute: LayoutSiakupRoute,
   LoginRoute: LoginRoute,
 }
 export const routeTree = rootRouteImport

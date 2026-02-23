@@ -1,10 +1,8 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getUser } from "@/lib/auth";
-import { RoomDetailView } from "@/views/housekeeping/RoomChecklistPage";
+import { RoomAssetListView } from "@/views/lecturer/RoomAssetListView";
 
-export const Route = createFileRoute(
-  "/_layout/housekeeping/room-checklist/$roomId"
-)({
+export const Route = createFileRoute("/_layout/room-asset-list/$id")({
   beforeLoad: async ({ location, context }) => {
     const user = await getUser(context.queryClient);
     if (!user) {
@@ -16,5 +14,5 @@ export const Route = createFileRoute(
       });
     }
   },
-  component: RoomDetailView,
+  component: RoomAssetListView,
 });

@@ -2,13 +2,10 @@ import { Link } from "@tanstack/react-router";
 import { Typography } from "uper-ui";
 import { Button } from "uper-ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "uper-ui/card";
-import { Header } from "@/components/header";
 
 export function DashboardView() {
   return (
     <div className="min-h-screen bg-[#F7F7FB]">
-      <Header />
-
       {/* Content */}
       <main className="mx-auto w-full max-w-5xl space-y-4 px-4 py-6">
         <Card elevation="low">

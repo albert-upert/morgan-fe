@@ -2,10 +2,9 @@ import { useNavigate } from "@tanstack/react-router";
 import { BrowserQRCodeReader } from "@zxing/browser";
 import { NotFoundException } from "@zxing/library";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeftIcon } from "uper-ui/icon";
+import { ArrowLeftIcon, FlashlightIcon, GalleryIcon } from "uper-ui/icon";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
-import { FlashlightIcon, GalleryIcon } from "@/components/icon";
 
 export function ScanQrView() {
   const navigate = useNavigate();
@@ -56,8 +55,8 @@ export function ScanQrView() {
 
             // Demo: langsung ke halaman list detail aset
             navigate({
-              to: "/room-asset-list/$roomId",
-              params: { roomId: "0001" },
+              to: "/room-asset-list/$id",
+              params: { id: "0001" },
             });
           } else if (err && !(err instanceof NotFoundException)) {
             // NotFoundException = frame belum ada QR, aman di-ignore
@@ -134,7 +133,7 @@ export function ScanQrView() {
             Pindai QR untuk melihat detail aset.
           </Typography>
           {cameraError && (
-            <Typography variant="pixie" className="mt-2 text-white/80">
+            <Typography variant="caption-pixie" className="mt-2 text-white/80">
               {cameraError}
             </Typography>
           )}

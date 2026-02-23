@@ -1,5 +1,5 @@
-import { Link } from "@tanstack/react-router";
 import type { MouseEventHandler, ReactNode } from "react";
+import { useState } from "react";
 import {
   Dropdown,
   DropdownContent,
@@ -38,7 +38,7 @@ export interface HeaderProps {
   logoSrc?: string;
   logoAlt?: string;
 
-  title?: Array<string>;
+  title?: string;
   subtitle?: string;
 
   /**
@@ -64,7 +64,7 @@ export function Header({
   variant: _variant = "default",
   logoSrc = "/images/logo-banner.png",
   logoAlt = "MORGAN",
-  title = ["M", "O", "R", "G", "A", "N"],
+  title = "MORGAN",
   subtitle = "Sistem Pelaporan Aset",
   maxWidthClassName,
   className,
@@ -72,14 +72,16 @@ export function Header({
   onSettingsClick,
   onLogoutClick,
 }: HeaderProps) {
-  const resolvedMaxWidth = maxWidthClassName || "max-w-auto";
-  const name = "Agus";
-  const role = "Teknisi IT";
+  const resolvedMaxWidth = maxWidthClassName || "max-w-5xl";
+
+  const fullName = "Meredita Susanty";
+  const role = "Dosen";
+  const [openMenu, setOpenMenu] = useState(false);
 
   return (
     <header
       className={cn(
-        "mx-auto max-w-[412px] bg-linear-to-l from-navbar-gradient-end to-background",
+        "mx-auto max-w-[412px] border-b border-border bg-linear-to-l from-navbar-gradient-end to-background",
         className
       )}
     >
@@ -96,57 +98,25 @@ export function Header({
             alt={logoAlt}
             className="h-[33.44px] w-[47.81px] shrink-0 object-contain"
           />
-          <div className="flex flex-col content-between gap-1">
-            <div className="flex flex-row justify-between">
-              {title.map((item, index) => (
-                <Typography
-                  key={index}
-                  variant="body-large-semibold"
-                  className="leading-4 text-gray-800"
+          <div className="flex flex-col gap-0 p-2">
+            <div className="flex justify-between">
+              {title.split("").map((char, i) => (
+                <span
+                  key={i}
+                  className="text-[17px] leading-none font-semibold text-gray-800"
                 >
-                  {item}
-                </Typography>
+                  {char}
+                </span>
               ))}
             </div>
 
-            <Typography variant="caption-pixie-semibold" className="">
+            <Typography
+              variant="caption-pixie"
+              className="font-semibold text-gray-800"
+            >
               {subtitle}
             </Typography>
           </div>
-
-          <Dropdown>
-            <DropdownTrigger asChild>
-              <button className="ml-auto flex items-center gap-1 outline-none">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100">
-                  <ProfileIcon />
-                </div>
-
-                <div className="flex flex-col items-center">
-                  <Typography variant="body-large-semibold">{name}</Typography>
-                  <Typography variant="caption-pixie">{role}</Typography>
-                </div>
-              </button>
-            </DropdownTrigger>
-            <DropdownContent align="end" className="w-48">
-              <DropdownItem className="gap-2">
-                <Link
-                  to="/fm-it/notification"
-                  className="flex items-center gap-2"
-                >
-                  <NotificationIcon className="h-5 w-5" />
-                  <Typography variant="body-small">Notifikasi</Typography>
-                </Link>
-              </DropdownItem>
-              <DropdownItem className="gap-2">
-                <SettingIcon className="h-5 w-5" />
-                <Typography variant="body-small">Pengaturan</Typography>
-              </DropdownItem>
-              <DropdownItem className="gap-2">
-                <LogoutIcon className="h-5 w-5" />
-                <Typography variant="body-small">Keluar</Typography>
-              </DropdownItem>
-            </DropdownContent>
-          </Dropdown>
         </div>
 
         <div className="flex items-center gap-[6px]">
