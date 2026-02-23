@@ -79,7 +79,7 @@ export function Header({
               {title}
             </Typography>
             <Typography
-              variant="caption-small"
+              variant="caption"
               className="leading-4 font-semibold text-gray-800"
             >
               {subtitle}
