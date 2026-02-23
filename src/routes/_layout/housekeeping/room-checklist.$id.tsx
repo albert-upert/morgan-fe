@@ -1,20 +1,8 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import { getUser } from "@/lib/auth";
+import { createFileRoute } from "@tanstack/react-router";
 import { RoomDetailView } from "@/views/housekeeping/RoomChecklistPage";
 
 export const Route = createFileRoute(
   "/_layout/housekeeping/room-checklist/$id"
 )({
-  beforeLoad: async ({ location, context }) => {
-    const user = await getUser(context.queryClient);
-    if (!user) {
-      throw redirect({
-        to: "/login",
-        search: {
-          redirect: location.href,
-        },
-      });
-    }
-  },
   component: RoomDetailView,
 });

@@ -13,15 +13,7 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutRoomAssetListRouteImport } from './routes/_layout/room-asset-list'
-import { Route as LayoutPetsIndexRouteImport } from './routes/_layout/pets/index'
-import { Route as LayoutCurriculumIndexRouteImport } from './routes/_layout/curriculum/index'
-import { Route as LayoutCourseIndexRouteImport } from './routes/_layout/course/index'
-import { Route as LayoutCourseScheduleIndexRouteImport } from './routes/_layout/course-schedule/index'
-import { Route as LayoutConfigurationIndexRouteImport } from './routes/_layout/configuration/index'
-import { Route as LayoutAutoAssignIndexRouteImport } from './routes/_layout/auto-assign/index'
-import { Route as LayoutAcademicCalendarIndexRouteImport } from './routes/_layout/academic-calendar/index'
 import { Route as LayoutRoomAssetListIdRouteImport } from './routes/_layout/room-asset-list.$id'
-import { Route as LayoutPetsCreateRouteImport } from './routes/_layout/pets/create'
 import { Route as LayoutLecturerScanRouteImport } from './routes/_layout/lecturer/scan'
 import { Route as LayoutLecturerRoomAssetListRouteImport } from './routes/_layout/lecturer/room-asset-list'
 import { Route as LayoutLecturerReportSuccessRouteImport } from './routes/_layout/lecturer/report-success'
@@ -34,54 +26,12 @@ import { Route as LayoutHousekeepingChecklistDashboardRouteImport } from './rout
 import { Route as LayoutFmItTicketListRouteImport } from './routes/_layout/fm-it/ticket-list'
 import { Route as LayoutFmItNotificationRouteImport } from './routes/_layout/fm-it/notification'
 import { Route as LayoutFmItHomeRouteImport } from './routes/_layout/fm-it/home'
-import { Route as LayoutCurriculumCreateRouteImport } from './routes/_layout/curriculum/create'
-import { Route as LayoutCurriculumAssignCoursesRouteImport } from './routes/_layout/curriculum/assign-courses'
-import { Route as LayoutCurriculumTypeRouteImport } from './routes/_layout/curriculum/$type'
-import { Route as LayoutCourseUploadResultRouteImport } from './routes/_layout/course/upload-result'
-import { Route as LayoutCourseUploadRouteImport } from './routes/_layout/course/upload'
-import { Route as LayoutCourseCreateRouteImport } from './routes/_layout/course/create'
-import { Route as LayoutCourseScheduleImportPreviewRouteImport } from './routes/_layout/course-schedule/import-preview'
-import { Route as LayoutCourseScheduleImportRouteImport } from './routes/_layout/course-schedule/import'
-import { Route as LayoutCourseScheduleCreateRouteImport } from './routes/_layout/course-schedule/create'
-import { Route as LayoutConfigurationUsersRouteImport } from './routes/_layout/configuration/users'
-import { Route as LayoutConfigurationSurveyQuestionsRouteImport } from './routes/_layout/configuration/survey-questions'
-import { Route as LayoutConfigurationRolesRouteImport } from './routes/_layout/configuration/roles'
-import { Route as LayoutConfigurationResearchRouteImport } from './routes/_layout/configuration/research'
-import { Route as LayoutConfigurationInstitutionRouteImport } from './routes/_layout/configuration/institution'
-import { Route as LayoutConfigurationCourseTypeRouteImport } from './routes/_layout/configuration/course-type'
-import { Route as LayoutConfigurationAdministrationRouteImport } from './routes/_layout/configuration/administration'
-import { Route as LayoutAutoAssignClassListRouteImport } from './routes/_layout/auto-assign/class-list'
-import { Route as LayoutAcademicCalendarUploadResultRouteImport } from './routes/_layout/academic-calendar/upload-result'
-import { Route as LayoutAcademicCalendarUploadRouteImport } from './routes/_layout/academic-calendar/upload'
-import { Route as LayoutAcademicCalendarGenerateAcademicHistoryRouteImport } from './routes/_layout/academic-calendar/generate-academic-history'
-import { Route as LayoutAcademicCalendarIdRouteImport } from './routes/_layout/academic-calendar/$id'
-import { Route as LayoutConfigurationUserManagementIndexRouteImport } from './routes/_layout/configuration/user-management/index'
-import { Route as LayoutConfigurationAcademicIndexRouteImport } from './routes/_layout/configuration/academic/index'
-import { Route as LayoutPetsIdEditRouteImport } from './routes/_layout/pets/$id.edit'
 import { Route as LayoutLecturerRoomAssetListIdRouteImport } from './routes/_layout/lecturer/room-asset-list.$id'
 import { Route as LayoutLecturerReportSuccessIdRouteImport } from './routes/_layout/lecturer/report-success.$id'
 import { Route as LayoutLecturerReportDetailPageIdRouteImport } from './routes/_layout/lecturer/report-detail-page.$id'
 import { Route as LayoutHousekeepingRoomChecklistIdRouteImport } from './routes/_layout/housekeeping/room-checklist.$id'
 import { Route as LayoutHousekeepingChecklistReportIdRouteImport } from './routes/_layout/housekeeping/checklist-report.$id'
 import { Route as LayoutFmItTicketDetailIdRouteImport } from './routes/_layout/fm-it/ticket-detail.$id'
-import { Route as LayoutCurriculumEquivalenceUploadResultRouteImport } from './routes/_layout/curriculum/equivalence/upload-result'
-import { Route as LayoutCurriculumEquivalenceUploadRouteImport } from './routes/_layout/curriculum/equivalence/upload'
-import { Route as LayoutCurriculumEquivalenceCreateRouteImport } from './routes/_layout/curriculum/equivalence/create'
-import { Route as LayoutCurriculumIdEditRouteImport } from './routes/_layout/curriculum/$id.edit'
-import { Route as LayoutCourseIdEditRouteImport } from './routes/_layout/course/$id.edit'
-import { Route as LayoutCourseScheduleIdEditRouteImport } from './routes/_layout/course-schedule/$id.edit'
-import { Route as LayoutConfigurationUserManagementCreateRouteImport } from './routes/_layout/configuration/user-management/create'
-import { Route as LayoutConfigurationAcademicTypeRouteImport } from './routes/_layout/configuration/academic/$type'
-import { Route as LayoutAutoAssignParticipantsFilledClassIdRouteImport } from './routes/_layout/auto-assign/participants-filled.$classId'
-import { Route as LayoutAutoAssignParticipantsApprovedClassIdRouteImport } from './routes/_layout/auto-assign/participants-approved.$classId'
-import { Route as LayoutCurriculumEquivalenceIdEditRouteImport } from './routes/_layout/curriculum/equivalence/$id.edit'
-import { Route as LayoutConfigurationUserManagementIdEditRouteImport } from './routes/_layout/configuration/user-management/$id.edit'
-import { Route as LayoutConfigurationAcademicPeriodCreateRouteImport } from './routes/_layout/configuration/academic/period/create'
-import { Route as LayoutConfigurationAcademicEventUploadResultRouteImport } from './routes/_layout/configuration/academic/event/upload-result'
-import { Route as LayoutConfigurationAcademicEventUploadRouteImport } from './routes/_layout/configuration/academic/event/upload'
-import { Route as LayoutConfigurationAcademicEventCreateRouteImport } from './routes/_layout/configuration/academic/event/create'
-import { Route as LayoutConfigurationAcademicPeriodIdEditRouteImport } from './routes/_layout/configuration/academic/period/$id.edit'
-import { Route as LayoutConfigurationAcademicEventIdEditRouteImport } from './routes/_layout/configuration/academic/event/$id.edit'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -102,53 +52,10 @@ const LayoutRoomAssetListRoute = LayoutRoomAssetListRouteImport.update({
   path: '/room-asset-list',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutPetsIndexRoute = LayoutPetsIndexRouteImport.update({
-  id: '/pets/',
-  path: '/pets/',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutCurriculumIndexRoute = LayoutCurriculumIndexRouteImport.update({
-  id: '/curriculum/',
-  path: '/curriculum/',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutCourseIndexRoute = LayoutCourseIndexRouteImport.update({
-  id: '/course/',
-  path: '/course/',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutCourseScheduleIndexRoute =
-  LayoutCourseScheduleIndexRouteImport.update({
-    id: '/course-schedule/',
-    path: '/course-schedule/',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationIndexRoute =
-  LayoutConfigurationIndexRouteImport.update({
-    id: '/configuration/',
-    path: '/configuration/',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutAutoAssignIndexRoute = LayoutAutoAssignIndexRouteImport.update({
-  id: '/auto-assign/',
-  path: '/auto-assign/',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutAcademicCalendarIndexRoute =
-  LayoutAcademicCalendarIndexRouteImport.update({
-    id: '/academic-calendar/',
-    path: '/academic-calendar/',
-    getParentRoute: () => LayoutRoute,
-  } as any)
 const LayoutRoomAssetListIdRoute = LayoutRoomAssetListIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => LayoutRoomAssetListRoute,
-} as any)
-const LayoutPetsCreateRoute = LayoutPetsCreateRouteImport.update({
-  id: '/pets/create',
-  path: '/pets/create',
-  getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutLecturerScanRoute = LayoutLecturerScanRouteImport.update({
   id: '/lecturer/scan',
@@ -214,145 +121,6 @@ const LayoutFmItHomeRoute = LayoutFmItHomeRouteImport.update({
   path: '/fm-it/home',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutCurriculumCreateRoute = LayoutCurriculumCreateRouteImport.update({
-  id: '/curriculum/create',
-  path: '/curriculum/create',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutCurriculumAssignCoursesRoute =
-  LayoutCurriculumAssignCoursesRouteImport.update({
-    id: '/curriculum/assign-courses',
-    path: '/curriculum/assign-courses',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutCurriculumTypeRoute = LayoutCurriculumTypeRouteImport.update({
-  id: '/curriculum/$type',
-  path: '/curriculum/$type',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutCourseUploadResultRoute =
-  LayoutCourseUploadResultRouteImport.update({
-    id: '/course/upload-result',
-    path: '/course/upload-result',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutCourseUploadRoute = LayoutCourseUploadRouteImport.update({
-  id: '/course/upload',
-  path: '/course/upload',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutCourseCreateRoute = LayoutCourseCreateRouteImport.update({
-  id: '/course/create',
-  path: '/course/create',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutCourseScheduleImportPreviewRoute =
-  LayoutCourseScheduleImportPreviewRouteImport.update({
-    id: '/course-schedule/import-preview',
-    path: '/course-schedule/import-preview',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutCourseScheduleImportRoute =
-  LayoutCourseScheduleImportRouteImport.update({
-    id: '/course-schedule/import',
-    path: '/course-schedule/import',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutCourseScheduleCreateRoute =
-  LayoutCourseScheduleCreateRouteImport.update({
-    id: '/course-schedule/create',
-    path: '/course-schedule/create',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationUsersRoute =
-  LayoutConfigurationUsersRouteImport.update({
-    id: '/configuration/users',
-    path: '/configuration/users',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationSurveyQuestionsRoute =
-  LayoutConfigurationSurveyQuestionsRouteImport.update({
-    id: '/configuration/survey-questions',
-    path: '/configuration/survey-questions',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationRolesRoute =
-  LayoutConfigurationRolesRouteImport.update({
-    id: '/configuration/roles',
-    path: '/configuration/roles',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationResearchRoute =
-  LayoutConfigurationResearchRouteImport.update({
-    id: '/configuration/research',
-    path: '/configuration/research',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationInstitutionRoute =
-  LayoutConfigurationInstitutionRouteImport.update({
-    id: '/configuration/institution',
-    path: '/configuration/institution',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationCourseTypeRoute =
-  LayoutConfigurationCourseTypeRouteImport.update({
-    id: '/configuration/course-type',
-    path: '/configuration/course-type',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationAdministrationRoute =
-  LayoutConfigurationAdministrationRouteImport.update({
-    id: '/configuration/administration',
-    path: '/configuration/administration',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutAutoAssignClassListRoute =
-  LayoutAutoAssignClassListRouteImport.update({
-    id: '/auto-assign/class-list',
-    path: '/auto-assign/class-list',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutAcademicCalendarUploadResultRoute =
-  LayoutAcademicCalendarUploadResultRouteImport.update({
-    id: '/academic-calendar/upload-result',
-    path: '/academic-calendar/upload-result',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutAcademicCalendarUploadRoute =
-  LayoutAcademicCalendarUploadRouteImport.update({
-    id: '/academic-calendar/upload',
-    path: '/academic-calendar/upload',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutAcademicCalendarGenerateAcademicHistoryRoute =
-  LayoutAcademicCalendarGenerateAcademicHistoryRouteImport.update({
-    id: '/academic-calendar/generate-academic-history',
-    path: '/academic-calendar/generate-academic-history',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutAcademicCalendarIdRoute =
-  LayoutAcademicCalendarIdRouteImport.update({
-    id: '/academic-calendar/$id',
-    path: '/academic-calendar/$id',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationUserManagementIndexRoute =
-  LayoutConfigurationUserManagementIndexRouteImport.update({
-    id: '/configuration/user-management/',
-    path: '/configuration/user-management/',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationAcademicIndexRoute =
-  LayoutConfigurationAcademicIndexRouteImport.update({
-    id: '/configuration/academic/',
-    path: '/configuration/academic/',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutPetsIdEditRoute = LayoutPetsIdEditRouteImport.update({
-  id: '/pets/$id/edit',
-  path: '/pets/$id/edit',
-  getParentRoute: () => LayoutRoute,
-} as any)
 const LayoutLecturerRoomAssetListIdRoute =
   LayoutLecturerRoomAssetListIdRouteImport.update({
     id: '/$id',
@@ -389,138 +157,11 @@ const LayoutFmItTicketDetailIdRoute =
     path: '/fm-it/ticket-detail/$id',
     getParentRoute: () => LayoutRoute,
   } as any)
-const LayoutCurriculumEquivalenceUploadResultRoute =
-  LayoutCurriculumEquivalenceUploadResultRouteImport.update({
-    id: '/curriculum/equivalence/upload-result',
-    path: '/curriculum/equivalence/upload-result',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutCurriculumEquivalenceUploadRoute =
-  LayoutCurriculumEquivalenceUploadRouteImport.update({
-    id: '/curriculum/equivalence/upload',
-    path: '/curriculum/equivalence/upload',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutCurriculumEquivalenceCreateRoute =
-  LayoutCurriculumEquivalenceCreateRouteImport.update({
-    id: '/curriculum/equivalence/create',
-    path: '/curriculum/equivalence/create',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutCurriculumIdEditRoute = LayoutCurriculumIdEditRouteImport.update({
-  id: '/curriculum/$id/edit',
-  path: '/curriculum/$id/edit',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutCourseIdEditRoute = LayoutCourseIdEditRouteImport.update({
-  id: '/course/$id/edit',
-  path: '/course/$id/edit',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutCourseScheduleIdEditRoute =
-  LayoutCourseScheduleIdEditRouteImport.update({
-    id: '/course-schedule/$id/edit',
-    path: '/course-schedule/$id/edit',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationUserManagementCreateRoute =
-  LayoutConfigurationUserManagementCreateRouteImport.update({
-    id: '/configuration/user-management/create',
-    path: '/configuration/user-management/create',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationAcademicTypeRoute =
-  LayoutConfigurationAcademicTypeRouteImport.update({
-    id: '/configuration/academic/$type',
-    path: '/configuration/academic/$type',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutAutoAssignParticipantsFilledClassIdRoute =
-  LayoutAutoAssignParticipantsFilledClassIdRouteImport.update({
-    id: '/auto-assign/participants-filled/$classId',
-    path: '/auto-assign/participants-filled/$classId',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutAutoAssignParticipantsApprovedClassIdRoute =
-  LayoutAutoAssignParticipantsApprovedClassIdRouteImport.update({
-    id: '/auto-assign/participants-approved/$classId',
-    path: '/auto-assign/participants-approved/$classId',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutCurriculumEquivalenceIdEditRoute =
-  LayoutCurriculumEquivalenceIdEditRouteImport.update({
-    id: '/curriculum/equivalence/$id/edit',
-    path: '/curriculum/equivalence/$id/edit',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationUserManagementIdEditRoute =
-  LayoutConfigurationUserManagementIdEditRouteImport.update({
-    id: '/configuration/user-management/$id/edit',
-    path: '/configuration/user-management/$id/edit',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationAcademicPeriodCreateRoute =
-  LayoutConfigurationAcademicPeriodCreateRouteImport.update({
-    id: '/configuration/academic/period/create',
-    path: '/configuration/academic/period/create',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationAcademicEventUploadResultRoute =
-  LayoutConfigurationAcademicEventUploadResultRouteImport.update({
-    id: '/configuration/academic/event/upload-result',
-    path: '/configuration/academic/event/upload-result',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationAcademicEventUploadRoute =
-  LayoutConfigurationAcademicEventUploadRouteImport.update({
-    id: '/configuration/academic/event/upload',
-    path: '/configuration/academic/event/upload',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationAcademicEventCreateRoute =
-  LayoutConfigurationAcademicEventCreateRouteImport.update({
-    id: '/configuration/academic/event/create',
-    path: '/configuration/academic/event/create',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationAcademicPeriodIdEditRoute =
-  LayoutConfigurationAcademicPeriodIdEditRouteImport.update({
-    id: '/configuration/academic/period/$id/edit',
-    path: '/configuration/academic/period/$id/edit',
-    getParentRoute: () => LayoutRoute,
-  } as any)
-const LayoutConfigurationAcademicEventIdEditRoute =
-  LayoutConfigurationAcademicEventIdEditRouteImport.update({
-    id: '/configuration/academic/event/$id/edit',
-    path: '/configuration/academic/event/$id/edit',
-    getParentRoute: () => LayoutRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginRoute
   '/room-asset-list': typeof LayoutRoomAssetListRouteWithChildren
-  '/academic-calendar/$id': typeof LayoutAcademicCalendarIdRoute
-  '/academic-calendar/generate-academic-history': typeof LayoutAcademicCalendarGenerateAcademicHistoryRoute
-  '/academic-calendar/upload': typeof LayoutAcademicCalendarUploadRoute
-  '/academic-calendar/upload-result': typeof LayoutAcademicCalendarUploadResultRoute
-  '/auto-assign/class-list': typeof LayoutAutoAssignClassListRoute
-  '/configuration/administration': typeof LayoutConfigurationAdministrationRoute
-  '/configuration/course-type': typeof LayoutConfigurationCourseTypeRoute
-  '/configuration/institution': typeof LayoutConfigurationInstitutionRoute
-  '/configuration/research': typeof LayoutConfigurationResearchRoute
-  '/configuration/roles': typeof LayoutConfigurationRolesRoute
-  '/configuration/survey-questions': typeof LayoutConfigurationSurveyQuestionsRoute
-  '/configuration/users': typeof LayoutConfigurationUsersRoute
-  '/course-schedule/create': typeof LayoutCourseScheduleCreateRoute
-  '/course-schedule/import': typeof LayoutCourseScheduleImportRoute
-  '/course-schedule/import-preview': typeof LayoutCourseScheduleImportPreviewRoute
-  '/course/create': typeof LayoutCourseCreateRoute
-  '/course/upload': typeof LayoutCourseUploadRoute
-  '/course/upload-result': typeof LayoutCourseUploadResultRoute
-  '/curriculum/$type': typeof LayoutCurriculumTypeRoute
-  '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
-  '/curriculum/create': typeof LayoutCurriculumCreateRoute
   '/fm-it/home': typeof LayoutFmItHomeRoute
   '/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
@@ -533,68 +174,18 @@ export interface FileRoutesByFullPath {
   '/lecturer/report-success': typeof LayoutLecturerReportSuccessRouteWithChildren
   '/lecturer/room-asset-list': typeof LayoutLecturerRoomAssetListRouteWithChildren
   '/lecturer/scan': typeof LayoutLecturerScanRoute
-  '/pets/create': typeof LayoutPetsCreateRoute
   '/room-asset-list/$id': typeof LayoutRoomAssetListIdRoute
-  '/academic-calendar/': typeof LayoutAcademicCalendarIndexRoute
-  '/auto-assign/': typeof LayoutAutoAssignIndexRoute
-  '/configuration/': typeof LayoutConfigurationIndexRoute
-  '/course-schedule/': typeof LayoutCourseScheduleIndexRoute
-  '/course/': typeof LayoutCourseIndexRoute
-  '/curriculum/': typeof LayoutCurriculumIndexRoute
-  '/pets/': typeof LayoutPetsIndexRoute
-  '/auto-assign/participants-approved/$classId': typeof LayoutAutoAssignParticipantsApprovedClassIdRoute
-  '/auto-assign/participants-filled/$classId': typeof LayoutAutoAssignParticipantsFilledClassIdRoute
-  '/configuration/academic/$type': typeof LayoutConfigurationAcademicTypeRoute
-  '/configuration/user-management/create': typeof LayoutConfigurationUserManagementCreateRoute
-  '/course-schedule/$id/edit': typeof LayoutCourseScheduleIdEditRoute
-  '/course/$id/edit': typeof LayoutCourseIdEditRoute
-  '/curriculum/$id/edit': typeof LayoutCurriculumIdEditRoute
-  '/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
-  '/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
-  '/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
   '/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
   '/housekeeping/checklist-report/$id': typeof LayoutHousekeepingChecklistReportIdRoute
   '/housekeeping/room-checklist/$id': typeof LayoutHousekeepingRoomChecklistIdRoute
   '/lecturer/report-detail-page/$id': typeof LayoutLecturerReportDetailPageIdRoute
   '/lecturer/report-success/$id': typeof LayoutLecturerReportSuccessIdRoute
   '/lecturer/room-asset-list/$id': typeof LayoutLecturerRoomAssetListIdRoute
-  '/pets/$id/edit': typeof LayoutPetsIdEditRoute
-  '/configuration/academic/': typeof LayoutConfigurationAcademicIndexRoute
-  '/configuration/user-management/': typeof LayoutConfigurationUserManagementIndexRoute
-  '/configuration/academic/event/create': typeof LayoutConfigurationAcademicEventCreateRoute
-  '/configuration/academic/event/upload': typeof LayoutConfigurationAcademicEventUploadRoute
-  '/configuration/academic/event/upload-result': typeof LayoutConfigurationAcademicEventUploadResultRoute
-  '/configuration/academic/period/create': typeof LayoutConfigurationAcademicPeriodCreateRoute
-  '/configuration/user-management/$id/edit': typeof LayoutConfigurationUserManagementIdEditRoute
-  '/curriculum/equivalence/$id/edit': typeof LayoutCurriculumEquivalenceIdEditRoute
-  '/configuration/academic/event/$id/edit': typeof LayoutConfigurationAcademicEventIdEditRoute
-  '/configuration/academic/period/$id/edit': typeof LayoutConfigurationAcademicPeriodIdEditRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/room-asset-list': typeof LayoutRoomAssetListRouteWithChildren
   '/': typeof LayoutIndexRoute
-  '/academic-calendar/$id': typeof LayoutAcademicCalendarIdRoute
-  '/academic-calendar/generate-academic-history': typeof LayoutAcademicCalendarGenerateAcademicHistoryRoute
-  '/academic-calendar/upload': typeof LayoutAcademicCalendarUploadRoute
-  '/academic-calendar/upload-result': typeof LayoutAcademicCalendarUploadResultRoute
-  '/auto-assign/class-list': typeof LayoutAutoAssignClassListRoute
-  '/configuration/administration': typeof LayoutConfigurationAdministrationRoute
-  '/configuration/course-type': typeof LayoutConfigurationCourseTypeRoute
-  '/configuration/institution': typeof LayoutConfigurationInstitutionRoute
-  '/configuration/research': typeof LayoutConfigurationResearchRoute
-  '/configuration/roles': typeof LayoutConfigurationRolesRoute
-  '/configuration/survey-questions': typeof LayoutConfigurationSurveyQuestionsRoute
-  '/configuration/users': typeof LayoutConfigurationUsersRoute
-  '/course-schedule/create': typeof LayoutCourseScheduleCreateRoute
-  '/course-schedule/import': typeof LayoutCourseScheduleImportRoute
-  '/course-schedule/import-preview': typeof LayoutCourseScheduleImportPreviewRoute
-  '/course/create': typeof LayoutCourseCreateRoute
-  '/course/upload': typeof LayoutCourseUploadRoute
-  '/course/upload-result': typeof LayoutCourseUploadResultRoute
-  '/curriculum/$type': typeof LayoutCurriculumTypeRoute
-  '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
-  '/curriculum/create': typeof LayoutCurriculumCreateRoute
   '/fm-it/home': typeof LayoutFmItHomeRoute
   '/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
@@ -607,42 +198,13 @@ export interface FileRoutesByTo {
   '/lecturer/report-success': typeof LayoutLecturerReportSuccessRouteWithChildren
   '/lecturer/room-asset-list': typeof LayoutLecturerRoomAssetListRouteWithChildren
   '/lecturer/scan': typeof LayoutLecturerScanRoute
-  '/pets/create': typeof LayoutPetsCreateRoute
   '/room-asset-list/$id': typeof LayoutRoomAssetListIdRoute
-  '/academic-calendar': typeof LayoutAcademicCalendarIndexRoute
-  '/auto-assign': typeof LayoutAutoAssignIndexRoute
-  '/configuration': typeof LayoutConfigurationIndexRoute
-  '/course-schedule': typeof LayoutCourseScheduleIndexRoute
-  '/course': typeof LayoutCourseIndexRoute
-  '/curriculum': typeof LayoutCurriculumIndexRoute
-  '/pets': typeof LayoutPetsIndexRoute
-  '/auto-assign/participants-approved/$classId': typeof LayoutAutoAssignParticipantsApprovedClassIdRoute
-  '/auto-assign/participants-filled/$classId': typeof LayoutAutoAssignParticipantsFilledClassIdRoute
-  '/configuration/academic/$type': typeof LayoutConfigurationAcademicTypeRoute
-  '/configuration/user-management/create': typeof LayoutConfigurationUserManagementCreateRoute
-  '/course-schedule/$id/edit': typeof LayoutCourseScheduleIdEditRoute
-  '/course/$id/edit': typeof LayoutCourseIdEditRoute
-  '/curriculum/$id/edit': typeof LayoutCurriculumIdEditRoute
-  '/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
-  '/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
-  '/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
   '/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
   '/housekeeping/checklist-report/$id': typeof LayoutHousekeepingChecklistReportIdRoute
   '/housekeeping/room-checklist/$id': typeof LayoutHousekeepingRoomChecklistIdRoute
   '/lecturer/report-detail-page/$id': typeof LayoutLecturerReportDetailPageIdRoute
   '/lecturer/report-success/$id': typeof LayoutLecturerReportSuccessIdRoute
   '/lecturer/room-asset-list/$id': typeof LayoutLecturerRoomAssetListIdRoute
-  '/pets/$id/edit': typeof LayoutPetsIdEditRoute
-  '/configuration/academic': typeof LayoutConfigurationAcademicIndexRoute
-  '/configuration/user-management': typeof LayoutConfigurationUserManagementIndexRoute
-  '/configuration/academic/event/create': typeof LayoutConfigurationAcademicEventCreateRoute
-  '/configuration/academic/event/upload': typeof LayoutConfigurationAcademicEventUploadRoute
-  '/configuration/academic/event/upload-result': typeof LayoutConfigurationAcademicEventUploadResultRoute
-  '/configuration/academic/period/create': typeof LayoutConfigurationAcademicPeriodCreateRoute
-  '/configuration/user-management/$id/edit': typeof LayoutConfigurationUserManagementIdEditRoute
-  '/curriculum/equivalence/$id/edit': typeof LayoutCurriculumEquivalenceIdEditRoute
-  '/configuration/academic/event/$id/edit': typeof LayoutConfigurationAcademicEventIdEditRoute
-  '/configuration/academic/period/$id/edit': typeof LayoutConfigurationAcademicPeriodIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -650,27 +212,6 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/_layout/room-asset-list': typeof LayoutRoomAssetListRouteWithChildren
   '/_layout/': typeof LayoutIndexRoute
-  '/_layout/academic-calendar/$id': typeof LayoutAcademicCalendarIdRoute
-  '/_layout/academic-calendar/generate-academic-history': typeof LayoutAcademicCalendarGenerateAcademicHistoryRoute
-  '/_layout/academic-calendar/upload': typeof LayoutAcademicCalendarUploadRoute
-  '/_layout/academic-calendar/upload-result': typeof LayoutAcademicCalendarUploadResultRoute
-  '/_layout/auto-assign/class-list': typeof LayoutAutoAssignClassListRoute
-  '/_layout/configuration/administration': typeof LayoutConfigurationAdministrationRoute
-  '/_layout/configuration/course-type': typeof LayoutConfigurationCourseTypeRoute
-  '/_layout/configuration/institution': typeof LayoutConfigurationInstitutionRoute
-  '/_layout/configuration/research': typeof LayoutConfigurationResearchRoute
-  '/_layout/configuration/roles': typeof LayoutConfigurationRolesRoute
-  '/_layout/configuration/survey-questions': typeof LayoutConfigurationSurveyQuestionsRoute
-  '/_layout/configuration/users': typeof LayoutConfigurationUsersRoute
-  '/_layout/course-schedule/create': typeof LayoutCourseScheduleCreateRoute
-  '/_layout/course-schedule/import': typeof LayoutCourseScheduleImportRoute
-  '/_layout/course-schedule/import-preview': typeof LayoutCourseScheduleImportPreviewRoute
-  '/_layout/course/create': typeof LayoutCourseCreateRoute
-  '/_layout/course/upload': typeof LayoutCourseUploadRoute
-  '/_layout/course/upload-result': typeof LayoutCourseUploadResultRoute
-  '/_layout/curriculum/$type': typeof LayoutCurriculumTypeRoute
-  '/_layout/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
-  '/_layout/curriculum/create': typeof LayoutCurriculumCreateRoute
   '/_layout/fm-it/home': typeof LayoutFmItHomeRoute
   '/_layout/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/_layout/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
@@ -683,42 +224,13 @@ export interface FileRoutesById {
   '/_layout/lecturer/report-success': typeof LayoutLecturerReportSuccessRouteWithChildren
   '/_layout/lecturer/room-asset-list': typeof LayoutLecturerRoomAssetListRouteWithChildren
   '/_layout/lecturer/scan': typeof LayoutLecturerScanRoute
-  '/_layout/pets/create': typeof LayoutPetsCreateRoute
   '/_layout/room-asset-list/$id': typeof LayoutRoomAssetListIdRoute
-  '/_layout/academic-calendar/': typeof LayoutAcademicCalendarIndexRoute
-  '/_layout/auto-assign/': typeof LayoutAutoAssignIndexRoute
-  '/_layout/configuration/': typeof LayoutConfigurationIndexRoute
-  '/_layout/course-schedule/': typeof LayoutCourseScheduleIndexRoute
-  '/_layout/course/': typeof LayoutCourseIndexRoute
-  '/_layout/curriculum/': typeof LayoutCurriculumIndexRoute
-  '/_layout/pets/': typeof LayoutPetsIndexRoute
-  '/_layout/auto-assign/participants-approved/$classId': typeof LayoutAutoAssignParticipantsApprovedClassIdRoute
-  '/_layout/auto-assign/participants-filled/$classId': typeof LayoutAutoAssignParticipantsFilledClassIdRoute
-  '/_layout/configuration/academic/$type': typeof LayoutConfigurationAcademicTypeRoute
-  '/_layout/configuration/user-management/create': typeof LayoutConfigurationUserManagementCreateRoute
-  '/_layout/course-schedule/$id/edit': typeof LayoutCourseScheduleIdEditRoute
-  '/_layout/course/$id/edit': typeof LayoutCourseIdEditRoute
-  '/_layout/curriculum/$id/edit': typeof LayoutCurriculumIdEditRoute
-  '/_layout/curriculum/equivalence/create': typeof LayoutCurriculumEquivalenceCreateRoute
-  '/_layout/curriculum/equivalence/upload': typeof LayoutCurriculumEquivalenceUploadRoute
-  '/_layout/curriculum/equivalence/upload-result': typeof LayoutCurriculumEquivalenceUploadResultRoute
   '/_layout/fm-it/ticket-detail/$id': typeof LayoutFmItTicketDetailIdRoute
   '/_layout/housekeeping/checklist-report/$id': typeof LayoutHousekeepingChecklistReportIdRoute
   '/_layout/housekeeping/room-checklist/$id': typeof LayoutHousekeepingRoomChecklistIdRoute
   '/_layout/lecturer/report-detail-page/$id': typeof LayoutLecturerReportDetailPageIdRoute
   '/_layout/lecturer/report-success/$id': typeof LayoutLecturerReportSuccessIdRoute
   '/_layout/lecturer/room-asset-list/$id': typeof LayoutLecturerRoomAssetListIdRoute
-  '/_layout/pets/$id/edit': typeof LayoutPetsIdEditRoute
-  '/_layout/configuration/academic/': typeof LayoutConfigurationAcademicIndexRoute
-  '/_layout/configuration/user-management/': typeof LayoutConfigurationUserManagementIndexRoute
-  '/_layout/configuration/academic/event/create': typeof LayoutConfigurationAcademicEventCreateRoute
-  '/_layout/configuration/academic/event/upload': typeof LayoutConfigurationAcademicEventUploadRoute
-  '/_layout/configuration/academic/event/upload-result': typeof LayoutConfigurationAcademicEventUploadResultRoute
-  '/_layout/configuration/academic/period/create': typeof LayoutConfigurationAcademicPeriodCreateRoute
-  '/_layout/configuration/user-management/$id/edit': typeof LayoutConfigurationUserManagementIdEditRoute
-  '/_layout/curriculum/equivalence/$id/edit': typeof LayoutCurriculumEquivalenceIdEditRoute
-  '/_layout/configuration/academic/event/$id/edit': typeof LayoutConfigurationAcademicEventIdEditRoute
-  '/_layout/configuration/academic/period/$id/edit': typeof LayoutConfigurationAcademicPeriodIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -726,27 +238,6 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/room-asset-list'
-    | '/academic-calendar/$id'
-    | '/academic-calendar/generate-academic-history'
-    | '/academic-calendar/upload'
-    | '/academic-calendar/upload-result'
-    | '/auto-assign/class-list'
-    | '/configuration/administration'
-    | '/configuration/course-type'
-    | '/configuration/institution'
-    | '/configuration/research'
-    | '/configuration/roles'
-    | '/configuration/survey-questions'
-    | '/configuration/users'
-    | '/course-schedule/create'
-    | '/course-schedule/import'
-    | '/course-schedule/import-preview'
-    | '/course/create'
-    | '/course/upload'
-    | '/course/upload-result'
-    | '/curriculum/$type'
-    | '/curriculum/assign-courses'
-    | '/curriculum/create'
     | '/fm-it/home'
     | '/fm-it/notification'
     | '/fm-it/ticket-list'
@@ -759,68 +250,18 @@ export interface FileRouteTypes {
     | '/lecturer/report-success'
     | '/lecturer/room-asset-list'
     | '/lecturer/scan'
-    | '/pets/create'
     | '/room-asset-list/$id'
-    | '/academic-calendar/'
-    | '/auto-assign/'
-    | '/configuration/'
-    | '/course-schedule/'
-    | '/course/'
-    | '/curriculum/'
-    | '/pets/'
-    | '/auto-assign/participants-approved/$classId'
-    | '/auto-assign/participants-filled/$classId'
-    | '/configuration/academic/$type'
-    | '/configuration/user-management/create'
-    | '/course-schedule/$id/edit'
-    | '/course/$id/edit'
-    | '/curriculum/$id/edit'
-    | '/curriculum/equivalence/create'
-    | '/curriculum/equivalence/upload'
-    | '/curriculum/equivalence/upload-result'
     | '/fm-it/ticket-detail/$id'
     | '/housekeeping/checklist-report/$id'
     | '/housekeeping/room-checklist/$id'
     | '/lecturer/report-detail-page/$id'
     | '/lecturer/report-success/$id'
     | '/lecturer/room-asset-list/$id'
-    | '/pets/$id/edit'
-    | '/configuration/academic/'
-    | '/configuration/user-management/'
-    | '/configuration/academic/event/create'
-    | '/configuration/academic/event/upload'
-    | '/configuration/academic/event/upload-result'
-    | '/configuration/academic/period/create'
-    | '/configuration/user-management/$id/edit'
-    | '/curriculum/equivalence/$id/edit'
-    | '/configuration/academic/event/$id/edit'
-    | '/configuration/academic/period/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
     | '/room-asset-list'
     | '/'
-    | '/academic-calendar/$id'
-    | '/academic-calendar/generate-academic-history'
-    | '/academic-calendar/upload'
-    | '/academic-calendar/upload-result'
-    | '/auto-assign/class-list'
-    | '/configuration/administration'
-    | '/configuration/course-type'
-    | '/configuration/institution'
-    | '/configuration/research'
-    | '/configuration/roles'
-    | '/configuration/survey-questions'
-    | '/configuration/users'
-    | '/course-schedule/create'
-    | '/course-schedule/import'
-    | '/course-schedule/import-preview'
-    | '/course/create'
-    | '/course/upload'
-    | '/course/upload-result'
-    | '/curriculum/$type'
-    | '/curriculum/assign-courses'
-    | '/curriculum/create'
     | '/fm-it/home'
     | '/fm-it/notification'
     | '/fm-it/ticket-list'
@@ -833,69 +274,19 @@ export interface FileRouteTypes {
     | '/lecturer/report-success'
     | '/lecturer/room-asset-list'
     | '/lecturer/scan'
-    | '/pets/create'
     | '/room-asset-list/$id'
-    | '/academic-calendar'
-    | '/auto-assign'
-    | '/configuration'
-    | '/course-schedule'
-    | '/course'
-    | '/curriculum'
-    | '/pets'
-    | '/auto-assign/participants-approved/$classId'
-    | '/auto-assign/participants-filled/$classId'
-    | '/configuration/academic/$type'
-    | '/configuration/user-management/create'
-    | '/course-schedule/$id/edit'
-    | '/course/$id/edit'
-    | '/curriculum/$id/edit'
-    | '/curriculum/equivalence/create'
-    | '/curriculum/equivalence/upload'
-    | '/curriculum/equivalence/upload-result'
     | '/fm-it/ticket-detail/$id'
     | '/housekeeping/checklist-report/$id'
     | '/housekeeping/room-checklist/$id'
     | '/lecturer/report-detail-page/$id'
     | '/lecturer/report-success/$id'
     | '/lecturer/room-asset-list/$id'
-    | '/pets/$id/edit'
-    | '/configuration/academic'
-    | '/configuration/user-management'
-    | '/configuration/academic/event/create'
-    | '/configuration/academic/event/upload'
-    | '/configuration/academic/event/upload-result'
-    | '/configuration/academic/period/create'
-    | '/configuration/user-management/$id/edit'
-    | '/curriculum/equivalence/$id/edit'
-    | '/configuration/academic/event/$id/edit'
-    | '/configuration/academic/period/$id/edit'
   id:
     | '__root__'
     | '/_layout'
     | '/login'
     | '/_layout/room-asset-list'
     | '/_layout/'
-    | '/_layout/academic-calendar/$id'
-    | '/_layout/academic-calendar/generate-academic-history'
-    | '/_layout/academic-calendar/upload'
-    | '/_layout/academic-calendar/upload-result'
-    | '/_layout/auto-assign/class-list'
-    | '/_layout/configuration/administration'
-    | '/_layout/configuration/course-type'
-    | '/_layout/configuration/institution'
-    | '/_layout/configuration/research'
-    | '/_layout/configuration/roles'
-    | '/_layout/configuration/survey-questions'
-    | '/_layout/configuration/users'
-    | '/_layout/course-schedule/create'
-    | '/_layout/course-schedule/import'
-    | '/_layout/course-schedule/import-preview'
-    | '/_layout/course/create'
-    | '/_layout/course/upload'
-    | '/_layout/course/upload-result'
-    | '/_layout/curriculum/$type'
-    | '/_layout/curriculum/assign-courses'
-    | '/_layout/curriculum/create'
     | '/_layout/fm-it/home'
     | '/_layout/fm-it/notification'
     | '/_layout/fm-it/ticket-list'
@@ -908,42 +299,13 @@ export interface FileRouteTypes {
     | '/_layout/lecturer/report-success'
     | '/_layout/lecturer/room-asset-list'
     | '/_layout/lecturer/scan'
-    | '/_layout/pets/create'
     | '/_layout/room-asset-list/$id'
-    | '/_layout/academic-calendar/'
-    | '/_layout/auto-assign/'
-    | '/_layout/configuration/'
-    | '/_layout/course-schedule/'
-    | '/_layout/course/'
-    | '/_layout/curriculum/'
-    | '/_layout/pets/'
-    | '/_layout/auto-assign/participants-approved/$classId'
-    | '/_layout/auto-assign/participants-filled/$classId'
-    | '/_layout/configuration/academic/$type'
-    | '/_layout/configuration/user-management/create'
-    | '/_layout/course-schedule/$id/edit'
-    | '/_layout/course/$id/edit'
-    | '/_layout/curriculum/$id/edit'
-    | '/_layout/curriculum/equivalence/create'
-    | '/_layout/curriculum/equivalence/upload'
-    | '/_layout/curriculum/equivalence/upload-result'
     | '/_layout/fm-it/ticket-detail/$id'
     | '/_layout/housekeeping/checklist-report/$id'
     | '/_layout/housekeeping/room-checklist/$id'
     | '/_layout/lecturer/report-detail-page/$id'
     | '/_layout/lecturer/report-success/$id'
     | '/_layout/lecturer/room-asset-list/$id'
-    | '/_layout/pets/$id/edit'
-    | '/_layout/configuration/academic/'
-    | '/_layout/configuration/user-management/'
-    | '/_layout/configuration/academic/event/create'
-    | '/_layout/configuration/academic/event/upload'
-    | '/_layout/configuration/academic/event/upload-result'
-    | '/_layout/configuration/academic/period/create'
-    | '/_layout/configuration/user-management/$id/edit'
-    | '/_layout/curriculum/equivalence/$id/edit'
-    | '/_layout/configuration/academic/event/$id/edit'
-    | '/_layout/configuration/academic/period/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -981,68 +343,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutRoomAssetListRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/pets/': {
-      id: '/_layout/pets/'
-      path: '/pets'
-      fullPath: '/pets/'
-      preLoaderRoute: typeof LayoutPetsIndexRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/curriculum/': {
-      id: '/_layout/curriculum/'
-      path: '/curriculum'
-      fullPath: '/curriculum/'
-      preLoaderRoute: typeof LayoutCurriculumIndexRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/course/': {
-      id: '/_layout/course/'
-      path: '/course'
-      fullPath: '/course/'
-      preLoaderRoute: typeof LayoutCourseIndexRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/course-schedule/': {
-      id: '/_layout/course-schedule/'
-      path: '/course-schedule'
-      fullPath: '/course-schedule/'
-      preLoaderRoute: typeof LayoutCourseScheduleIndexRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/': {
-      id: '/_layout/configuration/'
-      path: '/configuration'
-      fullPath: '/configuration/'
-      preLoaderRoute: typeof LayoutConfigurationIndexRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/auto-assign/': {
-      id: '/_layout/auto-assign/'
-      path: '/auto-assign'
-      fullPath: '/auto-assign/'
-      preLoaderRoute: typeof LayoutAutoAssignIndexRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/academic-calendar/': {
-      id: '/_layout/academic-calendar/'
-      path: '/academic-calendar'
-      fullPath: '/academic-calendar/'
-      preLoaderRoute: typeof LayoutAcademicCalendarIndexRouteImport
-      parentRoute: typeof LayoutRoute
-    }
     '/_layout/room-asset-list/$id': {
       id: '/_layout/room-asset-list/$id'
       path: '/$id'
       fullPath: '/room-asset-list/$id'
       preLoaderRoute: typeof LayoutRoomAssetListIdRouteImport
       parentRoute: typeof LayoutRoomAssetListRoute
-    }
-    '/_layout/pets/create': {
-      id: '/_layout/pets/create'
-      path: '/pets/create'
-      fullPath: '/pets/create'
-      preLoaderRoute: typeof LayoutPetsCreateRouteImport
-      parentRoute: typeof LayoutRoute
     }
     '/_layout/lecturer/scan': {
       id: '/_layout/lecturer/scan'
@@ -1128,174 +434,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutFmItHomeRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/curriculum/create': {
-      id: '/_layout/curriculum/create'
-      path: '/curriculum/create'
-      fullPath: '/curriculum/create'
-      preLoaderRoute: typeof LayoutCurriculumCreateRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/curriculum/assign-courses': {
-      id: '/_layout/curriculum/assign-courses'
-      path: '/curriculum/assign-courses'
-      fullPath: '/curriculum/assign-courses'
-      preLoaderRoute: typeof LayoutCurriculumAssignCoursesRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/curriculum/$type': {
-      id: '/_layout/curriculum/$type'
-      path: '/curriculum/$type'
-      fullPath: '/curriculum/$type'
-      preLoaderRoute: typeof LayoutCurriculumTypeRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/course/upload-result': {
-      id: '/_layout/course/upload-result'
-      path: '/course/upload-result'
-      fullPath: '/course/upload-result'
-      preLoaderRoute: typeof LayoutCourseUploadResultRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/course/upload': {
-      id: '/_layout/course/upload'
-      path: '/course/upload'
-      fullPath: '/course/upload'
-      preLoaderRoute: typeof LayoutCourseUploadRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/course/create': {
-      id: '/_layout/course/create'
-      path: '/course/create'
-      fullPath: '/course/create'
-      preLoaderRoute: typeof LayoutCourseCreateRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/course-schedule/import-preview': {
-      id: '/_layout/course-schedule/import-preview'
-      path: '/course-schedule/import-preview'
-      fullPath: '/course-schedule/import-preview'
-      preLoaderRoute: typeof LayoutCourseScheduleImportPreviewRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/course-schedule/import': {
-      id: '/_layout/course-schedule/import'
-      path: '/course-schedule/import'
-      fullPath: '/course-schedule/import'
-      preLoaderRoute: typeof LayoutCourseScheduleImportRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/course-schedule/create': {
-      id: '/_layout/course-schedule/create'
-      path: '/course-schedule/create'
-      fullPath: '/course-schedule/create'
-      preLoaderRoute: typeof LayoutCourseScheduleCreateRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/users': {
-      id: '/_layout/configuration/users'
-      path: '/configuration/users'
-      fullPath: '/configuration/users'
-      preLoaderRoute: typeof LayoutConfigurationUsersRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/survey-questions': {
-      id: '/_layout/configuration/survey-questions'
-      path: '/configuration/survey-questions'
-      fullPath: '/configuration/survey-questions'
-      preLoaderRoute: typeof LayoutConfigurationSurveyQuestionsRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/roles': {
-      id: '/_layout/configuration/roles'
-      path: '/configuration/roles'
-      fullPath: '/configuration/roles'
-      preLoaderRoute: typeof LayoutConfigurationRolesRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/research': {
-      id: '/_layout/configuration/research'
-      path: '/configuration/research'
-      fullPath: '/configuration/research'
-      preLoaderRoute: typeof LayoutConfigurationResearchRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/institution': {
-      id: '/_layout/configuration/institution'
-      path: '/configuration/institution'
-      fullPath: '/configuration/institution'
-      preLoaderRoute: typeof LayoutConfigurationInstitutionRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/course-type': {
-      id: '/_layout/configuration/course-type'
-      path: '/configuration/course-type'
-      fullPath: '/configuration/course-type'
-      preLoaderRoute: typeof LayoutConfigurationCourseTypeRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/administration': {
-      id: '/_layout/configuration/administration'
-      path: '/configuration/administration'
-      fullPath: '/configuration/administration'
-      preLoaderRoute: typeof LayoutConfigurationAdministrationRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/auto-assign/class-list': {
-      id: '/_layout/auto-assign/class-list'
-      path: '/auto-assign/class-list'
-      fullPath: '/auto-assign/class-list'
-      preLoaderRoute: typeof LayoutAutoAssignClassListRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/academic-calendar/upload-result': {
-      id: '/_layout/academic-calendar/upload-result'
-      path: '/academic-calendar/upload-result'
-      fullPath: '/academic-calendar/upload-result'
-      preLoaderRoute: typeof LayoutAcademicCalendarUploadResultRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/academic-calendar/upload': {
-      id: '/_layout/academic-calendar/upload'
-      path: '/academic-calendar/upload'
-      fullPath: '/academic-calendar/upload'
-      preLoaderRoute: typeof LayoutAcademicCalendarUploadRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/academic-calendar/generate-academic-history': {
-      id: '/_layout/academic-calendar/generate-academic-history'
-      path: '/academic-calendar/generate-academic-history'
-      fullPath: '/academic-calendar/generate-academic-history'
-      preLoaderRoute: typeof LayoutAcademicCalendarGenerateAcademicHistoryRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/academic-calendar/$id': {
-      id: '/_layout/academic-calendar/$id'
-      path: '/academic-calendar/$id'
-      fullPath: '/academic-calendar/$id'
-      preLoaderRoute: typeof LayoutAcademicCalendarIdRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/user-management/': {
-      id: '/_layout/configuration/user-management/'
-      path: '/configuration/user-management'
-      fullPath: '/configuration/user-management/'
-      preLoaderRoute: typeof LayoutConfigurationUserManagementIndexRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/academic/': {
-      id: '/_layout/configuration/academic/'
-      path: '/configuration/academic'
-      fullPath: '/configuration/academic/'
-      preLoaderRoute: typeof LayoutConfigurationAcademicIndexRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/pets/$id/edit': {
-      id: '/_layout/pets/$id/edit'
-      path: '/pets/$id/edit'
-      fullPath: '/pets/$id/edit'
-      preLoaderRoute: typeof LayoutPetsIdEditRouteImport
-      parentRoute: typeof LayoutRoute
-    }
     '/_layout/lecturer/room-asset-list/$id': {
       id: '/_layout/lecturer/room-asset-list/$id'
       path: '/$id'
@@ -1336,132 +474,6 @@ declare module '@tanstack/react-router' {
       path: '/fm-it/ticket-detail/$id'
       fullPath: '/fm-it/ticket-detail/$id'
       preLoaderRoute: typeof LayoutFmItTicketDetailIdRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/curriculum/equivalence/upload-result': {
-      id: '/_layout/curriculum/equivalence/upload-result'
-      path: '/curriculum/equivalence/upload-result'
-      fullPath: '/curriculum/equivalence/upload-result'
-      preLoaderRoute: typeof LayoutCurriculumEquivalenceUploadResultRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/curriculum/equivalence/upload': {
-      id: '/_layout/curriculum/equivalence/upload'
-      path: '/curriculum/equivalence/upload'
-      fullPath: '/curriculum/equivalence/upload'
-      preLoaderRoute: typeof LayoutCurriculumEquivalenceUploadRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/curriculum/equivalence/create': {
-      id: '/_layout/curriculum/equivalence/create'
-      path: '/curriculum/equivalence/create'
-      fullPath: '/curriculum/equivalence/create'
-      preLoaderRoute: typeof LayoutCurriculumEquivalenceCreateRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/curriculum/$id/edit': {
-      id: '/_layout/curriculum/$id/edit'
-      path: '/curriculum/$id/edit'
-      fullPath: '/curriculum/$id/edit'
-      preLoaderRoute: typeof LayoutCurriculumIdEditRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/course/$id/edit': {
-      id: '/_layout/course/$id/edit'
-      path: '/course/$id/edit'
-      fullPath: '/course/$id/edit'
-      preLoaderRoute: typeof LayoutCourseIdEditRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/course-schedule/$id/edit': {
-      id: '/_layout/course-schedule/$id/edit'
-      path: '/course-schedule/$id/edit'
-      fullPath: '/course-schedule/$id/edit'
-      preLoaderRoute: typeof LayoutCourseScheduleIdEditRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/user-management/create': {
-      id: '/_layout/configuration/user-management/create'
-      path: '/configuration/user-management/create'
-      fullPath: '/configuration/user-management/create'
-      preLoaderRoute: typeof LayoutConfigurationUserManagementCreateRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/academic/$type': {
-      id: '/_layout/configuration/academic/$type'
-      path: '/configuration/academic/$type'
-      fullPath: '/configuration/academic/$type'
-      preLoaderRoute: typeof LayoutConfigurationAcademicTypeRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/auto-assign/participants-filled/$classId': {
-      id: '/_layout/auto-assign/participants-filled/$classId'
-      path: '/auto-assign/participants-filled/$classId'
-      fullPath: '/auto-assign/participants-filled/$classId'
-      preLoaderRoute: typeof LayoutAutoAssignParticipantsFilledClassIdRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/auto-assign/participants-approved/$classId': {
-      id: '/_layout/auto-assign/participants-approved/$classId'
-      path: '/auto-assign/participants-approved/$classId'
-      fullPath: '/auto-assign/participants-approved/$classId'
-      preLoaderRoute: typeof LayoutAutoAssignParticipantsApprovedClassIdRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/curriculum/equivalence/$id/edit': {
-      id: '/_layout/curriculum/equivalence/$id/edit'
-      path: '/curriculum/equivalence/$id/edit'
-      fullPath: '/curriculum/equivalence/$id/edit'
-      preLoaderRoute: typeof LayoutCurriculumEquivalenceIdEditRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/user-management/$id/edit': {
-      id: '/_layout/configuration/user-management/$id/edit'
-      path: '/configuration/user-management/$id/edit'
-      fullPath: '/configuration/user-management/$id/edit'
-      preLoaderRoute: typeof LayoutConfigurationUserManagementIdEditRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/academic/period/create': {
-      id: '/_layout/configuration/academic/period/create'
-      path: '/configuration/academic/period/create'
-      fullPath: '/configuration/academic/period/create'
-      preLoaderRoute: typeof LayoutConfigurationAcademicPeriodCreateRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/academic/event/upload-result': {
-      id: '/_layout/configuration/academic/event/upload-result'
-      path: '/configuration/academic/event/upload-result'
-      fullPath: '/configuration/academic/event/upload-result'
-      preLoaderRoute: typeof LayoutConfigurationAcademicEventUploadResultRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/academic/event/upload': {
-      id: '/_layout/configuration/academic/event/upload'
-      path: '/configuration/academic/event/upload'
-      fullPath: '/configuration/academic/event/upload'
-      preLoaderRoute: typeof LayoutConfigurationAcademicEventUploadRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/academic/event/create': {
-      id: '/_layout/configuration/academic/event/create'
-      path: '/configuration/academic/event/create'
-      fullPath: '/configuration/academic/event/create'
-      preLoaderRoute: typeof LayoutConfigurationAcademicEventCreateRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/academic/period/$id/edit': {
-      id: '/_layout/configuration/academic/period/$id/edit'
-      path: '/configuration/academic/period/$id/edit'
-      fullPath: '/configuration/academic/period/$id/edit'
-      preLoaderRoute: typeof LayoutConfigurationAcademicPeriodIdEditRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/configuration/academic/event/$id/edit': {
-      id: '/_layout/configuration/academic/event/$id/edit'
-      path: '/configuration/academic/event/$id/edit'
-      fullPath: '/configuration/academic/event/$id/edit'
-      preLoaderRoute: typeof LayoutConfigurationAcademicEventIdEditRouteImport
       parentRoute: typeof LayoutRoute
     }
   }
@@ -1509,27 +521,6 @@ const LayoutLecturerRoomAssetListRouteWithChildren =
 interface LayoutRouteChildren {
   LayoutRoomAssetListRoute: typeof LayoutRoomAssetListRouteWithChildren
   LayoutIndexRoute: typeof LayoutIndexRoute
-  LayoutAcademicCalendarIdRoute: typeof LayoutAcademicCalendarIdRoute
-  LayoutAcademicCalendarGenerateAcademicHistoryRoute: typeof LayoutAcademicCalendarGenerateAcademicHistoryRoute
-  LayoutAcademicCalendarUploadRoute: typeof LayoutAcademicCalendarUploadRoute
-  LayoutAcademicCalendarUploadResultRoute: typeof LayoutAcademicCalendarUploadResultRoute
-  LayoutAutoAssignClassListRoute: typeof LayoutAutoAssignClassListRoute
-  LayoutConfigurationAdministrationRoute: typeof LayoutConfigurationAdministrationRoute
-  LayoutConfigurationCourseTypeRoute: typeof LayoutConfigurationCourseTypeRoute
-  LayoutConfigurationInstitutionRoute: typeof LayoutConfigurationInstitutionRoute
-  LayoutConfigurationResearchRoute: typeof LayoutConfigurationResearchRoute
-  LayoutConfigurationRolesRoute: typeof LayoutConfigurationRolesRoute
-  LayoutConfigurationSurveyQuestionsRoute: typeof LayoutConfigurationSurveyQuestionsRoute
-  LayoutConfigurationUsersRoute: typeof LayoutConfigurationUsersRoute
-  LayoutCourseScheduleCreateRoute: typeof LayoutCourseScheduleCreateRoute
-  LayoutCourseScheduleImportRoute: typeof LayoutCourseScheduleImportRoute
-  LayoutCourseScheduleImportPreviewRoute: typeof LayoutCourseScheduleImportPreviewRoute
-  LayoutCourseCreateRoute: typeof LayoutCourseCreateRoute
-  LayoutCourseUploadRoute: typeof LayoutCourseUploadRoute
-  LayoutCourseUploadResultRoute: typeof LayoutCourseUploadResultRoute
-  LayoutCurriculumTypeRoute: typeof LayoutCurriculumTypeRoute
-  LayoutCurriculumAssignCoursesRoute: typeof LayoutCurriculumAssignCoursesRoute
-  LayoutCurriculumCreateRoute: typeof LayoutCurriculumCreateRoute
   LayoutFmItHomeRoute: typeof LayoutFmItHomeRoute
   LayoutFmItNotificationRoute: typeof LayoutFmItNotificationRoute
   LayoutFmItTicketListRoute: typeof LayoutFmItTicketListRoute
@@ -1542,70 +533,15 @@ interface LayoutRouteChildren {
   LayoutLecturerReportSuccessRoute: typeof LayoutLecturerReportSuccessRouteWithChildren
   LayoutLecturerRoomAssetListRoute: typeof LayoutLecturerRoomAssetListRouteWithChildren
   LayoutLecturerScanRoute: typeof LayoutLecturerScanRoute
-  LayoutPetsCreateRoute: typeof LayoutPetsCreateRoute
-  LayoutAcademicCalendarIndexRoute: typeof LayoutAcademicCalendarIndexRoute
-  LayoutAutoAssignIndexRoute: typeof LayoutAutoAssignIndexRoute
-  LayoutConfigurationIndexRoute: typeof LayoutConfigurationIndexRoute
-  LayoutCourseScheduleIndexRoute: typeof LayoutCourseScheduleIndexRoute
-  LayoutCourseIndexRoute: typeof LayoutCourseIndexRoute
-  LayoutCurriculumIndexRoute: typeof LayoutCurriculumIndexRoute
-  LayoutPetsIndexRoute: typeof LayoutPetsIndexRoute
-  LayoutAutoAssignParticipantsApprovedClassIdRoute: typeof LayoutAutoAssignParticipantsApprovedClassIdRoute
-  LayoutAutoAssignParticipantsFilledClassIdRoute: typeof LayoutAutoAssignParticipantsFilledClassIdRoute
-  LayoutConfigurationAcademicTypeRoute: typeof LayoutConfigurationAcademicTypeRoute
-  LayoutConfigurationUserManagementCreateRoute: typeof LayoutConfigurationUserManagementCreateRoute
-  LayoutCourseScheduleIdEditRoute: typeof LayoutCourseScheduleIdEditRoute
-  LayoutCourseIdEditRoute: typeof LayoutCourseIdEditRoute
-  LayoutCurriculumIdEditRoute: typeof LayoutCurriculumIdEditRoute
-  LayoutCurriculumEquivalenceCreateRoute: typeof LayoutCurriculumEquivalenceCreateRoute
-  LayoutCurriculumEquivalenceUploadRoute: typeof LayoutCurriculumEquivalenceUploadRoute
-  LayoutCurriculumEquivalenceUploadResultRoute: typeof LayoutCurriculumEquivalenceUploadResultRoute
   LayoutFmItTicketDetailIdRoute: typeof LayoutFmItTicketDetailIdRoute
   LayoutHousekeepingChecklistReportIdRoute: typeof LayoutHousekeepingChecklistReportIdRoute
   LayoutHousekeepingRoomChecklistIdRoute: typeof LayoutHousekeepingRoomChecklistIdRoute
   LayoutLecturerReportDetailPageIdRoute: typeof LayoutLecturerReportDetailPageIdRoute
-  LayoutPetsIdEditRoute: typeof LayoutPetsIdEditRoute
-  LayoutConfigurationAcademicIndexRoute: typeof LayoutConfigurationAcademicIndexRoute
-  LayoutConfigurationUserManagementIndexRoute: typeof LayoutConfigurationUserManagementIndexRoute
-  LayoutConfigurationAcademicEventCreateRoute: typeof LayoutConfigurationAcademicEventCreateRoute
-  LayoutConfigurationAcademicEventUploadRoute: typeof LayoutConfigurationAcademicEventUploadRoute
-  LayoutConfigurationAcademicEventUploadResultRoute: typeof LayoutConfigurationAcademicEventUploadResultRoute
-  LayoutConfigurationAcademicPeriodCreateRoute: typeof LayoutConfigurationAcademicPeriodCreateRoute
-  LayoutConfigurationUserManagementIdEditRoute: typeof LayoutConfigurationUserManagementIdEditRoute
-  LayoutCurriculumEquivalenceIdEditRoute: typeof LayoutCurriculumEquivalenceIdEditRoute
-  LayoutConfigurationAcademicEventIdEditRoute: typeof LayoutConfigurationAcademicEventIdEditRoute
-  LayoutConfigurationAcademicPeriodIdEditRoute: typeof LayoutConfigurationAcademicPeriodIdEditRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutRoomAssetListRoute: LayoutRoomAssetListRouteWithChildren,
   LayoutIndexRoute: LayoutIndexRoute,
-  LayoutAcademicCalendarIdRoute: LayoutAcademicCalendarIdRoute,
-  LayoutAcademicCalendarGenerateAcademicHistoryRoute:
-    LayoutAcademicCalendarGenerateAcademicHistoryRoute,
-  LayoutAcademicCalendarUploadRoute: LayoutAcademicCalendarUploadRoute,
-  LayoutAcademicCalendarUploadResultRoute:
-    LayoutAcademicCalendarUploadResultRoute,
-  LayoutAutoAssignClassListRoute: LayoutAutoAssignClassListRoute,
-  LayoutConfigurationAdministrationRoute:
-    LayoutConfigurationAdministrationRoute,
-  LayoutConfigurationCourseTypeRoute: LayoutConfigurationCourseTypeRoute,
-  LayoutConfigurationInstitutionRoute: LayoutConfigurationInstitutionRoute,
-  LayoutConfigurationResearchRoute: LayoutConfigurationResearchRoute,
-  LayoutConfigurationRolesRoute: LayoutConfigurationRolesRoute,
-  LayoutConfigurationSurveyQuestionsRoute:
-    LayoutConfigurationSurveyQuestionsRoute,
-  LayoutConfigurationUsersRoute: LayoutConfigurationUsersRoute,
-  LayoutCourseScheduleCreateRoute: LayoutCourseScheduleCreateRoute,
-  LayoutCourseScheduleImportRoute: LayoutCourseScheduleImportRoute,
-  LayoutCourseScheduleImportPreviewRoute:
-    LayoutCourseScheduleImportPreviewRoute,
-  LayoutCourseCreateRoute: LayoutCourseCreateRoute,
-  LayoutCourseUploadRoute: LayoutCourseUploadRoute,
-  LayoutCourseUploadResultRoute: LayoutCourseUploadResultRoute,
-  LayoutCurriculumTypeRoute: LayoutCurriculumTypeRoute,
-  LayoutCurriculumAssignCoursesRoute: LayoutCurriculumAssignCoursesRoute,
-  LayoutCurriculumCreateRoute: LayoutCurriculumCreateRoute,
   LayoutFmItHomeRoute: LayoutFmItHomeRoute,
   LayoutFmItNotificationRoute: LayoutFmItNotificationRoute,
   LayoutFmItTicketListRoute: LayoutFmItTicketListRoute,
@@ -1621,56 +557,12 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutLecturerRoomAssetListRoute:
     LayoutLecturerRoomAssetListRouteWithChildren,
   LayoutLecturerScanRoute: LayoutLecturerScanRoute,
-  LayoutPetsCreateRoute: LayoutPetsCreateRoute,
-  LayoutAcademicCalendarIndexRoute: LayoutAcademicCalendarIndexRoute,
-  LayoutAutoAssignIndexRoute: LayoutAutoAssignIndexRoute,
-  LayoutConfigurationIndexRoute: LayoutConfigurationIndexRoute,
-  LayoutCourseScheduleIndexRoute: LayoutCourseScheduleIndexRoute,
-  LayoutCourseIndexRoute: LayoutCourseIndexRoute,
-  LayoutCurriculumIndexRoute: LayoutCurriculumIndexRoute,
-  LayoutPetsIndexRoute: LayoutPetsIndexRoute,
-  LayoutAutoAssignParticipantsApprovedClassIdRoute:
-    LayoutAutoAssignParticipantsApprovedClassIdRoute,
-  LayoutAutoAssignParticipantsFilledClassIdRoute:
-    LayoutAutoAssignParticipantsFilledClassIdRoute,
-  LayoutConfigurationAcademicTypeRoute: LayoutConfigurationAcademicTypeRoute,
-  LayoutConfigurationUserManagementCreateRoute:
-    LayoutConfigurationUserManagementCreateRoute,
-  LayoutCourseScheduleIdEditRoute: LayoutCourseScheduleIdEditRoute,
-  LayoutCourseIdEditRoute: LayoutCourseIdEditRoute,
-  LayoutCurriculumIdEditRoute: LayoutCurriculumIdEditRoute,
-  LayoutCurriculumEquivalenceCreateRoute:
-    LayoutCurriculumEquivalenceCreateRoute,
-  LayoutCurriculumEquivalenceUploadRoute:
-    LayoutCurriculumEquivalenceUploadRoute,
-  LayoutCurriculumEquivalenceUploadResultRoute:
-    LayoutCurriculumEquivalenceUploadResultRoute,
   LayoutFmItTicketDetailIdRoute: LayoutFmItTicketDetailIdRoute,
   LayoutHousekeepingChecklistReportIdRoute:
     LayoutHousekeepingChecklistReportIdRoute,
   LayoutHousekeepingRoomChecklistIdRoute:
     LayoutHousekeepingRoomChecklistIdRoute,
   LayoutLecturerReportDetailPageIdRoute: LayoutLecturerReportDetailPageIdRoute,
-  LayoutPetsIdEditRoute: LayoutPetsIdEditRoute,
-  LayoutConfigurationAcademicIndexRoute: LayoutConfigurationAcademicIndexRoute,
-  LayoutConfigurationUserManagementIndexRoute:
-    LayoutConfigurationUserManagementIndexRoute,
-  LayoutConfigurationAcademicEventCreateRoute:
-    LayoutConfigurationAcademicEventCreateRoute,
-  LayoutConfigurationAcademicEventUploadRoute:
-    LayoutConfigurationAcademicEventUploadRoute,
-  LayoutConfigurationAcademicEventUploadResultRoute:
-    LayoutConfigurationAcademicEventUploadResultRoute,
-  LayoutConfigurationAcademicPeriodCreateRoute:
-    LayoutConfigurationAcademicPeriodCreateRoute,
-  LayoutConfigurationUserManagementIdEditRoute:
-    LayoutConfigurationUserManagementIdEditRoute,
-  LayoutCurriculumEquivalenceIdEditRoute:
-    LayoutCurriculumEquivalenceIdEditRoute,
-  LayoutConfigurationAcademicEventIdEditRoute:
-    LayoutConfigurationAcademicEventIdEditRoute,
-  LayoutConfigurationAcademicPeriodIdEditRoute:
-    LayoutConfigurationAcademicPeriodIdEditRoute,
 }
 
 const LayoutRouteWithChildren =

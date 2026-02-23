@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import { Button } from "uper-ui/button";
@@ -12,6 +11,7 @@ import {
   ClockIcon,
   ProfileIcon,
 } from "uper-ui/icon";
+import { Link } from "uper-ui/link";
 import { Typography } from "uper-ui/typography";
 
 type ReportIssueType = "Rusak" | "Kurang" | "Hilang";

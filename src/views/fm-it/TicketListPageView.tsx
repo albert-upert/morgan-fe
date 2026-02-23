@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "@tanstack/react-router";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Accordion } from "uper-ui/accordion";
 import { Button } from "uper-ui/button";
 import { Card, CardContent } from "uper-ui/card";
@@ -22,7 +22,6 @@ import {
   StarIcon,
 } from "uper-ui/icon";
 import { Input } from "uper-ui/input";
-// import { Loading } from "uper-ui/loading";
 import { Pagination } from "uper-ui/pagination";
 import { Tag } from "uper-ui/tags";
 import { Typography } from "uper-ui/typography";
@@ -47,8 +46,6 @@ const role = "IT Support";
 
 export function TicketListView() {
   const [reports, setReports] = useState<Array<Report>>([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState<string | null>(null);
 
   const [openDetailModal, setOpenDetailModal] = useState(false);
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
@@ -60,9 +57,9 @@ export function TicketListView() {
   const itemsPerPage = 3;
 
   const location = useLocation();
-  const filter = location.search?.filter;
+  const filter = (location.search as { filter: string }).filter;
 
-  const filteredReports = React.useMemo(
+  const filteredReports = useMemo(
     () =>
       reports.filter((item) => {
         if (filter === "available") {
@@ -85,7 +82,7 @@ export function TicketListView() {
     [reports, filter]
   );
 
-  const finalReports = React.useMemo(() => {
+  const finalReports = useMemo(() => {
     if (selectedBuilding) {
       return filteredReports.filter(
         (item) => item.building === selectedBuilding
@@ -108,27 +105,18 @@ export function TicketListView() {
     const fetchAll = async () => {
       const data = await getAllReports();
       setReports(data);
-
-      // try {
-      //   setLoading(true);
-      //   const data = await getAllReports();
-      //   setReports(data);
-      // } catch (_err) {
-      //   setError("Gagal memuat daftar tiket");
-      // } finally {
-      //   setLoading(false);
-      // }
     };
 
     fetchAll();
   }, []);
 
   const navigate = useNavigate();
-  const home = () => {
+
+  const home = useCallback(() => {
     navigate({
       to: "/fm-it/home",
     });
-  };
+  }, [navigate]);
 
   const toggleAccordion = useCallback((id: string) => {
     setExpandedItems((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -163,23 +151,13 @@ export function TicketListView() {
     [navigate, hasActiveTicket]
   );
 
-  // if (loading)
-  //   return (
-  //     <div className="flex min-h-[80vh] w-full items-center justify-center">
-  //       <Loading indeterminate text="Sedang mengambil laporan..." />
-  //     </div>
-  //   );
-  // if (error) return <div className="text-center text-red-500">{error}</div>;
-
   return (
     <div className="flex flex-col gap-6">
       {/* Back */}
       <div className="">
         <Button variant="tertiary" onClick={home}>
-          <React.Fragment key=".0">
-            <ArrowLeftIcon />
-            Beranda
-          </React.Fragment>
+          <ArrowLeftIcon />
+          Beranda
         </Button>
       </div>
 
@@ -188,7 +166,7 @@ export function TicketListView() {
       </div>
 
       {/* Staff Data */}
-      <Card className="bg-gray-100" elevation="none">
+      <Card className="bg-gray-100">
         <CardContent>
           <div className="flex flex-col gap-4">
             <div className="flex flex-row items-center">
@@ -297,7 +275,7 @@ export function TicketListView() {
       </Card>
 
       {/* Ticket List */}
-      <Card className="bg-gray-100" elevation="none">
+      <Card className="bg-gray-100">
         <CardContent>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-4">
@@ -360,7 +338,7 @@ export function TicketListView() {
               {paginatedReports.map((item, index) => {
                 const isExpanded = expandedItems[item.id] || false;
                 return (
-                  <Card key={index} className="bg-gray-100" elevation="none">
+                  <Card key={index} className="bg-gray-100">
                     <CardContent>
                       <div className="flex flex-col items-center gap-2">
                         <div className="flex w-full flex-row items-center justify-between">

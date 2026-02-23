@@ -1,7 +1,7 @@
-import { Link } from "@tanstack/react-router";
 import { Typography } from "uper-ui";
 import { Button } from "uper-ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "uper-ui/card";
+import { Link } from "uper-ui/link";
 
 export function DashboardView() {
   return (

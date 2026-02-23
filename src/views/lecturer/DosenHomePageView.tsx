@@ -1,7 +1,11 @@
+import { useNavigate } from "@tanstack/react-router";
+import { useCallback } from "react";
+import { Button } from "uper-ui/button";
 import { Card, CardContent } from "uper-ui/card";
 import { BuildingIcon, CalendarIcon } from "uper-ui/icon";
 import { Typography } from "uper-ui/typography";
 import { MainMenu } from "@/components/main-menu";
+import { MAIN_MENU_LIST_CONFIG } from "@/lib/main-menu-list.config";
 
 type ActivityItem = {
   id: string;
@@ -49,7 +53,14 @@ function StatusPill({ label }: { label: string }) {
 }
 
 export function DosenHomePageView() {
+  const navigate = useNavigate();
   const name = "Meredita";
+
+  const scanPageRedirect = useCallback(() => {
+    navigate({
+      to: "/lecturer/scan",
+    });
+  }, [navigate]);
 
   return (
     <div className="">
@@ -60,7 +71,35 @@ export function DosenHomePageView() {
         </Typography>
       </div>
 
-      <MainMenu />
+      {/* BAGIAN SCAN PERMASALAHAN ASET INI HANYA UNTUK DOSEN */}
+      <div className="rounded-2xl bg-red-400 p-4 text-white">
+        <Typography
+          variant="body-large-semibold"
+          className="leading-5 text-white"
+        >
+          Ada masalah aset?
+        </Typography>
+        <Typography variant="caption-small" className="text-white">
+          Pindai QR code di ruangan untuk melapor.
+        </Typography>
+
+        <div className="mt-3">
+          <Button
+            className="w-full rounded-xl bg-white text-red-400 hover:bg-white/90"
+            variant="primary"
+            onClick={scanPageRedirect}
+          >
+            <Typography variant="body-medium" className="text-red-400">
+              Pindai Kode QR
+            </Typography>
+          </Button>
+        </div>
+      </div>
+
+      {/* <MainMenu /> */}
+      {MAIN_MENU_LIST_CONFIG.map((menu) => (
+        <MainMenu key={menu.id} {...menu} />
+      ))}
 
       {/* Activity */}
       <div className="mt-10">

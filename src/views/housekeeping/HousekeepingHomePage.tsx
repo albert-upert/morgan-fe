@@ -1,6 +1,6 @@
-import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { MailIcon } from "uper-ui/icon";
+import { Link } from "uper-ui/link";
 import { Typography } from "uper-ui/typography";
 
 interface ActionLinkProps {
