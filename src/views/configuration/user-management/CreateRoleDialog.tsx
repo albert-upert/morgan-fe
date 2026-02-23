@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dialog,
   DialogBody,
@@ -9,15 +9,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/dialog";
+} from "uper-ui/dialog";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
-import { CaretDownIcon, InfoIcon } from "@/components/icon";
-import { Typography } from "@/components/typography";
+} from "uper-ui/dropdown";
+import { CaretDownIcon, InfoIcon } from "uper-ui/icon";
+import { Typography } from "uper-ui/typography";
 
 export function CreateRoleDialog() {
   const institutions = [

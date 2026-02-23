@@ -1,22 +1,22 @@
 import { Link, useParams } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
 
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
+} from "uper-ui/dropdown";
 import {
   CaretDownIcon,
   CaretLeftIcon,
   PencilIcon,
   TrashIcon,
-} from "@/components/icon";
-import { Input } from "@/components/input";
-import { Switch } from "@/components/switch";
+} from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { Switch } from "uper-ui/switch";
 import {
   Table,
   TableBody,
@@ -24,9 +24,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Textarea } from "@/components/textarea";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Textarea } from "uper-ui/textarea";
+import { Typography } from "uper-ui/typography";
 
 import type { PrerequisiteCourse } from "./PrerequisiteCourseDialog";
 import { PrerequisiteCourseDialog } from "./PrerequisiteCourseDialog";
@@ -183,7 +183,7 @@ export function CreateCourseView({ mode = "create" }: CreateCourseViewProps) {
   }, []);
 
   const handleEditPrerequisite = useCallback((course: PrerequisiteCourse) => {
-    console.log("Edit prerequisite:", course);
+    console.warn("Edit prerequisite:", course);
   }, []);
 
   const handleConfirmPrerequisites = useCallback(
@@ -197,16 +197,18 @@ export function CreateCourseView({ mode = "create" }: CreateCourseViewProps) {
     []
   );
 
-  const handleDeletePrerequisite = useCallback((id: number) => {
-    setPrerequisiteCourses((prev) => prev.filter((course) => course.id !== id));
+  const handleDeletePrerequisite = useCallback((courseId: number) => {
+    setPrerequisiteCourses((prev) =>
+      prev.filter((course) => course.id !== courseId)
+    );
   }, []);
 
   const handleCancel = useCallback(() => {
-    console.log("Cancel");
+    console.warn("Cancel");
   }, []);
 
   const handleSave = useCallback(() => {
-    console.log("Save course", {
+    console.warn("Save course", {
       courseCode,
       courseName,
       courseNameEnglish,
@@ -380,7 +382,10 @@ export function CreateCourseView({ mode = "create" }: CreateCourseViewProps) {
                   onChange={(e) => setSemester(e.target.value)}
                   type="number"
                 />
-                <Typography variant="caption-small" className="text-muted-foreground">
+                <Typography
+                  variant="caption-small"
+                  className="text-muted-foreground"
+                >
                   Semester harus pada rentang 1-8
                 </Typography>
               </div>

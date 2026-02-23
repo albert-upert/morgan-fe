@@ -1,15 +1,15 @@
 import { useCallback, useState } from "react";
 
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dialog,
   DialogBody,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
-import { Input } from "@/components/input";
-import { Pagination } from "@/components/pagination";
+} from "uper-ui/dialog";
+import { Input } from "uper-ui/input";
+import { Pagination } from "uper-ui/pagination";
 import {
   Table,
   TableBody,
@@ -17,8 +17,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 
 export interface Course {
   id: number;
@@ -91,7 +91,7 @@ export function SelectCourseDialog({
   const totalPages = Math.ceil(availableCourses.length / pageSize);
 
   const handleSearch = useCallback(() => {
-    console.log("Search:", searchQuery);
+    console.warn("Search:", searchQuery);
   }, [searchQuery]);
 
   const handleSelectCourse = useCallback(

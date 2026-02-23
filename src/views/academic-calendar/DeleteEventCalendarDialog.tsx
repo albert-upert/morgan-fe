@@ -1,4 +1,4 @@
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dialog,
   DialogBody,
@@ -8,8 +8,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
-import { TrashIcon } from "@/components/icon";
+} from "uper-ui/dialog";
+import { TrashIcon } from "uper-ui/icon";
 
 interface DeleteEventDialogProps {
   open: boolean;
@@ -45,7 +45,7 @@ export function DeleteEventCalendarDialog({
               variant="primary"
               className="flex-1"
               onClick={() => {
-                console.log("Hapus");
+                console.warn("Hapus");
               }}
             >
               Hapus

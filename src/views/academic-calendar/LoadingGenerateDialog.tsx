@@ -1,5 +1,5 @@
-import { Dialog, DialogContent } from "@/components/dialog";
-import { Loading } from "@/components/loading";
+import { Dialog, DialogContent } from "uper-ui/dialog";
+import { Loading } from "uper-ui/loading";
 
 interface LoadingDialogProps {
   open: boolean;

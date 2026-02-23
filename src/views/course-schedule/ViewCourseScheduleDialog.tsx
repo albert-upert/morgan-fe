@@ -1,15 +1,15 @@
 import { useCallback, useState } from "react";
 
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dialog,
   DialogBody,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
-import { CaretDownIcon, CaretUpIcon } from "@/components/icon";
-import { Input } from "@/components/input";
+} from "uper-ui/dialog";
+import { CaretDownIcon, CaretUpIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
 import {
   Table,
   TableBody,
@@ -17,8 +17,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 import { cn } from "@/lib/utils";
 
 export interface CourseScheduleDetail {

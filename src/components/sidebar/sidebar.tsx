@@ -20,9 +20,9 @@ import {
   ProfileIcon,
   ScheduleIcon,
   SettingIcon,
-} from "@/components/icon";
+} from "uper-ui/icon";
 
-import Typography from "@/components/typography/typography";
+import { Typography } from "uper-ui/typography";
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {

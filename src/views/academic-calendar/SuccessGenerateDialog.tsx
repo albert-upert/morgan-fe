@@ -1,4 +1,4 @@
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dialog,
   DialogBody,
@@ -8,8 +8,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
-import { TickCircleIcon } from "@/components/icon";
+} from "uper-ui/dialog";
+import { TickCircleIcon } from "uper-ui/icon";
 
 interface SuccessGenerateDialogProps {
   open: boolean;

@@ -1,17 +1,17 @@
 import { Link, useParams } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { Checkbox } from "@/components/checkbox";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { Checkbox } from "uper-ui/checkbox";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
-import { CaretDownIcon, CaretLeftIcon, CourseIcon } from "@/components/icon";
-import { Input } from "@/components/input";
-import { Switch } from "@/components/switch";
+} from "uper-ui/dropdown";
+import { CaretDownIcon, CaretLeftIcon, CourseIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { Switch } from "uper-ui/switch";
 import {
   Table,
   TableBody,
@@ -19,8 +19,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 import { CreateCurriculumDialog } from "./CreateCurriculumDialog";
 
 interface CourseType {
@@ -210,7 +210,7 @@ export function CreateCurriculumView({
 
   const handleSave = useCallback(() => {
     // Save curriculum data
-    console.log({
+    console.warn({
       lectureProgram: selectedLectureProgram,
       curriculumName,
       description,

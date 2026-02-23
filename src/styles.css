@@ -5,7 +5,6 @@
 @import "shadcn/tailwind.css";
 
 @source "../node_modules/uper-ui";
-
 @custom-variant dark (&:is(.dark *));
 
 :root {

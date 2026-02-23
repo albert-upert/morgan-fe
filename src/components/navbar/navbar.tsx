@@ -1,27 +1,27 @@
 import { Link, useRouter } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from "@/components/dialog";
+} from "uper-ui/dialog";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
+} from "uper-ui/dropdown";
 import {
   BurgerMenuIcon,
   NotificationIcon,
   SearchIcon,
   SettingIcon,
-} from "@/components/icon";
+} from "uper-ui/icon";
 
-import { Separator } from "@/components/separator";
-import Typography from "@/components/typography/typography";
+import { Separator } from "uper-ui/separator";
+import { Typography } from "uper-ui/typography";
 import { clearToken } from "@/lib/auth";
 
 interface NavbarProps {

@@ -1,13 +1,13 @@
-import { Accordion, AccordionGroup } from "@/components/accordion";
+import { Accordion, AccordionGroup } from "uper-ui/accordion";
 import {
   Dialog,
   DialogBody,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
-import { Input } from "@/components/input";
-import { Switch } from "@/components/switch";
+} from "uper-ui/dialog";
+import { Input } from "uper-ui/input";
+import { Switch } from "uper-ui/switch";
 import {
   Table,
   TableBody,
@@ -15,9 +15,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Textarea } from "@/components/textarea";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Textarea } from "uper-ui/textarea";
+import { Typography } from "uper-ui/typography";
 
 export interface CourseDetail {
   id: number;

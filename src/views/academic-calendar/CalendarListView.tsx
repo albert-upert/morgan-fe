@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { SearchIcon } from "@/components/icon";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { SearchIcon } from "uper-ui/icon";
 import {
   Table,
   TableBody,
@@ -9,9 +9,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Tag } from "@/components/tags";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Tag } from "uper-ui/tags";
+import { Typography } from "uper-ui/typography";
 
 interface AcademicCalendar {
   id: number;

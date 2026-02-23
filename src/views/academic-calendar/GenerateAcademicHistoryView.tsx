@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { CaretLeftIcon } from "@/components/icon";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { CaretLeftIcon } from "uper-ui/icon";
 import {
   TableBody,
   TableCell,
@@ -10,8 +10,8 @@ import {
   TableCustomHeader,
   TableRow,
   TableWithCustomHeader,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 import { LoadingGenerateDialog } from "./LoadingGenerateDialog";
 import { SuccessGenerateDialog } from "./SuccessGenerateDialog";
 
