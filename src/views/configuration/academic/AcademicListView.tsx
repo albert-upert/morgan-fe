@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/tabs";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "uper-ui/tabs";
 import { EventListTab } from "./event/EventListTab";
 import { PeriodListTab } from "./period/PeriodListTab";
 

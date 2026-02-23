@@ -91,5 +91,10 @@
     "vite": "^7.3.0",
     "vitest": "^4.0.16",
     "web-vitals": "^5.1.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "uper-ui"
+    ]
   }
 }

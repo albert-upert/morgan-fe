@@ -1,4 +1,4 @@
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dialog,
   DialogBody,
@@ -7,8 +7,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
-import { InfoIcon } from "@/components/icon";
+} from "uper-ui/dialog";
+import { InfoIcon } from "uper-ui/icon";
 
 interface UploadEventDialogProps {
   open: boolean;

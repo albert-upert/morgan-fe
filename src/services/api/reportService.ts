@@ -8,7 +8,7 @@ let USE_MOCK = true;
 export const getReportById = async (id: string): Promise<Report> => {
   USE_MOCK = true;
   // 1. Pura-pura loading 1 detik
-  await delay(1000);
+  // await delay(1000);
 
   // 2. Cari data di array (Logic SQL sederhana: SELECT * FROM reports WHERE id = id)
   const foundReport = reportsSeed.find((item: Report) => item.id === id);
@@ -24,7 +24,7 @@ export const getReportById = async (id: string): Promise<Report> => {
 export const getAllReports = async (): Promise<Array<Report>> => {
   if (USE_MOCK) {
     // 1. Simulasi loading
-    await delay(800);
+    // await delay(2000);
 
     // 2. Return semua data (Array)
     return reportsSeed;

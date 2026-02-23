@@ -1,4 +1,4 @@
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dialog,
   DialogBody,
@@ -8,7 +8,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
+} from "uper-ui/dialog";
 
 interface UserRole {
   id: number;

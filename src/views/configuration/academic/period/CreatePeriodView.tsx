@@ -1,15 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import type { ReactNode } from "react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { DatePicker, YearPicker } from "@/components/date-picker";
-import { ArrowLeftIcon } from "@/components/icon";
-import { Input } from "@/components/input";
-import { RadioGroup, RadioGroupItem } from "@/components/radio";
-import { Switch } from "@/components/switch";
-import { Textarea } from "@/components/textarea";
-import { Typography } from "@/components/typography";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { DatePicker, YearPicker } from "uper-ui/date-picker";
+import { ArrowLeftIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { RadioGroup, RadioGroupItem } from "uper-ui/radio";
+import { Switch } from "uper-ui/switch";
+import { Textarea } from "uper-ui/textarea";
+import { Typography } from "uper-ui/typography";
 
 interface CreatePeriodViewProps {
   mode?: "create" | "edit";

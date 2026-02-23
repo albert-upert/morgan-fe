@@ -1,14 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
+} from "uper-ui/dropdown";
 import {
   CaretDownIcon,
   DownloadIcon,
@@ -17,9 +17,9 @@ import {
   PlusIcon,
   SearchIcon,
   TrashIcon,
-} from "@/components/icon";
-import { Input } from "@/components/input";
-import { Pagination } from "@/components/pagination";
+} from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { Pagination } from "uper-ui/pagination";
 import {
   Table,
   TableBody,
@@ -27,10 +27,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/tabs";
-import { Tag } from "@/components/tags";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "uper-ui/tabs";
+import { Tag } from "uper-ui/tags";
+import { Typography } from "uper-ui/typography";
 
 import type { CourseScheduleDetail } from "./ViewCourseScheduleDialog";
 import { ViewCourseScheduleDialog } from "./ViewCourseScheduleDialog";
@@ -200,11 +200,11 @@ export function CourseScheduleListView() {
   }, []);
 
   const handleDelete = useCallback((schedule: Schedule) => {
-    console.log("Delete schedule:", schedule);
+    console.warn("Delete schedule:", schedule);
   }, []);
 
   const handlePublish = useCallback((schedule: CourseScheduleDetail) => {
-    console.log("Publish schedule:", schedule);
+    console.warn("Publish schedule:", schedule);
     setIsViewDialogOpen(false);
   }, []);
 

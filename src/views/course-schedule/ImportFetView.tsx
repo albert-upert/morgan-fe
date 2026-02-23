@@ -2,22 +2,22 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import type { ChangeEvent, DragEvent } from "react";
 import { useCallback, useRef, useState } from "react";
 
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
+} from "uper-ui/dropdown";
 import {
   CaretDownIcon,
   CaretLeftIcon,
   InfoIcon,
   UploadIcon,
-} from "@/components/icon";
-import { Tag } from "@/components/tags";
-import { Typography } from "@/components/typography";
+} from "uper-ui/icon";
+import { Tag } from "uper-ui/tags";
+import { Typography } from "uper-ui/typography";
 
 const lectureTypeOptions = [
   { label: "Reguler", value: "regular" },
@@ -84,7 +84,7 @@ export function ImportFetView() {
 
   const handleUpload = useCallback(() => {
     if (selectedFile) {
-      console.log("Uploading file:", selectedFile.name, {
+      console.warn("Uploading file:", selectedFile.name, {
         lectureType: selectedLectureType,
         studyProgram: selectedStudyProgram,
       });
@@ -94,7 +94,7 @@ export function ImportFetView() {
   }, [selectedFile, selectedLectureType, selectedStudyProgram, navigate]);
 
   const handleDownloadSample = useCallback(() => {
-    console.log("Download sample data");
+    console.warn("Download sample data");
   }, []);
 
   return (
@@ -274,7 +274,7 @@ export function ImportFetView() {
                   <button
                     type="button"
                     className="text-blue-500 underline"
-                    onClick={() => console.log("Download course list")}
+                    onClick={() => console.warn("Download course list")}
                   >
                     disini
                   </button>
@@ -284,7 +284,7 @@ export function ImportFetView() {
                   <button
                     type="button"
                     className="text-blue-500 underline"
-                    onClick={() => console.log("Download instructor list")}
+                    onClick={() => console.warn("Download instructor list")}
                   >
                     disini
                   </button>

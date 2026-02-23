@@ -2,22 +2,22 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 import type { FormEvent } from "react";
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/card";
+} from "uper-ui/card";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
-import { ArrowLeftIcon, CaretDownIcon } from "@/components/icon";
-import { Input } from "@/components/input";
+} from "uper-ui/dropdown";
+import { ArrowLeftIcon, CaretDownIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
 import { addPetMutation } from "@/services/api/@tanstack/react-query.gen";
 import type { Pet } from "@/services/api/types.gen";
 

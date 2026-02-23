@@ -1,10 +1,12 @@
 export type Report = {
   id: string;
+  pic?: string;
   status:
-    | "Menunggu Diterima oleh Petugas"
+    | "Menunggu Petugas"
     | "Petugas dalam Perjalanan"
     | "Sedang Dikerjakan"
-    | "Laporan Selesai";
+    | "Laporan Selesai" 
+    | "Pelapor Memberikan Feedback";
   assets: Array<string>;
   room: string;
   building: string;
@@ -12,6 +14,6 @@ export type Report = {
   time: string;
   reporter: string;
   reporterRole: string;
-  photoUrl: string | null;
+  photoUrl: string;
   description: string;
 };

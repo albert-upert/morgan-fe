@@ -4,8 +4,8 @@ import {
   redirect,
   useLocation,
 } from "@tanstack/react-router";
-// import { Header } from "uper-ui";
-import { Header } from "@/components/header/Header";
+import { Separator } from "uper-ui/separator";
+import { Header } from "@/components/header";
 import { getUser } from "@/lib/auth";
 
 export const Route = createFileRoute("/_layout")({
@@ -34,15 +34,22 @@ function Layout() {
     >
       {!isScanPage && (
         <>
-          <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] border-b border-border">
-            <Header />
-          </div>
+          {isHomePage ? (
+            <div className="max-w-auto fixed top-0 right-0 left-0 z-30 mx-auto bg-linear-to-l from-navbar-gradient-end to-background">
+              <Header />
+              <Separator/>
+            </div>
+          ) : (
+            <div className="max-w-auto fixed top-0 right-0 left-0 z-30 mx-auto border-b border-border">
+              <Header />
+            </div>
+          )}
         </>
       )}
 
       <main
         className={
-          isScanPage ? "min-h-screen" : "min-h-screen px-[24px] pt-[88px]"
+          isScanPage ? "min-h-screen" : "min-h-screen px-[24px] pt-[104px]"
         }
       >
         <Outlet />
