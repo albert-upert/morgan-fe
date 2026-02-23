@@ -1,19 +1,19 @@
 import { Link } from "@tanstack/react-router";
 import { Fragment, useState } from "react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { DropdownItem, DropdownSearch } from "@/components/dropdown";
-import { ArrowLeftIcon } from "@/components/icon";
-import { Input } from "@/components/input";
-import { Switch } from "@/components/switch";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { DropdownItem, DropdownSearch } from "uper-ui/dropdown";
+import { ArrowLeftIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { Switch } from "uper-ui/switch";
 import {
   Table,
   TableBody,
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 import { CreateRoleDialog } from "./CreateRoleDialog";
 
 interface User {

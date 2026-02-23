@@ -1,6 +1,8 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useEffect, useState } from "react";
+import { Accordion } from "uper-ui/accordion";
 import { Button } from "uper-ui/button";
+import { Callout } from "uper-ui/callout";
 import {
   Dialog,
   DialogBody,
@@ -16,21 +18,19 @@ import {
   DropdownTrigger,
 } from "uper-ui/dropdown";
 import {
-  BuildingIcon,
   CaretDownIcon,
+  CaretUpIcon,
   CautionIcon,
-  ClockIcon,
   CloseIcon,
   FileIcon,
   OpenIcon,
-  RegistrationIcon,
-  SyncIcon,
 } from "uper-ui/icon";
 import { Separator } from "uper-ui/separator";
 import { Tag } from "uper-ui/tags";
 import { Textarea } from "uper-ui/textarea";
 import { Typography } from "uper-ui/typography";
 import type { Report } from "@/types/report";
+
 
 export function TicketListModal({
   open,
@@ -74,13 +74,20 @@ export function TicketListModal({
       sessionStorage.setItem("user_location", selected);
     }
 
+    sessionStorage.setItem("show_ticket_accepted_toast", "true");
+
     navigate({
       to: "/fm-it/ticket-detail/$id",
       params: {
         id: String(reportDetail.id),
       },
     });
-  }, [navigate, onOpenChange, onRequestSubmit, reportDetail, selected]);
+  }, [selected]);
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
+
+  const toggleAccordion = useCallback((id: string) => {
+    setExpandedItems((prev) => ({ ...prev, [id]: !prev[id] }));
+  }, []);
 
   return (
     <Dialog
@@ -125,81 +132,89 @@ export function TicketListModal({
             <Separator />
 
             <DialogBody className="flex flex-col gap-3 px-4 py-3">
-              <div className="flex w-full flex-col gap-2 rounded-lg bg-gray-100">
-                <div>
-                  <Typography
-                    className="text-primary"
-                    variant="body-medium-bold"
-                  >
-                    {reportDetail.id}
-                  </Typography>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <div className="flex flex-row items-center gap-3">
-                    <SyncIcon className="h-6 w-6" />
-                    <Tag color="red" type="filled" size="md" rounded="pill">
-                      {reportDetail.status}
-                    </Tag>
-                  </div>
-                  <div className="flex flex-row items-center gap-3">
-                    <CautionIcon className="h-6 w-6" />
-                    <Typography variant="caption-bold">
-                      {reportDetail.assets.join(", ")}
-                    </Typography>
-                  </div>
-                  <div className="flex flex-row items-center gap-3">
-                    <BuildingIcon className="h-6 w-6" />
-                    <Typography variant="caption-bold">
-                      {reportDetail.room} - {reportDetail.building}
-                    </Typography>
-                  </div>
-                  <div className="flex flex-row items-center gap-3">
-                    <ClockIcon className="h-6 w-6" />
-                    <Typography variant="caption-bold">
-                      {reportDetail.date} | {reportDetail.time}
-                    </Typography>
-                  </div>
-                  <div className="flex flex-row items-center gap-3">
-                    <RegistrationIcon className="h-6 w-6" />
-                    <Typography variant="caption-bold">
-                      Pelapor: {reportDetail.reporter} (
-                      {reportDetail.reporterRole})
-                    </Typography>
-                  </div>
-                </div>
-
-                <div>
-                  {/* File Attachment */}
-                  <Button
-                    onClick={() => {
-                      if (reportDetail.photoUrl) setShowPreview(true);
-                    }}
-                    className="flex w-full flex-row items-center justify-between gap-3"
-                    variant="outline"
-                  >
-                    <div>
-                      <FileIcon />
+              <div className="flex w-full flex-col gap-3">
+                {reportDetail.assets.map((item, index) => {
+                  const isExpanded = expandedItems[item[index]] || false;
+                  return (
+                    <div className="w-full border border-gray-400 bg-gray-100 rounded-lg">
+                      <Button 
+                        size="lg"
+                        variant="ghost"
+                        className="w-full h-full p-4 flex flex-row items-center justify-between"
+                        onClick={() =>  toggleAccordion(item[index])}
+                      >
+                          <div className="flex items-center justify-start gap-2 w-full h-full">
+                            <div className="h-5 w-5 flex justify-center items-center">
+                              <CautionIcon className="h-4 w-4" color="red"/> 
+                            </div>
+                            <Typography variant="caption-small-semibold">{item}</Typography>
+                            <div className="h-5 w-5 flex justify-center items-center ml-auto">
+                              {isExpanded ? 
+                                <CaretUpIcon className="h-4 w-4"/> 
+                                : <CaretDownIcon className="h-4 w-4"/>
+                              }
+                            </div>
+                          </div>
+                      </Button>
+                      <Accordion 
+                        title="" 
+                        key={index} 
+                        className="border-0 bg-transparent [&_[data-slot=accordion-content]]:px-0 [&_[data-slot=accordion-header]]:hidden"
+                        expanded={isExpanded}
+                      >
+                        <div className="flex flex-col gap-3">
+                          <div className="flex flex-col items-start gap-1">
+                            <Typography variant="caption-small-semibold"  className="text-gray-600">Jenis Masalah</Typography>
+                            <Tag color="red" type="filled" size="lg" rounded="default" className="px-3">
+                              <Typography variant="body-small" className="text-white">
+                                Rusak
+                              </Typography>
+                            </Tag>
+                          </div>
+    
+                          <div className="flex flex-col items-start gap-1">
+                            <Typography variant="caption-small-semibold"  className="text-gray-600">Detail Kendala</Typography>
+                            <Textarea
+                              className="bg-white"
+                              value={reportDetail.description}
+                              disabled
+                            />                  
+                          </div>
+    
+                          <div className="flex flex-col items-start gap-1">
+                            <Typography variant="caption-small-semibold"  className="text-gray-600">Bukti Foto</Typography>
+                            <Button
+                              onClick={() => {
+                                setShowPreview(true);
+                                setPhotoUrl(reportDetail.photoUrl);
+                              }}
+                              className="flex w-full flex-row items-center justify-between gap-3"
+                              variant="outline"
+                            >
+                              <div>
+                                <FileIcon />
+                              </div>
+    
+                              <div className="flex grow justify-start">
+                                {reportDetail.photoUrl}
+                              </div>
+    
+                              <div>
+                                <OpenIcon />
+                              </div>
+                            </Button>
+                          </div>
+                        </div>
+                      </Accordion>
                     </div>
-
-                    <div className="flex grow justify-start">
-                      {reportDetail.photoUrl}
-                    </div>
-
-                    <div>
-                      <OpenIcon />
-                    </div>
-                  </Button>
-                </div>
-
-                <div>
-                  <Textarea
-                    className="bg-white"
-                    value={reportDetail.description}
-                    disabled
-                  />
-                </div>
+                )})}
               </div>
+
+              {!selected && (
+                <div className="flex w-full flex-row justify-start">
+                  <Callout variant="yellow" message="Silahkan pilih lokasi saat ini terlebih dahulu." showClose={false} showIcon={true} />
+                </div> 
+              )}
 
               <div className="w-full">
                 <Dropdown>
@@ -262,11 +277,6 @@ export function TicketListModal({
                 </Dropdown>
               </div>
 
-              <div className="flex w-full flex-row justify-start">
-                <Typography variant="body-small">
-                  ** Silahkan pilih lokasi anda terlebih dahulu.
-                </Typography>
-              </div>
             </DialogBody>
             <DialogFooter className="flex w-full flex-row justify-between gap-3 px-4 py-3">
               <Button onClick={cancel} className="w-full" variant="secondary">

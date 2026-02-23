@@ -2,16 +2,11 @@ import { Link } from "@tanstack/react-router";
 import type { ChangeEvent } from "react";
 import { useCallback, useState } from "react";
 
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import {
-  CaretLeftIcon,
-  SearchIcon,
-  SortIcon,
-  TrashIcon,
-} from "@/components/icon";
-import { Input } from "@/components/input";
-import { Pagination } from "@/components/pagination";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { CaretLeftIcon, SearchIcon, SortIcon, TrashIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { Pagination } from "uper-ui/pagination";
 import {
   Table,
   TableBody,
@@ -19,8 +14,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 
 interface ClassData {
   id: number;
@@ -137,7 +132,7 @@ export function ClassListView() {
   }, []);
 
   const handleSort = useCallback(() => {
-    console.log("Sort clicked");
+    console.warn("Sort clicked");
   }, []);
 
   const handlePageChange = useCallback((page: number) => {
@@ -150,7 +145,7 @@ export function ClassListView() {
   }, []);
 
   const handleDeleteParticipants = useCallback((classId: number) => {
-    console.log("Delete participants for class:", classId);
+    console.warn("Delete participants for class:", classId);
   }, []);
 
   return (

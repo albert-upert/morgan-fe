@@ -1,27 +1,27 @@
 import { Link, useRouter } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-} from "@/components/dialog";
+} from "uper-ui/dialog";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
+} from "uper-ui/dropdown";
 import {
   BurgerMenuIcon,
   NotificationIcon,
   SearchIcon,
   SettingIcon,
-} from "@/components/icon";
+} from "uper-ui/icon";
 
-import { Separator } from "@/components/separator";
-import Typography from "@/components/typography/typography";
+import { Separator } from "uper-ui/separator";
+import { Typography } from "uper-ui/typography";
 import { clearToken } from "@/lib/auth";
 
 interface NavbarProps {
@@ -142,7 +142,7 @@ export default function Navbar({ userType }: NavbarProps) {
                     {user.name}
                   </Typography>
                   <Typography
-                    variant="caption"
+                    variant="caption-small"
                     className="text-gray-600 capitalize"
                     as="p"
                   >
@@ -186,7 +186,7 @@ export default function Navbar({ userType }: NavbarProps) {
           <Typography variant="body-small" className="text-gray-600" as="p">
             {formattedDate}
           </Typography>
-          <Typography variant="pixie" className="text-gray-600" as="p">
+          <Typography variant="caption-pixie" className="text-gray-600" as="p">
             {formattedTime}
           </Typography>
         </div>
@@ -211,7 +211,7 @@ export default function Navbar({ userType }: NavbarProps) {
                   {user.name}
                 </Typography>
                 <Typography
-                  variant="caption"
+                  variant="caption-small"
                   className="text-gray-600 capitalize"
                   as="p"
                 >
@@ -241,10 +241,10 @@ export default function Navbar({ userType }: NavbarProps) {
 
         {/* Academic Period Info */}
         <div className="flex flex-col gap-1">
-          <Typography variant="caption" className="text-gray-600" as="p">
+          <Typography variant="caption-small" className="text-gray-600" as="p">
             Periode Akademik: 2024 - 2025
           </Typography>
-          <Typography variant="pixie" className="text-gray-600" as="p">
+          <Typography variant="caption-pixie" className="text-gray-600" as="p">
             (Admin - Universitas Pertamina)
           </Typography>
         </div>

@@ -23,6 +23,7 @@ import { Route as LayoutPetsCreateRouteImport } from './routes/_layout/pets/crea
 import { Route as LayoutLecturerScanRouteImport } from './routes/_layout/lecturer/scan'
 import { Route as LayoutLecturerHomeRouteImport } from './routes/_layout/lecturer/home'
 import { Route as LayoutFmItTicketListRouteImport } from './routes/_layout/fm-it/ticket-list'
+import { Route as LayoutFmItNotificationRouteImport } from './routes/_layout/fm-it/notification'
 import { Route as LayoutFmItHomeRouteImport } from './routes/_layout/fm-it/home'
 import { Route as LayoutCurriculumCreateRouteImport } from './routes/_layout/curriculum/create'
 import { Route as LayoutCurriculumAssignCoursesRouteImport } from './routes/_layout/curriculum/assign-courses'
@@ -140,6 +141,11 @@ const LayoutLecturerHomeRoute = LayoutLecturerHomeRouteImport.update({
 const LayoutFmItTicketListRoute = LayoutFmItTicketListRouteImport.update({
   id: '/fm-it/ticket-list',
   path: '/fm-it/ticket-list',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutFmItNotificationRoute = LayoutFmItNotificationRouteImport.update({
+  id: '/fm-it/notification',
+  path: '/fm-it/notification',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutFmItHomeRoute = LayoutFmItHomeRouteImport.update({
@@ -436,6 +442,7 @@ export interface FileRoutesByFullPath {
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
   '/fm-it/home': typeof LayoutFmItHomeRoute
+  '/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
   '/lecturer/home': typeof LayoutLecturerHomeRoute
   '/lecturer/scan': typeof LayoutLecturerScanRoute
@@ -497,6 +504,7 @@ export interface FileRoutesByTo {
   '/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/curriculum/create': typeof LayoutCurriculumCreateRoute
   '/fm-it/home': typeof LayoutFmItHomeRoute
+  '/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
   '/lecturer/home': typeof LayoutLecturerHomeRoute
   '/lecturer/scan': typeof LayoutLecturerScanRoute
@@ -560,6 +568,7 @@ export interface FileRoutesById {
   '/_layout/curriculum/assign-courses': typeof LayoutCurriculumAssignCoursesRoute
   '/_layout/curriculum/create': typeof LayoutCurriculumCreateRoute
   '/_layout/fm-it/home': typeof LayoutFmItHomeRoute
+  '/_layout/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/_layout/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
   '/_layout/lecturer/home': typeof LayoutLecturerHomeRoute
   '/_layout/lecturer/scan': typeof LayoutLecturerScanRoute
@@ -623,6 +632,7 @@ export interface FileRouteTypes {
     | '/curriculum/assign-courses'
     | '/curriculum/create'
     | '/fm-it/home'
+    | '/fm-it/notification'
     | '/fm-it/ticket-list'
     | '/lecturer/home'
     | '/lecturer/scan'
@@ -684,6 +694,7 @@ export interface FileRouteTypes {
     | '/curriculum/assign-courses'
     | '/curriculum/create'
     | '/fm-it/home'
+    | '/fm-it/notification'
     | '/fm-it/ticket-list'
     | '/lecturer/home'
     | '/lecturer/scan'
@@ -746,6 +757,7 @@ export interface FileRouteTypes {
     | '/_layout/curriculum/assign-courses'
     | '/_layout/curriculum/create'
     | '/_layout/fm-it/home'
+    | '/_layout/fm-it/notification'
     | '/_layout/fm-it/ticket-list'
     | '/_layout/lecturer/home'
     | '/_layout/lecturer/scan'
@@ -886,6 +898,13 @@ declare module '@tanstack/react-router' {
       path: '/fm-it/ticket-list'
       fullPath: '/fm-it/ticket-list'
       preLoaderRoute: typeof LayoutFmItTicketListRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/fm-it/notification': {
+      id: '/_layout/fm-it/notification'
+      path: '/fm-it/notification'
+      fullPath: '/fm-it/notification'
+      preLoaderRoute: typeof LayoutFmItNotificationRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/fm-it/home': {
@@ -1237,6 +1256,7 @@ interface LayoutRouteChildren {
   LayoutCurriculumAssignCoursesRoute: typeof LayoutCurriculumAssignCoursesRoute
   LayoutCurriculumCreateRoute: typeof LayoutCurriculumCreateRoute
   LayoutFmItHomeRoute: typeof LayoutFmItHomeRoute
+  LayoutFmItNotificationRoute: typeof LayoutFmItNotificationRoute
   LayoutFmItTicketListRoute: typeof LayoutFmItTicketListRoute
   LayoutLecturerHomeRoute: typeof LayoutLecturerHomeRoute
   LayoutLecturerScanRoute: typeof LayoutLecturerScanRoute
@@ -1303,6 +1323,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutCurriculumAssignCoursesRoute: LayoutCurriculumAssignCoursesRoute,
   LayoutCurriculumCreateRoute: LayoutCurriculumCreateRoute,
   LayoutFmItHomeRoute: LayoutFmItHomeRoute,
+  LayoutFmItNotificationRoute: LayoutFmItNotificationRoute,
   LayoutFmItTicketListRoute: LayoutFmItTicketListRoute,
   LayoutLecturerHomeRoute: LayoutLecturerHomeRoute,
   LayoutLecturerScanRoute: LayoutLecturerScanRoute,

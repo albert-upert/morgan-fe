@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { InfoIcon } from "@/components/icon";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { InfoIcon } from "uper-ui/icon";
 import {
   TableBody,
   TableCell,
@@ -12,9 +12,9 @@ import {
   TableHeader,
   TableRow,
   TableWithCustomHeader,
-} from "@/components/table";
-import { Tag } from "@/components/tags";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Tag } from "uper-ui/tags";
+import { Typography } from "uper-ui/typography";
 import { UploadConfirmationDialog } from "./UploadConfirmationDialog";
 
 interface AcademicCalendarDetail {
