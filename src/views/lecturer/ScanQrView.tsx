@@ -2,71 +2,9 @@ import { useNavigate } from "@tanstack/react-router";
 import { BrowserQRCodeReader } from "@zxing/browser";
 import { NotFoundException } from "@zxing/library";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeftIcon } from "uper-ui/icon";
+import { ArrowLeftIcon, FlashlightIcon, GalleryIcon } from "uper-ui/icon";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
-
-function FlashlightIcon({
-  className,
-  color = "currentColor",
-}: {
-  className?: string;
-  color?: string;
-}) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d="M9 2h6a2 2 0 0 1 2 2v4a1 1 0 0 1-.293.707L15 10.414V21a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V10.414L7.293 8.707A1 1 0 0 1 7 8V4a2 2 0 0 1 2-2Z"
-        stroke={color}
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path d="M8 6h8" stroke={color} strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function GalleryIcon({
-  className,
-  color = "currentColor",
-}: {
-  className?: string;
-  color?: string;
-}) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-    >
-      <path
-        d="M5 7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7Z"
-        stroke={color}
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M8 13.5l2-2 2.5 2.5L15.5 11 19 14.5"
-        stroke={color}
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9 9.5h.01"
-        stroke={color}
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
 
 export function ScanQrView() {
   const navigate = useNavigate();
@@ -191,8 +129,8 @@ export function ScanQrView() {
         </button>
 
         <div className="mt-8 text-center">
-          <Typography variant="body-large-semibold" className="text-white">
-            Pindai QR
+          <Typography variant="h4" className="font-bold text-white">
+            Pindai Q
           </Typography>
           <Typography variant="body-small" className="mt-1 text-white/90">
             Pindai QR untuk melihat detail aset.

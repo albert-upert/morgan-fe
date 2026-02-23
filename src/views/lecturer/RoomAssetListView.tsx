@@ -13,11 +13,12 @@ import {
   DropdownTrigger,
 } from "uper-ui/dropdown";
 import {
+  ArrowBackIcon,
+  ArrowDownIconFilter,
   ArrowLeftIcon,
+  ArrowUpIconFilter,
   BuildingIcon,
   CalendarIcon,
-  CaretDownIcon,
-  CaretUpIcon,
   FilterIcon,
   SearchIcon,
 } from "uper-ui/icon";
@@ -176,7 +177,7 @@ export function RoomAssetListView() {
         className="inline-flex items-center gap-2 text-red-500"
         aria-label="Kembali ke Beranda"
       >
-        <ArrowLeftIcon className="h-[20px] w-[20px]" color="currentColor" />
+        <ArrowBackIcon className="h-[20px] w-[20px]" color="currentColor" />
         <Typography variant="body-small" className="text-red-500">
           Beranda
         </Typography>
@@ -277,7 +278,7 @@ export function RoomAssetListView() {
               onChange={(e) => setQuery(e.target.value)}
               onClear={() => setQuery("")}
               placeholder="Cari aset..."
-              startIcon={<SearchIcon className="h-[20px] w-[20px]" />}
+              startIcon={<SearchIcon className="ml-2 h-[20px] w-[20px]" />}
             />
             <Dropdown modal={false} open={isOpen} onOpenChange={setIsOpen}>
               <DropdownTrigger asChild>
@@ -313,10 +314,10 @@ export function RoomAssetListView() {
             </Dropdown>
           </div>
           <div className="mt-3 flex items-center justify-between">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <button
                 type="button"
-                className="flex flex-col items-center justify-center rounded-md px-1 py-0.5"
+                className="flex flex-col items-center justify-center rounded-md px-1 py-0.5 leading-none"
                 onClick={() =>
                   setSortMode((prev) => (prev === "az" ? "za" : "az"))
                 }
@@ -326,15 +327,17 @@ export function RoomAssetListView() {
                     : "Ubah urutan menjadi A-Z"
                 }
               >
-                <CaretUpIcon
-                  className={`h-4 w-4 ${
+                <ArrowUpIconFilter
+                  className={`h-[12px] w-[12px] ${
                     sortMode === "az" ? "text-primary" : "text-gray-400"
                   }`}
+                  color="currentColor"
                 />
-                <CaretDownIcon
-                  className={`-mt-1 h-4 w-4 ${
+                <ArrowDownIconFilter
+                  className={`-mt-1 h-[12px] w-[12px] ${
                     sortMode === "za" ? "text-primary" : "text-gray-400"
                   }`}
+                  color="currentColor"
                 />
               </button>
 

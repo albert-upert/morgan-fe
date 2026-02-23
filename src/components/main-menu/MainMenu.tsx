@@ -3,11 +3,7 @@ import { Button } from "uper-ui/button";
 import { MailIcon } from "uper-ui/icon";
 import { Typography } from "uper-ui/typography";
 
-export interface MainMenuProps {
-  onReportListClick?: () => void;
-}
-
-export function MainMenu({ onReportListClick }: MainMenuProps) {
+export function MainMenu() {
   return (
     <div className="mt-4 flex flex-col gap-4">
       <div className="rounded-2xl bg-red-400 p-4 text-white">
@@ -38,14 +34,7 @@ export function MainMenu({ onReportListClick }: MainMenuProps) {
         </div>
       </div>
 
-      <a
-        href="#"
-        className="block"
-        onClick={(e) => {
-          e.preventDefault();
-          onReportListClick?.();
-        }}
-      >
+      <Link to="/lecturer/my-report" className="block">
         <div className="flex items-center gap-3 rounded-2xl bg-red-400 p-4 text-white">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl">
             <MailIcon className="h-10 w-10" color="white" />
@@ -59,7 +48,7 @@ export function MainMenu({ onReportListClick }: MainMenuProps) {
             </Typography>
           </div>
         </div>
-      </a>
+      </Link>
     </div>
   );
 }
