@@ -1,4 +1,4 @@
-import type { ReportIssuePayload } from "@/views/lecturer/report-issue-modal";
+import type { ReportIssuePayload } from "@/views/lecturer/ReportIssueModal";
 
 const STORAGE_KEY = "morgan:lastReportSuccess:v1";
 

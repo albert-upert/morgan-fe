@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { Link, useNavigate, useParams } from "@tanstack/react-router";
-
+import { useNavigate, useParams } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "uper-ui/button";
 import { Card, CardContent } from "uper-ui/card";
@@ -23,6 +22,7 @@ import {
   SearchIcon,
 } from "uper-ui/icon";
 import { Input } from "uper-ui/input";
+import { Link } from "uper-ui/link";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
 import { submitReportIssue } from "@/services/morgan/report-issue";
@@ -30,9 +30,9 @@ import {
   makeReportSuccessData,
   saveLastReportSuccess,
 } from "@/services/morgan/report-success-store";
-import { ReportIssueModal } from "@/views/lecturer/report-issue-modal";
-import type { ReportIssuePayload } from "@/views/lecturer/report-issue-modal";
 import { ReportIssueValidationModal } from "@/views/lecturer/report-issue-validation-modal";
+import type { ReportIssuePayload } from "@/views/lecturer/ReportIssueModal";
+import { ReportIssueModal } from "@/views/lecturer/ReportIssueModal";
 
 type RoomAsset = {
   id: string;

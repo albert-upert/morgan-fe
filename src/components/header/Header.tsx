@@ -6,7 +6,12 @@ import {
   DropdownItem,
   DropdownTrigger,
 } from "uper-ui/dropdown";
-import { LogoutIcon, NotificationIcon, ProfileIcon, SettingIcon } from "uper-ui/icon";
+import {
+  LogoutIcon,
+  NotificationIcon,
+  ProfileIcon,
+  SettingIcon,
+} from "uper-ui/icon";
 import { Typography } from "uper-ui/typography";
 
 import { cn } from "@/lib/utils";
@@ -104,18 +109,15 @@ export function Header({
               ))}
             </div>
 
-            <Typography
-              variant="caption-pixie-semibold"
-              className=""
-            >
+            <Typography variant="caption-pixie-semibold" className="">
               {subtitle}
             </Typography>
           </div>
-          
+
           <Dropdown>
             <DropdownTrigger asChild>
               <button className="ml-auto flex items-center gap-1 outline-none">
-                <div className="flex items-center justify-center h-8 w-8 bg-blue-100 rounded-full">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100">
                   <ProfileIcon />
                 </div>
 
@@ -127,7 +129,10 @@ export function Header({
             </DropdownTrigger>
             <DropdownContent align="end" className="w-48">
               <DropdownItem className="gap-2">
-                <Link to="/fm-it/notification" className="flex items-center gap-2">
+                <Link
+                  to="/fm-it/notification"
+                  className="flex items-center gap-2"
+                >
                   <NotificationIcon className="h-5 w-5" />
                   <Typography variant="body-small">Notifikasi</Typography>
                 </Link>

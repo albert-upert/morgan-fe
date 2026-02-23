@@ -1,4 +1,4 @@
-import { Link, useParams } from "@tanstack/react-router";
+import { useParams } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import { Button } from "uper-ui/button";
@@ -14,10 +14,11 @@ import {
   FileIcon,
   OpenIcon,
 } from "uper-ui/icon";
+import { Link } from "uper-ui/link";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
 import { ConfirmCompletionModal } from "@/views/lecturer/confirm-completion-modal";
-import { ReportAgainModal } from "@/views/lecturer/report-again-modal";
+import { ReportAgainModal } from "@/views/lecturer/ReportAgainModal";
 
 type ReportIssueType = "Rusak" | "Kurang" | "Hilang";
 

@@ -2,9 +2,10 @@ import { useNavigate } from "@tanstack/react-router";
 import { BrowserQRCodeReader } from "@zxing/browser";
 import { NotFoundException } from "@zxing/library";
 import { useEffect, useRef, useState } from "react";
-import { ArrowLeftIcon, FlashlightIcon, GalleryIcon } from "uper-ui/icon";
+import { ArrowLeftIcon } from "uper-ui/icon";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
+import { FlashlightIcon, GalleryIcon } from "@/components/icon";
 
 export function ScanQrView() {
   const navigate = useNavigate();
@@ -37,35 +38,32 @@ export function ScanQrView() {
         video.srcObject = stream;
         await video.play();
 
-        readerRef.current.decodeFromVideoElement(
-          video,
-          (result, err: unknown) => {
-            if (cancelled) return;
-            if (result) {
-              if (handledRef.current) return;
-              handledRef.current = true;
-              // const text = result.getText(); // keep if you want to parse QR payload later
-              toast.success("QR terdeteksi");
+        readerRef.current.decodeFromVideoElement(video, (result, err) => {
+          if (cancelled) return;
+          if (result) {
+            if (handledRef.current) return;
+            handledRef.current = true;
+            // const text = result.getText(); // keep if you want to parse QR payload later
+            toast.success("QR terdeteksi");
 
-              // stop camera ASAP to avoid repeated scans
-              try {
-                const currentStream = video.srcObject as MediaStream | null;
-                currentStream?.getTracks().forEach((t) => t.stop());
-              } catch {
-                // ignore
-              }
-
-              // Demo: langsung ke halaman list detail aset
-              navigate({
-                to: "/lecturer/room-asset-list/$roomId",
-                params: { roomId: "0001" },
-              });
-            } else if (err && !(err instanceof NotFoundException)) {
-              // NotFoundException = frame belum ada QR, aman di-ignore
-              setCameraError("Gagal membaca QR. Coba lagi.");
+            // stop camera ASAP to avoid repeated scans
+            try {
+              const currentStream = video.srcObject as MediaStream | null;
+              currentStream?.getTracks().forEach((t) => t.stop());
+            } catch {
+              // ignore
             }
+
+            // Demo: langsung ke halaman list detail aset
+            navigate({
+              to: "/room-asset-list/$roomId",
+              params: { roomId: "0001" },
+            });
+          } else if (err && !(err instanceof NotFoundException)) {
+            // NotFoundException = frame belum ada QR, aman di-ignore
+            setCameraError("Gagal membaca QR. Coba lagi.");
           }
-        );
+        });
       } catch (e) {
         if (cancelled) return;
         setCameraError(
@@ -129,17 +127,14 @@ export function ScanQrView() {
         </button>
 
         <div className="mt-8 text-center">
-          <Typography variant="h4" className="font-bold text-white">
-            Pindai Q
+          <Typography variant="body-large-bold" className="text-white">
+            Pindai QR
           </Typography>
           <Typography variant="body-small" className="mt-1 text-white/90">
             Pindai QR untuk melihat detail aset.
           </Typography>
           {cameraError && (
-            <Typography
-              variant="body-small"
-              className="mt-2 text-[11px] text-white/80"
-            >
+            <Typography variant="pixie" className="mt-2 text-white/80">
               {cameraError}
             </Typography>
           )}

@@ -4,31 +4,28 @@ import { Button } from "uper-ui/button";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
-  BillIcon,
   CautionIcon,
   ClockIcon,
   NotificationIcon,
 } from "uper-ui/icon";
-import { Separator } from "uper-ui/separator";
 import { Typography } from "uper-ui/typography";
 
 export type Notification = {
-    id: number;
-    date: string;
-    tipe: "task" | "reminder" | "info";
-    title: string;
-    description: string;
-    timestamp: string;
-    isNew?: boolean;
-}
+  id: number;
+  date: string;
+  tipe: "task" | "reminder" | "info";
+  title: string;
+  description: string;
+  timestamp: string;
+  isNew?: boolean;
+};
 
 export function FmitNotificationPageView() {
-
   const navigate = useNavigate();
 
   const home = () => {
     navigate({
-      to: "/fm-it/home",
+      href: "/fm-it/home",
     });
   };
 
@@ -38,7 +35,8 @@ export function FmitNotificationPageView() {
       date: "Jumat, 20 Feb 2026",
       tipe: "task",
       title: "Tiket Baru: Critical!",
-      description: "Server R. IT Down. Segera menuju lokasi. SLA Respon: 15 menit.",
+      description:
+        "Server R. IT Down. Segera menuju lokasi. SLA Respon: 15 menit.",
       timestamp: new Date(Date.now() - 1000 * 60 * 1).toISOString(),
       isNew: true,
     },
@@ -47,7 +45,8 @@ export function FmitNotificationPageView() {
       date: "Jumat, 20 Feb 2026",
       tipe: "reminder",
       title: "SLA Hampir Habis!",
-      description: "Tiket #TK-901(Smartboard Mati) tersisa 10 menit sebelum melanggar SLA",
+      description:
+        "Tiket #TK-901(Smartboard Mati) tersisa 10 menit sebelum melanggar SLA",
       timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
       isNew: true,
     },
@@ -80,7 +79,7 @@ export function FmitNotificationPageView() {
   const getRelativeTime = (isoString: string) => {
     const date = new Date(isoString);
     const now = new Date();
-    
+
     const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
     if (diffInSeconds < 60) return "Sekarang";
@@ -93,18 +92,23 @@ export function FmitNotificationPageView() {
   const handleNotificationClick = (id: number) => {
     setNotifications((prev) =>
       prev.map((notification) =>
-        notification.id === id ? { ...notification, isNew: false } : notification
+        notification.id === id
+          ? { ...notification, isNew: false }
+          : notification
       )
     );
   };
 
-  const groupedNotifications = notifications.reduce((acc, curr) => {
-    if (!acc[curr.date]) {
-      acc[curr.date] = [];
-    }
-    acc[curr.date]?.push(curr);
-    return acc;
-  }, {} as Record<string, Array<Notification> | undefined>);
+  const groupedNotifications = notifications.reduce(
+    (acc, curr) => {
+      if (!acc[curr.date]) {
+        acc[curr.date] = [];
+      }
+      acc[curr.date]?.push(curr);
+      return acc;
+    },
+    {} as Record<string, Array<Notification> | undefined>
+  );
 
   const getIcon = (tipe: string) => {
     switch (tipe) {
@@ -136,52 +140,57 @@ export function FmitNotificationPageView() {
       <div className="flex flex-col gap-6">
         {Object.keys(groupedNotifications).map((date) => (
           <div key={date} className="flex flex-col gap-3">
-            <Typography variant="body-small-semibold">
-              {date}
-            </Typography>
-            <div className="flex flex-col w-full">
+            <Typography variant="body-small-semibold">{date}</Typography>
+            <div className="flex w-full flex-col">
               {groupedNotifications[date]?.map((item) => (
                 <div
                   key={item.id}
-                  className={`p-3 flex flex-col w-full border-b border-dashed ${item.isNew ? "bg-gray-200" : ""}`}
+                  className={`flex w-full flex-col border-b border-dashed p-3 ${item.isNew ? "bg-gray-200" : ""}`}
                   onClick={() => handleNotificationClick(item.id)}
                 >
-                    <div className="flex flex-row gap-3 items-start w-full">
-                        <div className="flex h-5 w-5 items-center justify-center">
-                            {getIcon(item.tipe)}
-                        </div>
-
-                        <div className="flex flex-col gap-1 w-full">
-                            <div className="flex flex-row justify-between items-start w-full">
-                                <Typography variant="body-small-semibold">
-                                {item.title}
-                                </Typography>
-                                <Typography variant="caption-pixie" className="text-gray-600">
-                                {getRelativeTime(item.timestamp)}
-                                </Typography>
-                            </div> 
-
-                            <Typography variant="caption-small" className="">
-                                {item.description}
-                            </Typography>
-                        
-                            {(item.tipe === "task" || item.tipe === "reminder") && (
-                                <Button className="w-fit h-fit p-1" variant="tertiary">
-                                    <Typography variant="caption-pixie" className="text-red-500">
-                                        {item.tipe === "task" ? "Terima Tugas" : "Lihat Detail"}
-                                    </Typography>
-                                    <React.Fragment key=".0">
-                                        <ArrowRightIcon />
-                                    </React.Fragment>
-                                </Button>
-                            )}
-                        </div>
-
-                        {item.isNew && (
-                            <div className="mb-auto h-2 w-2 bg-red-500 rounded-full">
-                            </div>
-                        )}
+                  <div className="flex w-full flex-row items-start gap-3">
+                    <div className="flex h-5 w-5 items-center justify-center">
+                      {getIcon(item.tipe)}
                     </div>
+
+                    <div className="flex w-full flex-col gap-1">
+                      <div className="flex w-full flex-row items-start justify-between">
+                        <Typography variant="body-small-semibold">
+                          {item.title}
+                        </Typography>
+                        <Typography
+                          variant="caption-pixie"
+                          className="text-gray-600"
+                        >
+                          {getRelativeTime(item.timestamp)}
+                        </Typography>
+                      </div>
+
+                      <Typography variant="caption-small" className="">
+                        {item.description}
+                      </Typography>
+
+                      {(item.tipe === "task" || item.tipe === "reminder") && (
+                        <Button className="h-fit w-fit p-1" variant="tertiary">
+                          <Typography
+                            variant="caption-pixie"
+                            className="text-red-500"
+                          >
+                            {item.tipe === "task"
+                              ? "Terima Tugas"
+                              : "Lihat Detail"}
+                          </Typography>
+                          <React.Fragment key=".0">
+                            <ArrowRightIcon />
+                          </React.Fragment>
+                        </Button>
+                      )}
+                    </div>
+
+                    {item.isNew && (
+                      <div className="mb-auto h-2 w-2 rounded-full bg-red-500"></div>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

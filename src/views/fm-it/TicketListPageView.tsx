@@ -1,8 +1,14 @@
-import { useNavigate, useLocation } from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import React, { useCallback, useEffect, useState } from "react";
 import { Accordion } from "uper-ui/accordion";
 import { Button } from "uper-ui/button";
 import { Card, CardContent } from "uper-ui/card";
+import {
+  Dropdown,
+  DropdownContent,
+  DropdownItem,
+  DropdownTrigger,
+} from "uper-ui/dropdown";
 import {
   ArrowLeftIcon,
   BuildingIcon,
@@ -16,12 +22,6 @@ import {
   StarIcon,
 } from "uper-ui/icon";
 import { Input } from "uper-ui/input";
-import {
-  Dropdown,
-  DropdownContent,
-  DropdownItem,
-  DropdownTrigger,
-} from "uper-ui/dropdown";
 // import { Loading } from "uper-ui/loading";
 import { Pagination } from "uper-ui/pagination";
 import { Tag } from "uper-ui/tags";
@@ -33,7 +33,7 @@ import { TicketListModal } from "./TicketListPageModal";
 export type Building = {
   name: string;
   floors: Array<string>;
-}
+};
 const name = "Budi Santoso";
 const shift = "07.00 - 13.00 WIB";
 const sesi = "Pagi";
@@ -46,13 +46,15 @@ const area: Array<Building> = [
 const role = "IT Support";
 
 export function TicketListView() {
-  const [reports, setReports] = useState<Array<Report> >([]);
+  const [reports, setReports] = useState<Array<Report>>([]);
   // const [loading, setLoading] = useState(true);
   // const [error, setError] = useState<string | null>(null);
 
   const [openDetailModal, setOpenDetailModal] = useState(false);
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
-  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
+    {}
+  );
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedBuilding, setSelectedBuilding] = useState<string | null>(null);
   const itemsPerPage = 3;
@@ -60,22 +62,34 @@ export function TicketListView() {
   const location = useLocation();
   const filter = location.search?.filter;
 
-  const filteredReports = React.useMemo(() => reports.filter((item) => {
-    if (filter === "available") {
-      return item.status === "Menunggu Petugas";
-    }
-    if (filter === "history") {
-      return item.status === "Laporan Selesai" || item.status === "Pelapor Memberikan Feedback";
-    }
-    if (filter === "active") {
-      return item.status === "Petugas dalam Perjalanan" || item.status === "Sedang Dikerjakan";
-    }
-    return true;
-  }), [reports, filter]);
+  const filteredReports = React.useMemo(
+    () =>
+      reports.filter((item) => {
+        if (filter === "available") {
+          return item.status === "Menunggu Petugas";
+        }
+        if (filter === "history") {
+          return (
+            item.status === "Laporan Selesai" ||
+            item.status === "Pelapor Memberikan Feedback"
+          );
+        }
+        if (filter === "active") {
+          return (
+            item.status === "Petugas dalam Perjalanan" ||
+            item.status === "Sedang Dikerjakan"
+          );
+        }
+        return true;
+      }),
+    [reports, filter]
+  );
 
   const finalReports = React.useMemo(() => {
     if (selectedBuilding) {
-      return filteredReports.filter((item) => item.building === selectedBuilding);
+      return filteredReports.filter(
+        (item) => item.building === selectedBuilding
+      );
     }
     return filteredReports;
   }, [filteredReports, selectedBuilding]);
@@ -122,28 +136,32 @@ export function TicketListView() {
 
   const hasActiveTicket = reports.some(
     (r) =>
-      r.status === "Petugas dalam Perjalanan" || r.status === "Sedang Dikerjakan"
+      r.status === "Petugas dalam Perjalanan" ||
+      r.status === "Sedang Dikerjakan"
   );
 
-  const lihatDetail = useCallback((item: Report) => {
-    if (item.status === "Menunggu Petugas") {
-      if (hasActiveTicket) {
-        alert("Anda sedang mengerjakan tiket lain. Selesaikan terlebih dahulu sebelum mengambil tiket baru.");
-        return;
+  const lihatDetail = useCallback(
+    (item: Report) => {
+      if (item.status === "Menunggu Petugas") {
+        if (hasActiveTicket) {
+          alert(
+            "Anda sedang mengerjakan tiket lain. Selesaikan terlebih dahulu sebelum mengambil tiket baru."
+          );
+          return;
+        }
+        setOpenDetailModal(true);
+        setSelectedReport(item);
+      } else {
+        navigate({
+          to: "/fm-it/ticket-detail/$id",
+          params: {
+            id: String(item.id),
+          },
+        });
       }
-      setOpenDetailModal(true);
-      setSelectedReport(item);
-    } else {
-      navigate({
-        to: "/fm-it/ticket-detail/$id",
-        params: {
-          id: String(item.id),
-        },
-      });
-    }
-  }, [navigate, hasActiveTicket]);
-
-
+    },
+    [navigate, hasActiveTicket]
+  );
 
   // if (loading)
   //   return (
@@ -174,23 +192,24 @@ export function TicketListView() {
         <CardContent>
           <div className="flex flex-col gap-4">
             <div className="flex flex-row items-center">
-              <div className="flex flex-row items center gap-3">
-                <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                  <ProfileIcon className="h-6 w-6"/>
+              <div className="items center flex flex-row gap-3">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100">
+                  <ProfileIcon className="h-6 w-6" />
                 </div>
 
                 <div className="flex flex-col">
-                    <Typography variant="body-medium-semibold">
-                      {name}
-                    </Typography>
+                  <Typography variant="body-medium-semibold">{name}</Typography>
 
-                  <div className="flex flex-row justify-start items-center">
-                    <div className="flex items-center justify-center h-full w-3">
-                      <StarIcon className="h-3 w-3"/>
+                  <div className="flex flex-row items-center justify-start">
+                    <div className="flex h-full w-3 items-center justify-center">
+                      <StarIcon className="h-3 w-3" />
                     </div>
 
-                    <div className="flex items-center h-full">
-                      <Typography variant="caption-pixie" className="text-gray-600">
+                    <div className="flex h-full items-center">
+                      <Typography
+                        variant="caption-pixie"
+                        className="text-gray-600"
+                      >
                         {rating} ({taskDone} Tugas Selesai)
                       </Typography>
                     </div>
@@ -198,8 +217,14 @@ export function TicketListView() {
                 </div>
               </div>
 
-              <div className="ml-auto mb-auto">
-                <Tag type="monochrome" color="red" size="md" rounded="pill" className="bg-red-50 px-3">
+              <div className="mb-auto ml-auto">
+                <Tag
+                  type="monochrome"
+                  color="red"
+                  size="md"
+                  rounded="pill"
+                  className="bg-red-50 px-3"
+                >
                   <Typography variant="caption-small" className="text-red-600">
                     {role}
                   </Typography>
@@ -208,25 +233,28 @@ export function TicketListView() {
             </div>
 
             <div className="flex flex-col items-center gap-2">
-              <div className="flex flex-row items-center justify-start gap-2 w-full bg-gray-200 p-2">
-                <div className="h-8 w-8 bg-gray-300 flex items-center justify-center rounded-lg">
-                  <ClockIcon className="h-6 w-6"/>
+              <div className="flex w-full flex-row items-center justify-start gap-2 bg-gray-200 p-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-300">
+                  <ClockIcon className="h-6 w-6" />
                 </div>
 
                 <div className="flex flex-col">
-                    <Typography variant="body-small-semibold" className="text-gray-600">
-                      Shift: {sesi}
-                    </Typography>
+                  <Typography
+                    variant="body-small-semibold"
+                    className="text-gray-600"
+                  >
+                    Shift: {sesi}
+                  </Typography>
 
-                    <Typography variant="caption-small" className="text-gray-600">
-                      {shift}
-                    </Typography>
+                  <Typography variant="caption-small" className="text-gray-600">
+                    {shift}
+                  </Typography>
                 </div>
               </div>
 
-              <div className="flex flex-row w-full items-center">
+              <div className="flex w-full flex-row items-center">
                 <div className="flex h-8 w-8 items-center justify-center">
-                  <BuildingIcon className="h-6 w-6"/>
+                  <BuildingIcon className="h-6 w-6" />
                 </div>
 
                 <div className="flex items-center">
@@ -236,23 +264,29 @@ export function TicketListView() {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center w-full gap-2">
+              <div className="flex w-full flex-col items-center gap-2">
                 {area.map((item, index) => (
-                  <div key={index} className="flex flex-row items-center justify-between w-full p-2 bg-gray-200 rounded-lg border border-gray-400">
+                  <div
+                    key={index}
+                    className="flex w-full flex-row items-center justify-between rounded-lg border border-gray-400 bg-gray-200 p-2"
+                  >
                     <div>
                       <Typography variant="caption-small">
                         {item.name}
                       </Typography>
                     </div>
-                    
+
                     <div className="flex items-center gap-1">
                       {item.floors.map((floor, indexf) => (
-                        <div key={indexf} className="flex items-center justify-center bg-gray-300 p-1">
+                        <div
+                          key={indexf}
+                          className="flex items-center justify-center bg-gray-300 p-1"
+                        >
                           <Typography variant="caption-pixie-semibold">
                             {floor}
                           </Typography>
                         </div>
-                        ))}
+                      ))}
                     </div>
                   </div>
                 ))}
@@ -260,7 +294,6 @@ export function TicketListView() {
             </div>
           </div>
         </CardContent>
-
       </Card>
 
       {/* Ticket List */}
@@ -269,19 +302,23 @@ export function TicketListView() {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-4">
               <div className="flex items-center">
-                <Typography variant="h5">
-                  Daftar Laporan
-                </Typography>
+                <Typography variant="h5">Daftar Laporan</Typography>
               </div>
 
-              <div className="flex flex-row justify-between items-center gap-2">
-                <div className="flex items-center w-[284px]">
-                  <Input size="lg" placeholder="Cari laporan..." startIcon={<SearchIcon className="size-5 text-muted-foreground" />}/> 
+              <div className="flex flex-row items-center justify-between gap-2">
+                <div className="flex w-[284px] items-center">
+                  <Input
+                    size="lg"
+                    placeholder="Cari laporan..."
+                    startIcon={
+                      <SearchIcon className="size-5 text-muted-foreground" />
+                    }
+                  />
                 </div>
 
                 <Dropdown>
                   <DropdownTrigger asChild>
-                    <button className="flex items-center justify-center h-10 w-10 rounded-lg border border-primary bg-white">
+                    <button className="flex h-10 w-10 items-center justify-center rounded-lg border border-primary bg-white">
                       <FilterIcon className="h-5 w-5" color="red" />
                     </button>
                   </DropdownTrigger>
@@ -289,10 +326,15 @@ export function TicketListView() {
                     <DropdownItem onSelect={() => setSelectedBuilding(null)}>
                       Semua Gedung
                     </DropdownItem>
-                    {Array.from(new Set(filteredReports.map((item) => item.building)))
+                    {Array.from(
+                      new Set(filteredReports.map((item) => item.building))
+                    )
                       .filter(Boolean)
                       .map((building) => (
-                        <DropdownItem key={building} onSelect={() => setSelectedBuilding(building as string)}>
+                        <DropdownItem
+                          key={building}
+                          onSelect={() => setSelectedBuilding(building)}
+                        >
                           {building}
                         </DropdownItem>
                       ))}
@@ -301,9 +343,9 @@ export function TicketListView() {
               </div>
 
               <div className="flex items-center">
-                <div className="flex flex-col items-center justify-center h-5 w-3">
-                  <CaretUpIcon className="h-3 w-3"/>
-                  <CaretDownIcon className="h-3 w-3"/>
+                <div className="flex h-5 w-3 flex-col items-center justify-center">
+                  <CaretUpIcon className="h-3 w-3" />
+                  <CaretDownIcon className="h-3 w-3" />
                 </div>
 
                 <div className="flex items-center">
@@ -321,59 +363,78 @@ export function TicketListView() {
                   <Card key={index} className="bg-gray-100" elevation="none">
                     <CardContent>
                       <div className="flex flex-col items-center gap-2">
-                        <div className="flex flex-row items-center justify-between w-full">
+                        <div className="flex w-full flex-row items-center justify-between">
                           <div className="flex items-center">
-                            <Typography variant="body-small-semibold" className="text-gray-600">
+                            <Typography
+                              variant="body-small-semibold"
+                              className="text-gray-600"
+                            >
                               {item.id}
                             </Typography>
                           </div>
 
                           <div className="flex items-center">
-                            <Tag color="red" type="filled" size="md" rounded="pill">
-                              <Typography variant="caption-small" className="text-white">
-                                {item.status !== "Pelapor Memberikan Feedback" ? item.status : "Laporan Selesai"}
+                            <Tag
+                              color="red"
+                              type="filled"
+                              size="md"
+                              rounded="pill"
+                            >
+                              <Typography
+                                variant="caption-small"
+                                className="text-white"
+                              >
+                                {item.status !== "Pelapor Memberikan Feedback"
+                                  ? item.status
+                                  : "Laporan Selesai"}
                               </Typography>
                             </Tag>
                           </div>
                         </div>
 
-                        <div className="flex flex-col items-between justify-between gap-2 w-full">
-                          <div className="flex flex-row items-center justify-between gap-2 w-full">
-                            <div className="flex flex-row items-center gap-1 w-full bg-gray-300 rounded-lg p-2">
-                              <ClockIcon className="h-5 w-5"/>
+                        <div className="items-between flex w-full flex-col justify-between gap-2">
+                          <div className="flex w-full flex-row items-center justify-between gap-2">
+                            <div className="flex w-full flex-row items-center gap-1 rounded-lg bg-gray-300 p-2">
+                              <ClockIcon className="h-5 w-5" />
                               <Typography variant="caption-pixie-semibold">
                                 {item.time}
                               </Typography>
                             </div>
 
-                            <div className="flex flex-row items-center gap-1 w-full bg-gray-300 rounded-lg p-2">
-                              <ScheduleIcon className="h-5 w-5"/>
+                            <div className="flex w-full flex-row items-center gap-1 rounded-lg bg-gray-300 p-2">
+                              <ScheduleIcon className="h-5 w-5" />
                               <Typography variant="caption-pixie-semibold">
                                 {item.date}
                               </Typography>
                             </div>
                           </div>
 
-                          <div className="flex flex-row items-center gap-2 w-full overflow-hidden min-w-0">
-                            <div className="flex flex-row items-center gap-1 w-full bg-gray-300 rounded-lg p-2 overflow-x-auto">
+                          <div className="flex w-full min-w-0 flex-row items-center gap-2 overflow-hidden">
+                            <div className="flex w-full flex-row items-center gap-1 overflow-x-auto rounded-lg bg-gray-300 p-2">
                               <div className="h-5 w-5 items-center justify-center">
-                                <BuildingIcon className="h-5 w-5"/>
+                                <BuildingIcon className="h-5 w-5" />
                               </div>
 
-                              <div className="flex items-center w-full">
-                                <Typography variant="caption-pixie-semibold" className="text-nowrap">
+                              <div className="flex w-full items-center">
+                                <Typography
+                                  variant="caption-pixie-semibold"
+                                  className="text-nowrap"
+                                >
                                   {item.building} - {item.room}
                                 </Typography>
                               </div>
                             </div>
 
-                            <div className="flex flex-row items-center gap-1 w-full bg-gray-300 rounded-lg p-2 overflow-x-auto">
+                            <div className="flex w-full flex-row items-center gap-1 overflow-x-auto rounded-lg bg-gray-300 p-2">
                               <div className="h-5 w-5 items-center justify-center">
-                                <ProfileIcon className="h-5 w-5"/>
+                                <ProfileIcon className="h-5 w-5" />
                               </div>
 
-                              <div className="flex items-center w-full">
-                                <Typography variant="caption-pixie-semibold" className="text-nowrap">
+                              <div className="flex w-full items-center">
+                                <Typography
+                                  variant="caption-pixie-semibold"
+                                  className="text-nowrap"
+                                >
                                   {item.reporter} ({item.reporterRole})
                                 </Typography>
                               </div>
@@ -382,37 +443,52 @@ export function TicketListView() {
                         </div>
 
                         <div className="w-full">
-                          <Button 
+                          <Button
                             size="lg"
                             variant="ghost"
-                            className="w-full flex flex-row items-center justify-between p-0"
-                            onClick={() =>  toggleAccordion(item.id)}
+                            className="flex w-full flex-row items-center justify-between p-0"
+                            onClick={() => toggleAccordion(item.id)}
                           >
-                            <Typography variant="caption-small-semibold">({item.assets.length}) Aset Bermasalah:</Typography>
-                            <div className="h-7 w-7 bg-gray-300 rounded-full flex justify-center items-center">
-                              {isExpanded ? 
-                                <CaretUpIcon className="h-4 w-4"/> 
-                                : <CaretDownIcon className="h-4 w-4"/>
-                              }
+                            <Typography variant="caption-small-semibold">
+                              ({item.assets.length}) Aset Bermasalah:
+                            </Typography>
+                            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-300">
+                              {isExpanded ? (
+                                <CaretUpIcon className="h-4 w-4" />
+                              ) : (
+                                <CaretDownIcon className="h-4 w-4" />
+                              )}
                             </div>
                           </Button>
-                          <Accordion 
-                            title="" 
-                            expanded={isExpanded} 
+                          <Accordion
+                            title=""
+                            expanded={isExpanded}
                             className="border-0 bg-transparent [&_[data-slot=accordion-content]]:px-0 [&_[data-slot=accordion-header]]:hidden"
                           >
-                            <div className="flex flex-col items-between gap-1">
+                            <div className="items-between flex flex-col gap-1">
                               {item.assets.map((asset, assetIndex) => {
-                                return(
-                                  <div key={assetIndex} className="p-2 flex flex-row justify-between items-center border border-red-400 bg-red-50 rounded-lg">
-                                    <Typography variant="caption-small">{asset}</Typography>
-                                    <Tag type="monochrome" className="bg-white" size="lg">
-                                      <Typography variant="caption-pixie-semibold" className="text-primary">
+                                return (
+                                  <div
+                                    key={assetIndex}
+                                    className="flex flex-row items-center justify-between rounded-lg border border-red-400 bg-red-50 p-2"
+                                  >
+                                    <Typography variant="caption-small">
+                                      {asset}
+                                    </Typography>
+                                    <Tag
+                                      type="monochrome"
+                                      className="bg-white"
+                                      size="lg"
+                                    >
+                                      <Typography
+                                        variant="caption-pixie-semibold"
+                                        className="text-primary"
+                                      >
                                         Rusak
                                       </Typography>
                                     </Tag>
                                   </div>
-                                )
+                                );
                               })}
                             </div>
                           </Accordion>
@@ -421,27 +497,32 @@ export function TicketListView() {
                         <div className="w-full">
                           <Button
                             variant="primary"
-                            className="w-full h-7"
+                            className="h-7 w-full"
                             size="lg"
                             onClick={() => lihatDetail(item)}
                           >
-                            <Typography variant="body-small" className="text-white">Lihat Detail Laporan</Typography>
+                            <Typography
+                              variant="body-small"
+                              className="text-white"
+                            >
+                              Lihat Detail Laporan
+                            </Typography>
                           </Button>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
-                )
+                );
               })}
             </div>
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages || 1}
-                onPageChange={setCurrentPage}
-                variant="simple"
-                className="flex flex-row justify-between"
-              />
-            
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages || 1}
+              onPageChange={setCurrentPage}
+              variant="simple"
+              className="flex flex-row justify-between"
+            />
+
             {selectedReport && (
               <TicketListModal
                 open={openDetailModal}

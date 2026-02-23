@@ -6,7 +6,9 @@ import { getAllReports } from "@/services/api/reportService";
 
 export function FmitHomePageView() {
   const name = "Agus";
-  const [activeTicketId, setActiveTicketId] = useState<string | number | null>(null);
+  const [activeTicketId, setActiveTicketId] = useState<string | number | null>(
+    null
+  );
 
   useEffect(() => {
     const checkActiveTicket = async () => {
@@ -14,7 +16,8 @@ export function FmitHomePageView() {
         const data = await getAllReports();
         const activeReport = data.find(
           (r) =>
-            r.status === "Petugas dalam Perjalanan" || r.status === "Sedang Dikerjakan"
+            r.status === "Petugas dalam Perjalanan" ||
+            r.status === "Sedang Dikerjakan"
         );
         setActiveTicketId(activeReport ? activeReport.id : null);
       } catch (error) {
@@ -52,7 +55,10 @@ export function FmitHomePageView() {
         </Link>
 
         {activeTicketId !== null ? (
-          <Link to="/fm-it/ticket-detail/$id" params={{ id: String(activeTicketId) }}>
+          <Link
+            to="/fm-it/ticket-detail/$id"
+            params={{ id: String(activeTicketId) }}
+          >
             <div className="flex items-center gap-3 rounded-2xl bg-primary px-5 py-4 text-white">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl">
                 <BillIcon className="h-12 w-12" color="white" />
@@ -68,12 +74,15 @@ export function FmitHomePageView() {
             </div>
           </Link>
         ) : (
-          <div className="flex items-center gap-3 rounded-2xl bg-gray-200 px-5 py-4 text-gray-400 cursor-not-allowed">
+          <div className="flex cursor-not-allowed items-center gap-3 rounded-2xl bg-gray-200 px-5 py-4 text-gray-400">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl">
               <BillIcon className="h-12 w-12" color="gray" />
             </div>
             <div className="flex flex-col">
-              <Typography variant="body-large-semibold" className="text-gray-600">
+              <Typography
+                variant="body-large-semibold"
+                className="text-gray-600"
+              >
                 Tiket Anda
               </Typography>
               <Typography variant="caption-small" className="text-gray-400">

@@ -252,7 +252,7 @@ function AssetMismatchItem({
       }}
       className="rounded-xl border border-gray-400 bg-gray-100 !p-0 transition-all duration-300"
     >
-      <div className="animate-in space-y-2 duration-300 fade-in slide-in-from-top-2">
+      <div className="animate-in fade-in slide-in-from-top-2 space-y-2 duration-300">
         {/* Issue Type Buttons */}
         <div className="space-y-1.5">
           <Typography
@@ -350,7 +350,7 @@ function ReportMismatchBody({
 }: BodyProps) {
   return (
     <DialogBody className="max-h-140 items-stretch gap-4 overflow-y-auto border-0 bg-white px-5 py-4">
-      <div className="animate-in space-y-3 duration-500 fade-in">
+      <div className="animate-in fade-in space-y-3 duration-500">
         {assets.map((asset, idx) => {
           const draft = drafts[asset.id] ?? {
             issueType: null,
@@ -362,7 +362,7 @@ function ReportMismatchBody({
           return (
             <div
               key={asset.id}
-              className="animate-in duration-300 fade-in slide-in-from-left-2"
+              className="animate-in fade-in slide-in-from-left-2 duration-300"
               style={{ animationDelay: `${idx * 100}ms` }}
             >
               <AssetMismatchItem

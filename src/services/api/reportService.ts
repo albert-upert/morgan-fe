@@ -1,8 +1,6 @@
 import { reportsSeed } from "@/services/mock/mockReport.ts";
 import type { Report } from "@/types/report";
 
-// Simulasi delay network (biar kerasa loading-nya)
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 let USE_MOCK = true;
 
 export const getReportById = async (id: string): Promise<Report> => {

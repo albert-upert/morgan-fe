@@ -1,4 +1,3 @@
-import { on } from "events";
 import React from "react";
 import { Button } from "uper-ui/button";
 import {
@@ -59,41 +58,42 @@ export function TicketDetailModal({
           </div>
         ) : (
           <>
-          <DialogHeader>
-            <DialogTitle>
-              <Typography variant="body-medium-bold">
-                Ubah Status Perbaikan
+            <DialogHeader>
+              <DialogTitle>
+                <Typography variant="body-medium-bold">
+                  Ubah Status Perbaikan
+                </Typography>
+              </DialogTitle>
+            </DialogHeader>
+
+            <Separator />
+
+            <DialogBody className="px-4 py-3">
+              <Typography variant="body-small" className="text-center">
+                Apakah anda yakin ingin mengubah status perbaikan tiket ini
+                menjadi {nextStatus}?
               </Typography>
-            </DialogTitle>
-          </DialogHeader>
+            </DialogBody>
 
-          <Separator />
-
-          <DialogBody className="px-4 py-3">
-            <Typography variant="body-small" className="text-center">
-              Apakah anda yakin ingin mengubah status perbaikan tiket ini menjadi {nextStatus}?
-            </Typography>
-          </DialogBody>
-
-          <DialogFooter className="px-4 py-3">
-            <Button
-              variant="primary"
-              className="w-full"
-              size="lg"
-              onClick={onConfirm}
-              disabled={isUpdating}
-            >
-              {isUpdating ? (
-                "Memproses..."
-              ) : (
-                <React.Fragment key=".0">
-                  <SyncIcon />
-                  Ya, {nextStatus}
-                </React.Fragment>
-              )}
-            </Button>
-          </DialogFooter>
-        </>
+            <DialogFooter className="px-4 py-3">
+              <Button
+                variant="primary"
+                className="w-full"
+                size="lg"
+                onClick={onConfirm}
+                disabled={isUpdating}
+              >
+                {isUpdating ? (
+                  "Memproses..."
+                ) : (
+                  <React.Fragment key=".0">
+                    <SyncIcon />
+                    Ya, {nextStatus}
+                  </React.Fragment>
+                )}
+              </Button>
+            </DialogFooter>
+          </>
         )}
       </DialogContent>
     </Dialog>

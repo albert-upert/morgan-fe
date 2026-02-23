@@ -31,7 +31,6 @@ import { Textarea } from "uper-ui/textarea";
 import { Typography } from "uper-ui/typography";
 import type { Report } from "@/types/report";
 
-
 export function TicketListModal({
   open,
   onOpenChange,
@@ -83,7 +82,9 @@ export function TicketListModal({
       },
     });
   }, [selected]);
-  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
+    {}
+  );
 
   const toggleAccordion = useCallback((id: string) => {
     setExpandedItems((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -136,53 +137,80 @@ export function TicketListModal({
                 {reportDetail.assets.map((item, index) => {
                   const isExpanded = expandedItems[item[index]] || false;
                   return (
-                    <div className="w-full border border-gray-400 bg-gray-100 rounded-lg">
-                      <Button 
+                    <div className="w-full rounded-lg border border-gray-400 bg-gray-100">
+                      <Button
                         size="lg"
                         variant="ghost"
-                        className="w-full h-full p-4 flex flex-row items-center justify-between"
-                        onClick={() =>  toggleAccordion(item[index])}
+                        className="flex h-full w-full flex-row items-center justify-between p-4"
+                        onClick={() => toggleAccordion(item[index])}
                       >
-                          <div className="flex items-center justify-start gap-2 w-full h-full">
-                            <div className="h-5 w-5 flex justify-center items-center">
-                              <CautionIcon className="h-4 w-4" color="red"/> 
-                            </div>
-                            <Typography variant="caption-small-semibold">{item}</Typography>
-                            <div className="h-5 w-5 flex justify-center items-center ml-auto">
-                              {isExpanded ? 
-                                <CaretUpIcon className="h-4 w-4"/> 
-                                : <CaretDownIcon className="h-4 w-4"/>
-                              }
-                            </div>
+                        <div className="flex h-full w-full items-center justify-start gap-2">
+                          <div className="flex h-5 w-5 items-center justify-center">
+                            <CautionIcon className="h-4 w-4" color="red" />
                           </div>
+                          <Typography variant="caption-small-semibold">
+                            {item}
+                          </Typography>
+                          <div className="ml-auto flex h-5 w-5 items-center justify-center">
+                            {isExpanded ? (
+                              <CaretUpIcon className="h-4 w-4" />
+                            ) : (
+                              <CaretDownIcon className="h-4 w-4" />
+                            )}
+                          </div>
+                        </div>
                       </Button>
-                      <Accordion 
-                        title="" 
-                        key={index} 
+                      <Accordion
+                        title=""
+                        key={index}
                         className="border-0 bg-transparent [&_[data-slot=accordion-content]]:px-0 [&_[data-slot=accordion-header]]:hidden"
                         expanded={isExpanded}
                       >
                         <div className="flex flex-col gap-3">
                           <div className="flex flex-col items-start gap-1">
-                            <Typography variant="caption-small-semibold"  className="text-gray-600">Jenis Masalah</Typography>
-                            <Tag color="red" type="filled" size="lg" rounded="default" className="px-3">
-                              <Typography variant="body-small" className="text-white">
+                            <Typography
+                              variant="caption-small-semibold"
+                              className="text-gray-600"
+                            >
+                              Jenis Masalah
+                            </Typography>
+                            <Tag
+                              color="red"
+                              type="filled"
+                              size="lg"
+                              rounded="default"
+                              className="px-3"
+                            >
+                              <Typography
+                                variant="body-small"
+                                className="text-white"
+                              >
                                 Rusak
                               </Typography>
                             </Tag>
                           </div>
-    
+
                           <div className="flex flex-col items-start gap-1">
-                            <Typography variant="caption-small-semibold"  className="text-gray-600">Detail Kendala</Typography>
+                            <Typography
+                              variant="caption-small-semibold"
+                              className="text-gray-600"
+                            >
+                              Detail Kendala
+                            </Typography>
                             <Textarea
                               className="bg-white"
                               value={reportDetail.description}
                               disabled
-                            />                  
+                            />
                           </div>
-    
+
                           <div className="flex flex-col items-start gap-1">
-                            <Typography variant="caption-small-semibold"  className="text-gray-600">Bukti Foto</Typography>
+                            <Typography
+                              variant="caption-small-semibold"
+                              className="text-gray-600"
+                            >
+                              Bukti Foto
+                            </Typography>
                             <Button
                               onClick={() => {
                                 setShowPreview(true);
@@ -194,11 +222,11 @@ export function TicketListModal({
                               <div>
                                 <FileIcon />
                               </div>
-    
+
                               <div className="flex grow justify-start">
                                 {reportDetail.photoUrl}
                               </div>
-    
+
                               <div>
                                 <OpenIcon />
                               </div>
@@ -207,13 +235,19 @@ export function TicketListModal({
                         </div>
                       </Accordion>
                     </div>
-                )})}
+                  );
+                })}
               </div>
 
               {!selected && (
                 <div className="flex w-full flex-row justify-start">
-                  <Callout variant="yellow" message="Silahkan pilih lokasi saat ini terlebih dahulu." showClose={false} showIcon={true} />
-                </div> 
+                  <Callout
+                    variant="yellow"
+                    message="Silahkan pilih lokasi saat ini terlebih dahulu."
+                    showClose={false}
+                    showIcon={true}
+                  />
+                </div>
               )}
 
               <div className="w-full">
@@ -276,7 +310,6 @@ export function TicketListModal({
                   </DropdownContent>
                 </Dropdown>
               </div>
-
             </DialogBody>
             <DialogFooter className="flex w-full flex-row justify-between gap-3 px-4 py-3">
               <Button onClick={cancel} className="w-full" variant="secondary">

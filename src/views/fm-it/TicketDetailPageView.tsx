@@ -4,7 +4,7 @@ import { Accordion } from "uper-ui/accordion";
 import { Button } from "uper-ui/button";
 import { Callout } from "uper-ui/callout";
 import { Card, CardContent } from "uper-ui/card";
-import { FileUpload } from "uper-ui/file-upload"
+import { FileUpload } from "uper-ui/file-upload";
 import {
   ArrowLeftIcon,
   BuildingIcon,
@@ -32,7 +32,9 @@ import type { TicketHistory, TicketStatus } from "@/types/ticketHistory";
 import { TicketDetailModal } from "./TicketDetailPageModal";
 
 export function TicketDetailView() {
-  const { id } = useParams({ from: "/_layout/fm-it/ticket-detail/$id" });
+  const { roomId } = useParams({
+    from: "/_layout/lecturer/report-success/$roomId",
+  });
 
   const [showPreview, setShowPreview] = useState(false);
   // const [onOpenChange, setOnOpenChange] = useState(false);
@@ -58,11 +60,11 @@ export function TicketDetailView() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getReportById(id);
+      const result = await getReportById(roomId);
       setData(result);
       // try {
       //   setLoading(true);
-      //   const result = await getReportById(id);
+      //   const result = await getReportById(roomId);
       //   setData(result);
       // } catch (_err) {
       //   setError("Data gagal dimuat");
@@ -72,12 +74,12 @@ export function TicketDetailView() {
     };
 
     fetchData();
-  }, [id]);
+  }, [roomId]);
 
   const navigate = useNavigate();
   const home = useCallback(() => {
     navigate({
-      to: "/fm-it/home",
+      href: "/_layout/fm-it/home",
     });
   }, []);
 
@@ -85,14 +87,14 @@ export function TicketDetailView() {
     const date = new Date(isoString);
     // Format: 08.11
     return date
-      .toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })
+      .toLocaleTimeString("roomId-ID", { hour: "2-digit", minute: "2-digit" })
       .replace(".", ":");
   };
 
   const formatDate = (isoString: string) => {
     const date = new Date(isoString);
     // Format: Min, 5 Okt
-    return date.toLocaleDateString("id-ID", {
+    return date.toLocaleDateString("roomId-ID", {
       weekday: "short",
       day: "numeric",
       month: "short",
@@ -104,25 +106,29 @@ export function TicketDetailView() {
 
   // Fetch data (gabungkan di useEffect yang ada atau buat baru)
   useEffect(() => {
-    getTimelineByTicketId(id).then((data) => {
+    getTimelineByTicketId(roomId).then((data) => {
       const sortedData = data.sort(
-        (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        (a, b) =>
+          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
       );
       setTimelines(sortedData);
     });
-  }, [id]);
+  }, [roomId]);
 
-  useEffect(() =>{
-    const shouldShowToast = sessionStorage.getItem("show_ticket_accepted_toast");
+  useEffect(() => {
+    const shouldShowToast = sessionStorage.getItem(
+      "show_ticket_accepted_toast"
+    );
     if (shouldShowToast === "true") {
       toast.default("Tiket berhasil diterima!", {
         action: {
           label: "Tutup",
-          onClick: () => {}
-        }
+          onClick: () => {},
+        },
       });
       sessionStorage.removeItem("show_ticket_accepted_toast");
-  }}, []);
+    }
+  }, []);
 
   const getNewStatus = (status: string) => {
     switch (status) {
@@ -142,12 +148,12 @@ export function TicketDetailView() {
   const changeStatus = async (newStatus: TicketStatus) => {
     try {
       setUpdatingProgressTicket(true);
-      await updateTicketStatus(id, newStatus, technicalNote);
+      await updateTicketStatus(roomId, newStatus, technicalNote);
 
-      const updatedTimelines = await getTimelineByTicketId(id);
+      const updatedTimelines = await getTimelineByTicketId(roomId);
       setTimelines(updatedTimelines);
 
-      const updatedReport = await getReportById(id);
+      const updatedReport = await getReportById(roomId);
       setData(updatedReport);
 
       setOpenModal(false);
@@ -165,21 +171,23 @@ export function TicketDetailView() {
       case "Sedang Dikerjakan":
         return "Anda sedang mengerjakan perbaikan. Jangan lupa untuk mencatat laporan teknis perbaikan. Jika sudah, konfirmasi penyelesaian tugas anda di bawah ini.";
       case "Laporan Selesai":
-        return "Anda telah selesai mengerjakan perbaikan. Tunggu pelapor memberikan konfirmasi atas penanganan anda!"
+        return "Anda telah selesai mengerjakan perbaikan. Tunggu pelapor memberikan konfirmasi atas penanganan anda!";
       case "Pelapor Memberikan Feedback":
         return "Tiket anda telah dikonfirmasi dan tidak ada masalah lagi!. Terima kasih atas penanganan anda!";
       default:
         return "Anda sedang menuju ruangan pelapor. Mohon ubah status perbaikan di bawah ini jika anda mulai mengerjakan perbaikan.";
-  }
-}
+    }
+  };
 
   const feedback = ["Cepat", "Baik Sekali"];
   const feedbackMessage = "Respon Cepat, Ramah";
   const feedbackRating = 3;
 
-  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({});
-  const toggleAccordion = useCallback((id: string) => {
-    setExpandedItems((prev) => ({ ...prev, [id]: !prev[id] }));
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
+    {}
+  );
+  const toggleAccordion = useCallback((roomId: string) => {
+    setExpandedItems((prev) => ({ ...prev, [roomId]: !prev[roomId] }));
   }, []);
 
   // if (loading) return <div>Sedang memuat data...</div>;
@@ -195,7 +203,7 @@ export function TicketDetailView() {
     <div className="flex flex-col gap-6">
       {/* Back */}
       <div className="">
-        <Toaster/>
+        <Toaster />
         <Button variant="tertiary" onClick={home}>
           <React.Fragment key=".0">
             <ArrowLeftIcon />
@@ -205,72 +213,85 @@ export function TicketDetailView() {
       </div>
 
       {/* Ticket Detail */}
-      
+
       <div className="flex items-center">
         <Typography variant="h4-semibold">Detail Laporan</Typography>
       </div>
 
-      <Card className="bg-gray-100" elevation="none">
+      <Card className="bg-gray-100">
         <CardContent>
           <div className="flex flex-col gap-4">
             <div className="flex flex-row items-center">
               <div className="flex flex-col">
-                  <Typography variant="h5">
-                    Ruang {report.room}
-                  </Typography>
+                <Typography variant="h5">Ruang {report.room}</Typography>
 
-                <div className="flex flex-row justify-start items-center">
-                  <div className="flex items-center justify-center h-5 w-5">
-                    <BuildingIcon className="h-4 w-4"/>
+                <div className="flex flex-row items-center justify-start">
+                  <div className="flex h-5 w-5 items-center justify-center">
+                    <BuildingIcon className="h-4 w-4" />
                   </div>
 
-                  <div className="flex items-center h-full">
-                    <Typography variant="caption-small" className="text-gray-600">
+                  <div className="flex h-full items-center">
+                    <Typography
+                      variant="caption-small"
+                      className="text-gray-600"
+                    >
                       Gedung {report.building}
                     </Typography>
                   </div>
                 </div>
               </div>
 
-              <div className="ml-auto mb-auto">
-                <Tag type="monochrome" color="red" size="md" rounded="pill" className="bg-red-50 px-3">
+              <div className="mb-auto ml-auto">
+                <Tag
+                  type="monochrome"
+                  color="red"
+                  size="md"
+                  rounded="pill"
+                  className="bg-red-50 px-3"
+                >
                   <Typography variant="caption-small" className="text-red-600">
-                    {report.id}
+                    {report.room}
                   </Typography>
                 </Tag>
               </div>
             </div>
 
             <div className="flex flex-col items-center gap-2">
-              <div className="flex flex-row items-center justify-start gap-2 w-full bg-gray-200 p-2">
-                <div className="h-8 w-8 bg-gray-300 flex items-center justify-center rounded-lg">
-                  <ProfileIcon className="h-6 w-6"/>
+              <div className="flex w-full flex-row items-center justify-start gap-2 bg-gray-200 p-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-300">
+                  <ProfileIcon className="h-6 w-6" />
                 </div>
 
                 <div className="flex flex-col">
-                    <Typography variant="caption-small-semibold" className="text-gray-600">
-                      Pelapor
-                    </Typography> 
+                  <Typography
+                    variant="caption-small-semibold"
+                    className="text-gray-600"
+                  >
+                    Pelapor
+                  </Typography>
 
-                    <Typography variant="caption-small" className="text-gray-600">
-                      {report.reporter} ({report.reporterRole})
-                    </Typography>
+                  <Typography variant="caption-small" className="text-gray-600">
+                    {report.reporter} ({report.reporterRole})
+                  </Typography>
                 </div>
               </div>
 
-              <div className="flex flex-row items-center justify-start gap-2 w-full bg-gray-200 p-2">
-                <div className="h-8 w-8 bg-gray-300 flex items-center justify-center rounded-lg">
-                  <ScheduleIcon className="h-6 w-6"/>
+              <div className="flex w-full flex-row items-center justify-start gap-2 bg-gray-200 p-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-300">
+                  <ScheduleIcon className="h-6 w-6" />
                 </div>
 
                 <div className="flex flex-col">
-                    <Typography variant="caption-small-semibold" className="text-gray-600">
-                      Tanggal
-                    </Typography> 
+                  <Typography
+                    variant="caption-small-semibold"
+                    className="text-gray-600"
+                  >
+                    Tanggal
+                  </Typography>
 
-                    <Typography variant="caption-small" className="text-gray-600">
-                      {report.date} | {report.time}
-                    </Typography>
+                  <Typography variant="caption-small" className="text-gray-600">
+                    {report.date} | {report.time}
+                  </Typography>
                 </div>
               </div>
             </div>
@@ -279,62 +300,87 @@ export function TicketDetailView() {
       </Card>
 
       {/* Repair Status */}
-      <Card className="bg-gray-100" elevation="none">
+      <Card className="bg-gray-100">
         <CardContent className="flex flex-col gap-4">
-          <Typography variant="h5">
-            Daftar Aset Bermasalah
-          </Typography>
+          <Typography variant="h5">Daftar Aset Bermasalah</Typography>
           <div className="flex w-full flex-col gap-2">
             {report.assets.map((item, index) => {
               const isExpanded = expandedItems[item[index]] || false;
               return (
-                <div className="w-full border border-gray-400 rounded-lg">
-                  <Button 
+                <div className="w-full rounded-lg border border-gray-400">
+                  <Button
                     size="lg"
                     variant="ghost"
-                    className="w-full h-full p-4 flex flex-row items-center justify-between"
-                    onClick={() =>  toggleAccordion(item[index])}
+                    className="flex h-full w-full flex-row items-center justify-between p-4"
+                    onClick={() => toggleAccordion(item[index])}
                   >
-                      <div className="flex items-center justify-start gap-2 w-full h-full">
-                        <div className="h-5 w-5 flex justify-center items-center">
-                          <CautionIcon className="h-4 w-4" color="red"/> 
-                        </div>
-                        <Typography variant="caption-small-semibold">{item}</Typography>
-                        <div className="h-5 w-5 flex justify-center items-center ml-auto">
-                          {isExpanded ? 
-                            <CaretUpIcon className="h-4 w-4"/> 
-                            : <CaretDownIcon className="h-4 w-4"/>
-                          }
-                        </div>
+                    <div className="flex h-full w-full items-center justify-start gap-2">
+                      <div className="flex h-5 w-5 items-center justify-center">
+                        <CautionIcon className="h-4 w-4" color="red" />
                       </div>
+                      <Typography variant="caption-small-semibold">
+                        {item}
+                      </Typography>
+                      <div className="ml-auto flex h-5 w-5 items-center justify-center">
+                        {isExpanded ? (
+                          <CaretUpIcon className="h-4 w-4" />
+                        ) : (
+                          <CaretDownIcon className="h-4 w-4" />
+                        )}
+                      </div>
+                    </div>
                   </Button>
-                  <Accordion 
-                    title="" 
-                    key={index} 
+                  <Accordion
+                    title=""
+                    key={index}
                     className="border-0 bg-transparent [&_[data-slot=accordion-content]]:px-0 [&_[data-slot=accordion-header]]:hidden"
                     expanded={isExpanded}
                   >
                     <div className="flex flex-col gap-3">
                       <div className="flex flex-col items-start gap-1">
-                        <Typography variant="caption-small-semibold"  className="text-gray-600">Jenis Masalah</Typography>
-                        <Tag color="red" type="filled" size="lg" rounded="default" className="px-3">
-                          <Typography variant="body-small" className="text-white">
+                        <Typography
+                          variant="caption-small-semibold"
+                          className="text-gray-600"
+                        >
+                          Jenis Masalah
+                        </Typography>
+                        <Tag
+                          color="red"
+                          type="filled"
+                          size="lg"
+                          rounded="default"
+                          className="px-3"
+                        >
+                          <Typography
+                            variant="body-small"
+                            className="text-white"
+                          >
                             Rusak
                           </Typography>
                         </Tag>
                       </div>
 
                       <div className="flex flex-col items-start gap-1">
-                        <Typography variant="caption-small-semibold"  className="text-gray-600">Detail Kendala</Typography>
+                        <Typography
+                          variant="caption-small-semibold"
+                          className="text-gray-600"
+                        >
+                          Detail Kendala
+                        </Typography>
                         <Textarea
                           className="bg-white"
                           value={report.description}
                           disabled
-                        />                  
+                        />
                       </div>
 
                       <div className="flex flex-col items-start gap-1">
-                        <Typography variant="caption-small-semibold"  className="text-gray-600">Bukti Foto</Typography>
+                        <Typography
+                          variant="caption-small-semibold"
+                          className="text-gray-600"
+                        >
+                          Bukti Foto
+                        </Typography>
                         <Button
                           onClick={() => {
                             setShowPreview(true);
@@ -360,25 +406,25 @@ export function TicketDetailView() {
                     </div>
                   </Accordion>
                 </div>
-            )})}
+              );
+            })}
           </div>
         </CardContent>
       </Card>
 
       {/* Repair Status */}
-      <Card className="bg-gray-100" elevation="none">
+      <Card className="bg-gray-100">
         <CardContent className="flex flex-col gap-3">
-          <Typography variant="h5">
-            Status Perbaikan
-          </Typography>
+          <Typography variant="h5">Status Perbaikan</Typography>
 
-          <Callout 
+          <Callout
             // message={calloutMessage(report.status)}
             message={calloutMessage(currentStatus)}
-            variant={currentStatus === "Sedang Dikerjakan" ||
-              currentStatus === "Pelapor Memberikan Feedback" ?
-              "blue"
-              : "yellow"
+            variant={
+              currentStatus === "Sedang Dikerjakan" ||
+              currentStatus === "Pelapor Memberikan Feedback"
+                ? "blue"
+                : "yellow"
             }
             showClose={false}
             showIcon={true}
@@ -386,8 +432,13 @@ export function TicketDetailView() {
           />
           {currentStatus === "Sedang Dikerjakan" && (
             <div className="flex flex-col justify-center gap-3">
-              <div className="flex flex-col items-start gap-1 w-full">
-                <Typography variant="caption-small-semibold" className="text-gray-600">Catatan Teknis</Typography>
+              <div className="flex w-full flex-col items-start gap-1">
+                <Typography
+                  variant="caption-small-semibold"
+                  className="text-gray-600"
+                >
+                  Catatan Teknis
+                </Typography>
                 <Textarea
                   showCount={true}
                   maxLength={150}
@@ -398,35 +449,46 @@ export function TicketDetailView() {
               </div>
 
               <div>
-                <Typography variant="caption-small-semibold" className="text-gray-600">Lampirkan Foto</Typography>
+                <Typography
+                  variant="caption-small-semibold"
+                  className="text-gray-600"
+                >
+                  Lampirkan Foto
+                </Typography>
                 <FileUpload
                   variant="button"
                   accept="image/*"
                   files={uploadedFiles}
                   onFilesChange={(files) => setUploadedFiles(files)}
                   onRemoveFile={(index) =>
-                    setUploadedFiles((prev) => prev.filter((_, i) => i !== index))
+                    setUploadedFiles((prev) =>
+                      prev.filter((_, i) => i !== index)
+                    )
                   }
                 />
               </div>
             </div>
           )}
-          {currentStatus !== "Laporan Selesai" && currentStatus !== "Pelapor Memberikan Feedback"  && (
-            <Button
-              variant="primary"
-              className="w-full"
-              size="lg"
-              disabled={currentStatus === "Sedang Dikerjakan" && (uploadedFiles.length === 0 || !technicalNote)}
-              onClick={() => {
-                setOpenModal(true);
-              }}
-            >
-              <React.Fragment key=".0">
-                <SyncIcon />
-                Ubah Status {nextStatus}
-              </React.Fragment>
-            </Button>
-          )}
+          {currentStatus !== "Laporan Selesai" &&
+            currentStatus !== "Pelapor Memberikan Feedback" && (
+              <Button
+                variant="primary"
+                className="w-full"
+                size="lg"
+                disabled={
+                  currentStatus === "Sedang Dikerjakan" &&
+                  (uploadedFiles.length === 0 || !technicalNote)
+                }
+                onClick={() => {
+                  setOpenModal(true);
+                }}
+              >
+                <React.Fragment key=".0">
+                  <SyncIcon />
+                  Ubah Status {nextStatus}
+                </React.Fragment>
+              </Button>
+            )}
           {/* HANYA UNTUK UJI COBA TAMPILAN FEEDBACK PENGGUNA */}
           {currentStatus === "Laporan Selesai" && (
             <Button
@@ -457,33 +519,41 @@ export function TicketDetailView() {
       </Card>
 
       {currentStatus === "Pelapor Memberikan Feedback" && (
-        <Card className="bg-gray-100" elevation="none">
+        <Card className="bg-gray-100">
           <CardContent className="flex flex-col gap-3">
             <Typography variant="h5">Riwayat Penanganan</Typography>
             <div className="flex items-center gap-2">
               <div className="flex">
-                <div className="h-17 w-17 flex items-center justify-center">
-                  <div className="h-13 w-13 bg-blue-100 rounded-full flex items-center justify-center">
-                    <ProfileIcon className="h-11 w-11"/>
+                <div className="flex h-17 w-17 items-center justify-center">
+                  <div className="flex h-13 w-13 items-center justify-center rounded-full bg-blue-100">
+                    <ProfileIcon className="h-11 w-11" />
                   </div>
                 </div>
 
-                <div className="mb-auto h-2 w-2 bg-green-500 rounded-full">
-                </div>
+                <div className="mb-auto h-2 w-2 rounded-full bg-green-500"></div>
               </div>
 
               <div className="flex flex-col gap-3">
-                <Typography variant="body-small-semibold">Agus Bagus</Typography>
+                <Typography variant="body-small-semibold">
+                  Agus Bagus
+                </Typography>
 
                 <div className="flex flex-col justify-center">
-                  <Typography variant="caption-small">+62 812-3456-7891</Typography>
+                  <Typography variant="caption-small">
+                    +62 812-3456-7891
+                  </Typography>
                   <Typography variant="caption-pixie">Teknisi IT</Typography>
                 </div>
               </div>
-            </div>  
+            </div>
 
             <div className="flex flex-col gap-2">
-              <Typography variant="caption-small-semibold" className="text-gray-600">Masukan dari Pelapor:</Typography>
+              <Typography
+                variant="caption-small-semibold"
+                className="text-gray-600"
+              >
+                Masukan dari Pelapor:
+              </Typography>
 
               <div className="flex items-center gap-2">
                 {feedback.map((item, index) => (
@@ -495,15 +565,17 @@ export function TicketDetailView() {
                 ))}
               </div>
 
-              <div className="border border-gray-400 rounded-lg flex flex-col gap-1 p-4">
-                <div className="flex gap-1 items-center justify-center">
+              <div className="flex flex-col gap-1 rounded-lg border border-gray-400 p-4">
+                <div className="flex items-center justify-center gap-1">
                   {Array.from({ length: feedbackRating }).map((_, index) => (
                     <StarIcon key={index} className="h-5 w-5" />
                   ))}
                 </div>
 
                 <div className="flex items-center justify-center">
-                  <Typography variant="caption-small">"{feedbackMessage}"</Typography>
+                  <Typography variant="caption-small">
+                    "{feedbackMessage}"
+                  </Typography>
                 </div>
               </div>
             </div>
@@ -512,13 +584,13 @@ export function TicketDetailView() {
       )}
 
       {/* Repair Progress */}
-      <Card className="bg-gray-100" elevation="none">
+      <Card className="bg-gray-100">
         <CardContent className="flex flex-col gap-3">
           <Typography variant="body-medium-bold">Status Saat Ini</Typography>
 
           <div className="relative">
             {timelines.map((item, index) => {
-              if (item.status as string === "Pelapor Memberikan Feedback") {
+              if ((item.status as string) === "Pelapor Memberikan Feedback") {
                 return null;
               }
 
@@ -541,7 +613,14 @@ export function TicketDetailView() {
                     >
                       {formatDate(item.timestamp)}
                     </Typography>
-                    {!isLastItem && <Typography variant="caption-pixie" className="text-xs text-gray-500 my-2">0j 2m</Typography>}
+                    {!isLastItem && (
+                      <Typography
+                        variant="caption-pixie"
+                        className="my-2 text-xs text-gray-500"
+                      >
+                        0j 2m
+                      </Typography>
+                    )}
                   </div>
 
                   {/* TimeLine */}
@@ -565,16 +644,11 @@ export function TicketDetailView() {
                       type="filled"
                       size="md"
                       rounded="pill"
-                      className={isLatest ?
-                        "bg-primary"
-                        : "bg-gray-300"
-                      }
+                      className={isLatest ? "bg-primary" : "bg-gray-300"}
                     >
-                      <Typography 
-                        variant="caption-small" 
-                        className={isLatest ?
-                        "text-white"
-                        : "text-gray-600"}
+                      <Typography
+                        variant="caption-small"
+                        className={isLatest ? "text-white" : "text-gray-600"}
                       >
                         {item.status}
                       </Typography>

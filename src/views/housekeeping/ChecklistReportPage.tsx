@@ -211,7 +211,7 @@ export function ChecklistReportView() {
                     title={accordionTitle as unknown as string}
                     className="rounded-xl border border-gray-400 bg-gray-100 !p-0 transition-all duration-300"
                   >
-                    <div className="animate-in space-y-2 duration-300 fade-in slide-in-from-top-2">
+                    <div className="animate-in fade-in slide-in-from-top-2 space-y-2 duration-300">
                       {/* Issue Type */}
                       <div className="space-y-1.5">
                         <Typography
