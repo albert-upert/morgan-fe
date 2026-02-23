@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import React, { Fragment, useCallback, useState } from "react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { CaretLeftIcon, TrashIcon } from "@/components/icon";
-import { Input } from "@/components/input";
-import { Switch } from "@/components/switch";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { CaretLeftIcon, TrashIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { Switch } from "uper-ui/switch";
 import {
   Table,
   TableBody,
@@ -12,8 +12,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 import { CreateRoleDialog } from "./CreateRoleDialog";
 import { DeleteRoleDialog } from "./DeleteRoleDialog";
 

@@ -1,18 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
-import {
-  CaretDownIcon,
-  PencilIcon,
-  SearchIcon,
-  TrashIcon,
-} from "@/components/icon";
+} from "uper-ui/dropdown";
+import { CaretDownIcon, PencilIcon, SearchIcon, TrashIcon } from "uper-ui/icon";
 import {
   Table,
   TableBody,
@@ -20,9 +15,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Tag } from "@/components/tags";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Tag } from "uper-ui/tags";
+import { Typography } from "uper-ui/typography";
 
 interface Curriculum {
   id: number;
@@ -94,11 +89,11 @@ export function CurriculumListTab() {
     useState("Ilmu Komputer");
 
   const handleView = useCallback((curriculum: Curriculum) => {
-    console.log("View curriculum:", curriculum);
+    console.warn("View curriculum:", curriculum);
   }, []);
 
   const handleDelete = useCallback((curriculum: Curriculum) => {
-    console.log("Delete curriculum:", curriculum);
+    console.warn("Delete curriculum:", curriculum);
   }, []);
 
   return (

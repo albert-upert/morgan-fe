@@ -1,8 +1,8 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 import type { FormEvent } from "react";
-import { Button } from "@/components/button";
-import { Input } from "@/components/input";
+import { Button } from "uper-ui/button";
+import { Input } from "uper-ui/input";
 
 export function LoginView() {
   const navigate = useNavigate();

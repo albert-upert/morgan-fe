@@ -1,7 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/tabs";
-import { Typography } from "@/components/typography";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "uper-ui/tabs";
+import { Typography } from "uper-ui/typography";
 import { CurriculumEquivalenceTab } from "./CurriculumEquivalenceTab";
 import { CurriculumListTab } from "./CurriculumListTab";
 import { CurriculumStructureTab } from "./CurriculumStructureTab";

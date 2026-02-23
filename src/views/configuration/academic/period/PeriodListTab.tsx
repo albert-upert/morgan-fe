@@ -1,14 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
-import { PencilIcon, SearchIcon, SortIcon, TrashIcon } from "@/components/icon";
-import { Input } from "@/components/input";
+} from "uper-ui/dropdown";
+import { PencilIcon, SearchIcon, SortIcon, TrashIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
 import {
   Table,
   TableBody,
@@ -16,8 +16,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Tag } from "@/components/tags";
+} from "uper-ui/table";
+import { Tag } from "uper-ui/tags";
 import { DeletePeriodDialog } from "./DeletePeriodDialog";
 import { DetailPeriodDialog } from "./DetailPeriodDialog";
 

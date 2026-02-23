@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { CaretLeftIcon, InfoIcon } from "@/components/icon";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { CaretLeftIcon, InfoIcon } from "uper-ui/icon";
 import {
   Table,
   TableBody,
@@ -10,9 +10,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Tag } from "@/components/tags";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Tag } from "uper-ui/tags";
+import { Typography } from "uper-ui/typography";
 import { UploadEventDialog } from "./UploadEventDialog";
 
 interface EventAkademik {

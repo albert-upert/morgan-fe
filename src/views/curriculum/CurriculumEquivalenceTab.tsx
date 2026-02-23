@@ -1,14 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dropdown,
   DropdownContent,
   DropdownItem,
   DropdownTrigger,
-} from "@/components/dropdown";
-import { CaretDownIcon, PencilIcon, TrashIcon } from "@/components/icon";
-import { Pagination } from "@/components/pagination";
+} from "uper-ui/dropdown";
+import { CaretDownIcon, PencilIcon, TrashIcon } from "uper-ui/icon";
+import { Pagination } from "uper-ui/pagination";
 import {
   Table,
   TableBody,
@@ -16,8 +16,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table";
-import { Typography } from "@/components/typography";
+} from "uper-ui/table";
+import { Typography } from "uper-ui/typography";
 
 interface CourseEquivalence {
   id: number;
@@ -109,11 +109,11 @@ export function CurriculumEquivalenceTab() {
   const totalPages = Math.ceil(equivalenceData.length / pageSize);
 
   const handleEdit = useCallback((equivalence: CourseEquivalence) => {
-    console.log("Edit equivalence:", equivalence);
+    console.warn("Edit equivalence:", equivalence);
   }, []);
 
   const handleDelete = useCallback((equivalence: CourseEquivalence) => {
-    console.log("Delete equivalence:", equivalence);
+    console.warn("Delete equivalence:", equivalence);
   }, []);
 
   return (

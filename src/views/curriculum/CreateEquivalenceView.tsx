@@ -1,11 +1,11 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { CaretLeftIcon, PlusIcon } from "@/components/icon";
-import { Input } from "@/components/input";
-import { Typography } from "@/components/typography";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { CaretLeftIcon, PlusIcon } from "uper-ui/icon";
+import { Input } from "uper-ui/input";
+import { Typography } from "uper-ui/typography";
 import { CreateCourseDialog } from "./CreateCourseDialog";
 import type { Course } from "./CreateCourseDialog";
 
@@ -27,7 +27,7 @@ export function CreateEquivalenceView() {
   }, [navigate]);
 
   const handleSave = useCallback(() => {
-    console.log("Save equivalence:", {
+    console.warn("Save equivalence:", {
       oldCurriculumCourse,
       newCurriculumCourse,
       selectedOldCourses,

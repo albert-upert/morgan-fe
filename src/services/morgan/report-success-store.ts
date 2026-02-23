@@ -1,50 +1,54 @@
-import type { ReportIssueResponse } from "@/services/morgan/report-issue";
-import type {
-  IssueType,
-  ReportIssuePayload,
-} from "@/views/lecturer/report-issue-modal";
+import type { ReportIssuePayload } from "@/views/lecturer/ReportIssueModal";
 
-export type ReportSuccessData = {
-  reportNumber: string;
-  roomName: string;
-  buildingName: string;
-  reporterName: string;
-  reporterRoleLabel: string;
-  createdAt: string;
-  statusLabel: string;
-  issues: Array<{
-    assetId: string;
-    assetName: string;
-    issueType: IssueType;
-    detail: string;
-    fileName?: string;
-  }>;
+const STORAGE_KEY = "morgan:lastReportSuccess:v1";
+
+export type ReportSuccessIssue = {
+  assetId: string;
+  assetName: string;
+  issueType: string;
+  detail: string;
+  fileName?: string;
 };
 
-const STORAGE_KEY = "morgan:lastReportSuccess";
+export type ReportSuccessData = {
+  ticketId: string;
+  statusLabel: string;
+  createdAt: string; // ISO
+  reporterName: string;
+  reporterRoleLabel: string;
+  roomId: string;
+  roomName: string;
+  buildingName: string;
+  issues: Array<ReportSuccessIssue>;
+};
 
-export function makeReportSuccessData({
-  payload,
-  response,
-  assetNameById,
-  roomId,
-}: {
+export type SubmitReportIssueResponse = {
+  ticketId: string;
+  statusLabel?: string;
+  createdAt?: string;
+};
+
+export function makeReportSuccessData(args: {
   payload: ReportIssuePayload;
-  response: ReportIssueResponse;
+  response: SubmitReportIssueResponse;
   assetNameById: Record<string, string>;
-  roomId?: string;
+  roomId: string;
 }): ReportSuccessData {
+  const createdAt = args.response.createdAt ?? new Date().toISOString();
+  const ticketId = args.response.ticketId;
+
   return {
-    reportNumber: response.reportNumber,
-    roomName: roomId ? `Ruang ${roomId}` : "Ruang 2805",
-    buildingName: "Gedung Griya Legita",
+    ticketId,
+    statusLabel: args.response.statusLabel ?? "Selesai",
+    createdAt,
     reporterName: "Meredita Susanty",
     reporterRoleLabel: "Dosen",
-    createdAt: response.createdAt,
-    statusLabel: "Menunggu Petugas",
-    issues: payload.issues.map((i) => ({
+    roomId: args.roomId,
+    roomName: `Ruang ${args.roomId}`,
+    buildingName: "Gedung Griya Legita",
+    issues: args.payload.issues.map((i) => ({
       assetId: i.assetId,
-      assetName: assetNameById[i.assetId] ?? i.assetId,
+      assetName: args.assetNameById[i.assetId] ?? i.assetId,
       issueType: i.issueType,
       detail: i.detail,
       fileName: i.fileName,
@@ -53,13 +57,17 @@ export function makeReportSuccessData({
 }
 
 export function saveLastReportSuccess(data: ReportSuccessData) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch {
+    // ignore storage failures
+  }
 }
 
 export function readLastReportSuccess(): ReportSuccessData | null {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return null;
   try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
     return JSON.parse(raw) as ReportSuccessData;
   } catch {
     return null;

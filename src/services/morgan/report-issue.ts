@@ -1,21 +1,15 @@
-import type { ReportIssuePayload } from "@/views/lecturer/report-issue-modal";
+import type { SubmitReportIssueResponse } from "@/services/morgan/report-success-store";
+import type { ReportIssuePayload } from "@/views/lecturer/ReportIssueModal";
 
-export type ReportIssueResponse = {
-  reportNumber: string;
-  createdAt: string;
-  status: "WAITING_OFFICER" | "IN_PROGRESS" | "DONE";
-};
-
-export async function submitReportIssue(payload: ReportIssuePayload) {
-  // NOTE: Backend belum tersedia. Simulasikan request sukses.
-  // Keep payload argument so later we can swap this implementation to real API call.
-  void payload;
-
-  await new Promise((r) => setTimeout(r, 900));
+export async function submitReportIssue(
+  _payload: ReportIssuePayload
+): Promise<SubmitReportIssueResponse> {
+  // Mock: simulate network delay + generate ticket id
+  await new Promise((r) => setTimeout(r, 600));
 
   return {
-    reportNumber: "#MFT-2025-0103",
+    ticketId: `#FM-${new Date().getFullYear()}-${Math.floor(Math.random() * 9000 + 1000)}`,
+    statusLabel: "Selesai",
     createdAt: new Date().toISOString(),
-    status: "WAITING_OFFICER",
-  } satisfies ReportIssueResponse;
+  };
 }

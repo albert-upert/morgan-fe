@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/components/button";
+import { Button } from "uper-ui/button";
 import {
   Dialog,
   DialogBody,
@@ -9,9 +9,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/dialog";
-import { Input } from "@/components/input";
-import { Typography } from "@/components/typography";
+} from "uper-ui/dialog";
+import { Input } from "uper-ui/input";
+import { Typography } from "uper-ui/typography";
 
 interface User {
   id: number;

@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
-import { Breadcrumb } from "@/components/breadcrumb";
-import { Button } from "@/components/button";
-import { FileUpload } from "@/components/file-upload";
-import { CaretLeftIcon, InfoIcon, UploadIcon } from "@/components/icon";
-import { Typography } from "@/components/typography";
+import { Breadcrumb } from "uper-ui/breadcrumb";
+import { Button } from "uper-ui/button";
+import { FileUpload } from "uper-ui/file-upload";
+import { CaretLeftIcon, InfoIcon, UploadIcon } from "uper-ui/icon";
+import { Typography } from "uper-ui/typography";
 
 export function UploadEventView() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export function UploadEventView() {
   }, []);
 
   const handleUpload = useCallback(() => {
-    console.log("Upload files:", files);
+    console.warn("Upload files:", files);
     navigate({ to: "/configuration/academic/event/upload-result" });
   }, [files, navigate]);
 
