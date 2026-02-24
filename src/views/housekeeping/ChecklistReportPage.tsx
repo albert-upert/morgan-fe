@@ -39,7 +39,7 @@ const MOCK_REPORT = {
 
 export function ChecklistReportView() {
   const search = useSearch({
-    from: "/_layout/housekeeping/checklist-report/$roomId",
+    from: "/_layout/housekeeping/checklist-report/$id",
   });
 
   const hasIssues = search.status === "issue";

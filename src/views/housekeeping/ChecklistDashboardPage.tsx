@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { useCallback, useMemo } from "react";
 import { Button } from "uper-ui/button";
 import {
   Card,
@@ -8,7 +9,6 @@ import {
   CardTitle,
 } from "uper-ui/card";
 import { ArrowBackIcon, BuildingIcon, ProfileIcon } from "uper-ui/icon";
-import { Link } from "uper-ui/link";
 import { Tag } from "uper-ui/tags";
 import { Typography } from "uper-ui/typography";
 
@@ -139,6 +139,7 @@ const MOCK_ROOM_DATA: RoomListData = {
 };
 
 export function RoomListView() {
+  const navigate = useNavigate();
   const data = MOCK_ROOM_DATA;
 
   const totalRooms = data.rooms.length;
@@ -157,28 +158,32 @@ export function RoomListView() {
     return [...unchecked, ...checked];
   }, [data.rooms]);
 
+  const toHomePage = useCallback(() => {
+    navigate({
+      to: "/lecturer/home", // TBF: /home
+    });
+  }, [navigate]);
+
+  const toScanPage = useCallback(() => {
+    navigate({
+      to: "/housekeeping/scan", // TBF: /scan
+    });
+  }, [navigate]);
+
   return (
     <div className="flex flex-col gap-4">
-      {/* Header */}
-      <div className="flex flex-col gap-4">
-        <Link
-          to="/housekeeping/home"
-          className="inline-flex w-fit items-start gap-2 text-red-500"
-          aria-label="Kembali ke Beranda"
-        >
-          <ArrowBackIcon className="h-5 w-5" color="currentColor" />
-          <Typography variant="body-small" className="text-red-500">
-            Beranda
-          </Typography>
-        </Link>
+      {/* Back Home Button */}
+      <Button variant="tertiary" onClick={toHomePage}>
+        <ArrowBackIcon className="size-5" color="currentColor" />
+        Beranda
+      </Button>
 
-        <Typography variant="h4-semibold" className="text-gray-900">
-          Daftar Ruangan
-        </Typography>
-      </div>
+      <Typography variant="h4-semibold" className="text-gray-900">
+        Daftar Ruangan
+      </Typography>
 
       {/* Info Card */}
-      <Card className="border border-gray-400 bg-gray-100 p-2" elevation="none">
+      <Card className="border border-gray-400 bg-gray-100 p-2">
         <CardContent className="flex flex-col gap-4 p-2">
           <div className="flex items-center gap-3">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100">
@@ -258,17 +263,20 @@ export function RoomListView() {
             Pindai kode QR yang tertera pada ruangan
           </Typography>
         </CardContent>
-        <CardFooter>
-          <Link to="/housekeeping/scan" className="w-full">
-            <Button
-              variant="primary"
-              className="w-full bg-white hover:bg-gray-100"
-            >
-              <Typography variant="body-medium" className="text-red-500">
-                Pindai Kode QR
-              </Typography>
-            </Button>
-          </Link>
+        <CardFooter className="w-full">
+          <Button
+            variant="ghost"
+            className="w-full bg-white"
+            onClick={toScanPage}
+          >
+            <ArrowBackIcon
+              className="size-5 text-red-500"
+              color="currentColor"
+            />
+            <Typography variant="body-medium" className="text-red-500">
+              Pindai Kode QR
+            </Typography>
+          </Button>
         </CardFooter>
       </Card>
 

@@ -27,7 +27,7 @@ function StarIcon({
     </svg>
   );
 }
-
+// hapus pindahin kefuncntion bawahnya terus ganti tag button
 function Chip({
   label,
   active,

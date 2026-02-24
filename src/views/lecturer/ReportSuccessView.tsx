@@ -31,11 +31,11 @@ function formatDateTime(iso: string) {
 }
 
 export function ReportSuccessView() {
-  const { roomId } = useParams({ strict: false });
+  const { id } = useParams({ strict: false });
   const data = useMemo(() => readLastReportSuccess(), []);
   const [openAssetId, setOpenAssetId] = useState<string | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(true);
-  const roomNameLabel = roomId ? `Ruang ${roomId}` : data?.roomName || "";
+  const roomNameLabel = id ? `Ruang ${id}` : data?.roomName || "";
 
   if (!data) {
     return (

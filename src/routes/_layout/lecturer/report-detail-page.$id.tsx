@@ -4,9 +4,5 @@ import { ReportDetailPageView } from "@/views/lecturer/ReportDetailPageView.tsx"
 export const Route = createFileRoute(
   "/_layout/lecturer/report-detail-page/$id"
 )({
-  component: RouteComponent,
+  component: ReportDetailPageView,
 });
-
-function RouteComponent() {
-  return <ReportDetailPageView />;
-}

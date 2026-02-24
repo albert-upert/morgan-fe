@@ -17,7 +17,7 @@ import {
 import { Link } from "uper-ui/link";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
-import { ConfirmCompletionModal } from "@/views/lecturer/confirm-completion-modal";
+import { ConfirmCompletionModal } from "@/views/lecturer/ConfirmCompletionModal";
 import { ReportAgainModal } from "@/views/lecturer/ReportAgainModal";
 
 type ReportIssueType = "Rusak" | "Kurang" | "Hilang";

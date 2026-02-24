@@ -38,7 +38,7 @@ const activityItems: Array<ActivityItem> = [
     statusLabel: "Sedang Dikerjakan",
   },
 ];
-
+// hapus status pill pindahin langsung
 function StatusPill({ label }: { label: string }) {
   return (
     <div className="inline-flex items-center rounded-full bg-red-400 px-[12px] py-[3.5px] text-[12px] leading-none font-semibold text-white">
@@ -56,7 +56,7 @@ export function DosenHomePageView() {
   const navigate = useNavigate();
   const name = "Meredita";
 
-  const scanPageRedirect = useCallback(() => {
+  const toScanPage = useCallback(() => {
     navigate({
       to: "/lecturer/scan",
     });
@@ -65,7 +65,7 @@ export function DosenHomePageView() {
   return (
     <div className="">
       {/* Greeting */}
-      <div className="mt-[16px] mb-[32px]">
+      <div className="mt-4 mb-8">
         <Typography variant="body-medium-semibold" className="text-gray-800">
           Selamat Datang, {name}!
         </Typography>
@@ -87,7 +87,7 @@ export function DosenHomePageView() {
           <Button
             className="w-full rounded-xl bg-white text-red-400 hover:bg-white/90"
             variant="primary"
-            onClick={scanPageRedirect}
+            onClick={toScanPage}
           >
             <Typography variant="body-medium" className="text-red-400">
               Pindai Kode QR
@@ -110,7 +110,7 @@ export function DosenHomePageView() {
           >
             Aktivitas Terakhir
           </Typography>
-          <CardContent className="px-[16px]">
+          <CardContent className="px-4">
             {activityItems.map((item, idx) => {
               const isLast = idx === activityItems.length - 1;
               return (
@@ -136,7 +136,7 @@ export function DosenHomePageView() {
 
                   <div className="mt-2 flex flex-wrap items-center gap-x-10 gap-y-2 text-gray-600">
                     <div className="inline-flex items-center gap-1">
-                      <BuildingIcon className="h-5 w-5" color="currentColor" />
+                      <BuildingIcon className="size-5" color="currentColor" />
                       <Typography
                         variant="caption-pixie-semibold"
                         className="text-gray-600"
@@ -145,7 +145,7 @@ export function DosenHomePageView() {
                       </Typography>
                     </div>
                     <div className="inline-flex items-center gap-1">
-                      <CalendarIcon className="h-5 w-5" color="currentColor" />
+                      <CalendarIcon className="size-5" color="currentColor" />
                       <Typography
                         variant="caption-pixie-semibold"
                         className="text-gray-600"

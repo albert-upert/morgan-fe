@@ -105,8 +105,8 @@ export function ScanQrView() {
   const handleQRDetected = useCallback(
     (qrText: string) => {
       navigate({
-        to: "/housekeeping/room-checklist/$roomId",
-        params: { roomId: qrText || "0001" },
+        to: "/housekeeping/room-checklist/$id",
+        params: { id: qrText || "0001" },
       });
     },
     [navigate]

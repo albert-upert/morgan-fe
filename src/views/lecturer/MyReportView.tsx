@@ -28,6 +28,7 @@ type ReportListItem = {
   issues: Array<{ assetName: string; type: ReportIssueType }>;
 };
 
+// hapus pindahkan ke MyReportView(), penggunaan status pill bisa diubah ke tag
 function StatusPill({ label }: { label: string }) {
   return (
     <div className="rounded-full bg-primary px-3 py-[4px]">
@@ -117,13 +118,13 @@ export function MyReportView() {
     reports[0]?.id ?? null
   );
 
-  const toHome = useCallback(() => {
+  const toHomePage = useCallback(() => {
     navigate({
       to: "/lecturer/home",
     });
   }, [navigate]);
 
-  const toReportDetail = useCallback(
+  const toReportDetailPage = useCallback(
     (id: string) => {
       navigate({
         to: "/lecturer/report-detail-page/$id",
@@ -136,7 +137,7 @@ export function MyReportView() {
   return (
     <div className="pt-4 pb-6">
       {/* Back Home Button */}
-      <Button variant="tertiary" onClick={toHome}>
+      <Button variant="tertiary" onClick={toHomePage}>
         <ArrowBackIcon className="size-5" color="currentColor" />
         Beranda
       </Button>
@@ -238,7 +239,7 @@ export function MyReportView() {
                   <Button
                     variant="primary"
                     className="w-full"
-                    onClick={() => toReportDetail(String(r.id))}
+                    onClick={() => toReportDetailPage(String(r.id))}
                   >
                     Lihat Detail Laporan
                   </Button>
