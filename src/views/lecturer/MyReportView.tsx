@@ -1,5 +1,6 @@
+import { useNavigate } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Button } from "uper-ui/button";
 import { Card, CardContent } from "uper-ui/card";
 import {
@@ -11,7 +12,6 @@ import {
   ClockIcon,
   ProfileIcon,
 } from "uper-ui/icon";
-import { Link } from "uper-ui/link";
 import { Typography } from "uper-ui/typography";
 
 type ReportIssueType = "Rusak" | "Kurang" | "Hilang";
@@ -63,6 +63,7 @@ function MetaChip({ icon, label }: { icon: ReactNode; label: string }) {
 }
 
 export function MyReportView() {
+  const navigate = useNavigate();
   const reports = useMemo<Array<ReportListItem>>(
     () => [
       {
@@ -116,18 +117,29 @@ export function MyReportView() {
     reports[0]?.id ?? null
   );
 
+  const toHome = useCallback(() => {
+    navigate({
+      to: "/lecturer/home",
+    });
+  }, [navigate]);
+
+  const toReportDetail = useCallback(
+    (id: string) => {
+      navigate({
+        to: "/lecturer/report-detail-page/$id",
+        params: { id: id },
+      });
+    },
+    [navigate]
+  );
+
   return (
     <div className="pt-4 pb-6">
-      <Link
-        to="/lecturer/home"
-        className="inline-flex items-center gap-2 text-red-500"
-        aria-label="Kembali ke Beranda"
-      >
-        <ArrowBackIcon className="h-[20px] w-[20px]" color="currentColor" />
-        <Typography variant="body-small" className="text-red-500">
-          Beranda
-        </Typography>
-      </Link>
+      {/* Back Home Button */}
+      <Button variant="tertiary" onClick={toHome}>
+        <ArrowBackIcon className="size-5" color="currentColor" />
+        Beranda
+      </Button>
 
       <div className="mt-4">
         <Typography variant="h4" className="font-semibold text-gray-900">
@@ -157,26 +169,24 @@ export function MyReportView() {
 
                 <div className="mt-3 grid grid-cols-2 gap-2">
                   <MetaChip
-                    icon={
-                      <ClockIcon className="h-5 w-5" color="currentColor" />
-                    }
+                    icon={<ClockIcon className="size-5" color="currentColor" />}
                     label={r.timeLabel}
                   />
                   <MetaChip
                     icon={
-                      <CalendarIcon className="h-5 w-5" color="currentColor" />
+                      <CalendarIcon className="size-5" color="currentColor" />
                     }
                     label={r.dateLabel}
                   />
                   <MetaChip
                     icon={
-                      <BuildingIcon className="h-5 w-5" color="currentColor" />
+                      <BuildingIcon className="size-5" color="currentColor" />
                     }
                     label={r.locationLabel}
                   />
                   <MetaChip
                     icon={
-                      <ProfileIcon className="h-5 w-5" color="currentColor" />
+                      <ProfileIcon className="size-5" color="currentColor" />
                     }
                     label={r.reporterLabel}
                   />
@@ -195,11 +205,11 @@ export function MyReportView() {
                   </Typography>
                   {isOpen ? (
                     <div className="rounded-full bg-gray-300">
-                      <CaretUpIcon className="h-8 w-8 p-0" />
+                      <CaretUpIcon className="size-5 p-0" />
                     </div>
                   ) : (
                     <CaretDownIcon
-                      className="h-8 w-8 p-0"
+                      className="size-5 p-0"
                       color="currentColor"
                     />
                   )}
@@ -225,13 +235,12 @@ export function MyReportView() {
                 )}
 
                 <div className="mt-3">
-                  <Button asChild variant="primary" className="w-full">
-                    <Link
-                      to="/lecturer/report-detail-page/$id"
-                      params={{ id: r.routeId }}
-                    >
-                      Lihat Detail Laporan
-                    </Link>
+                  <Button
+                    variant="primary"
+                    className="w-full"
+                    onClick={() => toReportDetail(String(r.id))}
+                  >
+                    Lihat Detail Laporan
                   </Button>
                 </div>
               </CardContent>

@@ -17,11 +17,11 @@ export function MainMenu({
   description,
 }: MainMenuProps) {
   return (
-    <div className="mt-4 flex flex-col gap-4">
+    <>
       <Link
         to={to}
         className={cn(
-          "flex items-center gap-3 rounded-2xl bg-red-400 p-4 text-white",
+          "mt-4 flex items-center gap-3 rounded-2xl bg-red-400 p-4 text-white",
           "transition-transform active:scale-[0.98]"
         )}
       >
@@ -38,6 +38,6 @@ export function MainMenu({
           </Typography>
         </div>
       </Link>
-    </div>
+    </>
   );
 }
