@@ -34,7 +34,7 @@ export function FmitHomePageView() {
         <Typography variant="body-medium" className="text-gray-800">
           Selamat Datang, {name}!
         </Typography>
-      </div>
+      </div>  
 
       {/* Primary actions */}
       <div className="flex flex-col gap-4">

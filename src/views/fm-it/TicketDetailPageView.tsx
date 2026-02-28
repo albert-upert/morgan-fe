@@ -106,12 +106,11 @@ export function TicketDetailView() {
 
   // Fetch data (gabungkan di useEffect yang ada atau buat baru)
   useEffect(() => {
-    getTimelineByTicketId(roomId).then((data) => {
-      const sortedData = data.sort(
-        (a, b) =>
-          new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    getTimelineByTicketId(id).then((ticketHistory) => {
+      const sortedTimeline = ticketHistory.sort(
+        (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
       );
-      setTimelines(sortedData);
+      setTimelines(sortedTimeline);
     });
   }, [roomId]);
 
