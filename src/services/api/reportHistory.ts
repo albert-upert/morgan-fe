@@ -1,5 +1,5 @@
-import { MOCK_TIMELINES } from "@/services/mock/mockHistories.ts";
-import { reportsSeed } from "@/services/mock/mockReport.ts";
+import { reportsSeed } from "@/services/mock/reportsSeed";
+import { ticketHistorySeed } from "@/services/mock/ticketHistorySeed";
 import type { TicketHistory, TicketStatus } from "@/types/ticketHistory";
 
 const delay = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -11,7 +11,7 @@ export const getTimelineByTicketId = async (
   await delay(500);
 
   // 1. FILTERING (SQL: WHERE reportId = ticketId)
-  const histories = MOCK_TIMELINES.filter((item) => item.reportId === ticketId);
+  const histories = ticketHistorySeed.filter((item) => item.reportId === ticketId);
 
   // 2. SORTING (Descending: Terbaru paling atas)
   // Algoritma sort javascript menggunakan nilai return positif/negatif
@@ -39,7 +39,7 @@ export const updateTicketStatus = async (
     actor: "Budi Santoso",
   };
 
-  MOCK_TIMELINES.push(newHistory);
+  ticketHistorySeed.push(newHistory);
 
   const reportIndex = reportsSeed.findIndex((r) => r.id === reportId);
   if (reportIndex !== -1) {

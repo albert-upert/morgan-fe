@@ -1,10 +1,10 @@
 import type { TicketHistory } from "@/types/ticketHistory.ts";
 
-export const MOCK_TIMELINES: Array<TicketHistory> = [
+export const ticketHistorySeed: Array<TicketHistory> = [
   {
     id: "H-1",
     reportId: "#FM-2025-0103",
-    status: "Menunggu Diterima oleh Petugas",
+    status: "Menunggu Petugas",
     timestamp: "2025-10-05T08:09:00",
     actor: "Budi Santoso",
   },

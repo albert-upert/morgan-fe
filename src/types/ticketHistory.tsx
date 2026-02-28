@@ -1,5 +1,5 @@
 export type TicketStatus =
-  | "Menunggu Diterima oleh Petugas"
+  | "Menunggu Petugas"
   | "Petugas dalam Perjalanan"
   | "Sedang Dikerjakan"
   | "Laporan Selesai";
