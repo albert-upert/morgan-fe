@@ -44,7 +44,7 @@ const ISSUE_TYPES: Array<IssueType> = ["Rusak", "Hilang", "Kurang", "Lainnya"];
 /**
  * Props Interface
  */
-export interface ReportMismatchDialogProps {
+export interface IReportMismatchDialogProps {
   open: boolean;
   assets: Array<MismatchAsset>;
   onOpenChange: (open: boolean) => void;
@@ -131,323 +131,15 @@ function useAccordionNavigation(assets: Array<MismatchAsset>) {
   return { expandedId, setExpandedId, toggle, goNext, reset };
 }
 
-/**
- * Header Component
- */
-function ReportMismatchHeader() {
-  return (
-    <DialogHeader className="justify-center border-b border-gray-300 bg-gray-100 px-5 py-4">
-      <Typography variant="h5" className="text-gray-800">
-        Isi Masalah Aset
-      </Typography>
-    </DialogHeader>
-  );
-}
-
-/**
- * Asset Item Component
- */
-interface AssetItemProps {
-  asset: MismatchAsset;
-  isExpanded: boolean;
-  issueType: IssueType | null;
-  detail: string;
-  fileName?: string;
-  onToggle: () => void;
-  onIssueTypeChange: (type: IssueType) => void;
-  onDetailChange: (value: string) => void;
-  onFileSelect: (file: File) => void;
-  onFileRemove: () => void;
-}
-
-function AssetMismatchItem({
-  asset,
-  isExpanded,
-  issueType,
-  detail,
-  fileName,
-  onToggle,
-  onIssueTypeChange,
-  onDetailChange,
-  onFileSelect,
-  onFileRemove,
-}: AssetItemProps) {
-  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  // Handle file selection from FileUpload
-  const handleFilesChange = useCallback(
-    (files: Array<File>) => {
-      if (files.length > 0) {
-        const file = files[0];
-        setSelectedFile(file);
-        onFileSelect(file);
-        // Create preview URL
-        const url = URL.createObjectURL(file);
-        setImagePreviewUrl(url);
-      }
-    },
-    [onFileSelect]
-  );
-
-  // Handle file removal
-  const handleRemoveFile = useCallback(() => {
-    onFileRemove();
-    setSelectedFile(null);
-    // Clean up preview URL
-    if (imagePreviewUrl) {
-      URL.revokeObjectURL(imagePreviewUrl);
-      setImagePreviewUrl(null);
-    }
-  }, [onFileRemove, imagePreviewUrl]);
-
-  // Cleanup URL on unmount
-  useEffect(() => {
-    return () => {
-      if (imagePreviewUrl) {
-        URL.revokeObjectURL(imagePreviewUrl);
-      }
-    };
-  }, [imagePreviewUrl]);
-
-  // Check if asset is complete (issueType and detail filled)
-  const isComplete = issueType && detail.trim().length > 0;
-
-  const accordionTitle = (
-    <div className="flex flex-col items-start gap-1">
-      <Tag
-        type="with-border"
-        size="md"
-        rounded="pill"
-        className={
-          isComplete
-            ? "border border-green-400 bg-green-50"
-            : "border border-red-400 bg-red-50"
-        }
-      >
-        <Typography
-          variant="caption-pixie"
-          className={isComplete ? "text-green-600" : "text-red-600"}
-        >
-          {isComplete ? "Sudah Lengkap" : "Belum Lengkap"}
-        </Typography>
-      </Tag>
-      <div className="inline-flex items-center gap-2">
-        <ErrorIcon className="h-4 w-4 text-red-500" />
-        <Typography variant="body-small-semibold" className="text-gray-800">
-          {asset.name}
-        </Typography>
-      </div>
-    </div>
-  );
-
-  return (
-    <Accordion
-      title={accordionTitle as unknown as string}
-      expanded={isExpanded}
-      onExpandedChange={(expanded) => {
-        if (expanded !== isExpanded) {
-          onToggle();
-        }
-      }}
-      className="rounded-xl border border-gray-400 bg-gray-100 !p-0 transition-all duration-300"
-    >
-      <div className="animate-in fade-in slide-in-from-top-2 space-y-2 duration-300">
-        {/* Issue Type Buttons */}
-        <div className="space-y-1.5">
-          <Typography
-            variant="caption-small-semibold"
-            className="text-gray-600"
-          >
-            Jenis Masalah
-          </Typography>
-          <div className="flex flex-wrap gap-2">
-            {ISSUE_TYPES.map((type) => (
-              <Button
-                key={type}
-                onClick={() => onIssueTypeChange(type)}
-                className={`rounded-lg border px-2 py-1 transition-colors ${
-                  issueType === type
-                    ? "border-red-500 bg-red-500 hover:bg-red-500 focus:bg-red-500 active:bg-red-500"
-                    : "border-red-500 bg-white hover:bg-white focus:bg-white active:bg-red-50"
-                }`}
-              >
-                <Typography
-                  variant="body-small"
-                  className={
-                    issueType === type ? "text-gray-50" : "text-red-500"
-                  }
-                >
-                  {type}
-                </Typography>
-              </Button>
-            ))}
-          </div>
-        </div>
-
-        {/* Detail Textarea */}
-        <div className="space-y-1.5">
-          <Typography
-            variant="caption-small-semibold"
-            className="text-gray-600"
-          >
-            Detail Kendala
-          </Typography>
-          <Textarea
-            label=""
-            value={detail}
-            onChange={(e) => onDetailChange(e.target.value)}
-            placeholder="Contoh: Lampu proyektor mati total saat dinyalakan"
-            className="border-gray-400 bg-white placeholder:text-gray-600 focus:!border-gray-500"
-            maxLength={150}
-            showCount
-            helperText=" "
-          />
-        </div>
-
-        {/* File Upload */}
-        <div className="space-y-1.5">
-          <FileUpload
-            label="Bukti Foto (Opsional)"
-            accept="image/*"
-            imagePreviewModal
-            maxSize={10}
-            variant="button"
-            buttonLabel={fileName ? "Ganti Foto" : "Ambil / Pilih Foto"}
-            files={selectedFile ? [selectedFile] : []}
-            onFilesChange={handleFilesChange}
-            onRemoveFile={handleRemoveFile}
-          />
-        </div>
-      </div>
-    </Accordion>
-  );
-}
-
-/**
- * Body Component
- */
-interface BodyProps {
-  assets: Array<MismatchAsset>;
-  expandedId: string | null;
-  drafts: Partial<Record<string, AssetMismatchDraft>>;
-  onToggleAccordion: (assetId: string) => void;
-  onChangeIssueType: (assetId: string, type: IssueType) => void;
-  onChangeDraft: (assetId: string, value: string) => void;
-  onFileSelect: (assetId: string, file: File) => void;
-  onFileRemove: (assetId: string) => void;
-}
-
-function ReportMismatchBody({
-  assets,
-  expandedId,
-  drafts,
-  onToggleAccordion,
-  onChangeIssueType,
-  onChangeDraft,
-  onFileSelect,
-  onFileRemove,
-}: BodyProps) {
-  return (
-    <DialogBody className="max-h-140 items-stretch gap-4 overflow-y-auto border-0 bg-white px-5 py-4">
-      <div className="animate-in fade-in space-y-3 duration-500">
-        {assets.map((asset, idx) => {
-          const draft = drafts[asset.id] ?? {
-            issueType: null,
-            detail: "",
-            fileName: undefined,
-          };
-          const isExpanded = expandedId === asset.id;
-
-          return (
-            <div
-              key={asset.id}
-              className="animate-in fade-in slide-in-from-left-2 duration-300"
-              style={{ animationDelay: `${idx * 100}ms` }}
-            >
-              <AssetMismatchItem
-                asset={asset}
-                isExpanded={isExpanded}
-                issueType={draft.issueType}
-                detail={draft.detail}
-                fileName={draft.fileName}
-                onToggle={() => onToggleAccordion(asset.id)}
-                onIssueTypeChange={(type) => onChangeIssueType(asset.id, type)}
-                onDetailChange={(value) => onChangeDraft(asset.id, value)}
-                onFileSelect={(file) => onFileSelect(asset.id, file)}
-                onFileRemove={() => onFileRemove(asset.id)}
-              />
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="flex items-start gap-2 rounded-lg border border-yellow-500 bg-yellow-50 px-3 py-2">
-        <ErrorIcon className="h-4 w-4 text-yellow-600" />
-        <Typography variant="caption-pixie" className="text-gray-800">
-          Silahkan isi detail masing-masing kendala terlebih dahulu.
-        </Typography>
-      </div>
-    </DialogBody>
-  );
-}
-
-/**
- * Footer Component
- */
-interface FooterProps {
-  isComplete: boolean;
-  isSubmitting?: boolean;
-  onCancel: () => void;
-  onSubmit: () => void;
-}
-
-function ReportMismatchFooter({
-  isComplete,
-  isSubmitting = false,
-  onCancel,
-  onSubmit,
-}: FooterProps) {
-  return (
-    <DialogFooter className="flex gap-3 rounded-b-lg bg-white px-5 py-4">
-      <Button
-        onClick={onCancel}
-        className="flex-1 border border-red-500 bg-white text-red-500 hover:bg-white focus:bg-white active:bg-red-50"
-      >
-        <Typography variant="body-medium" className="text-red-500">
-          Kembali
-        </Typography>
-      </Button>
-      <Button
-        onClick={onSubmit}
-        disabled={!isComplete || isSubmitting}
-        className={`flex-1 ${
-          isComplete
-            ? "bg-red-500 text-white hover:bg-red-500 focus:bg-red-600 active:bg-red-600"
-            : "cursor-not-allowed bg-gray-300 text-gray-600"
-        }`}
-      >
-        <Typography
-          variant="body-medium"
-          className={isComplete ? "text-white" : "text-gray-600"}
-        >
-          Kirim Laporan
-        </Typography>
-      </Button>
-    </DialogFooter>
-  );
-}
-
-/**
- * Main Dialog Component
- */
-export function ReportMismatchDialog({
+// MAIN MODAL
+export function ReportConditionModal({
   open,
   assets,
   onOpenChange,
   onSubmit,
   isSubmitting = false,
-}: ReportMismatchDialogProps) {
+}: IReportMismatchDialogProps) {
+  // STATE MANAGEMENT
   const [showConfirm, setShowConfirm] = useState(false);
   const {
     drafts,
@@ -462,6 +154,15 @@ export function ReportMismatchDialog({
   } = useAccordionNavigation(assets);
   const { isAllComplete } = useMismatchValidation(assets, drafts);
 
+  // File handling states for each asset
+  const [imagePreviewUrls, setImagePreviewUrls] = useState<
+    Record<string, string | null>
+  >({});
+  const [selectedFiles, setSelectedFiles] = useState<
+    Record<string, File | null>
+  >({});
+
+  // INITIALIZATION & CLEANUP
   useEffect(() => {
     if (open) {
       resetDrafts();
@@ -470,6 +171,52 @@ export function ReportMismatchDialog({
     }
   }, [open, resetDrafts, resetAccordion]);
 
+  // Cleanup preview URLs on unmount
+  useEffect(() => {
+    return () => {
+      Object.values(imagePreviewUrls).forEach((url) => {
+        if (url) URL.revokeObjectURL(url);
+      });
+    };
+  }, [imagePreviewUrls]);
+
+  // EVENT HANDLERS
+  const handleFilesChange = useCallback(
+    (assetId: string, files: Array<File>) => {
+      if (files.length > 0) {
+        const file = files[0];
+        setSelectedFiles((prev) => ({ ...prev, [assetId]: file }));
+        updateDraft(assetId, { fileName: file.name });
+
+        // Create preview URL
+        const url = URL.createObjectURL(file);
+        setImagePreviewUrls((prev) => ({
+          ...prev,
+          [assetId]: url,
+        }));
+      }
+    },
+    [updateDraft]
+  );
+
+  const handleRemoveFile = useCallback(
+    (assetId: string) => {
+      setSelectedFiles((prev) => ({ ...prev, [assetId]: null }));
+      updateDraft(assetId, { fileName: undefined });
+
+      // Clean up preview URL
+      setImagePreviewUrls((prev) => {
+        const url = prev[assetId];
+        if (url) {
+          URL.revokeObjectURL(url);
+        }
+        return { ...prev, [assetId]: null };
+      });
+    },
+    [updateDraft]
+  );
+
+  // EVENT HANDLERS - Dialog Actions
   const handleConfirmSubmit = useCallback(() => {
     const payload: ReportMismatchPayload = {
       issues: assets.map((asset) => {
@@ -489,18 +236,22 @@ export function ReportMismatchDialog({
     setShowConfirm(true);
   }, []);
 
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      {showConfirm ? (
+  // RENDER: CONFIRMATION DIALOG
+  if (showConfirm) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent
           className="w-full rounded-2xl p-0 data-[side=center]:top-1/2 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm data-[side=center]:-translate-y-1/2"
           showCloseButton={false}
         >
+          {/* Header */}
           <DialogHeader className="justify-center border-b border-gray-300 bg-gray-100 px-5 py-4">
             <Typography variant="h5" className="text-gray-800">
               Tunggu Sebentar
             </Typography>
           </DialogHeader>
+
+          {/* Body */}
           <DialogBody className="items-stretch gap-3 border-0 bg-white px-5 py-4">
             <Typography
               variant="body-medium"
@@ -509,6 +260,8 @@ export function ReportMismatchDialog({
               Apakah anda yakin sudah mengisi semua kendala aset dengan benar?
             </Typography>
           </DialogBody>
+
+          {/* Footer */}
           <DialogFooter className="flex gap-3 rounded-b-lg bg-white px-5 py-4">
             <Button
               onClick={() => setShowConfirm(false)}
@@ -529,38 +282,213 @@ export function ReportMismatchDialog({
             </Button>
           </DialogFooter>
         </DialogContent>
-      ) : (
-        <DialogContent
-          className="w-full rounded-2xl border border-gray-200 p-0 data-[side=center]:top-1/2 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm data-[side=center]:-translate-y-1/2"
-          showCloseButton={false}
-        >
-          <ReportMismatchHeader />
-          <ReportMismatchBody
-            assets={assets}
-            expandedId={expandedId}
-            drafts={drafts}
-            onToggleAccordion={toggle}
-            onChangeIssueType={(assetId, type) =>
-              updateDraft(assetId, { issueType: type })
-            }
-            onChangeDraft={(assetId, value) =>
-              updateDraft(assetId, { detail: value })
-            }
-            onFileSelect={(assetId, file) =>
-              updateDraft(assetId, { fileName: file.name })
-            }
-            onFileRemove={(assetId) =>
-              updateDraft(assetId, { fileName: undefined })
-            }
-          />
-          <ReportMismatchFooter
-            isComplete={isAllComplete}
-            isSubmitting={isSubmitting}
-            onCancel={() => onOpenChange(false)}
-            onSubmit={handleOpenConfirm}
-          />
-        </DialogContent>
-      )}
+      </Dialog>
+    );
+  }
+
+  // MAIN REPORT DIALOG
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        className="w-full rounded-2xl border border-gray-200 p-0 data-[side=center]:top-1/2 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm data-[side=center]:-translate-y-1/2"
+        showCloseButton={false}
+      >
+        {/* Header Section */}
+        <DialogHeader className="justify-center border-b border-gray-300 bg-gray-100 px-5 py-4">
+          <Typography variant="h5" className="text-gray-800">
+            Isi Masalah Aset
+          </Typography>
+        </DialogHeader>
+
+        {/* Body Section */}
+        <DialogBody className="max-h-140 items-stretch gap-4 overflow-y-auto border-0 bg-white px-5 py-4">
+          <div className="animate-in fade-in space-y-3 duration-500">
+            {/* Render each asset as an accordion item */}
+            {assets.map((asset, idx) => {
+              const draft = drafts[asset.id] ?? {
+                issueType: null,
+                detail: "",
+                fileName: undefined,
+              };
+              const isExpanded = expandedId === asset.id;
+              const selectedFile = selectedFiles[asset.id] ?? null;
+              const isComplete =
+                draft.issueType && draft.detail.trim().length > 0;
+
+              return (
+                <div
+                  key={asset.id}
+                  className="animate-in fade-in slide-in-from-left-2 duration-300"
+                  style={{ animationDelay: `${idx * 100}ms` }}
+                >
+                  {/* Accordion Item */}
+                  <Accordion
+                    title={
+                      (
+                        <div className="flex flex-col items-start gap-1">
+                          {/* Status Tag */}
+                          <Tag
+                            type="with-border"
+                            size="md"
+                            rounded="pill"
+                            className={
+                              isComplete
+                                ? "border border-green-400 bg-green-50"
+                                : "border border-red-400 bg-red-50"
+                            }
+                          >
+                            <Typography
+                              variant="caption-pixie"
+                              className={
+                                isComplete ? "text-green-600" : "text-red-600"
+                              }
+                            >
+                              {isComplete ? "Sudah Lengkap" : "Belum Lengkap"}
+                            </Typography>
+                          </Tag>
+
+                          {/* Name with Icon */}
+                          <div className="inline-flex items-center gap-2">
+                            <ErrorIcon className="h-4 w-4 text-red-500" />
+                            <Typography
+                              variant="body-small-semibold"
+                              className="text-gray-800"
+                            >
+                              {asset.name}
+                            </Typography>
+                          </div>
+                        </div>
+                      ) as unknown as string
+                    }
+                    expanded={isExpanded}
+                    onExpandedChange={(expanded: boolean) => {
+                      if (expanded !== isExpanded) {
+                        toggle(asset.id);
+                      }
+                    }}
+                    className="rounded-xl border border-gray-400 bg-gray-100 !p-0 transition-all duration-300"
+                  >
+                    <div className="animate-in fade-in slide-in-from-top-2 space-y-2 duration-300">
+                      {/* Issue Type */}
+                      <div className="space-y-1.5">
+                        <Typography
+                          variant="caption-small-semibold"
+                          className="text-gray-600"
+                        >
+                          Jenis Masalah
+                        </Typography>
+                        <div className="flex flex-wrap gap-2">
+                          {ISSUE_TYPES.map((type) => (
+                            <Button
+                              key={type}
+                              onClick={() =>
+                                updateDraft(asset.id, { issueType: type })
+                              }
+                              className={`rounded-lg border px-2 py-1 transition-colors ${
+                                draft.issueType === type
+                                  ? "border-red-500 bg-red-500 hover:bg-red-500 focus:bg-red-500 active:bg-red-500"
+                                  : "border-red-500 bg-white hover:bg-white focus:bg-white active:bg-red-50"
+                              }`}
+                            >
+                              <Typography
+                                variant="body-small"
+                                className={
+                                  draft.issueType === type
+                                    ? "text-gray-50"
+                                    : "text-red-500"
+                                }
+                              >
+                                {type}
+                              </Typography>
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Detail */}
+                      <div className="space-y-1.5">
+                        <Typography
+                          variant="caption-small-semibold"
+                          className="text-gray-600"
+                        >
+                          Detail Kendala
+                        </Typography>
+                        <Textarea
+                          label=""
+                          value={draft.detail}
+                          onChange={(e) =>
+                            updateDraft(asset.id, { detail: e.target.value })
+                          }
+                          placeholder="Contoh: Lampu proyektor mati total saat dinyalakan"
+                          className="border-gray-400 bg-white placeholder:text-gray-600 focus:!border-gray-500"
+                          maxLength={150}
+                          showCount
+                          helperText=" "
+                        />
+                      </div>
+
+                      {/* Bukti Foto */}
+                      <div className="space-y-1.5">
+                        <FileUpload
+                          label="Bukti Foto (Opsional)"
+                          accept="image/*"
+                          imagePreviewModal
+                          maxSize={10}
+                          variant="button"
+                          buttonLabel={
+                            draft.fileName ? "Ganti Foto" : "Ambil / Pilih Foto"
+                          }
+                          files={selectedFile ? [selectedFile] : []}
+                          onFilesChange={(files) =>
+                            handleFilesChange(asset.id, files)
+                          }
+                          onRemoveFile={() => handleRemoveFile(asset.id)}
+                        />
+                      </div>
+                    </div>
+                  </Accordion>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Validation Warning */}
+          <div className="flex items-start gap-2 rounded-lg border border-yellow-500 bg-yellow-50 px-3 py-2">
+            <ErrorIcon className="h-4 w-4 text-yellow-600" />
+            <Typography variant="caption-pixie" className="text-gray-800">
+              Silahkan isi detail masing-masing kendala terlebih dahulu.
+            </Typography>
+          </div>
+        </DialogBody>
+
+        {/* Footer */}
+        <DialogFooter className="flex gap-3 rounded-b-lg bg-white px-5 py-4">
+          <Button
+            onClick={() => onOpenChange(false)}
+            className="flex-1 border border-red-500 bg-white text-red-500 hover:bg-white focus:bg-white active:bg-red-50"
+          >
+            <Typography variant="body-medium" className="text-red-500">
+              Kembali
+            </Typography>
+          </Button>
+          <Button
+            onClick={handleOpenConfirm}
+            disabled={!isAllComplete || isSubmitting}
+            className={`flex-1 ${
+              isAllComplete
+                ? "bg-red-500 text-white hover:bg-red-500 focus:bg-red-600 active:bg-red-600"
+                : "cursor-not-allowed bg-gray-300 text-gray-600"
+            }`}
+          >
+            <Typography
+              variant="body-medium"
+              className={isAllComplete ? "text-white" : "text-gray-600"}
+            >
+              Kirim Laporan
+            </Typography>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
     </Dialog>
   );
 }

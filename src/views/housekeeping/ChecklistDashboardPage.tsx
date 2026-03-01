@@ -12,118 +12,38 @@ import { ArrowBackIcon, BuildingIcon, ProfileIcon } from "uper-ui/icon";
 import { Tag } from "uper-ui/tags";
 import { Typography } from "uper-ui/typography";
 
-interface Room {
+interface IRoom {
   id: string;
   code: string;
   name: string;
   status: "not-checked" | "checked";
 }
 
-interface RoomListData {
+interface IRoomListData {
+  id: string;
   janitor: string;
-  workAreas: Array<WorkArea>;
-  rooms: Array<Room>;
+  workAreas: Array<IWorkArea>;
+  rooms: Array<IRoom>;
 }
 
-interface WorkArea {
+interface IWorkArea {
   id: string;
   building: string;
   floors: Array<string>;
 }
 
-type RoomStatusLabelProps = {
-  status: Room["status"];
-};
-
-function RoomStatusLabel({ status }: RoomStatusLabelProps) {
-  const isChecked = status === "checked";
-
-  return (
-    <Tag
-      type="monochrome"
-      rounded="pill"
-      className={`inline-flex items-center px-3 py-1 ${
-        isChecked ? "bg-green-400" : "bg-red-400"
-      }`}
-    >
-      <Typography
-        variant="caption-small"
-        className={isChecked ? "text-gray-900" : "text-white"}
-      >
-        {isChecked ? "Sudah Dicek" : "Belum Dicek"}
-      </Typography>
-    </Tag>
-  );
-}
-
-type RoomItemProps = {
-  room: Room;
-};
-
-function RoomItem({ room }: RoomItemProps) {
-  const isChecked = room.status === "checked";
-
-  return (
-    <div
-      className={`flex items-center justify-between gap-4 rounded-xl border p-3 ${
-        isChecked
-          ? "border-green-500 bg-linear-to-r from-green-400 to-white"
-          : "border-red-500 bg-linear-to-r from-red-100 to-white"
-      }`}
-    >
-      <div className="flex items-center gap-3">
-        <div className="flex h-8 w-8 items-center justify-center">
-          <BuildingIcon className="h-6 w-6 text-gray-800" />
-        </div>
-        <div className="flex flex-col">
-          <Typography variant="body-small-semibold" className="text-gray-900">
-            {room.code} - {room.name}
-          </Typography>
-        </div>
-      </div>
-      <RoomStatusLabel status={room.status} />
-    </div>
-  );
-}
-
-type WorkAreaItemProps = {
-  area: WorkArea;
-};
-
-function WorkAreaItem({ area }: WorkAreaItemProps) {
-  return (
-    <Tag
-      type="with-border"
-      className="w-full justify-between rounded-sm border-gray-400 bg-gray-200 px-2 py-1"
-    >
-      <Typography variant="caption-small">{area.building}</Typography>
-      <div className="flex gap-1">
-        {area.floors.map((floor) => (
-          <Tag
-            key={floor}
-            type="with-border"
-            className="rounded-sm border-gray-400 bg-gray-300 px-1 py-1"
-          >
-            <Typography variant="caption-pixie-semibold">{floor}</Typography>
-          </Tag>
-        ))}
-      </div>
-    </Tag>
-  );
-}
-
-// Mock data untuk sementara
-const MOCK_ROOM_DATA: RoomListData = {
+const data_report: IRoomListData = {
+  id: "1",
   janitor: "Agus Bagus",
   workAreas: [
     {
-      id: "area-1",
-      building: "Gedung Griya Legita",
+      id: "1",
+      building: "Griya Legita",
       floors: ["Lt. 2", "Lt. 3", "Lt. 4"],
     },
     {
-      id: "area-2",
-      building: "Gedung Rektorat",
+      id: "2",
+      building: "Rektorat",
       floors: ["Lt. 1"],
     },
   ],
@@ -138,25 +58,26 @@ const MOCK_ROOM_DATA: RoomListData = {
   ],
 };
 
-export function RoomListView() {
+export function ChecklistDashboardView() {
   const navigate = useNavigate();
-  const data = MOCK_ROOM_DATA;
-
-  const totalRooms = data.rooms.length;
-  const completedRooms = data.rooms.filter(
+  const completedRooms = data_report.rooms.filter(
     (room) => room.status === "checked"
   ).length;
 
+  const totalRooms = data_report.rooms.length;
   const progressPercentage =
     totalRooms === 0 ? 0 : (completedRooms / totalRooms) * 100;
 
+  // sort for not-checked first then checked
   const sortedRooms = useMemo(() => {
-    const unchecked = data.rooms.filter(
+    const unchecked = data_report.rooms.filter(
       (room) => room.status === "not-checked"
     );
-    const checked = data.rooms.filter((room) => room.status === "checked");
+    const checked = data_report.rooms.filter(
+      (room) => room.status === "checked"
+    );
     return [...unchecked, ...checked];
-  }, [data.rooms]);
+  }, [data_report.rooms]);
 
   const toHomePage = useCallback(() => {
     navigate({
@@ -173,11 +94,12 @@ export function RoomListView() {
   return (
     <div className="flex flex-col gap-4">
       {/* Back Home Button */}
-      <Button variant="tertiary" onClick={toHomePage}>
+      <Button variant="tertiary" onClick={toHomePage} className="w-fit">
         <ArrowBackIcon className="size-5" color="currentColor" />
         Beranda
       </Button>
 
+      {/* Title */}
       <Typography variant="h4-semibold" className="text-gray-900">
         Daftar Ruangan
       </Typography>
@@ -194,7 +116,7 @@ export function RoomListView() {
               variant="body-medium-semibold"
               className="text-gray-800"
             >
-              {data.janitor}
+              {data_report.janitor}
             </Typography>
 
             <Tag
@@ -221,12 +143,34 @@ export function RoomListView() {
             </div>
           </div>
 
+          {/* Work Areas */}
           <div className="flex flex-col gap-2">
-            {data.workAreas.map((area) => (
-              <WorkAreaItem key={area.id} area={area} />
+            {data_report.workAreas.map((area) => (
+              <Tag
+                type="with-border"
+                className="w-full justify-between rounded-sm border-gray-400 bg-gray-200 px-2 py-1"
+              >
+                <Typography variant="caption-small">
+                  Gedung {area.building}
+                </Typography>
+                <div className="flex gap-1">
+                  {area.floors.map((floor) => (
+                    <Tag
+                      key={floor}
+                      type="with-border"
+                      className="rounded-sm border-gray-400 bg-gray-300 px-1 py-1"
+                    >
+                      <Typography variant="caption-pixie-semibold">
+                        {floor}
+                      </Typography>
+                    </Tag>
+                  ))}
+                </div>
+              </Tag>
             ))}
           </div>
 
+          {/* Progress Bar */}
           <div className="border-t border-gray-400">
             <div className="flex items-center justify-between">
               <Typography
@@ -269,10 +213,6 @@ export function RoomListView() {
             className="w-full bg-white"
             onClick={toScanPage}
           >
-            <ArrowBackIcon
-              className="size-5 text-red-500"
-              color="currentColor"
-            />
             <Typography variant="body-medium" className="text-red-500">
               Pindai Kode QR
             </Typography>
@@ -282,9 +222,49 @@ export function RoomListView() {
 
       {/* Room List sort by status not-checked to checked */}
       <div className="space-y-3 pb-4">
-        {sortedRooms.map((room) => (
-          <RoomItem key={room.id} room={room} />
-        ))}
+        {sortedRooms.map((room) => {
+          const isChecked = room.status === "checked";
+
+          return (
+            <div
+              key={room.id}
+              className={`flex items-center justify-between gap-4 rounded-xl border p-3 ${
+                isChecked
+                  ? "border-green-500 bg-linear-to-r from-green-400 to-white"
+                  : "border-red-500 bg-linear-to-r from-red-100 to-white"
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex h-8 w-8 items-center justify-center">
+                  <BuildingIcon className="h-6 w-6 text-gray-800" />
+                </div>
+                <div className="flex flex-col">
+                  <Typography
+                    variant="body-small-semibold"
+                    className="text-gray-900"
+                  >
+                    {room.code} - {room.name}
+                  </Typography>
+                </div>
+              </div>
+
+              <Tag
+                type="monochrome"
+                rounded="pill"
+                className={`inline-flex items-center px-3 py-1 ${
+                  isChecked ? "bg-green-400" : "bg-red-400"
+                }`}
+              >
+                <Typography
+                  variant="caption-small"
+                  className={isChecked ? "text-gray-900" : "text-white"}
+                >
+                  {isChecked ? "Sudah Dicek" : "Belum Dicek"}
+                </Typography>
+              </Tag>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
