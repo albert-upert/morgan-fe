@@ -38,21 +38,20 @@ const activityItems: Array<ActivityItem> = [
     statusLabel: "Sedang Dikerjakan",
   },
 ];
-// hapus status pill pindahin langsung
-function StatusPill({ label }: { label: string }) {
-  return (
-    <div className="inline-flex items-center rounded-full bg-red-400 px-[12px] py-[3.5px] text-[12px] leading-none font-semibold text-white">
-      <Typography
-        variant="caption-pixie"
-        className="font-regular text-[10px] text-white"
-      >
-        {label}
-      </Typography>
-    </div>
-  );
-}
 
 export function DosenHomePageView() {
+  function StatusPill({ label }: { label: string }) {
+    return (
+      <div className="text-3 inline-flex items-center rounded-full bg-red-400 px-3 py-[3.5px] leading-none font-semibold text-white">
+        <Typography
+          variant="caption-pixie"
+          className="font-regular text-3 text-white"
+        >
+          {label}
+        </Typography>
+      </div>
+    );
+  }
   const navigate = useNavigate();
   const name = "Meredita";
 
@@ -106,7 +105,7 @@ export function DosenHomePageView() {
         <Card className="mt-3" elevation="low">
           <Typography
             variant="body-medium-semibold"
-            className="px-[16px] text-gray-900"
+            className="px-4 text-gray-900"
           >
             Aktivitas Terakhir
           </Typography>

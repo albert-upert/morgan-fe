@@ -20,7 +20,9 @@ export function DashboardView() {
 
             <div className="flex flex-wrap gap-3">
               <Button asChild variant="primary">
-                <Link to="/lecturer/home">Buka Dosen Home</Link>
+                <Link to="/$module/home" params={{ module: "lecturer" }}>
+                  Buka Dosen Home
+                </Link>
               </Button>
               <Button asChild variant="secondary">
                 <Link to="/login">Login</Link>

@@ -40,65 +40,65 @@ type ReportDetail = {
   }>;
 };
 
-function MetaInfoBox({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex flex-1 flex-col gap-0 rounded-lg bg-gray-300 px-3 py-2">
-      <div className="flex items-center gap-1">
-        {label === "Posisi Terakhir" ? (
-          <BuildingIcon
-            className="h-5 w-5 text-gray-600"
-            color="currentColor"
-          />
-        ) : label === "Estimasi Tiba" ? (
-          <ClockIcon className="h-5 w-5 text-gray-600" color="currentColor" />
-        ) : null}
-        <Typography variant="caption-pixie" className="text-gray-600">
-          {label}
+export function ReportDetailPageView() {
+  function MetaInfoBox({ label, value }: { label: string; value: string }) {
+    return (
+      <div className="flex flex-1 flex-col gap-0 rounded-lg bg-gray-300 px-3 py-2">
+        <div className="flex items-center gap-1">
+          {label === "Posisi Terakhir" ? (
+            <BuildingIcon
+              className="h-5 w-5 text-gray-600"
+              color="currentColor"
+            />
+          ) : label === "Estimasi Tiba" ? (
+            <ClockIcon className="h-5 w-5 text-gray-600" color="currentColor" />
+          ) : null}
+          <Typography variant="caption-pixie" className="text-gray-600">
+            {label}
+          </Typography>
+        </div>
+        <Typography variant="caption-small-bold" className="text-gray-900">
+          {value}
         </Typography>
       </div>
-      <Typography variant="caption-small-bold" className="text-gray-900">
-        {value}
-      </Typography>
-    </div>
-  );
-}
+    );
+  }
 
-function Callout({
-  tone,
-  children,
-}: {
-  tone: "warning" | "info" | "danger" | "success";
-  children: ReactNode;
-}) {
-  const styles =
-    tone === "warning"
-      ? "border-yellow-400 bg-yellow-50 text-black"
-      : tone === "info"
-        ? "border-blue-400 bg-[#E9EDF4] text-black"
-        : tone === "danger"
-          ? "border-red-400 bg-red-50 text-black"
-          : "border-border bg-[#F5F5F5] text-black";
+  function Callout({
+    tone,
+    children,
+  }: {
+    tone: "warning" | "info" | "danger" | "success";
+    children: ReactNode;
+  }) {
+    const styles =
+      tone === "warning"
+        ? "border-yellow-400 bg-yellow-50 text-black"
+        : tone === "info"
+          ? "border-blue-400 bg-[#E9EDF4] text-black"
+          : tone === "danger"
+            ? "border-red-400 bg-red-50 text-black"
+            : "border-border bg-[#F5F5F5] text-black";
 
-  const iconClass =
-    tone === "warning"
-      ? "text-yellow-400"
-      : tone === "info"
-        ? "text-blue-400"
-        : tone === "danger"
-          ? "text-red-400"
-          : "text-gray-700";
+    const iconClass =
+      tone === "warning"
+        ? "text-yellow-400"
+        : tone === "info"
+          ? "text-blue-400"
+          : tone === "danger"
+            ? "text-red-400"
+            : "text-gray-700";
 
-  return (
-    <div className={`flex gap-2 rounded-lg border px-3 py-3 ${styles}`}>
-      <ErrorIcon className={`h-4 w-4 ${iconClass}`} color="currentColor" />
-      <Typography variant="caption-small" className="text-inherit">
-        {children}
-      </Typography>
-    </div>
-  );
-}
+    return (
+      <div className={`flex gap-2 rounded-lg border px-3 py-3 ${styles}`}>
+        <ErrorIcon className={`h-4 w-4 ${iconClass}`} color="currentColor" />
+        <Typography variant="caption-small" className="text-inherit">
+          {children}
+        </Typography>
+      </div>
+    );
+  }
 
-export function ReportDetailPageView() {
   const { id } = useParams({ strict: false });
   const [openAssetId, setOpenAssetId] = useState<string | null>(null);
   const [openConfirmCompletion, setOpenConfirmCompletion] = useState(false);
@@ -370,7 +370,7 @@ export function ReportDetailPageView() {
         className="inline-flex items-center gap-2 text-red-500"
         aria-label="Kembali ke Daftar Laporan"
       >
-        <ArrowBackIcon className="h-[20px] w-[20px]" color="currentColor" />
+        <ArrowBackIcon className="h-5 w-5" color="currentColor" />
         <Typography variant="body-small" className="text-red-500">
           Daftar Laporan
         </Typography>
@@ -393,14 +393,11 @@ export function ReportDetailPageView() {
               >
                 {data.roomLabel}
               </Typography>
-              <div className="flex items-center gap-[4px] text-gray-600">
-                <BuildingIcon
-                  className="h-[20px] w-[20px]"
-                  color="currentColor"
-                />
+              <div className="flex items-center gap-1 text-gray-600">
+                <BuildingIcon className="h-5 w-5" color="currentColor" />
                 <Typography
                   variant="body-small"
-                  className="text-[12px] text-gray-600"
+                  className="text-3 text-gray-600"
                 >
                   {data.buildingLabel}
                 </Typography>
@@ -417,7 +414,7 @@ export function ReportDetailPageView() {
             <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-2 py-2">
               <div className="mt-0.5 text-gray-600">
                 <CalendarIcon
-                  className="h-[32px] w-[32px] rounded-[8px] bg-gray-300 p-[6px]"
+                  className="rounded-2 h-[32px] w-[32px] bg-gray-300 p-[6px]"
                   color="currentColor"
                 />
               </div>
@@ -449,9 +446,10 @@ export function ReportDetailPageView() {
                   key={issue.assetId}
                   className="rounded-xl border border-border bg-white"
                 >
-                  <button
+                  <Button
                     type="button"
-                    className="flex w-full items-center gap-3 px-4 py-3 text-left"
+                    variant="secondary"
+                    className="flex w-full items-center gap-3 border-0 bg-transparent px-4 py-3 text-left hover:bg-transparent"
                     onClick={() => {
                       setOpenAssetId((prev) =>
                         prev === issue.assetId ? null : issue.assetId
@@ -476,7 +474,7 @@ export function ReportDetailPageView() {
                         )}
                       </div>
                     </div>
-                  </button>
+                  </Button>
 
                   {isOpen && (
                     <div className="border-t border-border bg-white px-4 pt-3 pb-4">
@@ -521,12 +519,13 @@ export function ReportDetailPageView() {
                           >
                             Bukti Foto
                           </Typography>
-                          <button
+                          <Button
                             type="button"
+                            variant="secondary"
                             className="mt-2 flex w-full items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-left"
-                            onClick={() =>
-                              toast.info("Preview foto belum tersedia")
-                            }
+                            onClick={() => {
+                              toast.info("Preview foto belum tersedia");
+                            }}
                           >
                             <FileIcon className="h-5 w-5 text-gray-600" />
                             <Typography
@@ -536,7 +535,7 @@ export function ReportDetailPageView() {
                               {issue.imageUrl}
                             </Typography>
                             <OpenIcon className="h-5 w-5 text-gray-600" />
-                          </button>
+                          </Button>
                         </>
                       )}
                     </div>

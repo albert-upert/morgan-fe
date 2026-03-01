@@ -4,56 +4,6 @@ import { Typography } from "uper-ui/typography";
 
 type FeedbackTag = "Cepat" | "Baik Sekali" | "Lainnya";
 
-function StarIcon({
-  filled,
-  className,
-}: {
-  filled: boolean;
-  className?: string;
-}) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={className ?? "h-6 w-6"}
-      aria-hidden="true"
-    >
-      <path
-        d="M12 17.27l-5.18 3.05 1.4-5.96L3.5 9.97l6.18-.53L12 3.8l2.32 5.64 6.18.53-4.72 4.39 1.4 5.96z"
-        fill={filled ? "#F59E0B" : "none"}
-        stroke="#F59E0B"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-// hapus pindahin kefuncntion bawahnya terus ganti tag button
-function Chip({
-  label,
-  active,
-  onClick,
-}: {
-  label: FeedbackTag;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`rounded-md border px-3 py-1 ${
-        active
-          ? "border-primary bg-primary text-white"
-          : "border-red-200 bg-white text-primary"
-      }`}
-    >
-      <Typography variant="caption-small" className="text-inherit">
-        {label}
-      </Typography>
-    </button>
-  );
-}
-
 export function ConfirmCompletionModal({
   open,
   onOpenChange,
@@ -80,11 +30,63 @@ export function ConfirmCompletionModal({
 
   if (!open) return null;
 
+  function StarIcon({
+    filled,
+    className,
+  }: {
+    filled: boolean;
+    className?: string;
+  }) {
+    return (
+      <svg
+        viewBox="0 0 24 24"
+        className={className ?? "h-6 w-6"}
+        aria-hidden="true"
+      >
+        <path
+          d="M12 17.27l-5.18 3.05 1.4-5.96L3.5 9.97l6.18-.53L12 3.8l2.32 5.64 6.18.53-4.72 4.39 1.4 5.96z"
+          fill={filled ? "#F59E0B" : "none"}
+          stroke="#F59E0B"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  }
+
+  function Chip({
+    label,
+    active,
+    onClick,
+  }: {
+    label: FeedbackTag;
+    active: boolean;
+    onClick: () => void;
+  }) {
+    return (
+      <Button
+        type="button"
+        onClick={onClick}
+        variant={active ? "primary" : "secondary"}
+        className={`rounded-md border px-3 py-1 ${
+          active
+            ? "border-primary bg-primary text-white"
+            : "border-red-200 bg-white text-primary"
+        }`}
+      >
+        <Typography variant="caption-small" className="text-inherit">
+          {label}
+        </Typography>
+      </Button>
+    );
+  }
+
   return (
     <div className="fixed inset-0 z-9999">
-      <button
+      <Button
         type="button"
-        className="absolute inset-0 cursor-default bg-black/30"
+        variant="secondary"
+        className="absolute inset-0 h-auto w-auto cursor-default border-0 bg-black/30 p-0"
         aria-label="Tutup modal"
         onClick={() => onOpenChange(false)}
       />
@@ -123,10 +125,11 @@ export function ConfirmCompletionModal({
                   const v = i + 1;
                   const filled = v <= rating;
                   return (
-                    <button
+                    <Button
                       key={v}
                       type="button"
-                      className="flex flex-col items-center gap-1"
+                      variant="secondary"
+                      className="flex h-auto flex-col items-center gap-1 border-0 bg-transparent p-0 hover:bg-transparent"
                       onClick={() => setRating(v)}
                       aria-label={`Rating ${v}`}
                     >
@@ -137,7 +140,7 @@ export function ConfirmCompletionModal({
                       >
                         {v}
                       </Typography>
-                    </button>
+                    </Button>
                   );
                 })}
               </div>

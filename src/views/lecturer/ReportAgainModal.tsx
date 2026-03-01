@@ -4,32 +4,6 @@ import { Typography } from "uper-ui/typography";
 
 export type ReportAgainTag = "Masih Bermasalah" | "Rusak Lagi" | "Lainnya";
 
-function Chip({
-  label,
-  active,
-  onClick,
-}: {
-  label: ReportAgainTag;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`rounded-md border px-3 py-1 ${
-        active
-          ? "border-primary bg-primary text-white"
-          : "border-red-200 bg-white text-primary"
-      }`}
-    >
-      <Typography variant="caption-small" className="text-inherit">
-        {label}
-      </Typography>
-    </button>
-  );
-}
-
 export function ReportAgainModal({
   open,
   onOpenChange,
@@ -50,11 +24,39 @@ export function ReportAgainModal({
 
   if (!open) return null;
 
+  function Chip({
+    label,
+    active,
+    onClick,
+  }: {
+    label: ReportAgainTag;
+    active: boolean;
+    onClick: () => void;
+  }) {
+    return (
+      <Button
+        type="button"
+        onClick={onClick}
+        variant={active ? "primary" : "secondary"}
+        className={`rounded-md border px-3 py-1 ${
+          active
+            ? "border-primary bg-primary text-white"
+            : "border-red-200 bg-white text-primary"
+        }`}
+      >
+        <Typography variant="caption-small" className="text-inherit">
+          {label}
+        </Typography>
+      </Button>
+    );
+  }
+
   return (
     <div className="fixed inset-0 z-9999">
-      <button
+      <Button
         type="button"
-        className="absolute inset-0 cursor-default bg-black/30"
+        variant="secondary"
+        className="absolute inset-0 h-auto w-auto cursor-default border-0 bg-black/30 p-0"
         aria-label="Tutup modal"
         onClick={() => onOpenChange(false)}
       />

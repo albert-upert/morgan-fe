@@ -18,9 +18,10 @@ export function ReportIssueValidationModal({
 
   return (
     <div className="fixed inset-0 z-9999">
-      <button
+      <Button
         type="button"
-        className="absolute inset-0 cursor-default bg-black/20"
+        variant="secondary"
+        className="absolute inset-0 h-auto w-auto cursor-default border-0 bg-black/20 p-0"
         aria-label="Tutup modal"
         onClick={() => onOpenChange(false)}
       />
@@ -34,7 +35,7 @@ export function ReportIssueValidationModal({
           className="w-full max-w-[412px] overflow-hidden rounded-xl bg-white shadow-lg"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="border-b border-border bg-muted px-5 py-[16px]">
+          <div className="border-b border-border bg-muted px-5 py-4">
             <div id="report-issue-validation-title">
               <Typography
                 variant="body-medium"
@@ -48,7 +49,7 @@ export function ReportIssueValidationModal({
             </p>
           </div>
 
-          <div className="px-5 pt-[10px]">
+          <div className="px-5 pt-3">
             <Typography
               variant="body-small"
               className="text-center text-gray-800"

@@ -51,12 +51,13 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
+      "eslint --fix --no-warn-ignored",
       "prettier --write"
     ],
     "*.{json,css,md}": [
       "prettier --write"
-    ]
+    ],
+    "**/*.gen.ts": []
   },
   "devDependencies": {
     "@eslint/js": "^9.39.3",
