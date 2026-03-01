@@ -21,7 +21,6 @@ import { Route as LayoutLecturerMyReportRouteImport } from './routes/_layout/lec
 import { Route as LayoutLecturerHomeRouteImport } from './routes/_layout/lecturer/home'
 import { Route as LayoutHousekeepingScanRouteImport } from './routes/_layout/housekeeping/scan'
 import { Route as LayoutHousekeepingReportHistoryRouteImport } from './routes/_layout/housekeeping/report-history'
-import { Route as LayoutHousekeepingHomeRouteImport } from './routes/_layout/housekeeping/home'
 import { Route as LayoutHousekeepingChecklistDashboardRouteImport } from './routes/_layout/housekeeping/checklist-dashboard'
 import { Route as LayoutFmItTicketListRouteImport } from './routes/_layout/fm-it/ticket-list'
 import { Route as LayoutFmItNotificationRouteImport } from './routes/_layout/fm-it/notification'
@@ -95,11 +94,6 @@ const LayoutHousekeepingReportHistoryRoute =
     path: '/housekeeping/report-history',
     getParentRoute: () => LayoutRoute,
   } as any)
-const LayoutHousekeepingHomeRoute = LayoutHousekeepingHomeRouteImport.update({
-  id: '/housekeeping/home',
-  path: '/housekeeping/home',
-  getParentRoute: () => LayoutRoute,
-} as any)
 const LayoutHousekeepingChecklistDashboardRoute =
   LayoutHousekeepingChecklistDashboardRouteImport.update({
     id: '/housekeeping/checklist-dashboard',
@@ -166,7 +160,6 @@ export interface FileRoutesByFullPath {
   '/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
   '/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
-  '/housekeeping/home': typeof LayoutHousekeepingHomeRoute
   '/housekeeping/report-history': typeof LayoutHousekeepingReportHistoryRoute
   '/housekeeping/scan': typeof LayoutHousekeepingScanRoute
   '/lecturer/home': typeof LayoutLecturerHomeRoute
@@ -190,7 +183,6 @@ export interface FileRoutesByTo {
   '/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
   '/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
-  '/housekeeping/home': typeof LayoutHousekeepingHomeRoute
   '/housekeeping/report-history': typeof LayoutHousekeepingReportHistoryRoute
   '/housekeeping/scan': typeof LayoutHousekeepingScanRoute
   '/lecturer/home': typeof LayoutLecturerHomeRoute
@@ -216,7 +208,6 @@ export interface FileRoutesById {
   '/_layout/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/_layout/fm-it/ticket-list': typeof LayoutFmItTicketListRoute
   '/_layout/housekeeping/checklist-dashboard': typeof LayoutHousekeepingChecklistDashboardRoute
-  '/_layout/housekeeping/home': typeof LayoutHousekeepingHomeRoute
   '/_layout/housekeeping/report-history': typeof LayoutHousekeepingReportHistoryRoute
   '/_layout/housekeeping/scan': typeof LayoutHousekeepingScanRoute
   '/_layout/lecturer/home': typeof LayoutLecturerHomeRoute
@@ -242,7 +233,6 @@ export interface FileRouteTypes {
     | '/fm-it/notification'
     | '/fm-it/ticket-list'
     | '/housekeeping/checklist-dashboard'
-    | '/housekeeping/home'
     | '/housekeeping/report-history'
     | '/housekeeping/scan'
     | '/lecturer/home'
@@ -266,7 +256,6 @@ export interface FileRouteTypes {
     | '/fm-it/notification'
     | '/fm-it/ticket-list'
     | '/housekeeping/checklist-dashboard'
-    | '/housekeeping/home'
     | '/housekeeping/report-history'
     | '/housekeeping/scan'
     | '/lecturer/home'
@@ -291,7 +280,6 @@ export interface FileRouteTypes {
     | '/_layout/fm-it/notification'
     | '/_layout/fm-it/ticket-list'
     | '/_layout/housekeeping/checklist-dashboard'
-    | '/_layout/housekeeping/home'
     | '/_layout/housekeeping/report-history'
     | '/_layout/housekeeping/scan'
     | '/_layout/lecturer/home'
@@ -397,13 +385,6 @@ declare module '@tanstack/react-router' {
       path: '/housekeeping/report-history'
       fullPath: '/housekeeping/report-history'
       preLoaderRoute: typeof LayoutHousekeepingReportHistoryRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/housekeeping/home': {
-      id: '/_layout/housekeeping/home'
-      path: '/housekeeping/home'
-      fullPath: '/housekeeping/home'
-      preLoaderRoute: typeof LayoutHousekeepingHomeRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/housekeeping/checklist-dashboard': {
@@ -525,7 +506,6 @@ interface LayoutRouteChildren {
   LayoutFmItNotificationRoute: typeof LayoutFmItNotificationRoute
   LayoutFmItTicketListRoute: typeof LayoutFmItTicketListRoute
   LayoutHousekeepingChecklistDashboardRoute: typeof LayoutHousekeepingChecklistDashboardRoute
-  LayoutHousekeepingHomeRoute: typeof LayoutHousekeepingHomeRoute
   LayoutHousekeepingReportHistoryRoute: typeof LayoutHousekeepingReportHistoryRoute
   LayoutHousekeepingScanRoute: typeof LayoutHousekeepingScanRoute
   LayoutLecturerHomeRoute: typeof LayoutLecturerHomeRoute
@@ -547,7 +527,6 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutFmItTicketListRoute: LayoutFmItTicketListRoute,
   LayoutHousekeepingChecklistDashboardRoute:
     LayoutHousekeepingChecklistDashboardRoute,
-  LayoutHousekeepingHomeRoute: LayoutHousekeepingHomeRoute,
   LayoutHousekeepingReportHistoryRoute: LayoutHousekeepingReportHistoryRoute,
   LayoutHousekeepingScanRoute: LayoutHousekeepingScanRoute,
   LayoutLecturerHomeRoute: LayoutLecturerHomeRoute,

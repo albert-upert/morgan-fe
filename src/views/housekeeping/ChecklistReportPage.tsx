@@ -1,6 +1,6 @@
-import { useSearch } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { Card, CardContent, Typography } from "uper-ui";
+import { useNavigate } from "@tanstack/react-router";
+import { useCallback, useMemo, useState } from "react";
+import { Button, Card, CardContent, Typography } from "uper-ui";
 import { Accordion } from "uper-ui/accordion";
 import { FileUpload } from "uper-ui/file-upload";
 import {
@@ -10,25 +10,25 @@ import {
   ErrorIcon,
   ProfileIcon,
 } from "uper-ui/icon";
-import { Link } from "uper-ui/link";
 import { Tag } from "uper-ui/tags";
 
-const MOCK_REPORT = {
-  roomCode: "Ruang 2805",
-  building: "Gedung Griya Legita",
+const data_report = {
+  id: "1",
+  roomCode: "2805",
+  building: "Griya Legita",
   reportId: "#FM-2025-0103",
   supervisor: "Andi Maulidi (Supervisor IT)",
   timestamp: "05 Oktober 2025 | 08:09 WIB",
   issues: [
     {
-      id: "asset-1",
+      id: "1",
       name: "Meja Dosen",
       issueType: "Rusak",
       detail: "Contoh: Lampu proyektor mati total saat dinyalakan",
       fileName: "file-name.jpg",
     },
     {
-      id: "asset-2",
+      id: "2",
       name: "Remote AC",
       issueType: "Hilang",
       detail: "Remote tidak ditemukan di ruangan",
@@ -38,17 +38,14 @@ const MOCK_REPORT = {
 };
 
 export function ChecklistReportView() {
-  const search = useSearch({
-    from: "/_layout/housekeeping/checklist-report/$id",
-  });
-
-  const hasIssues = search.status === "issue";
+  const navigate = useNavigate();
+  const hasIssues = data_report.issues.length > 0;
   const [issueFiles, setIssueFiles] = useState<Record<string, Array<File>>>({});
 
   // Inisialisasi mock files untuk setiap issue
   const initializedIssueFiles = useMemo(() => {
     if (Object.keys(issueFiles).length === 0) {
-      return MOCK_REPORT.issues.reduce(
+      return data_report.issues.reduce(
         (acc, issue) => {
           acc[issue.id] = [
             new File(["mock"], issue.fileName, { type: "image/jpeg" }),
@@ -68,20 +65,24 @@ export function ChecklistReportView() {
     }));
   };
 
+  const toReportHistoryPage = useCallback(() => {
+    navigate({
+      to: "/housekeeping/report-history",
+    });
+  }, [navigate]);
+
   return (
     <div className="flex flex-col gap-4 pb-4">
       {/* Header */}
       <div className="flex flex-col gap-4">
-        <Link
-          to="/housekeeping/home"
-          className="inline-flex w-fit items-center gap-2 text-red-500"
-          aria-label="Kembali ke Beranda"
+        <Button
+          variant="tertiary"
+          onClick={toReportHistoryPage}
+          className="w-fit"
         >
-          <ArrowBackIcon className="h-5 w-5" color="currentColor" />
-          <Typography variant="body-small" className="text-red-500">
-            Beranda
-          </Typography>
-        </Link>
+          <ArrowBackIcon className="size-5" color="currentColor" />
+          Daftar Laporan
+        </Button>
 
         <Typography variant="h4-semibold" className="text-gray-900">
           Detail Laporan
@@ -89,17 +90,17 @@ export function ChecklistReportView() {
       </div>
 
       {/* Room info card */}
-      <Card className="border border-gray-400 bg-gray-100 p-4" elevation="none">
+      <Card className="border border-gray-400 bg-gray-100 p-4">
         <CardContent className="flex flex-col gap-3 p-0">
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-col gap-1">
               <Typography variant="h5" className="text-gray-800">
-                {MOCK_REPORT.roomCode}
+                Ruang {data_report.roomCode}
               </Typography>
               <div className="flex items-center gap-2">
                 <BuildingIcon className="h-5 w-5 text-gray-600" />
                 <Typography variant="caption-small" className="text-gray-600">
-                  {MOCK_REPORT.building}
+                  Gedung {data_report.building}
                 </Typography>
               </div>
             </div>
@@ -111,7 +112,7 @@ export function ChecklistReportView() {
               className="bg-red-50 px-2 py-1"
             >
               <Typography variant="caption-small" className="text-red-600">
-                {MOCK_REPORT.reportId}
+                {data_report.reportId}
               </Typography>
             </Tag>
           </div>
@@ -125,7 +126,7 @@ export function ChecklistReportView() {
                   Supervisor
                 </Typography>
                 <Typography variant="caption-small" className="text-gray-800">
-                  {MOCK_REPORT.supervisor}
+                  {data_report.supervisor}
                 </Typography>
               </div>
             </div>
@@ -138,7 +139,7 @@ export function ChecklistReportView() {
                   Tanggal
                 </Typography>
                 <Typography variant="caption-small" className="text-gray-800">
-                  {MOCK_REPORT.timestamp}
+                  {data_report.timestamp}
                 </Typography>
               </div>
             </div>
@@ -147,10 +148,7 @@ export function ChecklistReportView() {
       </Card>
 
       {/* Status card */}
-      <Card
-        className="border border-gray-400 !bg-gray-100 bg-white p-1"
-        elevation="none"
-      >
+      <Card className="border border-gray-400 !bg-gray-100 bg-white p-1">
         <CardContent className="flex flex-col gap-3 p-3">
           <Typography variant="h5" className="text-gray-800">
             Status Ruangan
@@ -180,10 +178,7 @@ export function ChecklistReportView() {
 
       {/* Problematic assets */}
       {hasIssues && (
-        <Card
-          className="border border-gray-400 !bg-gray-100 bg-white p-0"
-          elevation="none"
-        >
+        <Card className="border border-gray-400 !bg-gray-100 bg-white p-0">
           <CardContent className="flex flex-col gap-3 px-4 py-3">
             <Typography
               variant="body-medium-semibold"
@@ -192,7 +187,7 @@ export function ChecklistReportView() {
               Daftar Aset Bermasalah
             </Typography>
             <div className="flex flex-col gap-3">
-              {MOCK_REPORT.issues.map((issue) => {
+              {data_report.issues.map((issue) => {
                 const accordionTitle = (
                   <div className="inline-flex items-center gap-2">
                     <ErrorIcon className="h-4 w-4 text-red-500" />

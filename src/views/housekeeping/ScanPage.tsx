@@ -1,13 +1,14 @@
 import { useNavigate } from "@tanstack/react-router";
 import { BrowserQRCodeReader } from "@zxing/browser";
 import { NotFoundException } from "@zxing/library";
-import type { ReactNode, RefObject } from "react";
+import type { RefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Button } from "uper-ui/button";
 import { ArrowBackIcon, GalleryIcon, GladiIcon } from "uper-ui/icon";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
 
-// Custom hook for QR code reader setup
+// Custom for QR code reader setup
 function useQRCodeReader(
   videoRef: RefObject<HTMLVideoElement | null>,
   onQRDetected: (qrText: string) => void,
@@ -97,7 +98,7 @@ function useQRCodeReader(
   }, [videoRef, onQRDetected, onError]);
 }
 
-export function ScanQrView() {
+export function ScanPageView() {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [cameraError, setCameraError] = useState<string>("");
@@ -128,25 +129,6 @@ export function ScanQrView() {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-black">
-      <CameraPreview videoRef={videoRef} />
-      <ScanHeader cameraError={cameraError} onBackClick={handleNavigateBack} />
-      <ScanFrame />
-      <BottomActions
-        onFlashlightClick={handleFlashlight}
-        onGalleryClick={handleGallery}
-      />
-    </div>
-  );
-}
-
-// Subcomponent: Camera preview with video element
-function CameraPreview({
-  videoRef,
-}: {
-  videoRef: RefObject<HTMLVideoElement | null>;
-}) {
-  return (
-    <>
       <video
         ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover brightness-95 contrast-110"
@@ -154,100 +136,54 @@ function CameraPreview({
         muted
       />
       <div className="absolute inset-0 bg-black/20" />
-    </>
-  );
-}
 
-// Subcomponent: Top header with back button and instructions
-function ScanHeader({
-  cameraError,
-  onBackClick,
-}: {
-  cameraError: string;
-  onBackClick: () => void;
-}) {
-  return (
-    <div className="absolute top-0 right-0 left-0 z-20 px-6">
-      <button
-        type="button"
-        onClick={onBackClick}
-        className="inline-flex items-center gap-2 py-12 text-white"
-        aria-label="Kembali ke Daftar Ruangan"
-      >
-        <ArrowBackIcon className="h-5 w-5" color="white" />
-        <Typography variant="body-small" className="text-white">
-          Daftar Ruangan
-        </Typography>
-      </button>
+      <div className="absolute top-0 right-0 left-0 z-20 px-6 py-4">
+        <Button
+          variant="tertiary"
+          onClick={handleNavigateBack}
+          className="w-fit"
+        >
+          <ArrowBackIcon className="size-5" color="currentColor" />
+          Beranda
+        </Button>
 
-      <div className="mt-8 flex flex-col items-center justify-center gap-2 text-center">
-        <Typography variant="body-large-bold" className="text-white">
-          Pindai QR
-        </Typography>
-        <Typography variant="body-medium" className="text-white">
-          Pindai QR untuk melihat detail aset.
-        </Typography>
-        {cameraError && (
-          <Typography variant="caption-pixie" className="text-red-400">
-            {cameraError}
+        <div className="mt-8 flex flex-col items-center justify-center gap-2 text-center">
+          <Typography variant="body-large-bold" className="text-white">
+            Pindai QR
           </Typography>
-        )}
+          <Typography variant="body-medium" className="text-white">
+            Pindai QR untuk melihat detail aset.
+          </Typography>
+          {cameraError && (
+            <Typography variant="caption-pixie" className="text-red-400">
+              {cameraError}
+            </Typography>
+          )}
+        </div>
+      </div>
+
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-12">
+        <div className="relative aspect-square w-full rounded-xl shadow-[0_0_0_9999px_rgba(0,0,0,0.5)]" />
+      </div>
+
+      <div className="absolute right-0 bottom-10 left-0 z-20 flex items-center justify-between gap-16 px-12">
+        <button
+          type="button"
+          onClick={handleFlashlight}
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-black"
+          aria-label="Flashlight"
+        >
+          <GladiIcon className="h-10 w-10" />
+        </button>
+        <button
+          type="button"
+          onClick={handleGallery}
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-black"
+          aria-label="Galeri"
+        >
+          <GalleryIcon className="h-10 w-10" />
+        </button>
       </div>
     </div>
-  );
-}
-
-// Subcomponent: Scan frame with animated line
-function ScanFrame() {
-  return (
-    <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-12">
-      <div className="relative aspect-square w-full rounded-xl shadow-[0_0_0_9999px_rgba(0,0,0,0.5)]"></div>
-    </div>
-  );
-}
-
-// Subcomponent: Bottom action buttons
-function BottomActions({
-  onFlashlightClick,
-  onGalleryClick,
-}: {
-  onFlashlightClick: () => void;
-  onGalleryClick: () => void;
-}) {
-  return (
-    <div className="absolute right-0 bottom-10 left-0 z-20 flex items-center justify-between gap-16 px-12">
-      <ActionButton
-        onClick={onFlashlightClick}
-        icon={<GladiIcon className="h-10 w-10" />}
-        ariaLabel="Flashlight"
-      />
-      <ActionButton
-        onClick={onGalleryClick}
-        icon={<GalleryIcon className="h-10 w-10" />}
-        ariaLabel="Galeri"
-      />
-    </div>
-  );
-}
-
-// Subcomponent: Reusable action button
-function ActionButton({
-  onClick,
-  icon,
-  ariaLabel,
-}: {
-  onClick: () => void;
-  icon: ReactNode;
-  ariaLabel: string;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-black"
-      aria-label={ariaLabel}
-    >
-      {icon}
-    </button>
   );
 }
