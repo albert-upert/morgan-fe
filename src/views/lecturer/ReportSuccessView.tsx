@@ -1,5 +1,6 @@
-import { useParams } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
+import { Button } from "uper-ui/button";
 import { Card, CardContent } from "uper-ui/card";
 import {
   ArrowBackIcon,
@@ -11,26 +12,25 @@ import {
   FileIcon,
   OpenIcon,
 } from "uper-ui/icon";
-import { Link } from "uper-ui/link";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
 import { readLastReportSuccess } from "@/services/morgan/report-success-store";
 import type { ReportSuccessIssue } from "@/services/morgan/report-success-store";
 
-function formatDateTime(iso: string) {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
-  // simple locale formatting (ID)
-  return d.toLocaleString("id-ID", {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
-
 export function ReportSuccessView() {
+  function formatDateTime(iso: string) {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return iso;
+    // simple locale formatting (ID)
+    return d.toLocaleString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
   const { id } = useParams({ strict: false });
   const data = useMemo(() => readLastReportSuccess(), []);
   const [openAssetId, setOpenAssetId] = useState<string | null>(null);
@@ -41,11 +41,12 @@ export function ReportSuccessView() {
     return (
       <div className="px-6 pt-4">
         <Link
-          to="/lecturer/home"
+          to="/$module/home"
+          params={{ module: "lecturer" }}
           className="inline-flex items-center gap-2 text-red-500"
           aria-label="Kembali ke Beranda"
         >
-          <ArrowBackIcon className="h-[20px] w-[20px]" color="currentColor" />
+          <ArrowBackIcon className="h-5 w-5" color="currentColor" />
           <Typography variant="body-small" className="text-red-500">
             Daftar Laporan
           </Typography>
@@ -72,23 +73,25 @@ export function ReportSuccessView() {
               <Typography variant="body-small" className="text-white">
                 Laporan berhasil diunggah!
               </Typography>
-              <button
+              <Button
                 type="button"
-                className="shrink-0 rounded-md bg-white/10 px-3 py-1 text-[12px] font-semibold text-white hover:bg-white/20"
+                variant="secondary"
+                className="text-3 shrink-0 rounded-md border-0 bg-white/10 px-3 py-1 font-semibold text-white hover:bg-white/20"
                 onClick={() => setSnackbarOpen(false)}
               >
                 Oke
-              </button>
+              </Button>
             </div>
           </div>
         )}
 
         <Link
-          to="/lecturer/home"
+          to="/$module/home"
+          params={{ module: "lecturer" }}
           className="inline-flex items-center gap-2 text-red-500"
           aria-label="Kembali ke Beranda"
         >
-          <ArrowBackIcon className="h-[20px] w-[20px]" color="currentColor" />
+          <ArrowBackIcon className="h-5 w-5" color="currentColor" />
           <Typography variant="body-small" className="text-red-500">
             Daftar Laporan
           </Typography>
@@ -113,14 +116,11 @@ export function ReportSuccessView() {
                 >
                   {roomNameLabel || data.roomName}
                 </Typography>
-                <div className="flex items-center gap-[4px] text-gray-600">
-                  <BuildingIcon
-                    className="h-[20px] w-[20px]"
-                    color="currentColor"
-                  />
+                <div className="flex items-center gap-1 text-gray-600">
+                  <BuildingIcon className="h-5 w-5" color="currentColor" />
                   <Typography
                     variant="body-small"
-                    className="text-[12px] text-gray-600"
+                    className="text-3 text-gray-600"
                   >
                     {data.buildingName}
                   </Typography>
@@ -137,7 +137,7 @@ export function ReportSuccessView() {
               <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-2">
                 <div className="mt-0.5 text-gray-600">
                   <CalendarIcon
-                    className="h-[32px] w-[32px] rounded-[8px] bg-gray-300 p-[6px]"
+                    className="rounded-2 h-8 w-8 bg-gray-300 p-[6px]"
                     color="currentColor"
                   />
                 </div>
@@ -168,9 +168,10 @@ export function ReportSuccessView() {
                     key={issue.assetId}
                     className="rounded-xl border border-border bg-white"
                   >
-                    <button
+                    <Button
                       type="button"
-                      className="flex w-full items-center gap-3 px-4 py-3 text-left"
+                      variant="secondary"
+                      className="flex w-full items-center gap-3 border-0 bg-transparent px-4 py-3 text-left hover:bg-transparent"
                       onClick={() => {
                         setOpenAssetId((prev) =>
                           prev === issue.assetId ? null : issue.assetId
@@ -197,7 +198,7 @@ export function ReportSuccessView() {
                           )}
                         </div>
                       </div>
-                    </button>
+                    </Button>
 
                     {isOpen && (
                       <div className="border-t border-border bg-white px-4 pt-3 pb-4">
@@ -242,12 +243,13 @@ export function ReportSuccessView() {
                             >
                               Bukti Foto
                             </Typography>
-                            <button
+                            <Button
                               type="button"
+                              variant="secondary"
                               className="mt-2 flex w-full items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-left"
-                              onClick={() =>
-                                toast.info("Preview foto belum tersedia")
-                              }
+                              onClick={() => {
+                                toast.info("Preview foto belum tersedia");
+                              }}
                             >
                               <FileIcon className="h-5 w-5 text-gray-600" />
                               <Typography
@@ -257,7 +259,7 @@ export function ReportSuccessView() {
                                 {issue.fileName}
                               </Typography>
                               <OpenIcon className="h-5 w-5 text-gray-600" />
-                            </button>
+                            </Button>
                           </>
                         )}
                       </div>
@@ -306,10 +308,7 @@ export function ReportSuccessView() {
 
             <div className="mt-3 flex items-start gap-2 rounded-xl border border-yellow-200 bg-yellow-50 px-3 py-2">
               <ErrorIcon className="mt-px h-4 w-4 text-yellow-700" />
-              <Typography
-                variant="body-small"
-                className="text-[12px] text-gray-700"
-              >
+              <Typography variant="body-small" className="text-3 text-gray-700">
                 Aset akan memasuki notifikasi setelah laporan sudah diterima
                 oleh petugas.
               </Typography>

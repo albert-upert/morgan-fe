@@ -30,10 +30,17 @@ export function ReportHistoryPage() {
     <div className="flex flex-col gap-6 pb-6">
       {/* Header */}
       <div className="flex flex-col gap-4">
-        <Button variant="tertiary" onClick={toHomePage} className="w-fit">
-          <ArrowBackIcon className="size-5" color="currentColor" />
-          Daftar Ruangan
-        </Button>
+        <Link
+          to="/$module/home"
+          params={{ module: "housekeeping" }}
+          className="inline-flex items-center gap-2 text-red-500"
+          aria-label="Kembali ke Beranda"
+        >
+          <ArrowBackIcon className="h-5 w-5" color="currentColor" />
+          <Typography variant="body-small" className="text-red-500">
+            Beranda
+          </Typography>
+        </Link>
 
         <Typography variant="h4-semibold" className="text-gray-800">
           Daftar Laporan

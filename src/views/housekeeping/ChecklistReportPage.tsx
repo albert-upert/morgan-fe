@@ -75,10 +75,11 @@ export function ChecklistReportView() {
     <div className="flex flex-col gap-4 pb-4">
       {/* Header */}
       <div className="flex flex-col gap-4">
-        <Button
-          variant="tertiary"
-          onClick={toReportHistoryPage}
-          className="w-fit"
+        <Link
+          to="/$module/home"
+          params={{ module: "housekeeping" }}
+          className="inline-flex w-fit items-center gap-2 text-red-500"
+          aria-label="Kembali ke Beranda"
         >
           <ArrowBackIcon className="size-5" color="currentColor" />
           Daftar Laporan

@@ -28,42 +28,41 @@ type ReportListItem = {
   issues: Array<{ assetName: string; type: ReportIssueType }>;
 };
 
-// hapus pindahkan ke MyReportView(), penggunaan status pill bisa diubah ke tag
-function StatusPill({ label }: { label: string }) {
-  return (
-    <div className="rounded-full bg-primary px-3 py-[4px]">
-      <Typography variant="caption-small" className="text-white">
-        {label}
-      </Typography>
-    </div>
-  );
-}
-
-function IssueTag({ label }: { label: ReportIssueType }) {
-  return (
-    <div className="rounded-md bg-gray-50 px-2 py-px">
-      <Typography variant="caption-pixie" className="text-primary">
-        {label}
-      </Typography>
-    </div>
-  );
-}
-
-function MetaChip({ icon, label }: { icon: ReactNode; label: string }) {
-  return (
-    <div className="flex items-center gap-2 rounded-lg bg-gray-300 px-3 py-2">
-      <div className="text-black">{icon}</div>
-      <Typography
-        variant="caption-small-semibold"
-        className="overflow-hidden text-ellipsis whitespace-nowrap text-black"
-      >
-        {label}
-      </Typography>
-    </div>
-  );
-}
-
 export function MyReportView() {
+  function StatusPill({ label }: { label: string }) {
+    return (
+      <div className="rounded-full bg-primary px-3 py-1">
+        <Typography variant="caption-small" className="text-white">
+          {label}
+        </Typography>
+      </div>
+    );
+  }
+
+  function IssueTag({ label }: { label: ReportIssueType }) {
+    return (
+      <div className="rounded-md bg-gray-50 px-2 py-px">
+        <Typography variant="caption-pixie" className="text-primary">
+          {label}
+        </Typography>
+      </div>
+    );
+  }
+
+  function MetaChip({ icon, label }: { icon: ReactNode; label: string }) {
+    return (
+      <div className="flex items-center gap-2 rounded-lg bg-gray-300 px-3 py-2">
+        <div className="text-black">{icon}</div>
+        <Typography
+          variant="caption-small-semibold"
+          className="overflow-hidden text-ellipsis whitespace-nowrap text-black"
+        >
+          {label}
+        </Typography>
+      </div>
+    );
+  }
+
   const navigate = useNavigate();
   const reports = useMemo<Array<ReportListItem>>(
     () => [
@@ -120,7 +119,8 @@ export function MyReportView() {
 
   const toHomePage = useCallback(() => {
     navigate({
-      to: "/lecturer/home",
+      to: "/$module/home",
+      params: { module: "lecturer" },
     });
   }, [navigate]);
 
@@ -193,9 +193,10 @@ export function MyReportView() {
                   />
                 </div>
 
-                <button
+                <Button
                   type="button"
-                  className="mt-3 flex w-full items-center justify-between gap-3"
+                  variant="secondary"
+                  className="mt-3 flex w-full items-center justify-between gap-3 border-0 bg-transparent hover:bg-transparent"
                   onClick={() =>
                     setOpenReportId((prev) => (prev === r.id ? null : r.id))
                   }
@@ -214,7 +215,7 @@ export function MyReportView() {
                       color="currentColor"
                     />
                   )}
-                </button>
+                </Button>
 
                 {isOpen && (
                   <div className="mt-2 space-y-2">
