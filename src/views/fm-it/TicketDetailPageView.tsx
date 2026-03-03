@@ -32,8 +32,8 @@ import type { TicketHistory, TicketStatus } from "@/types/ticketHistory";
 import { TicketDetailModal } from "./TicketDetailPageModal";
 
 export function TicketDetailView() {
-  const { roomId } = useParams({
-    from: "/_layout/lecturer/report-success/$roomId",
+  const { id } = useParams({
+    from: "/_layout/fm-it/ticket-detail/$id",
   });
 
   const [showPreview, setShowPreview] = useState(false);
@@ -60,11 +60,11 @@ export function TicketDetailView() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getReportById(roomId);
+      const result = await getReportById(id);
       setData(result);
       // try {
       //   setLoading(true);
-      //   const result = await getReportById(roomId);
+      //   const result = await getReportById(id);
       //   setData(result);
       // } catch (_err) {
       //   setError("Data gagal dimuat");
@@ -74,7 +74,7 @@ export function TicketDetailView() {
     };
 
     fetchData();
-  }, [roomId]);
+  }, [id]);
 
   const navigate = useNavigate();
   const home = useCallback(() => {
@@ -87,14 +87,14 @@ export function TicketDetailView() {
     const date = new Date(isoString);
     // Format: 08.11
     return date
-      .toLocaleTimeString("roomId-ID", { hour: "2-digit", minute: "2-digit" })
+      .toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })
       .replace(".", ":");
   };
 
   const formatDate = (isoString: string) => {
     const date = new Date(isoString);
     // Format: Min, 5 Okt
-    return date.toLocaleDateString("roomId-ID", {
+    return date.toLocaleDateString("id-ID", {
       weekday: "short",
       day: "numeric",
       month: "short",
@@ -112,7 +112,7 @@ export function TicketDetailView() {
       );
       setTimelines(sortedTimeline);
     });
-  }, [roomId]);
+  }, [id]);
 
   useEffect(() => {
     const shouldShowToast = sessionStorage.getItem(
@@ -147,12 +147,12 @@ export function TicketDetailView() {
   const changeStatus = async (newStatus: TicketStatus) => {
     try {
       setUpdatingProgressTicket(true);
-      await updateTicketStatus(roomId, newStatus, technicalNote);
+      await updateTicketStatus(id, newStatus, technicalNote);
 
-      const updatedTimelines = await getTimelineByTicketId(roomId);
+      const updatedTimelines = await getTimelineByTicketId(id);
       setTimelines(updatedTimelines);
 
-      const updatedReport = await getReportById(roomId);
+      const updatedReport = await getReportById(id);
       setData(updatedReport);
 
       setOpenModal(false);
@@ -185,8 +185,8 @@ export function TicketDetailView() {
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
     {}
   );
-  const toggleAccordion = useCallback((roomId: string) => {
-    setExpandedItems((prev) => ({ ...prev, [roomId]: !prev[roomId] }));
+  const toggleAccordion = useCallback((id: string) => {
+    setExpandedItems((prev) => ({ ...prev, [id]: !prev[id] }));
   }, []);
 
   // if (loading) return <div>Sedang memuat data...</div>;

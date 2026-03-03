@@ -10,12 +10,6 @@ import {
   DropdownTrigger,
 } from "uper-ui/dropdown";
 import {
-  Dropdown,
-  DropdownContent,
-  DropdownItem,
-  DropdownTrigger,
-} from "uper-ui/dropdown";
-import {
   ArrowLeftIcon,
   BuildingIcon,
   CaretDownIcon,

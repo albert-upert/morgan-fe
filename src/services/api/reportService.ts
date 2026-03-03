@@ -1,4 +1,4 @@
-import { reportsSeed } from "@/services/mock/mockReport.ts";
+import { reportsSeed } from "@/services/mock/reportsSeed.ts";
 import type { Report } from "@/types/report";
 
 export const getReportById = (id: string): Report => {
