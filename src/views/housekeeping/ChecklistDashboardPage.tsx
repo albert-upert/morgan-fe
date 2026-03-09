@@ -160,7 +160,8 @@ export function RoomListView() {
 
   const toHomePage = useCallback(() => {
     navigate({
-      to: "/lecturer/home", // TBF: /home
+      to: "/$module/home",
+      params: { module: "housekeeping" },
     });
   }, [navigate]);
 

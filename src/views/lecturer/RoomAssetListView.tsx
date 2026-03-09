@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate, useParams } from "@tanstack/react-router";
+import { Link, useNavigate, useParams } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "uper-ui/button";
 import { Card, CardContent } from "uper-ui/card";
@@ -22,7 +22,6 @@ import {
   SearchIcon,
 } from "uper-ui/icon";
 import { Input } from "uper-ui/input";
-import { Link } from "uper-ui/link";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
 import { submitReportIssue } from "@/services/morgan/report-issue";
@@ -30,9 +29,9 @@ import {
   makeReportSuccessData,
   saveLastReportSuccess,
 } from "@/services/morgan/report-success-store";
-import { ReportIssueValidationModal } from "@/views/lecturer/report-issue-validation-modal";
 import type { ReportIssuePayload } from "@/views/lecturer/ReportIssueModal";
 import { ReportIssueModal } from "@/views/lecturer/ReportIssueModal";
+import { ReportIssueValidationModal } from "@/views/lecturer/ReportIssueValidationModal";
 
 type RoomAsset = {
   id: string;
@@ -66,7 +65,7 @@ const assetsSeed: Array<RoomAsset> = [
 
 export function RoomAssetListView() {
   const navigate = useNavigate();
-  const { roomId: roomIdParam } = useParams({ strict: false });
+  const { id: roomIdParam } = useParams({ strict: false });
   const roomId = roomIdParam ?? "0001";
   const [query, setQuery] = useState("");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(() => new Set());
@@ -161,8 +160,8 @@ export function RoomAssetListView() {
       setSelectedIds(new Set());
 
       navigate({
-        to: "/lecturer/report-success/$roomId",
-        params: { roomId },
+        to: "/lecturer/report-success/$id",
+        params: { id: roomId },
       });
     },
     onError: () => {
@@ -173,21 +172,19 @@ export function RoomAssetListView() {
   return (
     <div className="pt-4">
       <Link
-        to="/lecturer/home"
+        to="/$module/home"
+        params={{ module: "lecturer" }}
         className="inline-flex items-center gap-2 text-red-500"
         aria-label="Kembali ke Beranda"
       >
-        <ArrowBackIcon className="h-[20px] w-[20px]" color="currentColor" />
+        <ArrowBackIcon className="h-5 w-5" color="currentColor" />
         <Typography variant="body-small" className="text-red-500">
           Beranda
         </Typography>
       </Link>
 
       <div className="mt-4">
-        <Typography
-          variant="h4"
-          className="text-[20px] font-semibold text-gray-900"
-        >
+        <Typography variant="h4" className="text-5 font-semibold text-gray-900">
           Detail Aset Ruangan
         </Typography>
       </div>
@@ -202,14 +199,11 @@ export function RoomAssetListView() {
               >
                 Ruang {roomId}
               </Typography>
-              <div className="flex items-center gap-[4px] text-gray-600">
-                <BuildingIcon
-                  className="h-[20px] w-[20px]"
-                  color="currentColor"
-                />
+              <div className="flex items-center gap-1 text-gray-600">
+                <BuildingIcon className="h-5 w-5" color="currentColor" />
                 <Typography
                   variant="body-small"
-                  className="text-[12px] text-gray-600"
+                  className="text-3 text-gray-600"
                 >
                   Gedung Griya Legita
                 </Typography>
@@ -226,7 +220,7 @@ export function RoomAssetListView() {
             <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-2">
               <div className="mt-0.5 text-gray-600">
                 <CalendarIcon
-                  className="h-[32px] w-[32px] rounded-[8px] bg-gray-300 p-[6px]"
+                  className="rounded-2 h-8 w-8 bg-gray-300 p-[6px]"
                   color="currentColor"
                 />
               </div>
@@ -253,14 +247,11 @@ export function RoomAssetListView() {
               >
                 Lapor Ketidaksesuaian Aset
               </Typography>
-              <div className="flex items-center gap-[4px] text-gray-600">
-                <BuildingIcon
-                  className="h-[20px] w-[20px]"
-                  color="currentColor"
-                />
+              <div className="flex items-center gap-1 text-gray-600">
+                <BuildingIcon className="h-5 w-5" color="currentColor" />
                 <Typography
                   variant="body-small"
-                  className="text-[12px] text-gray-600"
+                  className="text-3 text-gray-600"
                 >
                   Gedung Griya Legita
                 </Typography>
@@ -278,20 +269,18 @@ export function RoomAssetListView() {
               onChange={(e) => setQuery(e.target.value)}
               onClear={() => setQuery("")}
               placeholder="Cari aset..."
-              startIcon={<SearchIcon className="ml-2 h-[20px] w-[20px]" />}
+              startIcon={<SearchIcon className="ml-2 h-5 w-5" />}
             />
             <Dropdown modal={false} open={isOpen} onOpenChange={setIsOpen}>
               <DropdownTrigger asChild>
-                <button
+                <Button
                   type="button"
-                  className={`flex h-[40px] w-[40px] items-center justify-center rounded-lg border border-primary text-primary ${isOpen ? "bg-primary-light" : "bg-white"}`}
+                  variant="secondary"
+                  className={`flex h-10 w-10 items-center justify-center rounded-lg border border-primary text-primary ${isOpen ? "bg-primary-light" : "bg-white"}`}
                   aria-label="Filter"
                 >
-                  <FilterIcon
-                    className="h-[20px] w-[20px]"
-                    color="currentColor"
-                  />
-                </button>
+                  <FilterIcon className="h-5 w-5" color="currentColor" />
+                </Button>
               </DropdownTrigger>
               <DropdownContent
                 align="end"
@@ -315,9 +304,10 @@ export function RoomAssetListView() {
           </div>
           <div className="mt-3 flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <button
+              <Button
                 type="button"
-                className="flex flex-col items-center justify-center rounded-md px-1 py-0.5 leading-none"
+                variant="secondary"
+                className="flex flex-col items-center justify-center gap-0 rounded-md border-0 bg-transparent px-1 py-0 leading-none hover:bg-transparent"
                 onClick={() =>
                   setSortMode((prev) => (prev === "az" ? "za" : "az"))
                 }
@@ -328,29 +318,25 @@ export function RoomAssetListView() {
                 }
               >
                 <ArrowUpIconFilter
-                  className={`h-[12px] w-[12px] ${
+                  className={`h-3 w-3 ${
                     sortMode === "az" ? "text-primary" : "text-gray-400"
                   }`}
-                  color="currentColor"
                 />
                 <ArrowDownIconFilter
-                  className={`-mt-1 h-[12px] w-[12px] ${
+                  className={`-mt-2 h-3 w-3 ${
                     sortMode === "za" ? "text-primary" : "text-gray-400"
                   }`}
-                  color="currentColor"
                 />
-              </button>
+              </Button>
 
-              <Typography
-                variant="body-small"
-                className="text-[12px] text-gray-800"
-              >
+              <Typography variant="body-small" className="text-3 text-gray-800">
                 ({filteredAssets.length}) aset ditemukan
               </Typography>
             </div>
-            <button
+            <Button
               type="button"
-              className="text-[12px] font-semibold text-primary"
+              variant="secondary"
+              className="text-3 h-auto border-0 bg-transparent p-0 font-semibold text-primary hover:bg-transparent"
               onClick={() => {
                 setSelectedIds((prev) => {
                   const next = new Set(prev);
@@ -369,7 +355,7 @@ export function RoomAssetListView() {
               }}
             >
               {allVisibleSelected ? "Batalkan" : "Pilih Semua"}
-            </button>
+            </Button>
           </div>
           <div className="mt-3 overflow-hidden bg-white">
             {pagedAssets.map((asset, idx) => {
@@ -483,15 +469,16 @@ export function RoomAssetListView() {
         {/* Pagination */}
         {totalPages > 1 && (
           <div className="mt-4 flex items-center justify-center gap-2">
-            <button
+            <Button
               type="button"
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 disabled:opacity-50"
+              variant="secondary"
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white p-0 text-gray-700 disabled:opacity-50"
               onClick={() => setPage((p) => Math.max(1, p - 1))}
               disabled={page === 1}
               aria-label="Halaman sebelumnya"
             >
               <ArrowLeftIcon className="h-4 w-4" color="currentColor" />
-            </button>
+            </Button>
 
             {Array.from({ length: totalPages })
               .slice(0, 5)
@@ -499,10 +486,11 @@ export function RoomAssetListView() {
                 const p = i + 1;
                 const active = p === page;
                 return (
-                  <button
+                  <Button
                     key={p}
                     type="button"
-                    className={`flex h-8 w-8 items-center justify-center rounded-lg border text-[12px] font-semibold ${
+                    variant={active ? "primary" : "secondary"}
+                    className={`text-3 flex h-8 w-8 items-center justify-center rounded-lg border p-0 font-semibold ${
                       active
                         ? "border-primary bg-primary text-white"
                         : "border-gray-200 bg-white text-gray-700"
@@ -511,13 +499,14 @@ export function RoomAssetListView() {
                     aria-label={`Halaman ${p}`}
                   >
                     {p}
-                  </button>
+                  </Button>
                 );
               })}
 
-            <button
+            <Button
               type="button"
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white text-gray-700 disabled:opacity-50"
+              variant="secondary"
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 bg-white p-0 text-gray-700 disabled:opacity-50"
               onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
               aria-label="Halaman berikutnya"
@@ -526,7 +515,7 @@ export function RoomAssetListView() {
                 className="h-4 w-4 rotate-180"
                 color="currentColor"
               />
-            </button>
+            </Button>
           </div>
         )}
       </div>

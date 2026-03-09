@@ -23,7 +23,8 @@ export function ReportHistoryPage() {
       {/* Header */}
       <div className="flex flex-col gap-4">
         <Link
-          to="/housekeeping/home"
+          to="/$module/home"
+          params={{ module: "housekeeping" }}
           className="inline-flex items-center gap-2 text-red-500"
           aria-label="Kembali ke Beranda"
         >

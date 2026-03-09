@@ -114,7 +114,8 @@ export function TicketListView() {
 
   const home = useCallback(() => {
     navigate({
-      to: "/fm-it/home",
+      to: "/$module/home",
+      params: { module: "fm-it" },
     });
   }, [navigate]);
 

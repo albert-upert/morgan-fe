@@ -64,6 +64,7 @@ export default [
       "**/node_modules/**",
       "**/*.gen.ts",
       "**/routeTree.gen.ts",
+      "src/routeTree.gen.ts",
       "pnpm-lock.yaml",
       "package-lock.json",
       "yarn.lock",
