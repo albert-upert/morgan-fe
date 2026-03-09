@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
-import type { ComponentType } from "react";
 import {
   Button,
   Card,
@@ -33,46 +32,20 @@ import {
   SearchIcon,
 } from "uper-ui/icon";
 import { Input } from "uper-ui/input";
-import { Link } from "uper-ui/link";
 import { Pagination } from "uper-ui/pagination";
 import { Tag } from "uper-ui/tags";
 import { toast } from "uper-ui/toast";
-import { ReportMismatchDialog } from "./ReportConditionModal";
+import { ReportConditionModal } from "./ReportConditionModal";
 import type {
   MismatchAsset,
   ReportMismatchPayload,
 } from "./ReportConditionModal";
 
-interface InfoRowProps {
-  icon: ComponentType<{ className?: string }>;
-  label: string;
-  value: string;
-}
-
-function InfoRow({ icon: Icon, label, value }: InfoRowProps) {
-  return (
-    <div className="flex items-start gap-2">
-      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-300">
-        <Icon className="h-6 w-6 text-gray-600" />
-      </div>
-      <div className="flex flex-col items-baseline gap-1">
-        <Typography variant="caption-small-semibold" className="text-gray-600">
-          {label}
-        </Typography>
-        <Typography variant="caption-small" className="text-gray-800">
-          {value}
-        </Typography>
-      </div>
-    </div>
-  );
-}
-
-// Mock data
 type AssetStatus = "reported" | "unchecked";
 type AssetCategory = "all" | "elektronik" | "furniture" | "lainnya";
 type SortOrder = "asc" | "desc";
 
-interface RoomAsset {
+interface IRoomAsset {
   id: string;
   name: string;
   status: AssetStatus;
@@ -82,26 +55,28 @@ interface RoomAsset {
   defaultExpanded?: boolean;
 }
 
-interface Room {
+interface IRoom {
+  id: string;
   code: string;
   building: string;
   floor: string;
-  assets: Array<RoomAsset>;
+  assets: Array<IRoomAsset>;
 }
 
-const MOCK_ROOM_DATA: Room = {
-  code: "Ruang 2805",
-  building: "Gedung Griya Legita",
-  floor: "Lantai 8",
+const data_report: IRoom = {
+  id: "1",
+  code: "2805",
+  building: "Griya Legita",
+  floor: "8",
   assets: [
     {
-      id: "asset-1",
+      id: "1",
       name: "Air Conditioner (AC) Daikin",
       status: "reported",
       notes: "Sudah Dilaporkan",
     },
     {
-      id: "asset-2",
+      id: "2",
       name: "Fingerprint Absensi",
       status: "unchecked",
       category: "elektronik",
@@ -113,7 +88,7 @@ const MOCK_ROOM_DATA: Room = {
       defaultExpanded: true,
     },
     {
-      id: "asset-3",
+      id: "3",
       name: "Kursi Kuliah (40 Unit)",
       status: "unchecked",
       category: "furniture",
@@ -124,79 +99,79 @@ const MOCK_ROOM_DATA: Room = {
       ],
     },
     {
-      id: "asset-4",
+      id: "4",
       name: "Meja Dosen",
       status: "unchecked",
       category: "furniture",
     },
     {
-      id: "asset-5",
+      id: "5",
       name: "Proyektor Epson EB-X05",
       status: "unchecked",
       category: "elektronik",
     },
     {
-      id: "asset-6",
+      id: "6",
       name: "Remote AC",
       status: "unchecked",
       category: "elektronik",
     },
     {
-      id: "asset-7",
+      id: "7",
       name: "Smartboard Samsung Flip",
       status: "unchecked",
       category: "elektronik",
     },
     {
-      id: "asset-8",
+      id: "8",
       name: "Tas Penyimpanan",
       status: "unchecked",
       category: "furniture",
     },
     {
-      id: "asset-9",
+      id: "9",
       name: "Tas Penyimpanan",
       status: "unchecked",
       category: "lainnya",
     },
     {
-      id: "asset-10",
+      id: "10",
       name: "Tas Penyimpanan",
       status: "unchecked",
       category: "lainnya",
     },
     {
-      id: "asset-11",
+      id: "11",
       name: "Tas Penyimpanan",
       status: "unchecked",
       category: "lainnya",
     },
     {
-      id: "asset-12",
+      id: "12",
       name: "Tas Penyimpanan",
       status: "unchecked",
       category: "furniture",
     },
     {
-      id: "asset-13",
+      id: "13",
       name: "Tas Penyimpanan",
       status: "unchecked",
       category: "lainnya",
     },
     {
-      id: "asset-14",
+      id: "14",
       name: "Tas Penyimpanan",
       status: "unchecked",
       category: "lainnya",
     },
     {
-      id: "asset-15",
+      id: "15",
       name: "Tas Penyimpanan",
       status: "unchecked",
       category: "furniture",
     },
     {
-      id: "asset-16",
+      id: "16",
       name: "Tas Penyimpanan",
       status: "unchecked",
       category: "lainnya",
@@ -239,7 +214,7 @@ function formatNowLabel() {
   return `${date} | ${time} WIB`;
 }
 
-function filterAssetsByQuery(assets: Array<RoomAsset>, query: string) {
+function filterAssetsByQuery(assets: Array<IRoomAsset>, query: string) {
   const normalizedQuery = query.trim().toLowerCase();
   if (!normalizedQuery) return assets;
   return assets.filter((asset) =>
@@ -248,7 +223,7 @@ function filterAssetsByQuery(assets: Array<RoomAsset>, query: string) {
 }
 
 function filterAssetsByCategory(
-  assets: Array<RoomAsset>,
+  assets: Array<IRoomAsset>,
   category: AssetCategory
 ) {
   if (category === "all") return assets;
@@ -256,9 +231,9 @@ function filterAssetsByCategory(
 }
 
 function sortAssets(
-  assets: Array<RoomAsset>,
+  assets: Array<IRoomAsset>,
   order: SortOrder
-): Array<RoomAsset> {
+): Array<IRoomAsset> {
   const sorted = [...assets].sort((a, b) => {
     const nameA = a.name.toLowerCase();
     const nameB = b.name.toLowerCase();
@@ -271,7 +246,7 @@ function sortAssets(
 }
 
 function paginateAssets(
-  assets: Array<RoomAsset>,
+  assets: Array<IRoomAsset>,
   currentPage: number,
   pageSize: number
 ) {
@@ -279,9 +254,9 @@ function paginateAssets(
   return assets.slice(startIndex, startIndex + pageSize);
 }
 
-export function RoomDetailView() {
-  const { roomId: _roomId } = useParams({
-    from: "/_layout/housekeeping/room-checklist/$roomId",
+export function RoomChecklistView() {
+  const { id: _roomId } = useParams({
+    from: "/_layout/housekeeping/room-checklist/$id",
   });
   const navigate = useNavigate();
 
@@ -309,10 +284,10 @@ export function RoomDetailView() {
   ];
 
   // Data: room detail source
-  const [roomAssets] = useState<Array<RoomAsset>>(MOCK_ROOM_DATA.assets);
+  const [roomAssets] = useState<Array<IRoomAsset>>(data_report.assets);
 
   const room = useMemo(
-    () => ({ ...MOCK_ROOM_DATA, assets: roomAssets }),
+    () => ({ ...data_report, assets: roomAssets }),
     [roomAssets]
   );
 
@@ -384,13 +359,13 @@ export function RoomDetailView() {
       return;
     }
 
-    // Jika tidak ada masalah dan tidak ada yang dicek, warning
+    // if no assets selected, show error
     if (selectedIds.size === 0) {
       toast.error("Pilih minimal satu aset");
       return;
     }
 
-    // Jika tidak ada masalah, tampilkan konfirmasi
+    // if all selected assets are in good condition, show confirmation
     setShowAllOkConfirm(true);
   }, [selectedIds, reportingIds, roomAssets]);
 
@@ -445,8 +420,8 @@ export function RoomDetailView() {
       setReportingAssets([]);
       setReportingIds(new Set()); // Clear reporting IDs after submit
       navigate({
-        to: "/housekeeping/checklist-report/$roomId",
-        params: { roomId: _roomId },
+        to: "/housekeeping/checklist-report/$id",
+        params: { id: _roomId },
         search: { status: "issue" },
       });
       // TODO: Send to API (both checked assets from selectedIds and problematic assets from payload)
@@ -467,8 +442,8 @@ export function RoomDetailView() {
     toast.success("Laporan berhasil dikirim!");
     setShowAllOkConfirm(false);
     navigate({
-      to: "/housekeeping/checklist-report/$roomId",
-      params: { roomId: _roomId },
+      to: "/housekeeping/checklist-report/$id",
+      params: { id: _roomId },
       search: { status: "ok" },
     });
   }, [navigate, _roomId]);
@@ -488,20 +463,21 @@ export function RoomDetailView() {
     setCurrentPage(1);
   }, []);
 
+  // Handlers: back to checklist dashboard
+  const toHomePage = useCallback(() => {
+    navigate({
+      to: "/housekeeping/checklist-dashboard",
+    });
+  }, [navigate]);
+
   return (
     <div className="flex flex-col gap-4 pb-4">
       {/* Page header */}
       <div className="flex flex-col gap-4">
-        <Link
-          to="/housekeeping/checklist-dashboard"
-          className="inline-flex w-fit items-center gap-2 text-red-500"
-          aria-label="Kembali ke Daftar Ruangan"
-        >
-          <ArrowBackIcon className="h-5 w-5" color="currentColor" />
-          <Typography variant="body-small" className="text-red-500">
-            Daftar Ruangan
-          </Typography>
-        </Link>
+        <Button variant="tertiary" onClick={toHomePage} className="w-fit">
+          <ArrowBackIcon className="size-5" color="currentColor" />
+          Daftar Ruangan
+        </Button>
 
         <Typography variant="h4-semibold" className="text-gray-900">
           Detail Aset Ruangan
@@ -511,19 +487,16 @@ export function RoomDetailView() {
       {/* Page content */}
       <div className="flex flex-col gap-4">
         {/* Room info card */}
-        <Card
-          className="flex flex-col gap-3 border border-gray-300 bg-gray-100 px-4 py-3"
-          elevation="none"
-        >
+        <Card className="flex flex-col gap-3 border border-gray-300 bg-gray-100 px-4 py-3">
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-col gap-1">
               <Typography variant="h5" className="text-gray-900">
-                {room.code}
+                Ruang {room.code}
               </Typography>
               <div className="flex items-center gap-2">
                 <BuildingIcon className="h-5 w-5 text-gray-600" />
                 <Typography variant="caption-small" className="text-gray-600">
-                  {room.building}
+                  Gedung {room.building}
                 </Typography>
               </div>
             </div>
@@ -535,20 +508,32 @@ export function RoomDetailView() {
               className="bg-red-50 px-2 py-1"
             >
               <Typography variant="caption-small" className="text-red-600">
-                {room.floor}
+                Lantai {room.floor}
               </Typography>
             </Tag>
           </div>
           <div className="flex flex-col gap-2">
-            <InfoRow icon={CalendarIcon} label="Tanggal" value={nowLabel} />
+            <div className="flex items-start gap-2">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gray-300">
+                <CalendarIcon className="h-6 w-6 text-gray-600" />
+              </div>
+              <div className="flex flex-col items-baseline gap-1">
+                <Typography
+                  variant="caption-small-semibold"
+                  className="text-gray-600"
+                >
+                  Tanggal
+                </Typography>
+                <Typography variant="caption-small" className="text-gray-800">
+                  {nowLabel}
+                </Typography>
+              </div>
+            </div>
           </div>
         </Card>
 
         {/* Asset list section */}
-        <Card
-          className="flex flex-col gap-3 border border-gray-300 bg-gray-100 py-0"
-          elevation="none"
-        >
+        <Card className="flex flex-col gap-3 border border-gray-300 bg-gray-100 py-0">
           <CardContent className="p-0">
             {/* Asset header */}
             <div className="flex flex-col gap-3 px-4 py-3">
@@ -566,7 +551,7 @@ export function RoomDetailView() {
                       variant="caption-small"
                       className="text-gray-600"
                     >
-                      {room.building}
+                      Gedung {room.building}
                     </Typography>
                   </div>
                 </div>
@@ -631,6 +616,7 @@ export function RoomDetailView() {
                 </Dropdown>
               </div>
 
+              {/* Note informasion */}
               <Tag
                 color="yellow"
                 type="with-border"
@@ -682,7 +668,7 @@ export function RoomDetailView() {
               </div>
             </div>
 
-            {/* Asset cards */}
+            {/* Asset list cards */}
             <div className="flex flex-col gap-2 px-4 pb-4">
               {pagedAssets.map((asset) => {
                 const isSelected = selectedIds.has(asset.id);
@@ -703,11 +689,11 @@ export function RoomDetailView() {
                           ? `border-red-500 bg-red-50 ${isExpanded ? "!bg-gray-200" : ""}`
                           : isSelected
                             ? `border-green-500 bg-green-50 ${isExpanded ? "!bg-gray-200" : ""}`
-                            : "border-gray-300 bg-white"
+                            : `border-gray-300 bg-white ${isExpanded ? "!bg-gray-200" : ""}`
                     }`}
                   >
                     <div
-                      className={`flex items-center justify-between gap-3 px-2 py-1 ${isExpanded ? "rounded-xl border-b " + (isReporting ? "border-red-500 bg-red-50" : "border-green-500 bg-green-50") : ""} `}
+                      className={`flex items-center justify-between gap-3 px-2 py-1 ${isExpanded ? "rounded-xl border-b " + (isReporting ? "border-red-500 bg-red-50" : "bg-white") : ""} `}
                     >
                       <div className="flex items-center justify-start gap-3">
                         {isReporting ? (
@@ -902,7 +888,7 @@ export function RoomDetailView() {
       </div>
 
       {/* Report Modal */}
-      <ReportMismatchDialog
+      <ReportConditionModal
         open={showReportModal}
         onOpenChange={handleModalClose}
         assets={reportingAssets}
