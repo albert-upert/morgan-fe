@@ -143,13 +143,14 @@ export function ReportIssueModal({
               <Typography variant="body-small" className="text-white">
                 {uploadNotice}
               </Typography>
-              <button
+              <Button
                 type="button"
-                className="shrink-0 rounded-md bg-white/10 px-3 py-1 text-[12px] font-semibold text-white hover:bg-white/20"
+                variant="secondary"
+                className="text-3 shrink-0 rounded-md border-0 bg-white/10 px-3 py-1 font-semibold text-white hover:bg-white/20"
                 onClick={() => setUploadNotice(null)}
               >
                 Oke
-              </button>
+              </Button>
             </div>
           )}
 
@@ -177,9 +178,10 @@ export function ReportIssueModal({
                     key={asset.id}
                     className="rounded-xl border border-border bg-white"
                   >
-                    <button
+                    <Button
                       type="button"
-                      className="flex w-full items-center gap-3 px-4 py-3 text-left"
+                      variant="secondary"
+                      className="flex w-full items-center gap-3 border-0 bg-transparent px-4 py-3 text-left hover:bg-transparent"
                       onClick={() =>
                         setExpandedId((prev) =>
                           prev === asset.id ? null : asset.id
@@ -189,7 +191,7 @@ export function ReportIssueModal({
                       <div className="flex min-w-0 flex-1 flex-col gap-1">
                         <div className="flex items-center gap-2">
                           <span
-                            className={`rounded-full border px-2 py-0.5 text-[9px] ${
+                            className={`text-2 rounded-full border px-2 py-0.5 ${
                               isComplete
                                 ? "border-green-600 bg-green-50 text-green-700"
                                 : "border-red-400 bg-red-50 text-red-600"
@@ -221,7 +223,7 @@ export function ReportIssueModal({
                           )}
                         </div>
                       </div>
-                    </button>
+                    </Button>
 
                     {isExpanded && (
                       <div className="border-t border-border bg-white px-4 pt-3 pb-4">
@@ -237,10 +239,11 @@ export function ReportIssueModal({
                           ).map((t) => {
                             const active = draft.issueType === t;
                             return (
-                              <button
+                              <Button
                                 key={t}
                                 type="button"
-                                className={`rounded-lg border px-3 py-1.5 text-[12px] font-semibold ${
+                                variant={active ? "primary" : "secondary"}
+                                className={`text-3 rounded-lg border px-3 py-1.5 font-semibold ${
                                   active
                                     ? "border-primary bg-primary text-white"
                                     : "border-primary bg-white text-primary"
@@ -250,7 +253,7 @@ export function ReportIssueModal({
                                 }
                               >
                                 {t}
-                              </button>
+                              </Button>
                             );
                           })}
                         </div>
@@ -278,7 +281,7 @@ export function ReportIssueModal({
                           </Typography>
                           <label className="mt-2 flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-gray-300 bg-white px-4 py-3 text-gray-700">
                             <UploadIcon className="h-4 w-4" />
-                            <span className="text-[12px] font-semibold">
+                            <span className="text-3 font-semibold">
                               Ambil / Pilih Foto
                             </span>
                             <input
@@ -307,13 +310,14 @@ export function ReportIssueModal({
                         </div>
                         {assets.length > 1 &&
                           asset.id !== assets[assets.length - 1].id && (
-                            <button
+                            <Button
                               type="button"
-                              className="mt-4 w-full text-right text-[12px] font-semibold text-primary"
+                              variant="secondary"
+                              className="text-3 mt-4 h-auto w-full border-0 bg-transparent p-0 text-right font-semibold text-primary hover:bg-transparent"
                               onClick={goNext}
                             >
                               Lanjut ke aset berikutnya →
-                            </button>
+                            </Button>
                           )}
                       </div>
                     )}
@@ -327,7 +331,7 @@ export function ReportIssueModal({
                 <ErrorIcon className="mt-px h-5 w-5 text-yellow-700" />
                 <Typography
                   variant="body-small"
-                  className="text-[12px] text-gray-700"
+                  className="text-3 text-gray-700"
                 >
                   Silahkan isi detail masing-masing kendala terlebih dahulu.
                 </Typography>
