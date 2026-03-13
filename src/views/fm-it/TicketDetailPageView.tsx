@@ -79,7 +79,7 @@ export function TicketDetailView() {
   const navigate = useNavigate();
   const home = useCallback(() => {
     navigate({
-      href: "/_layout/fm-it/home",
+      to: "/fm-it/home",
     });
   }, []);
 
@@ -249,14 +249,14 @@ export function TicketDetailView() {
                   className="bg-red-50 px-3"
                 >
                   <Typography variant="caption-small" className="text-red-600">
-                    {report.room}
+                    {report.id}
                   </Typography>
                 </Tag>
               </div>
             </div>
 
             <div className="flex flex-col items-center gap-2">
-              <div className="flex w-full flex-row items-center justify-start gap-2 bg-gray-200 p-2">
+              <div className="flex w-full flex-row items-center justify-start gap-2 bg-gray-200 p-2 rounded-lg">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-300">
                   <ProfileIcon className="h-6 w-6" />
                 </div>
@@ -275,7 +275,7 @@ export function TicketDetailView() {
                 </div>
               </div>
 
-              <div className="flex w-full flex-row items-center justify-start gap-2 bg-gray-200 p-2">
+              <div className="flex w-full flex-row items-center justify-start gap-2 bg-gray-200 p-2 rounded-lg">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-300">
                   <ScheduleIcon className="h-6 w-6" />
                 </div>

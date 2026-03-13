@@ -1,6 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AttendanceIcon, BillIcon, NotificationIcon } from "uper-ui/icon";
-import { Link } from "uper-ui/link";
 import { Typography } from "uper-ui/typography";
 import { getAllReports } from "@/services/api/reportService";
 
@@ -55,7 +55,10 @@ export function FmitHomePageView() {
         </Link>
 
         {activeTicketId !== null ? (
-          <Link to="/fm-it/ticket-detail/$id">
+          <Link 
+            to="/fm-it/ticket-detail/$id"
+            params={{ id: String(activeTicketId) }}
+          >
             <div className="flex items-center gap-3 rounded-2xl bg-primary px-5 py-4 text-white">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl">
                 <BillIcon className="h-12 w-12" color="white" />

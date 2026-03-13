@@ -285,10 +285,11 @@ export function TicketListView() {
               </div>
 
               <div className="flex flex-row items-center justify-between gap-2">
-                <div className="flex w-[284px] items-center">
+                <div className="flex flex-1 items-center">
                   <Input
                     size="lg"
                     placeholder="Cari laporan..."
+                    className="w-full"
                     startIcon={
                       <SearchIcon className="size-5 text-muted-foreground" />
                     }
