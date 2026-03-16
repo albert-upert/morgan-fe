@@ -6,6 +6,11 @@ import {
 } from "@tanstack/react-router";
 import { Header } from "@/components/header";
 import { getUser } from "@/lib/auth";
+import type { Me } from "@/services/user/types.gen";
+
+export type LayoutUser = Omit<Me, "metadata"> & {
+  metadata?: Record<string, string>;
+};
 
 export const Route = createFileRoute("/_layout")({
   beforeLoad: async ({ location, context }) => {
@@ -19,6 +24,8 @@ export const Route = createFileRoute("/_layout")({
       });
     }
   },
+  loader: ({ context }) =>
+    getUser(context.queryClient) as Promise<LayoutUser | null>,
   component: Layout,
 });
 

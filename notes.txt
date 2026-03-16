@@ -1,0 +1,32 @@
+1. $module/home.tsx
+/fm-it/...
+/lecturer/...
+/hk/...
+CHANGING
+I. FM-IT
+a. notification/index.tsx -> https://localhost:8080/notification/
+c. ticket-list.tsx -> https://localhost:8080/ticket/ GET ALL
+b. ticket-detail.$id.tsx || ticket/$id.tsx -> https://localhost:8080/ticket/$id GET by ID
+
+II. HOUSEKEEPING
+a. checklist-dashboard.tsx -> checklist/index.tsx -> https://localhost:8080/checklist
+b. checklist-report.tsx -> checklist/$id.tsx -> https://localhost:8080/checklist/$id ($id = id room asset)
+c. report-history.tsx -> history/index.tsx -> https://localhost:8080/history
+d. room-checklist.$id.tsx -> daily-checking/index.tsx -> https://localhost:8080/daily-checking -> CREATE TICKET
+
+III. LECTURER
+a. my-report.tsx -> my-report/$index.tsx -> https://localhost:8080/ticket
+b. report-detail-page.tsx & report-success.tsx -> report/$id.tsx -> https://localhost:8080/ticket/$id
+...
+
+TICKET:
+CREATE: LECTURER & HOUSEKEEPING
+READ ALL: 
+READ BY ID: HK & LECTURER & FM-IT
+UPDATE: -
+DELETE: -
+
+CHECKLIST:
+CREATE: HK
+READ: SUPERVISOR
+DETAIL: HK & SUPERVISOR

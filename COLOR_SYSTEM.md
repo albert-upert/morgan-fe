@@ -1,6 +1,6 @@
-# SIAKUP Color System
+# MORGAN Color System
 
-This document outlines the complete color system for the SIAKUP application based on the design system.
+This document outlines the complete color system for the MORGAN application based on the design system.
 
 ## Color Palettes
 

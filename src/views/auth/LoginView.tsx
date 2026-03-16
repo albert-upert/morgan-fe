@@ -1,96 +1,123 @@
-import { useNavigate } from "@tanstack/react-router";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import type { FormEvent } from "react";
 import { Button } from "uper-ui/button";
 import { Input } from "uper-ui/input";
+import { Typography } from "uper-ui/typography";
+import { loginFn } from "@/lib/auth";
+
+const TEST_USERS = [
+  { username: "dosen", label: "Dosen" },
+  { username: "fm-it", label: "IT Support" },
+  { username: "house-keeping", label: "House Keeping" },
+  { username: "supervisor", label: "Supervisor" },
+  { username: "admin", label: "Admin Sistem" },
+];
 
 export function LoginView() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = useCallback((event: FormEvent) => {
+  const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
-    // Fake login - just store a token and redirect
-    localStorage.setItem("auth_token", "fake-token-12345");
-    navigate({ to: "/" });
-  }, []);
+    setError("");
+    setLoading(true);
+
+    try {
+      const result = await loginFn({ data: { username, password } });
+
+      if (!result.success) {
+        setError("message" in result ? result.message : "Login failed");
+        return;
+      }
+
+      window.location.href = "/";
+    } catch {
+      setError("An unexpected error occurred");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleQuickLogin = (testUsername: string) => {
+    setUsername(testUsername);
+    setPassword(testUsername);
+  };
 
   return (
-    <div className="relative grid min-h-screen w-full grid-cols-1 overflow-hidden md:grid-cols-2">
-      <div className="bg-accent1 absolute inset-0 hidden w-1/2 origin-top-left -skew-x-6 transform md:block"></div>
-      <div className="bg-accent1 absolute inset-0 h-1/2 origin-top-left -skew-y-6 transform md:hidden"></div>
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
+      <div className="w-full max-w-md space-y-6 rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
+        <div className="text-center">
+          <Typography variant="h5">MORGAN</Typography>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Sistem Pelaporan Aset Universitas Pertamina
+          </p>
+        </div>
 
-      <div className="relative mt-4 flex flex-col items-center justify-center">
-        <h1 className="font-quicksand mb-4 text-center text-2xl font-bold text-primary md:text-3xl">
-          Pet Store Manager
-        </h1>
-        <img
-          src="/images/Illustration.png"
-          width={500}
-          height={500}
-          alt="Ilustration"
-          loading="lazy"
-          className="md:max-w-full"
-        />
-      </div>
-      <div className="flex flex-col items-center justify-center bg-white p-8">
-        <div className="z-10 flex h-full w-full max-w-md flex-col items-center justify-center">
-          <img
-            src="/images/RAPIDnet-blue.png"
-            width={200}
-            height={200}
-            alt="RAPIDnet-blue"
-            className="mb-4"
-            loading="lazy"
+        {error && (
+          <div className="rounded-md bg-red-50 p-3 text-sm text-red-600">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleLogin} className="space-y-4">
+          <Input
+            id="username"
+            label="Username"
+            type="text"
+            placeholder="Enter your username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            className="w-full"
           />
-          <h2 className="mb-8 text-2xl font-bold text-primary md:text-3xl">
-            Sign in to your account
-          </h2>
 
-          <form onSubmit={handleLogin} className="w-full space-y-4">
-            <Input
-              id="email"
-              label="Email"
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full"
-            />
+          <Input
+            id="password"
+            label="Password"
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full"
+          />
 
-            <Input
-              id="password"
-              label="Password"
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full"
-            />
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full"
+            size="lg"
+            variant="primary"
+          >
+            {loading ? "Signing in..." : "Sign In"}
+          </Button>
+        </form>
 
-            <Button
-              type="submit"
-              className="w-full rounded-full bg-primary px-4 py-2 text-lg font-medium text-white shadow-md hover:bg-primary/90"
-            >
-              Sign In
-            </Button>
-          </form>
-
-          <p className="mt-4 text-sm text-muted-foreground">
-            Demo credentials: any email and password will work
+        <div className="space-y-3 border-t pt-4">
+          <p className="text-center text-xs font-medium text-muted-foreground">
+            Test Users (click to autofill)
           </p>
+          <div className="grid grid-cols-2 gap-2">
+            {TEST_USERS.map((user) => (
+              <Button
+                key={user.username}
+                type="button"
+                variant="outline"
+                size="md"
+                className="w-full text-xs"
+                onClick={() => handleQuickLogin(user.username)}
+              >
+                {user.label}
+              </Button>
+            ))}
+          </div>
         </div>
-        <div className="mt-8 text-center md:mt-auto">
-          <h5 className="text-sm font-bold text-primary md:text-base">
-            Siakup
-          </h5>
-          <p className="text-xs text-primary md:text-sm">
-            Developed by @sanakdam
-          </p>
-        </div>
+
+        <p className="text-center text-xs text-muted-foreground">
+          Developed by MORGAN Team
+        </p>
       </div>
     </div>
   );

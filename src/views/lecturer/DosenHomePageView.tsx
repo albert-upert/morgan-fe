@@ -57,7 +57,7 @@ export function DosenHomePageView() {
 
   const toScanPage = useCallback(() => {
     navigate({
-      to: "/lecturer/scan",
+      to: "/scan",
     });
   }, [navigate]);
 
