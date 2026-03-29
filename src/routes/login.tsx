@@ -1,13 +1,36 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getUser } from "@/lib/auth";
+import {
+  normalizeRedirectSearchParam,
+  resolvePostLoginDestination,
+} from "@/lib/login-redirect";
 import { LoginView } from "@/views/auth/LoginView";
 
+export type LoginSearch = {
+  redirect?: string;
+};
+
 export const Route = createFileRoute("/login")({
-  beforeLoad: async ({ context }) => {
+  validateSearch: (raw: Record<string, unknown>): LoginSearch => ({
+    redirect: normalizeRedirectSearchParam(raw.redirect),
+  }),
+  beforeLoad: async ({ context, location, search }) => {
     const user = await getUser(context.queryClient);
     if (user) {
-      throw redirect({ to: "/" });
+      const roleKey = user.roles?.[0]?.role_name ?? "";
+      throw redirect({
+        to: resolvePostLoginDestination(
+          search.redirect,
+          location.href,
+          roleKey
+        ),
+      });
     }
   },
-  component: LoginView,
+  component: LoginRoutePage,
 });
+
+function LoginRoutePage() {
+  const { redirect: redirectTo } = Route.useSearch();
+  return <LoginView redirectTo={redirectTo} />;
+}

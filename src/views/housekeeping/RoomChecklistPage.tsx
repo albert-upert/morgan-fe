@@ -256,7 +256,7 @@ function paginateAssets(
 
 export function RoomChecklistView() {
   const { id: _roomId } = useParams({
-    from: "/_layout/housekeeping/room-checklist/$id",
+    from: "/_layout/daily-checking/$id",
   });
   const navigate = useNavigate();
 
@@ -420,7 +420,7 @@ export function RoomChecklistView() {
       setReportingAssets([]);
       setReportingIds(new Set()); // Clear reporting IDs after submit
       navigate({
-        to: "/housekeeping/checklist-report/$id",
+        to: "/checklist/$id",
         params: { id: _roomId },
         search: { status: "issue" },
       });
@@ -442,7 +442,7 @@ export function RoomChecklistView() {
     toast.success("Laporan berhasil dikirim!");
     setShowAllOkConfirm(false);
     navigate({
-      to: "/housekeeping/checklist-report/$id",
+      to: "/checklist/$id",
       params: { id: _roomId },
       search: { status: "ok" },
     });
@@ -466,7 +466,7 @@ export function RoomChecklistView() {
   // Handlers: back to checklist dashboard
   const toHomePage = useCallback(() => {
     navigate({
-      to: "/housekeeping/checklist-dashboard",
+      to: "/checklist",
     });
   }, [navigate]);
 

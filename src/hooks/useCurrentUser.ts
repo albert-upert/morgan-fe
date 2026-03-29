@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { getRoleSync } from "@/lib/cookie";
 
 const layoutRoute = getRouteApi("/_layout");
-const isDev = import.meta.env.VITE_ENV === "development";
+const isDev = import.meta.env.DEV || import.meta.env.VITE_ENV === "development";
 
 const APPROVER_LABEL: Record<string, string> = {
   "akademik-prodi": "Akademik Prodi",

@@ -127,7 +127,7 @@ export function MyReportView() {
   const toReportDetailPage = useCallback(
     (id: string) => {
       navigate({
-        to: "/lecturer/report-detail-page/$id",
+        to: "/ticket/$id",
         params: { id: id },
       });
     },
@@ -240,7 +240,7 @@ export function MyReportView() {
                   <Button
                     variant="primary"
                     className="w-full"
-                    onClick={() => toReportDetailPage(String(r.id))}
+                    onClick={() => toReportDetailPage(r.routeId)}
                   >
                     Lihat Detail Laporan
                   </Button>

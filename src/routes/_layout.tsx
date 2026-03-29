@@ -4,8 +4,10 @@ import {
   redirect,
   useLocation,
 } from "@tanstack/react-router";
+import { useCallback } from "react";
 import { Header } from "@/components/header";
-import { getUser } from "@/lib/auth";
+import { getUser, logoutFn } from "@/lib/auth";
+import { clearSessionCookiesClient } from "@/lib/cookie";
 import type { Me } from "@/services/user/types.gen";
 
 export type LayoutUser = Omit<Me, "metadata"> & {
@@ -34,6 +36,19 @@ function Layout() {
   const isHomePage = pathname.endsWith("/home");
   const isScanPage = pathname.endsWith("/scan");
 
+  const handleLogout = useCallback(() => {
+    // Fire-and-forget: dropdown `onSelect` may not await async; defer full flow.
+    void (async () => {
+      try {
+        await logoutFn();
+      } catch {
+        /* server fn may fail; still clear client cookies and leave */
+      }
+      clearSessionCookiesClient();
+      window.location.assign("/login");
+    })();
+  }, []);
+
   return (
     <div
       id="dashboard-layout"
@@ -43,11 +58,11 @@ function Layout() {
         <>
           {isHomePage ? (
             <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] bg-linear-to-l from-navbar-gradient-end to-background">
-              <Header />
+              <Header onLogoutClick={handleLogout} />
             </div>
           ) : (
             <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] border-b border-border">
-              <Header />
+              <Header onLogoutClick={handleLogout} />
             </div>
           )}
         </>

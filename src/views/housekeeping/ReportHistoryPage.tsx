@@ -49,7 +49,7 @@ export function ReportHistoryPage() {
             .map((report) => (
               <Link
                 key={report.id}
-                to="/housekeeping/checklist-report/$id"
+                to="/checklist/$id"
                 params={{ id: report.room }}
                 className="block"
               >

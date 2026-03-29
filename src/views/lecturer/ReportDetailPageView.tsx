@@ -1,4 +1,4 @@
-import { useParams } from "@tanstack/react-router";
+import { Link, getRouteApi } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import { Button } from "uper-ui/button";
@@ -14,11 +14,13 @@ import {
   FileIcon,
   OpenIcon,
 } from "uper-ui/icon";
-import { Link } from "uper-ui/link";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
+import { normalizeTicketRouteId } from "@/lib/ticket-route-id";
 import { ConfirmCompletionModal } from "@/views/lecturer/ConfirmCompletionModal";
 import { ReportAgainModal } from "@/views/lecturer/ReportAgainModal";
+
+const ticketDetailRoute = getRouteApi("/_layout/ticket/$id");
 
 type ReportIssueType = "Rusak" | "Kurang" | "Hilang";
 
@@ -99,7 +101,8 @@ export function ReportDetailPageView() {
     );
   }
 
-  const { id } = useParams({ strict: false });
+  const { id: rawId } = ticketDetailRoute.useParams();
+  const id = normalizeTicketRouteId(rawId);
   const [openAssetId, setOpenAssetId] = useState<string | null>(null);
   const [openConfirmCompletion, setOpenConfirmCompletion] = useState(false);
   const [openReportAgain, setOpenReportAgain] = useState(false);
@@ -366,7 +369,7 @@ export function ReportDetailPageView() {
   return (
     <div className="pt-4 pb-6">
       <Link
-        to="/lecturer/my-report"
+        to="/ticket"
         className="inline-flex items-center gap-2 text-red-500"
         aria-label="Kembali ke Daftar Laporan"
       >

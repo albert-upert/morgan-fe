@@ -4,6 +4,8 @@ import { Button } from "uper-ui/button";
 import { Input } from "uper-ui/input";
 import { Typography } from "uper-ui/typography";
 import { loginFn } from "@/lib/auth";
+import { setDevMockSessionCookiesClient } from "@/lib/cookie";
+import { resolvePostLoginDestination } from "@/lib/login-redirect";
 
 const TEST_USERS = [
   { username: "dosen", label: "Dosen" },
@@ -13,26 +15,39 @@ const TEST_USERS = [
   { username: "admin", label: "Admin Sistem" },
 ];
 
-export function LoginView() {
+type LoginViewProps = {
+  /** From `?redirect=` when redirected from a protected route. */
+  redirectTo?: string;
+};
+
+export function LoginView({ redirectTo }: LoginViewProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (event: FormEvent) => {
-    event.preventDefault();
+  const completeLogin = async (user: string, pass: string) => {
     setError("");
     setLoading(true);
-
     try {
-      const result = await loginFn({ data: { username, password } });
+      const result = await loginFn({
+        data: { username: user, password: pass },
+      });
 
       if (!result.success) {
         setError("message" in result ? result.message : "Login failed");
         return;
       }
 
-      window.location.href = "/";
+      if ("mock" in result && result.mock) {
+        setDevMockSessionCookiesClient(user);
+      }
+
+      window.location.href = resolvePostLoginDestination(
+        redirectTo,
+        window.location.href,
+        user
+      );
     } catch {
       setError("An unexpected error occurred");
     } finally {
@@ -40,9 +55,16 @@ export function LoginView() {
     }
   };
 
+  const handleLogin = async (event: FormEvent) => {
+    event.preventDefault();
+    await completeLogin(username, password);
+  };
+
+  /** Logs in immediately — does not rely on input state (avoids empty-field submits). */
   const handleQuickLogin = (testUsername: string) => {
     setUsername(testUsername);
     setPassword(testUsername);
+    void completeLogin(testUsername, testUsername);
   };
 
   return (
@@ -107,7 +129,11 @@ export function LoginView() {
                 variant="outline"
                 size="md"
                 className="w-full text-xs"
-                onClick={() => handleQuickLogin(user.username)}
+                disabled={loading}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleQuickLogin(user.username);
+                }}
               >
                 {user.label}
               </Button>

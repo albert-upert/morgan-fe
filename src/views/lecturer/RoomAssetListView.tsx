@@ -160,8 +160,9 @@ export function RoomAssetListView() {
       setSelectedIds(new Set());
 
       navigate({
-        to: "/lecturer/report-success/$id",
+        to: "/ticket/$id",
         params: { id: roomId },
+        search: { success: true },
       });
     },
     onError: () => {

@@ -106,7 +106,7 @@ export function ScanPageView() {
   const handleQRDetected = useCallback(
     (qrText: string) => {
       navigate({
-        to: "/housekeeping/room-checklist/$id",
+        to: "/daily-checking/$id",
         params: { id: qrText || "0001" },
       });
     },
@@ -114,7 +114,7 @@ export function ScanPageView() {
   );
 
   const handleNavigateBack = useCallback(() => {
-    navigate({ to: "/housekeeping/checklist-dashboard" });
+    navigate({ to: "/checklist" });
   }, [navigate]);
 
   const handleFlashlight = useCallback(() => {

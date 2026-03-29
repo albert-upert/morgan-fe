@@ -88,7 +88,7 @@ export function ChecklistDashboardView() {
 
   const toScanPage = useCallback(() => {
     navigate({
-      to: "/housekeeping/scan", // TBF: /scan
+      to: "/scan",
     });
   }, [navigate]);
 
@@ -148,6 +148,7 @@ export function ChecklistDashboardView() {
           <div className="flex flex-col gap-2">
             {data_report.workAreas.map((area) => (
               <Tag
+                key={area.id}
                 type="with-border"
                 className="w-full justify-between rounded-sm border-gray-400 bg-gray-200 px-2 py-1"
               >

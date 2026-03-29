@@ -9,7 +9,7 @@ import {
 export const MAIN_MENU_LIST_CONFIG = [
   {
     id: 1,
-    to: "/lecturer/my-report",
+    to: "/ticket",
     icon: MailIcon,
     title: "Daftar Laporan",
     description: "Lihat daftar laporan anda",
@@ -17,7 +17,7 @@ export const MAIN_MENU_LIST_CONFIG = [
   },
   {
     id: 2,
-    to: "/housekeeping/checklist-dashboard",
+    to: "/checklist",
     icon: MailIcon,
     title: "Daftar Ruangan",
     description: "Lihat daftar ruangan yang harus di cek",
@@ -25,7 +25,7 @@ export const MAIN_MENU_LIST_CONFIG = [
   },
   {
     id: 3,
-    to: "/housekeeping/report-history",
+    to: "/history",
     icon: FileIcon,
     title: "Daftar Laporan",
     description: "Lihat daftar laporan anda",

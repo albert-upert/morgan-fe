@@ -1,4 +1,4 @@
-import { Link, useParams } from "@tanstack/react-router";
+import { Link, getRouteApi } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Button } from "uper-ui/button";
 import { Card, CardContent } from "uper-ui/card";
@@ -14,8 +14,11 @@ import {
 } from "uper-ui/icon";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
+import { normalizeTicketRouteId } from "@/lib/ticket-route-id";
 import { readLastReportSuccess } from "@/services/morgan/report-success-store";
 import type { ReportSuccessIssue } from "@/services/morgan/report-success-store";
+
+const ticketDetailRoute = getRouteApi("/_layout/ticket/$id");
 
 export function ReportSuccessView() {
   function formatDateTime(iso: string) {
@@ -31,7 +34,8 @@ export function ReportSuccessView() {
     });
   }
 
-  const { id } = useParams({ strict: false });
+  const { id: rawId } = ticketDetailRoute.useParams();
+  const id = normalizeTicketRouteId(rawId);
   const data = useMemo(() => readLastReportSuccess(), []);
   const [openAssetId, setOpenAssetId] = useState<string | null>(null);
   const [snackbarOpen, setSnackbarOpen] = useState(true);
