@@ -7,7 +7,7 @@ import {
   setCookie,
 } from "@tanstack/react-start/server";
 import { getUsersMeOptions } from "@/services/user/@tanstack/react-query.gen";
-import { getTokenSync } from "./cookie";
+import { getRoleSync, getTokenSync } from "./cookie";
 
 const COOKIE_NAME = "access_token";
 
@@ -75,6 +75,10 @@ export const logoutFn = createServerFn({ method: "POST" }).handler(() => {
     domain: getCookieDomain(),
     path: "/",
   });
+  deleteCookie("dev_role", {
+    domain: getCookieDomain(),
+    path: "/",
+  });
   return { success: true };
 });
 
@@ -83,14 +87,103 @@ export const getTokenFn = createServerFn({ method: "GET" }).handler(() => {
   return token || null;
 });
 
+export const getDevRoleFn = createServerFn({ method: "GET" }).handler(() => {
+  const role = getCookie("dev_role");
+  return role || null;
+});
+
 export const getToken = async () => {
   const isServer = typeof window === "undefined";
   return isServer ? await getTokenFn() : (getTokenSync() ?? null);
 };
 
+export const getDevRole = async () => {
+  const isServer = typeof window === "undefined";
+  return isServer ? await getDevRoleFn() : (getRoleSync() ?? null);
+};
+
+// Mock user data generator untuk development mode
+function generateMockUser(role: string) {
+  const normalizedRole = role.trim().toLowerCase();
+
+  type MockUser = {
+    id: string;
+    institution_id: string;
+    status: string;
+    metadata: {
+      full_name: string;
+    };
+    roles: Array<{
+      role_name: string;
+      id: string;
+    }>;
+    groups: Array<unknown>;
+    permissions: Array<string>;
+  };
+
+  const mockUsers: Record<string, MockUser> = {
+    lecturer: {
+      id: "mock-lecturer-001",
+      institution_id: "up-001",
+      status: "active",
+      metadata: { full_name: "Dr. Lecturer Test" },
+      roles: [{ role_name: "lecturer", id: "role-lecturer" }],
+      groups: [],
+      permissions: ["view_report", "create_report"],
+    },
+    "fm-it": {
+      id: "mock-fmit-001",
+      institution_id: "up-001",
+      status: "active",
+      metadata: { full_name: "IT Support Officer" },
+      roles: [{ role_name: "fm-it", id: "role-fmit" }],
+      groups: [],
+      permissions: ["view_ticket", "create_ticket", "update_ticket"],
+    },
+    hk: {
+      id: "mock-hk-001",
+      institution_id: "up-001",
+      status: "active",
+      metadata: { full_name: "House Keeping Staff" },
+      roles: [{ role_name: "hk", id: "role-hk" }],
+      groups: [],
+      permissions: ["create_checklist", "view_report"],
+    },
+    supervisor: {
+      id: "mock-supervisor-001",
+      institution_id: "up-001",
+      status: "active",
+      metadata: { full_name: "Supervisor" },
+      roles: [{ role_name: "supervisor", id: "role-supervisor" }],
+      groups: [],
+      permissions: ["approve_checklist", "view_all"],
+    },
+    admin: {
+      id: "mock-admin-001",
+      institution_id: "up-001",
+      status: "active",
+      metadata: { full_name: "Admin Sistem" },
+      roles: [{ role_name: "admin", id: "role-admin" }],
+      groups: [],
+      permissions: ["all"],
+    },
+  };
+
+  return mockUsers[normalizedRole] ?? mockUsers.lecturer;
+}
+
 export const getUser = async (queryClient: QueryClient) => {
   const token = await getToken();
   if (!token) return null;
+
+  const isDev = import.meta.env.VITE_ENV === "development";
+
+  // Development mode: return mock user when using dummy token
+  if (isDev && token === "test-it-session-01") {
+    const devRole = await getDevRole();
+    const mockUser = generateMockUser(devRole || "lecturer");
+    return mockUser;
+  }
 
   try {
     const data = await queryClient.fetchQuery({

@@ -25,7 +25,7 @@ export function FmitNotificationPageView() {
 
   const home = () => {
     navigate({
-      href: "/fm-it/home",
+      href: "/",
     });
   };
 

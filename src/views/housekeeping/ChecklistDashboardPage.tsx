@@ -81,14 +81,13 @@ export function ChecklistDashboardView() {
 
   const toHomePage = useCallback(() => {
     navigate({
-      to: "/$module/home",
-      params: { module: "housekeeping" },
+      to: "/",
     });
   }, [navigate]);
 
   const toScanPage = useCallback(() => {
     navigate({
-      to: "/housekeeping/scan", // TBF: /scan
+      to: "/scan",
     });
   }, [navigate]);
 

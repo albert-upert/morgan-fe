@@ -160,7 +160,7 @@ export function RoomAssetListView() {
       setSelectedIds(new Set());
 
       navigate({
-        to: "/lecturer/report-success/$id",
+        to: "/report-success/$id",
         params: { id: roomId },
       });
     },
@@ -172,8 +172,7 @@ export function RoomAssetListView() {
   return (
     <div className="pt-4">
       <Link
-        to="/$module/home"
-        params={{ module: "lecturer" }}
+        to="/"
         className="inline-flex items-center gap-2 text-red-500"
         aria-label="Kembali ke Beranda"
       >

@@ -1,3 +1,4 @@
+import type { ComponentType } from "react";
 import {
   AttendanceIcon,
   BillIcon,
@@ -6,53 +7,107 @@ import {
   NotificationIcon,
 } from "uper-ui/icon";
 
-export const MAIN_MENU_LIST_CONFIG = [
+export type AppRole = "lecturer" | "hk" | "supervisor" | "fm-it" | "admin";
+
+export type MainMenuFeature =
+  | "daftarLaporanDosen"
+  | "daftarRuangan"
+  | "daftarLaporanHk"
+  | "lihatAmbilTiket"
+  | "tiketAnda"
+  | "riwayatTiketAnda";
+
+type MainMenuItem = {
+  id: number;
+  feature: MainMenuFeature;
+  to: string;
+  icon: ComponentType<{ className?: string }>;
+  title: string;
+  description: string;
+  variant: "primary";
+  allowedRoles: ReadonlyArray<AppRole>;
+};
+
+export function resolveAppRole(roleName?: string | null): AppRole | null {
+  const normalizedRole = (roleName ?? "").trim().toLowerCase();
+  if (
+    normalizedRole === "lecturer" ||
+    normalizedRole === "fm-it" ||
+    normalizedRole === "hk" ||
+    normalizedRole === "admin" ||
+    normalizedRole === "supervisor"
+  ) {
+    return normalizedRole;
+  }
+  return null;
+}
+
+export const MAIN_MENU_LIST_CONFIG: ReadonlyArray<MainMenuItem> = [
   {
     id: 1,
-    to: "/lecturer/my-report",
+    feature: "daftarLaporanDosen",
+    to: "/my-report",
     icon: MailIcon,
     title: "Daftar Laporan",
     description: "Lihat daftar laporan anda",
     variant: "primary",
+    allowedRoles: ["lecturer"],
   },
   {
     id: 2,
-    to: "/housekeeping/checklist-dashboard",
+    feature: "daftarRuangan",
+    to: "/checklist-dashboard",
     icon: MailIcon,
     title: "Daftar Ruangan",
     description: "Lihat daftar ruangan yang harus di cek",
     variant: "primary",
+    allowedRoles: ["hk"],
   },
   {
     id: 3,
-    to: "/housekeeping/report-history",
+    feature: "daftarLaporanHk",
+    to: "/report-history",
     icon: FileIcon,
     title: "Daftar Laporan",
     description: "Lihat daftar laporan anda",
     variant: "primary",
+    allowedRoles: ["hk"],
   },
   {
     id: 4,
-    to: "/fm-it/ticket-list",
+    feature: "lihatAmbilTiket",
+    to: "/ticket-list",
     icon: NotificationIcon,
     title: "Lihat dan Ambil Tiket",
     description: "Lihat daftar laporan tiket",
     variant: "primary",
+    allowedRoles: ["fm-it"],
   },
   {
     id: 5,
-    to: "/fm-it/ticket-detail",
+    feature: "tiketAnda",
+    to: "/ticket-list",
     icon: BillIcon,
     title: "Tiket Anda",
     description: "Lihat detail status tiket yang anda kerjakan",
     variant: "primary",
+    allowedRoles: ["fm-it"],
   },
   {
     id: 6,
-    to: "/fm-it/ticket-list",
+    feature: "riwayatTiketAnda",
+    to: "/ticket-list",
     icon: AttendanceIcon,
     title: "Riwayat Tiket Anda",
     description: "Daftar laporan yang pernah anda kerjakan",
     variant: "primary",
+    allowedRoles: ["fm-it"],
   },
-] as const;
+];
+
+export function getMainMenuByRole(role: AppRole | null) {
+  if (!role) return [];
+  return MAIN_MENU_LIST_CONFIG.filter((menu) =>
+    menu.allowedRoles.includes(role)
+  );
+}
