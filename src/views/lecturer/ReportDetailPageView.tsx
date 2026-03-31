@@ -366,7 +366,7 @@ export function ReportDetailPageView() {
   return (
     <div className="pt-4 pb-6">
       <Link
-        to="/lecturer/my-report"
+        to="/my-report"
         className="inline-flex items-center gap-2 text-red-500"
         aria-label="Kembali ke Daftar Laporan"
       >

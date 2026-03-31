@@ -142,7 +142,7 @@ export function TicketListView() {
         setSelectedReport(item);
       } else {
         navigate({
-          to: "/fm-it/ticket-detail/$id",
+          to: "/ticket-detail/$id",
           params: {
             id: String(item.id),
           },

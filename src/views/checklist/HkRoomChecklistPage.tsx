@@ -1,17 +1,6 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
-import {
-  Button,
-  Card,
-  CardContent,
-  Checkbox,
-  Dialog,
-  DialogBody,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  Typography,
-} from "uper-ui";
+import { Button, Card, CardContent, Checkbox, Typography } from "uper-ui";
 import { Accordion } from "uper-ui/accordion";
 import {
   Dropdown,
@@ -35,11 +24,12 @@ import { Input } from "uper-ui/input";
 import { Pagination } from "uper-ui/pagination";
 import { Tag } from "uper-ui/tags";
 import { toast } from "uper-ui/toast";
-import { ReportConditionModal } from "./ReportConditionModal";
+import { IssueReportModal } from "@/views/checklist/checklistModal/ReportIssueModal";
 import type {
-  MismatchAsset,
-  ReportMismatchPayload,
-} from "./ReportConditionModal";
+  IssueReportAsset,
+  IssueReportPayload,
+} from "@/views/checklist/checklistModal/ReportIssueModal";
+import { ReportIssueValidationModal } from "@/views/checklist/checklistModal/ReportIssueValidationModal";
 
 type AssetStatus = "reported" | "unchecked";
 type AssetCategory = "all" | "elektronik" | "furniture" | "lainnya";
@@ -254,9 +244,9 @@ function paginateAssets(
   return assets.slice(startIndex, startIndex + pageSize);
 }
 
-export function RoomChecklistView() {
+export function HkRoomChecklistPage() {
   const { id: _roomId } = useParams({
-    from: "/_layout/housekeeping/room-checklist/$id",
+    from: "/_layout/room-checklist/$id",
   });
   const navigate = useNavigate();
 
@@ -270,10 +260,13 @@ export function RoomChecklistView() {
   const [sortOrder, setSortOrder] = useState<SortOrder>("asc");
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
+  const [showValidationModal, setShowValidationModal] = useState(false);
   const [showAllOkConfirm, setShowAllOkConfirm] = useState(false);
-  const [reportingAssets, setReportingAssets] = useState<Array<MismatchAsset>>(
-    []
-  );
+  const [reportingAssets, setReportingAssets] = useState<
+    Array<IssueReportAsset>
+  >([]);
+  const [pendingPayload, setPendingPayload] =
+    useState<IssueReportPayload | null>(null);
   const pageSize = 6;
 
   const categoryOptions = [
@@ -395,7 +388,7 @@ export function RoomChecklistView() {
           return next;
         });
       } else {
-        // Start reporting - tandai sebagai bermasalah (BELUM buka modal)
+        // Start reporting - tandai sebagai bermasalah
         setReportingIds((prev) => new Set(prev).add(assetId));
       }
 
@@ -412,15 +405,17 @@ export function RoomChecklistView() {
 
   // Handlers: submit report
   const handleSubmitReport = useCallback(
-    (_payload: ReportMismatchPayload) => {
+    (_payload: IssueReportPayload) => {
       toast.success("Laporan berhasil dikirim!");
 
       // Reset state
+      setShowValidationModal(false);
       setShowReportModal(false);
       setReportingAssets([]);
-      setReportingIds(new Set()); // Clear reporting IDs after submit
+      setReportingIds(new Set());
+      setPendingPayload(null);
       navigate({
-        to: "/housekeeping/checklist-report/$id",
+        to: "/checklist-report/$id",
         params: { id: _roomId },
         search: { status: "issue" },
       });
@@ -432,7 +427,7 @@ export function RoomChecklistView() {
   // Handlers: modal close
   const handleModalClose = useCallback((open: boolean) => {
     if (!open) {
-      // When modal closes without submitting, keep reportingIds (user masih bisa edit)
+      // When modal closes without submitting, keep reportingIds
       setReportingAssets([]);
     }
     setShowReportModal(open);
@@ -442,7 +437,7 @@ export function RoomChecklistView() {
     toast.success("Laporan berhasil dikirim!");
     setShowAllOkConfirm(false);
     navigate({
-      to: "/housekeeping/checklist-report/$id",
+      to: "/checklist-report/$id",
       params: { id: _roomId },
       search: { status: "ok" },
     });
@@ -466,7 +461,7 @@ export function RoomChecklistView() {
   // Handlers: back to checklist dashboard
   const toHomePage = useCallback(() => {
     navigate({
-      to: "/housekeeping/checklist-dashboard",
+      to: "/checklist-dashboard",
     });
   }, [navigate]);
 
@@ -888,52 +883,38 @@ export function RoomChecklistView() {
       </div>
 
       {/* Report Modal */}
-      <ReportConditionModal
+      <IssueReportModal
         open={showReportModal}
         onOpenChange={handleModalClose}
         assets={reportingAssets}
-        onSubmit={handleSubmitReport}
+        onRequestSubmit={(payload) => {
+          setPendingPayload(payload);
+          setShowReportModal(false);
+          setShowValidationModal(true);
+        }}
       />
 
-      {/* All OK Confirm Modal */}
-      <Dialog open={showAllOkConfirm} onOpenChange={setShowAllOkConfirm}>
-        <DialogContent
-          className="w-full rounded-2xl p-0 data-[side=center]:top-1/2 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm data-[side=center]:-translate-y-1/2"
-          showCloseButton={false}
-        >
-          <DialogHeader className="justify-center border-b border-gray-300 bg-gray-100">
-            <Typography variant="h5" className="text-gray-800">
-              Tunggu Sebentar
-            </Typography>
-          </DialogHeader>
-          <DialogBody className="border-0 bg-white">
-            <Typography
-              variant="body-medium"
-              className="text-center text-gray-800"
-            >
-              Apakah anda yakin semua aset telah memenuhi standar SOP?
-            </Typography>
-          </DialogBody>
-          <DialogFooter className="flex gap-3 rounded-b-lg bg-white px-4 pb-3">
-            <Button
-              onClick={() => setShowAllOkConfirm(false)}
-              className="flex-1 border border-red-500 bg-white text-red-500 active:bg-white"
-            >
-              <Typography variant="body-medium" className="text-red-500">
-                Cek Kembali
-              </Typography>
-            </Button>
-            <Button
-              onClick={handleConfirmAllOk}
-              className="flex-1 bg-red-500 text-white hover:bg-red-600 active:bg-red-500"
-            >
-              <Typography variant="body-medium" className="text-white">
-                Ya, Laporkan
-              </Typography>
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <ReportIssueValidationModal
+        open={showValidationModal}
+        onOpenChange={setShowValidationModal}
+        onBack={() => {
+          setShowValidationModal(false);
+          setShowReportModal(true);
+        }}
+        onConfirm={() => {
+          if (!pendingPayload) return;
+          handleSubmitReport(pendingPayload);
+        }}
+      />
+
+      <ReportIssueValidationModal
+        open={showAllOkConfirm}
+        onOpenChange={setShowAllOkConfirm}
+        onBack={() => setShowAllOkConfirm(false)}
+        onConfirm={handleConfirmAllOk}
+        message="Apakah anda yakin semua aset telah memenuhi standar SOP?"
+        description="Konfirmasi sebelum mengirim laporan kondisi semua aset sesuai SOP."
+      />
     </div>
   );
 }

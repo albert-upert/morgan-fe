@@ -67,7 +67,7 @@ export function ChecklistReportView() {
 
   const toReportHistoryPage = useCallback(() => {
     navigate({
-      to: "/housekeeping/report-history",
+      to: "/report-history",
     });
   }, [navigate]);
 

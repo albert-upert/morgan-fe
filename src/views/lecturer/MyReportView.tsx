@@ -119,15 +119,14 @@ export function MyReportView() {
 
   const toHomePage = useCallback(() => {
     navigate({
-      to: "/$module/home",
-      params: { module: "lecturer" },
+      to: "/",
     });
   }, [navigate]);
 
   const toReportDetailPage = useCallback(
     (id: string) => {
       navigate({
-        to: "/lecturer/report-detail-page/$id",
+        to: "/report-detail-page/$id",
         params: { id: id },
       });
     },

@@ -3,9 +3,12 @@ import {
   createFileRoute,
   redirect,
   useLocation,
+  useNavigate,
 } from "@tanstack/react-router";
 import { Header } from "@/components/header";
-import { getUser } from "@/lib/auth";
+import { getUser, logoutFn } from "@/lib/auth";
+import { resolveAppRole } from "@/lib/main-menu-list.config";
+import { canAccessPath } from "@/lib/route-authorization";
 import type { Me } from "@/services/user/types.gen";
 
 export type LayoutUser = Omit<Me, "metadata"> & {
@@ -23,6 +26,16 @@ export const Route = createFileRoute("/_layout")({
         },
       });
     }
+
+    const roleName = user.roles?.[0]?.role_name;
+    const role = resolveAppRole(roleName);
+
+    if (!role || !canAccessPath(role, location.pathname)) {
+      throw redirect({
+        to: "/",
+        replace: true,
+      });
+    }
   },
   loader: ({ context }) =>
     getUser(context.queryClient) as Promise<LayoutUser | null>,
@@ -31,8 +44,21 @@ export const Route = createFileRoute("/_layout")({
 
 function Layout() {
   const { pathname } = useLocation();
-  const isHomePage = pathname.endsWith("/home");
+  const navigate = useNavigate();
+  const isHomePage = pathname === "/";
   const isScanPage = pathname.endsWith("/scan");
+
+  const handleLogout = async () => {
+    try {
+      await logoutFn();
+    } finally {
+      navigate({
+        to: "/login",
+        search: { redirect: undefined },
+        replace: true,
+      });
+    }
+  };
 
   return (
     <div
@@ -43,11 +69,11 @@ function Layout() {
         <>
           {isHomePage ? (
             <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] bg-linear-to-l from-navbar-gradient-end to-background">
-              <Header />
+              <Header onLogoutClick={handleLogout} />
             </div>
           ) : (
             <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] border-b border-border">
-              <Header />
+              <Header onLogoutClick={handleLogout} />
             </div>
           )}
         </>

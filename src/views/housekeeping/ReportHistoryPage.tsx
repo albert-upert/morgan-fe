@@ -22,7 +22,7 @@ export function ReportHistoryPage() {
   const navigate = useNavigate();
   const toHomePage = useCallback(() => {
     navigate({
-      to: "/lecturer/home",
+      to: "/",
     });
   }, [navigate]);
 
@@ -49,7 +49,7 @@ export function ReportHistoryPage() {
             .map((report) => (
               <Link
                 key={report.id}
-                to="/housekeeping/checklist-report/$id"
+                to="/checklist-report/$id"
                 params={{ id: report.room }}
                 className="block"
               >

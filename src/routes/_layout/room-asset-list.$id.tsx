@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getUser } from "@/lib/auth";
-import { RoomAssetListView } from "@/views/lecturer/RoomAssetListView";
+import { LecturerRoomChecklistPage } from "@/views/checklist/LecturerRoomChecklistPage";
 
 export const Route = createFileRoute("/_layout/room-asset-list/$id")({
   beforeLoad: async ({ location, context }) => {
@@ -14,5 +14,5 @@ export const Route = createFileRoute("/_layout/room-asset-list/$id")({
       });
     }
   },
-  component: RoomAssetListView,
+  component: LecturerRoomChecklistPage,
 });

@@ -7,12 +7,22 @@ export function ReportIssueValidationModal({
   onBack,
   onConfirm,
   isSubmitting = false,
+  title = "Tunggu Sebentar",
+  message = "Apakah anda yakin sudah mengisi semua kendala aset dengan benar?",
+  description = "Konfirmasi sebelum mengirim laporan kendala aset.",
+  backLabel = "Cek Kembali",
+  confirmLabel = "Ya, Laporkan",
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onBack: () => void;
   onConfirm: () => void;
   isSubmitting?: boolean;
+  title?: string;
+  message?: string;
+  description?: string;
+  backLabel?: string;
+  confirmLabel?: string;
 }) {
   if (!open) return null;
 
@@ -41,11 +51,11 @@ export function ReportIssueValidationModal({
                 variant="body-medium"
                 className="w-full text-center font-semibold"
               >
-                Tunggu Sebentar
+                {title}
               </Typography>
             </div>
             <p id="report-issue-validation-desc" className="sr-only">
-              Konfirmasi sebelum mengirim laporan kendala aset.
+              {description}
             </p>
           </div>
 
@@ -54,7 +64,7 @@ export function ReportIssueValidationModal({
               variant="body-small"
               className="text-center text-gray-800"
             >
-              Apakah anda yakin sudah mengisi semua kendala aset dengan benar?
+              {message}
             </Typography>
           </div>
 
@@ -69,7 +79,7 @@ export function ReportIssueValidationModal({
                 variant="body-medium"
                 className="text-center text-primary"
               >
-                Cek Kembali
+                {backLabel}
               </Typography>
             </Button>
             <Button
@@ -82,7 +92,7 @@ export function ReportIssueValidationModal({
                 variant="body-medium"
                 className="text-center text-white"
               >
-                {isSubmitting ? "Mengirim..." : "Ya, Laporkan"}
+                {isSubmitting ? "Mengirim..." : confirmLabel}
               </Typography>
             </Button>
           </div>

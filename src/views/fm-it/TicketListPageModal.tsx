@@ -76,7 +76,7 @@ export function TicketListModal({
     sessionStorage.setItem("show_ticket_accepted_toast", "true");
 
     navigate({
-      to: "/fm-it/ticket-detail/$id",
+      to: "/ticket-detail/$id",
       params: {
         id: String(reportDetail.id),
       },

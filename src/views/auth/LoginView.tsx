@@ -1,3 +1,4 @@
+import { useSearch } from "@tanstack/react-router";
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { Button } from "uper-ui/button";
@@ -6,14 +7,15 @@ import { Typography } from "uper-ui/typography";
 import { loginFn } from "@/lib/auth";
 
 const TEST_USERS = [
-  { username: "dosen", label: "Dosen" },
+  { username: "lecturer", label: "Lecturer" },
   { username: "fm-it", label: "IT Support" },
-  { username: "house-keeping", label: "House Keeping" },
+  { username: "hk", label: "House Keeping" },
   { username: "supervisor", label: "Supervisor" },
   { username: "admin", label: "Admin Sistem" },
 ];
 
 export function LoginView() {
+  const search = useSearch({ from: "/login" });
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -30,6 +32,16 @@ export function LoginView() {
       if (!result.success) {
         setError("message" in result ? result.message : "Login failed");
         return;
+      }
+
+      const redirectTarget = search.redirect;
+
+      if (redirectTarget) {
+        const redirectUrl = new URL(redirectTarget, window.location.origin);
+        if (redirectUrl.origin === window.location.origin) {
+          window.location.href = `${redirectUrl.pathname}${redirectUrl.search}`;
+          return;
+        }
       }
 
       window.location.href = "/";
