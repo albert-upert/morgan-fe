@@ -1,4 +1,4 @@
-import type { ReportIssuePayload } from "@/views/lecturer/ReportIssueModal";
+import type { IssueReportPayload } from "@/views/checklist/checklistModal/ReportIssueModal";
 
 const STORAGE_KEY = "morgan:lastReportSuccess:v1";
 
@@ -29,7 +29,7 @@ export type SubmitReportIssueResponse = {
 };
 
 export function makeReportSuccessData(args: {
-  payload: ReportIssuePayload;
+  payload: IssueReportPayload;
   response: SubmitReportIssueResponse;
   assetNameById: Record<string, string>;
   roomId: string;

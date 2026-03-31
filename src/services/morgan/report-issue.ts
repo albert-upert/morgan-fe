@@ -1,8 +1,8 @@
 import type { SubmitReportIssueResponse } from "@/services/morgan/report-success-store";
-import type { ReportIssuePayload } from "@/views/lecturer/ReportIssueModal";
+import type { IssueReportPayload } from "@/views/checklist/checklistModal/ReportIssueModal";
 
 export async function submitReportIssue(
-  _payload: ReportIssuePayload
+  _payload: IssueReportPayload
 ): Promise<SubmitReportIssueResponse> {
   // Mock: simulate network delay + generate ticket id
   await new Promise((r) => setTimeout(r, 600));

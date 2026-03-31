@@ -14,23 +14,20 @@ import {
 import { Accordion } from "uper-ui/accordion";
 import { FileUpload } from "uper-ui/file-upload";
 
-/**
- * Domain Types
- */
 export type IssueType = "Rusak" | "Hilang" | "Kurang" | "Lainnya";
 
-export type MismatchAsset = {
+export type IssueReportAsset = {
   id: string;
   name: string;
 };
 
-type AssetMismatchDraft = {
+type AssetIssueDraft = {
   issueType: IssueType | null;
   detail: string;
   fileName?: string;
 };
 
-export type ReportMismatchPayload = {
+export type IssueReportPayload = {
   issues: Array<{
     assetId: string;
     issueType: IssueType;
@@ -41,27 +38,13 @@ export type ReportMismatchPayload = {
 
 const ISSUE_TYPES: Array<IssueType> = ["Rusak", "Hilang", "Kurang", "Lainnya"];
 
-/**
- * Props Interface
- */
-export interface IReportMismatchDialogProps {
-  open: boolean;
-  assets: Array<MismatchAsset>;
-  onOpenChange: (open: boolean) => void;
-  onSubmit: (payload: ReportMismatchPayload) => void;
-  isSubmitting?: boolean;
-}
-
-/**
- * Hook for Draft Management
- */
-function useMismatchDrafts(_assets: Array<MismatchAsset>) {
+function useIssueDrafts() {
   const [drafts, setDrafts] = useState<
-    Partial<Record<string, AssetMismatchDraft>>
+    Partial<Record<string, AssetIssueDraft>>
   >({});
 
   const getDraft = useCallback(
-    (assetId: string): AssetMismatchDraft => {
+    (assetId: string): AssetIssueDraft => {
       return (
         drafts[assetId] ?? { issueType: null, detail: "", fileName: undefined }
       );
@@ -70,7 +53,7 @@ function useMismatchDrafts(_assets: Array<MismatchAsset>) {
   );
 
   const updateDraft = useCallback(
-    (assetId: string, partial: Partial<AssetMismatchDraft>) => {
+    (assetId: string, partial: Partial<AssetIssueDraft>) => {
       setDrafts((prev) => ({
         ...prev,
         [assetId]: { ...getDraft(assetId), ...partial },
@@ -86,39 +69,10 @@ function useMismatchDrafts(_assets: Array<MismatchAsset>) {
   return { drafts, getDraft, updateDraft, reset };
 }
 
-/**
- * Hook untuk Validation Logic
- */
-function useMismatchValidation(
-  assets: Array<MismatchAsset>,
-  drafts: Partial<Record<string, AssetMismatchDraft>>
-) {
-  const isAllComplete = useMemo(() => {
-    if (assets.length === 0) return false;
-    return assets.every((asset) => {
-      const draft = drafts[asset.id];
-      return draft && draft.issueType && draft.detail.trim().length > 0;
-    });
-  }, [assets, drafts]);
-
-  return { isAllComplete };
-}
-
-/**
- * Hook untuk Accordion Navigation
- */
-function useAccordionNavigation(assets: Array<MismatchAsset>) {
+function useAccordionNavigation(assets: Array<IssueReportAsset>) {
   const [expandedId, setExpandedId] = useState<string | null>(
     assets[0]?.id ?? null
   );
-
-  const goNext = useCallback(() => {
-    if (!expandedId) return;
-    const currentIdx = assets.findIndex((a) => a.id === expandedId);
-    if (currentIdx >= 0 && currentIdx < assets.length - 1) {
-      setExpandedId(assets[currentIdx + 1].id);
-    }
-  }, [assets, expandedId]);
 
   const toggle = useCallback((assetId: string) => {
     setExpandedId((prev) => (prev === assetId ? null : assetId));
@@ -128,50 +82,58 @@ function useAccordionNavigation(assets: Array<MismatchAsset>) {
     setExpandedId(assets[0]?.id ?? null);
   }, [assets]);
 
-  return { expandedId, setExpandedId, toggle, goNext, reset };
+  return { expandedId, toggle, reset };
 }
 
-// MAIN MODAL
-export function ReportConditionModal({
+export function IssueReportModal({
   open,
   assets,
   onOpenChange,
-  onSubmit,
+  onRequestSubmit,
+  resetToken = 0,
   isSubmitting = false,
-}: IReportMismatchDialogProps) {
-  // STATE MANAGEMENT
-  const [showConfirm, setShowConfirm] = useState(false);
+}: {
+  open: boolean;
+  assets: Array<IssueReportAsset>;
+  onOpenChange: (open: boolean) => void;
+  onRequestSubmit?: (payload: IssueReportPayload) => void;
+  resetToken?: number;
+  isSubmitting?: boolean;
+}) {
   const {
     drafts,
     getDraft,
     updateDraft,
     reset: resetDrafts,
-  } = useMismatchDrafts(assets);
+  } = useIssueDrafts();
   const {
     expandedId,
     toggle,
     reset: resetAccordion,
   } = useAccordionNavigation(assets);
-  const { isAllComplete } = useMismatchValidation(assets, drafts);
-
-  // File handling states for each asset
-  const [imagePreviewUrls, setImagePreviewUrls] = useState<
-    Record<string, string | null>
-  >({});
   const [selectedFiles, setSelectedFiles] = useState<
     Record<string, File | null>
   >({});
+  const [imagePreviewUrls, setImagePreviewUrls] = useState<
+    Record<string, string | null>
+  >({});
 
-  // INITIALIZATION & CLEANUP
+  const isAllComplete = useMemo(() => {
+    if (assets.length === 0) return false;
+    return assets.every((asset) => {
+      const draft = drafts[asset.id];
+      return !!draft?.issueType && draft.detail.trim().length > 0;
+    });
+  }, [assets, drafts]);
+
   useEffect(() => {
-    if (open) {
-      resetDrafts();
-      resetAccordion();
-      setShowConfirm(false);
-    }
-  }, [open, resetDrafts, resetAccordion]);
+    if (!open) return;
+    resetDrafts();
+    resetAccordion();
+    setSelectedFiles({});
+    setImagePreviewUrls({});
+  }, [open, resetToken, resetDrafts, resetAccordion]);
 
-  // Cleanup preview URLs on unmount
   useEffect(() => {
     return () => {
       Object.values(imagePreviewUrls).forEach((url) => {
@@ -180,21 +142,20 @@ export function ReportConditionModal({
     };
   }, [imagePreviewUrls]);
 
-  // EVENT HANDLERS
   const handleFilesChange = useCallback(
     (assetId: string, files: Array<File>) => {
-      if (files.length > 0) {
-        const file = files[0];
-        setSelectedFiles((prev) => ({ ...prev, [assetId]: file }));
-        updateDraft(assetId, { fileName: file.name });
+      if (files.length === 0) return;
 
-        // Create preview URL
-        const url = URL.createObjectURL(file);
-        setImagePreviewUrls((prev) => ({
-          ...prev,
-          [assetId]: url,
-        }));
-      }
+      const file = files[0];
+      setSelectedFiles((prev) => ({ ...prev, [assetId]: file }));
+      updateDraft(assetId, { fileName: file.name });
+
+      const url = URL.createObjectURL(file);
+      setImagePreviewUrls((prev) => {
+        const oldUrl = prev[assetId];
+        if (oldUrl) URL.revokeObjectURL(oldUrl);
+        return { ...prev, [assetId]: url };
+      });
     },
     [updateDraft]
   );
@@ -203,22 +164,18 @@ export function ReportConditionModal({
     (assetId: string) => {
       setSelectedFiles((prev) => ({ ...prev, [assetId]: null }));
       updateDraft(assetId, { fileName: undefined });
-
-      // Clean up preview URL
       setImagePreviewUrls((prev) => {
-        const url = prev[assetId];
-        if (url) {
-          URL.revokeObjectURL(url);
-        }
+        const oldUrl = prev[assetId];
+        if (oldUrl) URL.revokeObjectURL(oldUrl);
         return { ...prev, [assetId]: null };
       });
     },
     [updateDraft]
   );
 
-  // EVENT HANDLERS - Dialog Actions
-  const handleConfirmSubmit = useCallback(() => {
-    const payload: ReportMismatchPayload = {
+  const handleSubmit = useCallback(() => {
+    if (!isAllComplete) return;
+    const payload: IssueReportPayload = {
       issues: assets.map((asset) => {
         const draft = getDraft(asset.id);
         return {
@@ -229,81 +186,23 @@ export function ReportConditionModal({
         };
       }),
     };
-    onSubmit(payload);
-  }, [assets, getDraft, onSubmit]);
+    onRequestSubmit?.(payload);
+  }, [assets, getDraft, isAllComplete, onRequestSubmit]);
 
-  const handleOpenConfirm = useCallback(() => {
-    setShowConfirm(true);
-  }, []);
-
-  // RENDER: CONFIRMATION DIALOG
-  if (showConfirm) {
-    return (
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent
-          className="w-full rounded-2xl p-0 data-[side=center]:top-1/2 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm data-[side=center]:-translate-y-1/2"
-          showCloseButton={false}
-        >
-          {/* Header */}
-          <DialogHeader className="justify-center border-b border-gray-300 bg-gray-100 px-5 py-4">
-            <Typography variant="h5" className="text-gray-800">
-              Tunggu Sebentar
-            </Typography>
-          </DialogHeader>
-
-          {/* Body */}
-          <DialogBody className="items-stretch gap-3 border-0 bg-white px-5 py-4">
-            <Typography
-              variant="body-medium"
-              className="text-center text-gray-800"
-            >
-              Apakah anda yakin sudah mengisi semua kendala aset dengan benar?
-            </Typography>
-          </DialogBody>
-
-          {/* Footer */}
-          <DialogFooter className="flex gap-3 rounded-b-lg bg-white px-5 py-4">
-            <Button
-              onClick={() => setShowConfirm(false)}
-              className="flex-1 border border-red-500 bg-white text-red-500 hover:bg-white focus:bg-white active:bg-red-50"
-            >
-              <Typography variant="body-medium" className="text-red-500">
-                Cek Kembali
-              </Typography>
-            </Button>
-            <Button
-              onClick={handleConfirmSubmit}
-              disabled={isSubmitting}
-              className="flex-1 bg-red-500 text-white hover:bg-red-500 active:bg-red-600"
-            >
-              <Typography variant="body-medium" className="text-white">
-                {isSubmitting ? "Mengirim..." : "Ya, Laporkan"}
-              </Typography>
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    );
-  }
-
-  // MAIN REPORT DIALOG
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className="w-full rounded-2xl border border-gray-200 p-0 data-[side=center]:top-1/2 data-[side=center]:w-[calc(100%-2rem)] data-[side=center]:max-w-sm data-[side=center]:-translate-y-1/2"
         showCloseButton={false}
       >
-        {/* Header Section */}
         <DialogHeader className="justify-center border-b border-gray-300 bg-gray-100 px-5 py-4">
           <Typography variant="h5" className="text-gray-800">
             Isi Masalah Aset
           </Typography>
         </DialogHeader>
 
-        {/* Body Section */}
         <DialogBody className="max-h-140 items-stretch gap-4 overflow-y-auto border-0 bg-white px-5 py-4">
           <div className="animate-in fade-in space-y-3 duration-500">
-            {/* Render each asset as an accordion item */}
             {assets.map((asset, idx) => {
               const draft = drafts[asset.id] ?? {
                 issueType: null,
@@ -313,7 +212,7 @@ export function ReportConditionModal({
               const isExpanded = expandedId === asset.id;
               const selectedFile = selectedFiles[asset.id] ?? null;
               const isComplete =
-                draft.issueType && draft.detail.trim().length > 0;
+                !!draft.issueType && draft.detail.trim().length > 0;
 
               return (
                 <div
@@ -321,12 +220,10 @@ export function ReportConditionModal({
                   className="animate-in fade-in slide-in-from-left-2 duration-300"
                   style={{ animationDelay: `${idx * 100}ms` }}
                 >
-                  {/* Accordion Item */}
                   <Accordion
                     title={
                       (
                         <div className="flex flex-col items-start gap-1">
-                          {/* Status Tag */}
                           <Tag
                             type="with-border"
                             size="md"
@@ -347,7 +244,6 @@ export function ReportConditionModal({
                             </Typography>
                           </Tag>
 
-                          {/* Name with Icon */}
                           <div className="inline-flex items-center gap-2">
                             <ErrorIcon className="h-4 w-4 text-red-500" />
                             <Typography
@@ -369,7 +265,6 @@ export function ReportConditionModal({
                     className="rounded-xl border border-gray-400 bg-gray-100 !p-0 transition-all duration-300"
                   >
                     <div className="animate-in fade-in slide-in-from-top-2 space-y-2 duration-300">
-                      {/* Issue Type */}
                       <div className="space-y-1.5">
                         <Typography
                           variant="caption-small-semibold"
@@ -405,7 +300,6 @@ export function ReportConditionModal({
                         </div>
                       </div>
 
-                      {/* Detail */}
                       <div className="space-y-1.5">
                         <Typography
                           variant="caption-small-semibold"
@@ -427,7 +321,6 @@ export function ReportConditionModal({
                         />
                       </div>
 
-                      {/* Bukti Foto */}
                       <div className="space-y-1.5">
                         <FileUpload
                           label="Bukti Foto (Opsional)"
@@ -452,7 +345,6 @@ export function ReportConditionModal({
             })}
           </div>
 
-          {/* Validation Warning */}
           <div className="flex items-start gap-2 rounded-lg border border-yellow-500 bg-yellow-50 px-3 py-2">
             <ErrorIcon className="h-4 w-4 text-yellow-600" />
             <Typography variant="caption-pixie" className="text-gray-800">
@@ -461,7 +353,6 @@ export function ReportConditionModal({
           </div>
         </DialogBody>
 
-        {/* Footer */}
         <DialogFooter className="flex gap-3 rounded-b-lg bg-white px-5 py-4">
           <Button
             onClick={() => onOpenChange(false)}
@@ -472,7 +363,7 @@ export function ReportConditionModal({
             </Typography>
           </Button>
           <Button
-            onClick={handleOpenConfirm}
+            onClick={handleSubmit}
             disabled={!isAllComplete || isSubmitting}
             className={`flex-1 ${
               isAllComplete
@@ -484,7 +375,7 @@ export function ReportConditionModal({
               variant="body-medium"
               className={isAllComplete ? "text-white" : "text-gray-600"}
             >
-              Kirim Laporan
+              Lanjut Konfirmasi
             </Typography>
           </Button>
         </DialogFooter>

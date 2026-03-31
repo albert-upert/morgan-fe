@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { RoomChecklistView } from "@/views/housekeeping/RoomChecklistPage";
+import { HkRoomChecklistPage } from "@/views/checklist/HkRoomChecklistPage";
 
 export const Route = createFileRoute("/_layout/room-checklist/$id")({
-  component: RoomChecklistView,
+  component: HkRoomChecklistPage,
 });

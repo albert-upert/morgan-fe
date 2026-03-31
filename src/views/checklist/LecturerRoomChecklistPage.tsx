@@ -29,9 +29,9 @@ import {
   makeReportSuccessData,
   saveLastReportSuccess,
 } from "@/services/morgan/report-success-store";
-import type { ReportIssuePayload } from "@/views/lecturer/ReportIssueModal";
-import { ReportIssueModal } from "@/views/lecturer/ReportIssueModal";
-import { ReportIssueValidationModal } from "@/views/lecturer/ReportIssueValidationModal";
+import type { IssueReportPayload } from "@/views/checklist/checklistModal/ReportIssueModal";
+import { IssueReportModal } from "@/views/checklist/checklistModal/ReportIssueModal";
+import { ReportIssueValidationModal } from "@/views/checklist/checklistModal/ReportIssueValidationModal";
 
 type RoomAsset = {
   id: string;
@@ -63,7 +63,7 @@ const assetsSeed: Array<RoomAsset> = [
   { id: "smart-1", name: "Smartboard Samsung Flip", category: "Elektronik" },
 ];
 
-export function RoomAssetListView() {
+export function LecturerRoomChecklistPage() {
   const navigate = useNavigate();
   const { id: roomIdParam } = useParams({ strict: false });
   const roomId = roomIdParam ?? "0001";
@@ -76,7 +76,7 @@ export function RoomAssetListView() {
   const [openReportModal, setOpenReportModal] = useState(false);
   const [openValidationModal, setOpenValidationModal] = useState(false);
   const [pendingPayload, setPendingPayload] =
-    useState<ReportIssuePayload | null>(null);
+    useState<IssueReportPayload | null>(null);
   const [reportResetToken, setReportResetToken] = useState(0);
 
   const reportedIds = useMemo(
@@ -140,7 +140,7 @@ export function RoomAssetListView() {
   }, [selectedIds]);
 
   const submitMutation = useMutation({
-    mutationFn: (payload: ReportIssuePayload) => submitReportIssue(payload),
+    mutationFn: (payload: IssueReportPayload) => submitReportIssue(payload),
     onSuccess: (response, payload) => {
       const assetNameById = Object.fromEntries(
         selectedAssetsForReport.map((a) => [a.id, a.name])
@@ -519,7 +519,7 @@ export function RoomAssetListView() {
         )}
       </div>
 
-      <ReportIssueModal
+      <IssueReportModal
         open={openReportModal}
         onOpenChange={setOpenReportModal}
         assets={selectedAssetsForReport}

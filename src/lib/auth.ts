@@ -117,7 +117,7 @@ function generateMockUser(role: string) {
       role_name: string;
       id: string;
     }>;
-    groups: Array<unknown>;
+    groups: Array<string>;
     permissions: Array<string>;
   };
 

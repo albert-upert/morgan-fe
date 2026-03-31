@@ -14,6 +14,5 @@ export const Route = createFileRoute("/_layout/")({
       });
     }
   },
-  loader: ({ context }) => getUser(context.queryClient),
   component: HomePageView,
 });
