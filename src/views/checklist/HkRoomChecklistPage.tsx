@@ -24,12 +24,12 @@ import { Input } from "uper-ui/input";
 import { Pagination } from "uper-ui/pagination";
 import { Tag } from "uper-ui/tags";
 import { toast } from "uper-ui/toast";
-import { IssueReportModal } from "@/views/checklist/checklistModal/ReportIssueModal";
+import { IssueReportModal } from "@/views/checklist/ReportIssueModal";
 import type {
   IssueReportAsset,
   IssueReportPayload,
-} from "@/views/checklist/checklistModal/ReportIssueModal";
-import { ReportIssueValidationModal } from "@/views/checklist/checklistModal/ReportIssueValidationModal";
+} from "@/views/checklist/ReportIssueModal";
+import { ReportIssueValidationModal } from "@/views/checklist/ReportIssueValidationModal";
 
 type AssetStatus = "reported" | "unchecked";
 type AssetCategory = "all" | "elektronik" | "furniture" | "lainnya";

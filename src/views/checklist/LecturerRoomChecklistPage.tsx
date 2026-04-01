@@ -29,9 +29,9 @@ import {
   makeReportSuccessData,
   saveLastReportSuccess,
 } from "@/services/morgan/report-success-store";
-import type { IssueReportPayload } from "@/views/checklist/checklistModal/ReportIssueModal";
-import { IssueReportModal } from "@/views/checklist/checklistModal/ReportIssueModal";
-import { ReportIssueValidationModal } from "@/views/checklist/checklistModal/ReportIssueValidationModal";
+import type { IssueReportPayload } from "@/views/checklist/ReportIssueModal";
+import { IssueReportModal } from "@/views/checklist/ReportIssueModal";
+import { ReportIssueValidationModal } from "@/views/checklist/ReportIssueValidationModal";
 
 type RoomAsset = {
   id: string;
