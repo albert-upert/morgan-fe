@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import {
   Outlet,
   createFileRoute,
@@ -7,6 +8,7 @@ import {
 } from "@tanstack/react-router";
 import { Header } from "@/components/header";
 import { getUser, logoutFn } from "@/lib/auth";
+import { clearAuthCookiesClient } from "@/lib/cookie";
 import { resolveAppRole } from "@/lib/main-menu-list.config";
 import { canAccessPath } from "@/lib/route-authorization";
 import type { Me } from "@/services/user/types.gen";
@@ -45,6 +47,7 @@ export const Route = createFileRoute("/_layout")({
 function Layout() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const isHomePage = pathname === "/";
   const isScanPage = pathname.endsWith("/scan");
 
@@ -52,7 +55,19 @@ function Layout() {
     try {
       await logoutFn();
     } finally {
-      navigate({
+      // getUser memakai fetchQuery + staleTime: Infinity; tanpa ini /login masih baca user dari cache lalu redirect ke "/".
+      queryClient.removeQueries({
+        predicate: (q) => {
+          const head = q.queryKey[0];
+          return (
+            typeof head === "object" &&
+            head !== null &&
+            (head as { _id?: string })._id === "getUsersMe"
+          );
+        },
+      });
+      clearAuthCookiesClient();
+      await navigate({
         to: "/login",
         search: { redirect: undefined },
         replace: true,

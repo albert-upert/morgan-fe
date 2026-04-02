@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Button } from "uper-ui/button";
 import {
@@ -17,7 +18,6 @@ import {
   DialogTitle,
 } from "uper-ui/dialog";
 import { PencilIcon, PlusIcon, TrashIcon } from "uper-ui/icon";
-import { Link } from "uper-ui/link";
 import { Table } from "uper-ui/table";
 import { Tag } from "uper-ui/tags";
 import {

@@ -1,17 +1,13 @@
 import type { AppRole } from "@/lib/main-menu-list.config";
 
-const LEGACY_ROLE_PREFIXES = ["/lecturer", "/housekeeping", "/fm-it"];
+// Prefix route lama yang sudah di-refactor (harus ditolak)
+// Jangan masukkan "/fm-it" di sini karena sekarang kita pakai route baru: "/fm-it/home"
+const LEGACY_ROLE_PREFIXES = ["/lecturer", "/housekeeping"];
 
 const ROLE_ALLOWED_PATH_PREFIXES: Record<AppRole, ReadonlyArray<string>> = {
-  lecturer: [
-    "/",
-    "/my-report",
-    "/report-detail-page",
-    "/report-success",
-    "/room-asset-list",
-    "/scan",
-  ],
-  "fm-it": ["/", "/ticket-list", "/ticket-detail", "/notification"],
+  lecturer: ["/", "/ticket", "/room-asset-list", "/scan"],
+  // FM-IT ikut pakai base `/ticket` dan home khusus
+  "fm-it": ["/", "/ticket", "/notification", "/fm-it/home"],
   hk: [
     "/",
     "/checklist-dashboard",

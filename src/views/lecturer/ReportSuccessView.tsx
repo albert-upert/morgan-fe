@@ -41,10 +41,9 @@ export function ReportSuccessView() {
     return (
       <div className="px-6 pt-4">
         <Link
-          to="/$module/home"
-          params={{ module: "lecturer" }}
+          to="/ticket"
           className="inline-flex items-center gap-2 text-red-500"
-          aria-label="Kembali ke Beranda"
+          aria-label="Kembali ke Daftar Laporan"
         >
           <ArrowBackIcon className="h-5 w-5" color="currentColor" />
           <Typography variant="body-small" className="text-red-500">
@@ -86,10 +85,9 @@ export function ReportSuccessView() {
         )}
 
         <Link
-          to="/$module/home"
-          params={{ module: "lecturer" }}
+          to="/ticket"
           className="inline-flex items-center gap-2 text-red-500"
-          aria-label="Kembali ke Beranda"
+          aria-label="Kembali ke Daftar Laporan"
         >
           <ArrowBackIcon className="h-5 w-5" color="currentColor" />
           <Typography variant="body-small" className="text-red-500">

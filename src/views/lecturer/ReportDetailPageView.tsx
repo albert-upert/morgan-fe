@@ -1,4 +1,4 @@
-import { useParams } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import { Button } from "uper-ui/button";
@@ -14,7 +14,7 @@ import {
   FileIcon,
   OpenIcon,
 } from "uper-ui/icon";
-import { Link } from "uper-ui/link";
+
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
 import { ConfirmCompletionModal } from "@/views/lecturer/ConfirmCompletionModal";
@@ -99,7 +99,14 @@ export function ReportDetailPageView() {
     );
   }
 
-  const { id } = useParams({ strict: false });
+  const rawId = useParams({ strict: false }).id ?? "";
+  const id = (() => {
+    try {
+      return decodeURIComponent(rawId).replace(/^#/, "");
+    } catch {
+      return rawId.replace(/^#/, "");
+    }
+  })();
   const [openAssetId, setOpenAssetId] = useState<string | null>(null);
   const [openConfirmCompletion, setOpenConfirmCompletion] = useState(false);
   const [openReportAgain, setOpenReportAgain] = useState(false);
@@ -366,7 +373,7 @@ export function ReportDetailPageView() {
   return (
     <div className="pt-4 pb-6">
       <Link
-        to="/my-report"
+        to="/ticket"
         className="inline-flex items-center gap-2 text-red-500"
         aria-label="Kembali ke Daftar Laporan"
       >

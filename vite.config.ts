@@ -19,6 +19,8 @@ const config = defineConfig(({ mode }) => {
     },
   };
 
+  const isViteDev = mode === "development";
+
   return {
     plugins: [
       // this is the plugin that enables path aliases
@@ -36,7 +38,7 @@ const config = defineConfig(({ mode }) => {
     },
     server: {
       allowedHosts: true,
-      ...(env.VITE_ENV === "development" && { proxy: devProxy }),
+      ...(isViteDev && { proxy: devProxy }),
     },
   };
 });

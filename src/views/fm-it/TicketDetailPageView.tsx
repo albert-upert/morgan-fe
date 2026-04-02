@@ -32,9 +32,7 @@ import type { TicketHistory, TicketStatus } from "@/types/ticketHistory";
 import { TicketDetailModal } from "./TicketDetailPageModal";
 
 export function TicketDetailView() {
-  const { roomId } = useParams({
-    from: "/_layout/lecturer/report-success/$roomId",
-  });
+  const { id: roomId = "" } = useParams({ strict: false });
 
   const [showPreview, setShowPreview] = useState(false);
   // const [onOpenChange, setOnOpenChange] = useState(false);
@@ -79,7 +77,7 @@ export function TicketDetailView() {
   const navigate = useNavigate();
   const home = useCallback(() => {
     navigate({
-      href: "/_layout/fm-it/home",
+      to: "/fm-it/home",
     });
   }, []);
 
@@ -186,8 +184,8 @@ export function TicketDetailView() {
   const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>(
     {}
   );
-  const toggleAccordion = useCallback((roomId: string) => {
-    setExpandedItems((prev) => ({ ...prev, [roomId]: !prev[roomId] }));
+  const toggleAccordion = useCallback((sectionId: string) => {
+    setExpandedItems((prev) => ({ ...prev, [sectionId]: !prev[sectionId] }));
   }, []);
 
   // if (loading) return <div>Sedang memuat data...</div>;
