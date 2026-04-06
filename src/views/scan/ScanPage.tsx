@@ -17,6 +17,26 @@ function useQRCodeReader(
   const readerRef = useRef<BrowserQRCodeReader | null>(null);
   const handledRef = useRef(false);
 
+  const stopCamera = useCallback(() => {
+    const reader = readerRef.current as unknown as {
+      stopContinuousDecode?: () => void;
+      stopAsyncDecode?: () => void;
+      reset?: () => void;
+    } | null;
+
+    try {
+      reader?.stopContinuousDecode?.();
+      reader?.stopAsyncDecode?.();
+      reader?.reset?.();
+    } catch {
+      // ignore cleanup errors
+    }
+
+    const stream = videoRef.current?.srcObject as MediaStream | null;
+    stream?.getTracks().forEach((track) => track.stop());
+    if (videoRef.current) videoRef.current.srcObject = null;
+  }, [videoRef]);
+
   useEffect(() => {
     let cancelled = false;
 
@@ -75,27 +95,9 @@ function useQRCodeReader(
       handledRef.current = false;
       stopCamera();
     };
+  }, [videoRef, onQRDetected, onError, stopCamera]);
 
-    function stopCamera() {
-      const reader = readerRef.current as unknown as {
-        stopContinuousDecode?: () => void;
-        stopAsyncDecode?: () => void;
-        reset?: () => void;
-      } | null;
-
-      try {
-        reader?.stopContinuousDecode?.();
-        reader?.stopAsyncDecode?.();
-        reader?.reset?.();
-      } catch {
-        // ignore cleanup errors
-      }
-
-      const stream = videoRef.current?.srcObject as MediaStream | null;
-      stream?.getTracks().forEach((track) => track.stop());
-      if (videoRef.current) videoRef.current.srcObject = null;
-    }
-  }, [videoRef, onQRDetected, onError]);
+  return stopCamera;
 }
 
 export function ScanPageView() {
@@ -113,9 +115,16 @@ export function ScanPageView() {
     [navigate]
   );
 
+  const stopCamera = useQRCodeReader(
+    videoRef,
+    handleQRDetected,
+    setCameraError
+  );
+
   const handleNavigateBack = useCallback(() => {
+    stopCamera();
     navigate({ to: "/checklist-dashboard" });
-  }, [navigate]);
+  }, [navigate, stopCamera]);
 
   const handleFlashlight = useCallback(() => {
     // TODO: Implement flashlight toggle
@@ -124,8 +133,6 @@ export function ScanPageView() {
   const handleGallery = useCallback(() => {
     // TODO: Implement gallery/upload QR from image
   }, []);
-
-  useQRCodeReader(videoRef, handleQRDetected, setCameraError);
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-black">
