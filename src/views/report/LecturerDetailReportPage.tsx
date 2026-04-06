@@ -1,5 +1,5 @@
-import { useParams } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { Link, useParams } from "@tanstack/react-router";
+import type { Dispatch, ReactNode, SetStateAction } from "react";
 import { useMemo, useState } from "react";
 import { Button } from "uper-ui/button";
 import { Card, CardContent } from "uper-ui/card";
@@ -14,11 +14,12 @@ import {
   FileIcon,
   OpenIcon,
 } from "uper-ui/icon";
-import { Link } from "uper-ui/link";
 import { toast } from "uper-ui/toast";
 import { Typography } from "uper-ui/typography";
-import { ConfirmCompletionModal } from "@/views/lecturer/ConfirmCompletionModal";
-import { ReportAgainModal } from "@/views/lecturer/ReportAgainModal";
+import { readLastReportSuccess } from "@/services/morgan/report-success-store";
+import type { ReportSuccessIssue } from "@/services/morgan/report-success-store";
+import { ReportAgainModal } from "@/views/report/ReportAgainModal";
+import { ConfirmCompletionModal } from "@/views/report/ReportCompletionModal";
 
 type ReportIssueType = "Rusak" | "Kurang" | "Hilang";
 
@@ -40,7 +41,238 @@ type ReportDetail = {
   }>;
 };
 
-export function ReportDetailPageView() {
+type ReportDetailPageViewProps = {
+  viewMode?: "detail" | "success";
+};
+
+type UnifiedIssue = {
+  assetId: string;
+  assetName: string;
+  issueLabel: string;
+  detailText: string;
+  attachmentLabel: string | null;
+};
+
+function ReportBackLink({
+  to,
+  ariaLabel,
+}: {
+  to: "/" | "/my-report";
+  ariaLabel: string;
+}) {
+  return (
+    <Link
+      to={to}
+      className="inline-flex items-center gap-2 text-red-500"
+      aria-label={ariaLabel}
+    >
+      <ArrowBackIcon className="h-5 w-5" color="currentColor" />
+      <Typography variant="body-small" className="text-red-500">
+        Daftar Laporan
+      </Typography>
+    </Link>
+  );
+}
+
+function ReportHeaderCard({
+  roomLabel,
+  buildingLabel,
+  ticketLabel,
+  dateText,
+  dateRowClassName,
+  iconClassName,
+}: {
+  roomLabel: string;
+  buildingLabel: string;
+  ticketLabel: string;
+  dateText: string;
+  dateRowClassName: string;
+  iconClassName: string;
+}) {
+  return (
+    <Card className="my-5 border border-border bg-white py-4" elevation="low">
+      <CardContent className="px-4">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <Typography variant="body-large-semibold" className="text-gray-900">
+              {roomLabel}
+            </Typography>
+            <div className="flex items-center gap-1 text-gray-600">
+              <BuildingIcon className="h-5 w-5" color="currentColor" />
+              <Typography variant="body-small" className="text-3 text-gray-600">
+                {buildingLabel}
+              </Typography>
+            </div>
+          </div>
+          <div className="shrink-0 rounded-full bg-red-50 px-3 py-[2px]">
+            <Typography variant="caption-small" className="text-primary">
+              {ticketLabel}
+            </Typography>
+          </div>
+        </div>
+
+        <div className="mt-4 space-y-2">
+          <div className={dateRowClassName}>
+            <div className="mt-0.5 text-gray-600">
+              <CalendarIcon className={iconClassName} color="currentColor" />
+            </div>
+            <div className="flex flex-col">
+              <Typography variant="caption-small" className="text-gray-600">
+                Tanggal
+              </Typography>
+              <Typography variant="caption-small" className="text-gray-900">
+                {dateText}
+              </Typography>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function ReportIssuesCard({
+  issues,
+  openAssetId,
+  setOpenAssetId,
+}: {
+  issues: Array<UnifiedIssue>;
+  openAssetId: string | null;
+  setOpenAssetId: Dispatch<SetStateAction<string | null>>;
+}) {
+  return (
+    <Card className="border border-border bg-white py-4" elevation="low">
+      <CardContent className="px-4">
+        <Typography variant="body-large-semibold" className="text-gray-900">
+          Daftar Aset Bermasalah
+        </Typography>
+
+        <div className="mt-3 space-y-2">
+          {issues.map((issue) => {
+            const isOpen = openAssetId === issue.assetId;
+            return (
+              <div
+                key={issue.assetId}
+                className="rounded-xl border border-border bg-white"
+              >
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="flex w-full items-center gap-3 border-0 bg-transparent px-4 py-3 text-left hover:bg-transparent"
+                  onClick={() => {
+                    setOpenAssetId((prev) =>
+                      prev === issue.assetId ? null : issue.assetId
+                    );
+                  }}
+                >
+                  <ErrorIcon className="h-4 w-4 text-red-600" />
+                  <div className="flex min-w-0 flex-1 flex-col gap-1">
+                    <Typography
+                      variant="body-small-semibold"
+                      className="truncate text-gray-900"
+                    >
+                      {issue.assetName}
+                    </Typography>
+                  </div>
+                  <div className="shrink-0 text-gray-700">
+                    <div className={isOpen ? "rounded-full bg-gray-300" : ""}>
+                      {isOpen ? (
+                        <CaretUpIcon className="h-10 w-10 p-0" />
+                      ) : (
+                        <CaretDownIcon className="h-10 w-10 p-0" />
+                      )}
+                    </div>
+                  </div>
+                </Button>
+
+                {isOpen && (
+                  <div className="border-t border-border bg-white px-4 pt-3 pb-4">
+                    <Typography
+                      variant="caption-small-semibold"
+                      className="text-gray-600"
+                    >
+                      Jenis Masalah
+                    </Typography>
+                    <div className="my-1">
+                      <span className="inline-flex items-center rounded-lg bg-primary px-3 py-1">
+                        <Typography
+                          variant="caption-small"
+                          className="text-white"
+                        >
+                          {issue.issueLabel}
+                        </Typography>
+                      </span>
+                    </div>
+
+                    <Typography
+                      variant="caption-small-semibold"
+                      className="mt-3 text-gray-600"
+                    >
+                      Detail Kendala
+                    </Typography>
+
+                    <div className="mt-2 rounded-lg border border-border bg-white px-3 py-2">
+                      <Typography
+                        variant="body-small"
+                        className="text-gray-900"
+                      >
+                        {issue.detailText}
+                      </Typography>
+                    </div>
+
+                    {issue.attachmentLabel && (
+                      <>
+                        <Typography
+                          variant="caption-small-semibold"
+                          className="mt-3 text-gray-600"
+                        >
+                          Bukti Foto
+                        </Typography>
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          className="mt-2 flex w-full items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-left"
+                          onClick={() => {
+                            toast.info("Preview foto belum tersedia");
+                          }}
+                        >
+                          <FileIcon className="h-5 w-5 text-gray-600" />
+                          <Typography
+                            variant="body-small"
+                            className="min-w-0 flex-1 truncate text-gray-900"
+                          >
+                            {issue.attachmentLabel}
+                          </Typography>
+                          <OpenIcon className="h-5 w-5 text-gray-600" />
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+export function ReportDetailPageView({
+  viewMode = "detail",
+}: ReportDetailPageViewProps) {
+  function formatDateTime(iso: string) {
+    const d = new Date(iso);
+    if (Number.isNaN(d.getTime())) return iso;
+    return d.toLocaleString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
   function MetaInfoBox({ label, value }: { label: string; value: string }) {
     return (
       <div className="flex flex-1 flex-col gap-0 rounded-lg bg-gray-300 px-3 py-2">
@@ -100,7 +332,12 @@ export function ReportDetailPageView() {
   }
 
   const { id } = useParams({ strict: false });
+  const normalizedId = useMemo(() => {
+    if (!id) return "FM-2025-0103";
+    return id.startsWith("#") ? id.slice(1) : id;
+  }, [id]);
   const [openAssetId, setOpenAssetId] = useState<string | null>(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(true);
   const [openConfirmCompletion, setOpenConfirmCompletion] = useState(false);
   const [openReportAgain, setOpenReportAgain] = useState(false);
   const [completionHistory, setCompletionHistory] = useState<null | {
@@ -112,6 +349,9 @@ export function ReportDetailPageView() {
     tags: Array<"Masih Bermasalah" | "Rusak Lagi" | "Lainnya">;
     note: string;
   }>(null);
+  const successData = useMemo(() => readLastReportSuccess(), []);
+  const roomNameLabel = id ? `Ruang ${id}` : successData?.roomName || "";
+  const isSuccessMode = viewMode === "success";
 
   const officer = useMemo(
     () => ({
@@ -162,10 +402,10 @@ export function ReportDetailPageView() {
   }
 
   const data = useMemo<ReportDetail>(() => {
-    const ticket = id ? `#${id}` : "#FM-2025-0103";
+    const ticket = `#${normalizedId}`;
 
     // simple mock mapping
-    if (id === "FM-2025-0102") {
+    if (normalizedId === "FM-2025-0102") {
       return {
         id: "FM-2025-0102",
         ticketLabel: ticket,
@@ -201,7 +441,7 @@ export function ReportDetailPageView() {
       };
     }
 
-    if (id === "FM-2025-0101") {
+    if (normalizedId === "FM-2025-0101") {
       return {
         id: "FM-2025-0101",
         ticketLabel: ticket,
@@ -256,7 +496,7 @@ export function ReportDetailPageView() {
         },
       ],
     };
-  }, [id]);
+  }, [normalizedId]);
 
   const statusTimeline = useMemo(() => {
     type DotTone = "solid" | "hollow";
@@ -363,18 +603,195 @@ export function ReportDetailPageView() {
     ] satisfies Array<StatusItem>;
   }, [data.statusLabel]);
 
+  const unifiedIssues = useMemo<Array<UnifiedIssue>>(() => {
+    if (isSuccessMode && successData) {
+      return successData.issues.map((issue: ReportSuccessIssue) => ({
+        assetId: issue.assetId,
+        assetName: issue.assetName,
+        issueLabel: issue.issueType,
+        detailText: issue.detail,
+        attachmentLabel: issue.fileName ?? null,
+      }));
+    }
+
+    return data.issues.map((issue) => ({
+      assetId: issue.assetId,
+      assetName: issue.assetName,
+      issueLabel: issue.type,
+      detailText: issue.description,
+      attachmentLabel: issue.imageUrl,
+    }));
+  }, [isSuccessMode, successData, data.issues]);
+
+  if (isSuccessMode) {
+    if (!successData) {
+      return (
+        <div className="px-6 pt-4">
+          <ReportBackLink to="/" ariaLabel="Kembali ke Beranda" />
+
+          <div className="mt-6">
+            <Typography
+              variant="body-medium-semibold"
+              className="text-gray-900"
+            >
+              Daftar Laporan
+            </Typography>
+            <Typography variant="body-small" className="mt-2 text-gray-700">
+              Belum ada data laporan. Silakan buat laporan terlebih dahulu.
+            </Typography>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="pt-4 pb-6">
+        {snackbarOpen && (
+          <div className="fixed top-24 left-1/2 z-50 w-[calc(100%-48px)] max-w-[412px] -translate-x-1/2">
+            <div className="flex items-center justify-between gap-3 rounded-lg bg-gray-900 px-4 py-3 text-white shadow-lg">
+              <Typography variant="body-small" className="text-white">
+                Laporan berhasil diunggah!
+              </Typography>
+              <Button
+                type="button"
+                variant="secondary"
+                className="text-3 shrink-0 rounded-md border-0 bg-white/10 px-3 py-1 font-semibold text-white hover:bg-white/20"
+                onClick={() => setSnackbarOpen(false)}
+              >
+                Oke
+              </Button>
+            </div>
+          </div>
+        )}
+
+        <ReportBackLink to="/" ariaLabel="Kembali ke Beranda" />
+
+        <div className="mt-4">
+          <Typography variant="body-medium-semibold" className="text-gray-900">
+            Detail Laporan
+          </Typography>
+        </div>
+
+        <ReportHeaderCard
+          roomLabel={roomNameLabel || successData.roomName}
+          buildingLabel={successData.buildingName}
+          ticketLabel={successData.ticketId}
+          dateText={formatDateTime(successData.createdAt)}
+          dateRowClassName="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-2"
+          iconClassName="rounded-2 h-8 w-8 bg-gray-300 p-[6px]"
+        />
+
+        <ReportIssuesCard
+          issues={unifiedIssues}
+          openAssetId={openAssetId}
+          setOpenAssetId={setOpenAssetId}
+        />
+
+        <Card
+          className="mt-6 border border-border bg-white py-4"
+          elevation="low"
+        >
+          <CardContent className="px-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <Typography
+                  variant="body-medium-semibold"
+                  className="text-gray-900"
+                >
+                  Status Saat Ini
+                </Typography>
+
+                <Typography
+                  variant="caption-small-semibold"
+                  className="text-gray-600"
+                >
+                  {new Date(successData.createdAt).toLocaleTimeString("id-ID", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </Typography>
+                <Typography variant="caption-pixie" className="text-gray-600">
+                  WIB, Selesai
+                </Typography>
+              </div>
+
+              <div className="shrink-0 rounded-full bg-primary px-3 py-[2px]">
+                <Typography variant="caption-small" className="text-white">
+                  {successData.statusLabel}
+                </Typography>
+              </div>
+            </div>
+
+            <div className="mt-3 flex items-start gap-2 rounded-xl border border-yellow-200 bg-yellow-50 px-3 py-2">
+              <ErrorIcon className="mt-px h-4 w-4 text-yellow-700" />
+              <Typography variant="body-small" className="text-3 text-gray-700">
+                Aset akan memasuki notifikasi setelah laporan sudah diterima
+                oleh petugas.
+              </Typography>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="mt-5">
+          <Typography variant="body-medium-semibold" className="text-gray-900">
+            Petugas Piket Hari Ini
+          </Typography>
+        </div>
+
+        <Card
+          className="mt-3 border border-border bg-white py-4"
+          elevation="low"
+        >
+          <CardContent className="px-4">
+            {[
+              {
+                id: "1",
+                name: "Agus Bagus",
+                time: "08.00 - 13.00 WIB",
+                role: "Teknisi IT",
+              },
+              {
+                id: "2",
+                name: "Siti Rohimah",
+                time: "08.00 - 13.00 WIB",
+                role: "Teknisi IT",
+              },
+              {
+                id: "3",
+                name: "Dimas Dava",
+                time: "08.00 - 13.00 WIB",
+                role: "Teknisi IT",
+              },
+            ].map((user) => (
+              <div
+                key={user.id}
+                className="flex items-center gap-3 border-b border-gray-200 py-3 last:border-b-0"
+              >
+                <div className="flex h-10 w-10 min-w-0 flex-1 flex-col rounded-full bg-gray-300">
+                  <Typography
+                    variant="body-small-semibold"
+                    className="text-gray-900"
+                  >
+                    {user.name}
+                  </Typography>
+                  <Typography variant="caption-pixie" className="text-gray-700">
+                    {user.time}
+                  </Typography>
+                  <Typography variant="caption-pixie" className="text-gray-600">
+                    {user.role}
+                  </Typography>
+                </div>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="pt-4 pb-6">
-      <Link
-        to="/my-report"
-        className="inline-flex items-center gap-2 text-red-500"
-        aria-label="Kembali ke Daftar Laporan"
-      >
-        <ArrowBackIcon className="h-5 w-5" color="currentColor" />
-        <Typography variant="body-small" className="text-red-500">
-          Daftar Laporan
-        </Typography>
-      </Link>
+      <ReportBackLink to="/my-report" ariaLabel="Kembali ke Daftar Laporan" />
 
       <div className="mt-4">
         <Typography variant="body-medium-semibold" className="text-gray-900">
@@ -382,170 +799,20 @@ export function ReportDetailPageView() {
         </Typography>
       </div>
 
-      {/* Header detail */}
-      <Card className="my-5 border border-border bg-white py-4" elevation="low">
-        <CardContent className="px-4">
-          <div className="flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <Typography
-                variant="body-large-semibold"
-                className="text-gray-900"
-              >
-                {data.roomLabel}
-              </Typography>
-              <div className="flex items-center gap-1 text-gray-600">
-                <BuildingIcon className="h-5 w-5" color="currentColor" />
-                <Typography
-                  variant="body-small"
-                  className="text-3 text-gray-600"
-                >
-                  {data.buildingLabel}
-                </Typography>
-              </div>
-            </div>
-            <div className="shrink-0 rounded-full bg-red-50 px-3 py-[2px]">
-              <Typography variant="caption-small" className="text-primary">
-                {data.ticketLabel}
-              </Typography>
-            </div>
-          </div>
+      <ReportHeaderCard
+        roomLabel={data.roomLabel}
+        buildingLabel={data.buildingLabel}
+        ticketLabel={data.ticketLabel}
+        dateText={`${data.dateLabel} | ${data.timeLabel}`}
+        dateRowClassName="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-2 py-2"
+        iconClassName="rounded-2 h-[32px] w-[32px] bg-gray-300 p-[6px]"
+      />
 
-          <div className="mt-4 space-y-2">
-            <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-2 py-2">
-              <div className="mt-0.5 text-gray-600">
-                <CalendarIcon
-                  className="rounded-2 h-[32px] w-[32px] bg-gray-300 p-[6px]"
-                  color="currentColor"
-                />
-              </div>
-              <div className="flex flex-col">
-                <Typography variant="caption-small" className="text-gray-600">
-                  Tanggal
-                </Typography>
-                <Typography variant="caption-small" className="text-gray-900">
-                  {data.dateLabel} | {data.timeLabel}
-                </Typography>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Issues */}
-      <Card className="border border-border bg-white py-4" elevation="low">
-        <CardContent className="px-4">
-          <Typography variant="body-large-semibold" className="text-gray-900">
-            Daftar Aset Bermasalah
-          </Typography>
-
-          <div className="mt-3 space-y-2">
-            {data.issues.map((issue) => {
-              const isOpen = openAssetId === issue.assetId;
-              return (
-                <div
-                  key={issue.assetId}
-                  className="rounded-xl border border-border bg-white"
-                >
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    className="flex w-full items-center gap-3 border-0 bg-transparent px-4 py-3 text-left hover:bg-transparent"
-                    onClick={() => {
-                      setOpenAssetId((prev) =>
-                        prev === issue.assetId ? null : issue.assetId
-                      );
-                    }}
-                  >
-                    <ErrorIcon className="h-4 w-4 text-red-600" />
-                    <div className="flex min-w-0 flex-1 flex-col gap-1">
-                      <Typography
-                        variant="body-small-semibold"
-                        className="truncate text-gray-900"
-                      >
-                        {issue.assetName}
-                      </Typography>
-                    </div>
-                    <div className="shrink-0 text-gray-700">
-                      <div className={isOpen ? "rounded-full bg-gray-300" : ""}>
-                        {isOpen ? (
-                          <CaretUpIcon className="h-10 w-10 p-0" />
-                        ) : (
-                          <CaretDownIcon className="h-10 w-10 p-0" />
-                        )}
-                      </div>
-                    </div>
-                  </Button>
-
-                  {isOpen && (
-                    <div className="border-t border-border bg-white px-4 pt-3 pb-4">
-                      <Typography
-                        variant="caption-small-semibold"
-                        className="text-gray-600"
-                      >
-                        Jenis Masalah
-                      </Typography>
-                      <div className="my-1">
-                        <span className="inline-flex items-center rounded-lg bg-primary px-3 py-1">
-                          <Typography
-                            variant="caption-small"
-                            className="text-white"
-                          >
-                            {issue.type}
-                          </Typography>
-                        </span>
-                      </div>
-
-                      <Typography
-                        variant="caption-small-semibold"
-                        className="mt-3 text-gray-600"
-                      >
-                        Detail Kendala
-                      </Typography>
-
-                      <div className="mt-2 rounded-lg border border-border bg-white px-3 py-2">
-                        <Typography
-                          variant="body-small"
-                          className="text-gray-900"
-                        >
-                          {issue.description}
-                        </Typography>
-                      </div>
-
-                      {issue.imageUrl && (
-                        <>
-                          <Typography
-                            variant="caption-small-semibold"
-                            className="mt-3 text-gray-600"
-                          >
-                            Bukti Foto
-                          </Typography>
-                          <Button
-                            type="button"
-                            variant="secondary"
-                            className="mt-2 flex w-full items-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-left"
-                            onClick={() => {
-                              toast.info("Preview foto belum tersedia");
-                            }}
-                          >
-                            <FileIcon className="h-5 w-5 text-gray-600" />
-                            <Typography
-                              variant="body-small"
-                              className="min-w-0 flex-1 truncate text-gray-900"
-                            >
-                              {issue.imageUrl}
-                            </Typography>
-                            <OpenIcon className="h-5 w-5 text-gray-600" />
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
+      <ReportIssuesCard
+        issues={unifiedIssues}
+        openAssetId={openAssetId}
+        setOpenAssetId={setOpenAssetId}
+      />
 
       {/* Current status */}
       <Card className="mt-6 border border-border bg-white py-4" elevation="low">

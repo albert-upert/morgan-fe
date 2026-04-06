@@ -29,7 +29,7 @@ import {
 import { getReportById } from "@/services/api/reportService";
 import type { Report } from "@/types/report";
 import type { TicketHistory, TicketStatus } from "@/types/ticketHistory";
-import { TicketDetailModal } from "./TicketDetailPageModal";
+import { TicketDetailModal } from "./TicketDetailModal";
 
 export function TicketDetailView() {
   const { roomId } = useParams({

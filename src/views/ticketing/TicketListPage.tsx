@@ -27,7 +27,7 @@ import { Tag } from "uper-ui/tags";
 import { Typography } from "uper-ui/typography";
 import { getAllReports } from "@/services/api/reportService";
 import type { Report } from "@/types/report";
-import { TicketListModal } from "./TicketListPageModal";
+import { TicketListModal } from "./TicketListModal";
 
 export type Building = {
   name: string;

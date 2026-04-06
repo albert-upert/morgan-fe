@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ReportSuccessView } from "@/views/lecturer/ReportSuccessView";
+import { ReportDetailPageView } from "@/views/report/LecturerDetailReportPage";
 
 export const Route = createFileRoute("/_layout/report-success")({
-  component: ReportSuccessView,
+  component: () => <ReportDetailPageView viewMode="success" />,
 });

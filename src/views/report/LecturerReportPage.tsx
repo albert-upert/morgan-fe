@@ -125,9 +125,10 @@ export function MyReportView() {
 
   const toReportDetailPage = useCallback(
     (id: string) => {
+      const normalizedId = id.startsWith("#") ? id.slice(1) : id;
       navigate({
         to: "/report-detail-page/$id",
-        params: { id: id },
+        params: { id: normalizedId },
       });
     },
     [navigate]
@@ -239,7 +240,7 @@ export function MyReportView() {
                   <Button
                     variant="primary"
                     className="w-full"
-                    onClick={() => toReportDetailPage(String(r.id))}
+                    onClick={() => toReportDetailPage(r.routeId)}
                   >
                     Lihat Detail Laporan
                   </Button>
