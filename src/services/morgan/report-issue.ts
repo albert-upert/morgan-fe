@@ -1,5 +1,5 @@
 import type { SubmitReportIssueResponse } from "@/services/morgan/report-success-store";
-import type { IssueReportPayload } from "@/views/checklist/checklistModal/ReportIssueModal";
+import type { IssueReportPayload } from "@/views/checklist/ReportIssueModal";
 
 export async function submitReportIssue(
   _payload: IssueReportPayload
