@@ -7,35 +7,46 @@ import {
   setCookie,
 } from "@tanstack/react-start/server";
 import { getUsersMeOptions } from "@/services/user/@tanstack/react-query.gen";
-import { getRoleSync, getTokenSync } from "./cookie";
+import { DEV_DUMMY_ACCESS_TOKEN, getRoleSync, getTokenSync } from "./cookie";
 
 const COOKIE_NAME = "access_token";
 
-function getCookieDomain(): string {
+/**
+ * Scope cookie agar hapus/set konsisten. Jangan set Domain=localhost / 127.0.0.1 — banyak browser menolaknya;
+ * pakai host-only cookie supaya sesi login terkirim setelah redirect ke `/`.
+ */
+function authCookieScope(): { path: "/" } & { domain?: string } {
+  let hostname = "localhost";
   try {
-    const request = getRequest();
-    return new URL(request.url).hostname;
+    hostname = new URL(getRequest().url).hostname;
   } catch {
-    return "localhost";
+    // host-only default
   }
+  const hostOnly =
+    hostname === "localhost" ||
+    hostname === "127.0.0.1" ||
+    hostname === "[::1]";
+  return {
+    path: "/",
+    ...(hostOnly ? {} : { domain: hostname }),
+  };
 }
 
 export const loginFn = createServerFn({ method: "POST" })
   .inputValidator((data: { username: string; password: string }) => data)
   .handler(async ({ data }) => {
-    const isDev = import.meta.env.VITE_ENV === "development";
+    const isDev = import.meta.env.DEV;
 
     if (isDev) {
-      setCookie(COOKIE_NAME, "test-it-session-01", {
-        domain: getCookieDomain(),
-        path: "/",
+      const scope = authCookieScope();
+      setCookie(COOKIE_NAME, DEV_DUMMY_ACCESS_TOKEN, {
+        ...scope,
         maxAge: 60 * 60 * 24 * 7,
         sameSite: "lax",
       });
       // Store username as dev role (e.g. "akademik-prodi", "kaprodi", "dekan", "manager-pp")
       setCookie("dev_role", data.username, {
-        domain: getCookieDomain(),
-        path: "/",
+        ...scope,
         maxAge: 60 * 60 * 24 * 7,
         sameSite: "lax",
       });
@@ -61,8 +72,7 @@ export const loginFn = createServerFn({ method: "POST" })
     }
 
     setCookie(COOKIE_NAME, json.access_token as string, {
-      domain: getCookieDomain(),
-      path: "/",
+      ...authCookieScope(),
       maxAge: (json.expires_in as number) || 3600,
       sameSite: "lax",
     });
@@ -71,14 +81,9 @@ export const loginFn = createServerFn({ method: "POST" })
   });
 
 export const logoutFn = createServerFn({ method: "POST" }).handler(() => {
-  deleteCookie(COOKIE_NAME, {
-    domain: getCookieDomain(),
-    path: "/",
-  });
-  deleteCookie("dev_role", {
-    domain: getCookieDomain(),
-    path: "/",
-  });
+  const scope = authCookieScope();
+  deleteCookie(COOKIE_NAME, scope);
+  deleteCookie("dev_role", scope);
   return { success: true };
 });
 
@@ -176,10 +181,10 @@ export const getUser = async (queryClient: QueryClient) => {
   const token = await getToken();
   if (!token) return null;
 
-  const isDev = import.meta.env.VITE_ENV === "development";
+  const isDev = import.meta.env.DEV;
 
   // Development mode: return mock user when using dummy token
-  if (isDev && token === "test-it-session-01") {
+  if (isDev && token === DEV_DUMMY_ACCESS_TOKEN) {
     const devRole = await getDevRole();
     const mockUser = generateMockUser(devRole || "lecturer");
     return mockUser;

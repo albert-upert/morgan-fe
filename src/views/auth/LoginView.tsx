@@ -5,6 +5,7 @@ import { Button } from "uper-ui/button";
 import { Input } from "uper-ui/input";
 import { Typography } from "uper-ui/typography";
 import { loginFn } from "@/lib/auth";
+import { applyDevSessionClient } from "@/lib/cookie";
 
 const TEST_USERS = [
   { username: "lecturer", label: "Lecturer" },
@@ -14,6 +15,25 @@ const TEST_USERS = [
   { username: "admin", label: "Admin Sistem" },
 ];
 
+function navigateAfterLogin(redirect: string | undefined) {
+  if (redirect) {
+    try {
+      const redirectUrl = /^https?:\/\//i.test(redirect)
+        ? new URL(redirect)
+        : new URL(redirect, window.location.origin);
+      if (redirectUrl.origin === window.location.origin) {
+        window.location.assign(
+          `${redirectUrl.pathname}${redirectUrl.search}${redirectUrl.hash}`
+        );
+        return;
+      }
+    } catch {
+      /* ke beranda */
+    }
+  }
+  window.location.assign("/");
+}
+
 export function LoginView() {
   const search = useSearch({ from: "/login" });
   const [username, setUsername] = useState("");
@@ -21,35 +41,32 @@ export function LoginView() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (event: FormEvent) => {
-    event.preventDefault();
+  const performLogin = async (user: string, pass: string) => {
     setError("");
     setLoading(true);
-
     try {
-      const result = await loginFn({ data: { username, password } });
-
+      const result = await loginFn({
+        data: { username: user, password: pass },
+        fetch: (url, init) => fetch(url, { ...init, credentials: "include" }),
+      });
       if (!result.success) {
         setError("message" in result ? result.message : "Login failed");
         return;
       }
-
-      const redirectTarget = search.redirect;
-
-      if (redirectTarget) {
-        const redirectUrl = new URL(redirectTarget, window.location.origin);
-        if (redirectUrl.origin === window.location.origin) {
-          window.location.href = `${redirectUrl.pathname}${redirectUrl.search}`;
-          return;
-        }
+      if (import.meta.env.DEV) {
+        applyDevSessionClient(user);
       }
-
-      window.location.href = "/";
+      navigateAfterLogin(search.redirect);
     } catch {
       setError("An unexpected error occurred");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleLogin = (event: FormEvent) => {
+    event.preventDefault();
+    void performLogin(username, password);
   };
 
   const handleQuickLogin = (testUsername: string) => {
@@ -109,7 +126,7 @@ export function LoginView() {
 
         <div className="space-y-3 border-t pt-4">
           <p className="text-center text-xs font-medium text-muted-foreground">
-            Test Users (click to autofill)
+            Test Users (klik untuk isi form, lalu Sign In)
           </p>
           <div className="grid grid-cols-2 gap-2">
             {TEST_USERS.map((user) => (

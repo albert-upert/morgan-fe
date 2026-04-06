@@ -114,8 +114,7 @@ export function TicketListView() {
 
   const home = useCallback(() => {
     navigate({
-      to: "/$module/home",
-      params: { module: "fm-it" },
+      to: "/fm-it/home",
     });
   }, [navigate]);
 
@@ -142,7 +141,7 @@ export function TicketListView() {
         setSelectedReport(item);
       } else {
         navigate({
-          to: "/ticket-detail/$id",
+          to: "/ticket/$id",
           params: {
             id: String(item.id),
           },

@@ -31,8 +31,7 @@ export const getRouter = () => {
   });
 
   const isServer = typeof window === "undefined";
-  const isDev = import.meta.env.VITE_ENV === "development";
-  const useProxy = !isServer && isDev;
+  const useProxy = !isServer && import.meta.env.DEV;
 
   centralClient.setConfig({
     baseUrl: useProxy ? "/proxy/central" : import.meta.env.VITE_BE_CENTRAL_URL,

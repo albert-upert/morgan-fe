@@ -118,20 +118,15 @@ export function MyReportView() {
   );
 
   const toHomePage = useCallback(() => {
-    navigate({
-      to: "/",
-    });
+    navigate({ to: "/" });
   }, [navigate]);
 
-  const toReportDetailPage = useCallback(
-    (id: string) => {
-      navigate({
-        to: "/report-detail-page/$id",
-        params: { id: id },
-      });
-    },
-    [navigate]
-  );
+  const toReportDetailPage = useCallback((id: string) => {
+    // Bypass kemungkinan masalah transition `navigate()` di TanStack Router.
+    // Ini tetap akan lewat guard di `/_layout` karena kita pakai URL normal.
+    if (typeof window === "undefined") return;
+    window.location.assign(`/ticket/${encodeURIComponent(id)}`);
+  }, []);
 
   return (
     <div className="pt-4 pb-6">
@@ -239,7 +234,7 @@ export function MyReportView() {
                   <Button
                     variant="primary"
                     className="w-full"
-                    onClick={() => toReportDetailPage(String(r.id))}
+                    onClick={() => toReportDetailPage(r.routeId)}
                   >
                     Lihat Detail Laporan
                   </Button>
