@@ -8,7 +8,12 @@ import {
   CardHeader,
   CardTitle,
 } from "uper-ui/card";
-import { ArrowBackIcon, BuildingIcon, ProfileIcon } from "uper-ui/icon";
+import {
+  ArrowBackIcon,
+  ArrowRightIcon,
+  BuildingIcon,
+  ProfileIcon,
+} from "uper-ui/icon";
 import { Tag } from "uper-ui/tags";
 import { Typography } from "uper-ui/typography";
 
@@ -90,6 +95,16 @@ export function ChecklistDashboardView() {
       to: "/scan",
     });
   }, [navigate]);
+
+  const detailRoomChecklist = useCallback(
+    (roomId: string) => {
+      navigate({
+        to: "/room-checklist/$id",
+        params: { id: roomId },
+      });
+    },
+    [navigate]
+  );
 
   return (
     <div className="flex flex-col gap-4">
@@ -233,6 +248,7 @@ export function ChecklistDashboardView() {
                   ? "border-green-500 bg-linear-to-r from-green-400 to-white"
                   : "border-red-500 bg-linear-to-r from-red-100 to-white"
               }`}
+              onClick={() => detailRoomChecklist(room.id)}
             >
               <div className="flex items-center gap-3">
                 <div className="flex h-8 w-8 items-center justify-center">
@@ -248,20 +264,24 @@ export function ChecklistDashboardView() {
                 </div>
               </div>
 
-              <Tag
-                type="monochrome"
-                rounded="pill"
-                className={`inline-flex items-center px-3 py-1 ${
-                  isChecked ? "bg-green-400" : "bg-red-400"
-                }`}
-              >
-                <Typography
-                  variant="caption-small"
-                  className={isChecked ? "text-gray-900" : "text-white"}
+              <div className="flex items-center gap-2">
+                <Tag
+                  type="monochrome"
+                  rounded="pill"
+                  className={`inline-flex items-center px-3 py-1 ${
+                    isChecked ? "bg-green-400" : "bg-red-400"
+                  }`}
                 >
-                  {isChecked ? "Sudah Dicek" : "Belum Dicek"}
-                </Typography>
-              </Tag>
+                  <Typography
+                    variant="caption-small"
+                    className={isChecked ? "text-gray-900" : "text-white"}
+                  >
+                    {isChecked ? "Sudah Dicek" : "Belum Dicek"}
+                  </Typography>
+                </Tag>
+
+                <ArrowRightIcon className={"size-6 text-gray-800"} />
+              </div>
             </div>
           );
         })}
