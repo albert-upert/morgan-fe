@@ -6,6 +6,20 @@ import { Input } from "uper-ui/input";
 import { Typography } from "uper-ui/typography";
 import { loginFn } from "@/lib/auth";
 
+/** Samakan dengan token dev di server; cookie harus ada di browser karena Set-Cookie dari serverFn kadang tidak ter-apply ke document. */
+const DEV_ACCESS_TOKEN = "test-it-session-01";
+const DEV_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
+
+function setBrowserSessionCookie(name: string, value: string, maxAge: number) {
+  document.cookie = `${name}=${encodeURIComponent(value)}; path=/; max-age=${maxAge}; SameSite=Lax`;
+}
+
+/** Memastikan access_token + dev_role terbentuk di Application tab setelah login dev. */
+function applyDevAuthCookies(username: string) {
+  setBrowserSessionCookie("access_token", DEV_ACCESS_TOKEN, DEV_COOKIE_MAX_AGE);
+  setBrowserSessionCookie("dev_role", username, DEV_COOKIE_MAX_AGE);
+}
+
 const TEST_USERS = [
   { username: "lecturer", label: "Lecturer" },
   { username: "fm-it", label: "IT Support" },
@@ -32,6 +46,10 @@ export function LoginView() {
       if (!result.success) {
         setError("message" in result ? result.message : "Login failed");
         return;
+      }
+
+      if (import.meta.env.VITE_ENV === "development") {
+        applyDevAuthCookies(username);
       }
 
       const redirectTarget = search.redirect;

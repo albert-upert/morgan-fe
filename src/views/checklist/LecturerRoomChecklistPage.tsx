@@ -160,7 +160,7 @@ export function LecturerRoomChecklistPage() {
       setSelectedIds(new Set());
 
       navigate({
-        to: "/report-success/$id",
+        to: "/ticket/$id/success",
         params: { id: roomId },
       });
     },

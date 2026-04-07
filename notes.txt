@@ -5,8 +5,8 @@
 CHANGING
 I. FM-IT
 a. notification/index.tsx -> https://localhost:8080/notification/
-c. ticket-list.tsx -> https://localhost:8080/ticket/ GET ALL
-b. ticket-detail.$id.tsx || ticket/$id.tsx -> https://localhost:8080/ticket/$id GET by ID
+c. ticket.tsx (list) -> https://localhost:8080/ticket/ GET ALL
+b. ticket.$id.tsx -> https://localhost:8080/ticket/$id GET by ID
 
 II. HOUSEKEEPING
 a. checklist-dashboard.tsx -> checklist/index.tsx -> https://localhost:8080/checklist
@@ -15,8 +15,8 @@ c. report-history.tsx -> history/index.tsx -> https://localhost:8080/history
 d. room-checklist.$id.tsx -> daily-checking/index.tsx -> https://localhost:8080/daily-checking -> CREATE TICKET
 
 III. LECTURER
-a. my-report.tsx -> my-report/$index.tsx -> https://localhost:8080/ticket
-b. report-detail-page.tsx & report-success.tsx -> report/$id.tsx -> https://localhost:8080/ticket/$id
+a. ticket.tsx (same route as FM-IT; role memilih view) -> https://localhost:8080/ticket
+b. ticket.$id.tsx (detail + ?submitted=1 untuk layar sukses kirim laporan) -> https://localhost:8080/ticket/$id
 ...
 
 TICKET:

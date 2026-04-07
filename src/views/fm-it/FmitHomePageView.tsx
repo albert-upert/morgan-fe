@@ -1,6 +1,6 @@
+import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AttendanceIcon, BillIcon, NotificationIcon } from "uper-ui/icon";
-import { Link } from "uper-ui/link";
 import { Typography } from "uper-ui/typography";
 import { getAllReports } from "@/services/api/reportService";
 
@@ -38,7 +38,7 @@ export function FmitHomePageView() {
 
       {/* Primary actions */}
       <div className="flex flex-col gap-4">
-        <Link to="/ticket-list">
+        <Link to="/ticket">
           <div className="flex items-center gap-3 rounded-2xl bg-primary px-5 py-4 text-white">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl">
               <NotificationIcon className="h-12 w-12" color="white" />
@@ -55,7 +55,7 @@ export function FmitHomePageView() {
         </Link>
 
         {activeTicketId !== null ? (
-          <Link to="/ticket-detail/$id">
+          <Link to={`/ticket/${String(activeTicketId)}`}>
             <div className="flex items-center gap-3 rounded-2xl bg-primary px-5 py-4 text-white">
               <div className="flex h-12 w-12 items-center justify-center rounded-xl">
                 <BillIcon className="h-12 w-12" color="white" />
@@ -89,7 +89,7 @@ export function FmitHomePageView() {
           </div>
         )}
 
-        <Link to="/ticket-list">
+        <Link to="/ticket">
           <div className="flex items-center gap-3 rounded-2xl bg-primary px-5 py-4 text-white">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl">
               <AttendanceIcon className="h-12 w-12" color="white" />

@@ -46,7 +46,7 @@ export const MAIN_MENU_LIST_CONFIG: ReadonlyArray<MainMenuItem> = [
   {
     id: 1,
     feature: "daftarLaporanDosen",
-    to: "/my-report",
+    to: "/ticket",
     icon: MailIcon,
     title: "Daftar Laporan",
     description: "Lihat daftar laporan anda",
@@ -76,7 +76,7 @@ export const MAIN_MENU_LIST_CONFIG: ReadonlyArray<MainMenuItem> = [
   {
     id: 4,
     feature: "lihatAmbilTiket",
-    to: "/ticket-list",
+    to: "/ticket",
     icon: NotificationIcon,
     title: "Lihat dan Ambil Tiket",
     description: "Lihat daftar laporan tiket",
@@ -86,7 +86,7 @@ export const MAIN_MENU_LIST_CONFIG: ReadonlyArray<MainMenuItem> = [
   {
     id: 5,
     feature: "tiketAnda",
-    to: "/ticket-list",
+    to: "/ticket",
     icon: BillIcon,
     title: "Tiket Anda",
     description: "Lihat detail status tiket yang anda kerjakan",
@@ -96,7 +96,7 @@ export const MAIN_MENU_LIST_CONFIG: ReadonlyArray<MainMenuItem> = [
   {
     id: 6,
     feature: "riwayatTiketAnda",
-    to: "/ticket-list",
+    to: "/ticket",
     icon: AttendanceIcon,
     title: "Riwayat Tiket Anda",
     description: "Daftar laporan yang pernah anda kerjakan",

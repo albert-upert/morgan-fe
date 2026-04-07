@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import {
   Outlet,
   createFileRoute,
@@ -43,6 +44,7 @@ export const Route = createFileRoute("/_layout")({
 });
 
 function Layout() {
+  const queryClient = useQueryClient();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const isHomePage = pathname === "/";
@@ -52,6 +54,14 @@ function Layout() {
     try {
       await logoutFn();
     } finally {
+      queryClient.removeQueries({
+        predicate: (q) =>
+          (q.queryKey[0] as { _id?: string } | undefined)?._id === "getUsersMe",
+      });
+      if (typeof document !== "undefined") {
+        document.cookie = "access_token=; path=/; max-age=0";
+        document.cookie = "dev_role=; path=/; max-age=0";
+      }
       navigate({
         to: "/login",
         search: { redirect: undefined },

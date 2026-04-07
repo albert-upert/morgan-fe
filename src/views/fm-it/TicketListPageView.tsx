@@ -113,10 +113,7 @@ export function TicketListView() {
   const navigate = useNavigate();
 
   const home = useCallback(() => {
-    navigate({
-      to: "/$module/home",
-      params: { module: "fm-it" },
-    });
+    navigate({ to: "/" });
   }, [navigate]);
 
   const toggleAccordion = useCallback((id: string) => {
@@ -142,7 +139,7 @@ export function TicketListView() {
         setSelectedReport(item);
       } else {
         navigate({
-          to: "/ticket-detail/$id",
+          to: "/ticket/$id",
           params: {
             id: String(item.id),
           },
