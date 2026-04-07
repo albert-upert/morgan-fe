@@ -7,9 +7,9 @@ const ROLE_ALLOWED_PATH_PREFIXES: Record<AppRole, ReadonlyArray<string>> = {
     "/",
     "/my-report",
     "/report-detail-page",
-    "/report-success",
     "/room-asset-list",
     "/scan",
+    "/notification",
   ],
   "fm-it": ["/", "/ticket-list", "/ticket-detail", "/notification"],
   hk: [
@@ -19,6 +19,7 @@ const ROLE_ALLOWED_PATH_PREFIXES: Record<AppRole, ReadonlyArray<string>> = {
     "/room-checklist",
     "/checklist-report",
     "/scan",
+    "/notification",
   ],
   supervisor: ["/", "/report-history", "/checklist-report"],
   admin: ["/", "/room-asset-list"],

@@ -41,10 +41,6 @@ type ReportDetail = {
   }>;
 };
 
-type ReportDetailPageViewProps = {
-  viewMode?: "detail" | "success";
-};
-
 type UnifiedIssue = {
   assetId: string;
   assetName: string;
@@ -258,9 +254,7 @@ function ReportIssuesCard({
   );
 }
 
-export function ReportDetailPageView({
-  viewMode = "detail",
-}: ReportDetailPageViewProps) {
+export function ReportDetailPageView() {
   function formatDateTime(iso: string) {
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return iso;
@@ -351,7 +345,7 @@ export function ReportDetailPageView({
   }>(null);
   const successData = useMemo(() => readLastReportSuccess(), []);
   const roomNameLabel = id ? `Ruang ${id}` : successData?.roomName || "";
-  const isSuccessMode = viewMode === "success";
+  const isSuccessMode = Boolean(successData && successData.roomId === id);
 
   const officer = useMemo(
     () => ({

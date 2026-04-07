@@ -13,7 +13,6 @@ declare module "@tanstack/react-router" {
     "/_layout/lecturer/home": unknown;
     "/_layout/lecturer/scan": unknown;
     "/_layout/lecturer/room-asset-list/$roomId": unknown;
-    "/_layout/lecturer/report-success/$roomId": unknown;
     "/_layout/lecturer/my-report": unknown;
     "/_layout/lecturer/report-detail-page/$id": unknown;
   }
@@ -22,7 +21,6 @@ declare module "@tanstack/react-router" {
     "/lecturer/home": unknown;
     "/lecturer/scan": unknown;
     "/lecturer/room-asset-list/$roomId": unknown;
-    "/lecturer/report-success/$roomId": unknown;
     "/lecturer/my-report": unknown;
     "/lecturer/report-detail-page/$id": unknown;
   }

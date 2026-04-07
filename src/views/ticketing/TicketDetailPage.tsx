@@ -33,7 +33,7 @@ import { TicketDetailModal } from "./TicketDetailModal";
 
 export function TicketDetailView() {
   const { roomId } = useParams({
-    from: "/_layout/lecturer/report-success/$roomId",
+    from: "/_layout/lecturer/report-detail-page/$roomId",
   });
 
   const [showPreview, setShowPreview] = useState(false);

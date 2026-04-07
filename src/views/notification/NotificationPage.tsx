@@ -1,14 +1,16 @@
 import { useNavigate } from "@tanstack/react-router";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Button } from "uper-ui/button";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
   CautionIcon,
   ClockIcon,
+  ListIcon,
   NotificationIcon,
 } from "uper-ui/icon";
 import { Typography } from "uper-ui/typography";
+import type { AppRole } from "@/lib/main-menu-list.config";
 
 export type Notification = {
   id: number;
@@ -20,7 +22,11 @@ export type Notification = {
   isNew?: boolean;
 };
 
-export function FmitNotificationPageView() {
+export interface NotificationPageProps {
+  role: AppRole | null | string;
+}
+
+export function NotificationPage({ role }: NotificationPageProps) {
   const navigate = useNavigate();
 
   const home = () => {
@@ -29,52 +35,102 @@ export function FmitNotificationPageView() {
     });
   };
 
-  const [notifications, setNotifications] = useState<Array<Notification>>([
-    {
-      id: 1,
-      date: "Jumat, 20 Feb 2026",
-      tipe: "task",
-      title: "Tiket Baru: Critical!",
-      description:
-        "Server R. IT Down. Segera menuju lokasi. SLA Respon: 15 menit.",
-      timestamp: new Date(Date.now() - 1000 * 60 * 1).toISOString(),
-      isNew: true,
-    },
-    {
-      id: 2,
-      date: "Jumat, 20 Feb 2026",
-      tipe: "reminder",
-      title: "SLA Hampir Habis!",
-      description:
-        "Tiket #TK-901(Smartboard Mati) tersisa 10 menit sebelum melanggar SLA",
-      timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
-      isNew: true,
-    },
-    {
-      id: 3,
-      date: "Jumat, 20 Feb 2026",
-      tipe: "info",
-      title: "Tugas Preventive Maintenance ",
-      description: "Jadwal bulanan pengecekan UPS Gedung Rektorat tersedia.",
-      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
-    },
-    {
-      id: 4,
-      date: "Kamis, 19 Feb 2026",
-      tipe: "task",
-      title: "Tiket Baru Masuk",
-      description: "Laporan lampu mati di Ruang Rapat Utama",
-      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 28).toISOString(), // 1 day 4 hours ago
-    },
-    {
-      id: 5,
-      date: "Minggu Lalu",
-      tipe: "info",
-      title: "Update Sistem",
-      description: "Sistem MORGAN telah diperbarui ke versi 2.0",
-      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(), // 5 days ago
-    },
-  ]);
+  // Mock Data berdasarkan role
+  const initialNotifications = useMemo(() => {
+    if (role === "fm-it") {
+      return [
+        {
+          id: 1,
+          date: "Jumat, 20 Feb 2026",
+          tipe: "task",
+          title: "Tiket Baru: Critical!",
+          description:
+            "Server R. IT Down. Segera menuju lokasi. SLA Respon: 15 menit.",
+          timestamp: new Date(Date.now() - 1000 * 60 * 1).toISOString(),
+          isNew: true,
+        },
+        {
+          id: 2,
+          date: "Jumat, 20 Feb 2026",
+          tipe: "reminder",
+          title: "SLA Hampir Habis!",
+          description:
+            "Tiket #TK-901(Smartboard Mati) tersisa 10 menit sebelum melanggar SLA",
+          timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+          isNew: true,
+        },
+        {
+          id: 3,
+          date: "Jumat, 20 Feb 2026",
+          tipe: "info",
+          title: "Tugas Preventive Maintenance",
+          description:
+            "Jadwal bulanan pengecekan UPS Gedung Rektorat tersedia.",
+          timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
+        },
+        {
+          id: 4,
+          date: "Kamis, 19 Feb 2026",
+          tipe: "task",
+          title: "Tiket Baru Masuk",
+          description: "Laporan lampu mati di Ruang Rapat Utama",
+          timestamp: new Date(Date.now() - 1000 * 60 * 60 * 28).toISOString(),
+        },
+        {
+          id: 5,
+          date: "Minggu Lalu",
+          tipe: "info",
+          title: "Update Sistem",
+          description: "Sistem MORGAN telah diperbarui ke versi 2.0",
+          timestamp: new Date(
+            Date.now() - 1000 * 60 * 60 * 24 * 5
+          ).toISOString(),
+        },
+      ] as Array<Notification>;
+    }
+
+    // Untuk HK dan Lecturer saat ini datanya sama dari contoh sebelumnya
+    return [
+      {
+        id: 1,
+        date: "Jumat, 20 Feb 2026",
+        tipe: "reminder",
+        title: "Checklist Harian",
+        description:
+          "Selesaikan checklist 5 ruangan tersisa sebelum shift berakhir pukul",
+        timestamp: new Date(Date.now() - 1000 * 60 * 1).toISOString(),
+        isNew: true,
+      },
+      {
+        id: 2,
+        date: "Jumat, 20 Feb 2026",
+        tipe: "info",
+        title: "Pemeriksaan Selesai",
+        description: "Supervisor telah menyetujui laporan chechlist R.301-310.",
+        timestamp: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+        isNew: true,
+      },
+      {
+        id: 3,
+        date: "Kamis, 19 Feb 2026",
+        tipe: "reminder",
+        title: "Tugas Preventive Maintenance ",
+        description: "Jadwal bulanan pengecekan UPS Gedung Rektorat tersedia.",
+        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
+      },
+      {
+        id: 4,
+        date: "Kamis, 19 Feb 2026",
+        tipe: "info",
+        title: "Pemeriksaan Selesai",
+        description: "Supervisor telah menyetujui laporan chechlist R.301-310.",
+        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 28).toISOString(),
+      },
+    ] as Array<Notification>;
+  }, [role]);
+
+  const [notifications, setNotifications] =
+    useState<Array<Notification>>(initialNotifications);
 
   const getRelativeTime = (isoString: string) => {
     const date = new Date(isoString);
@@ -111,13 +167,24 @@ export function FmitNotificationPageView() {
   );
 
   const getIcon = (tipe: string) => {
-    switch (tipe) {
-      case "task":
-        return <CautionIcon className="h-5 w-5" color="red" />;
-      case "reminder":
-        return <ClockIcon className="h-5 w-5" color="red" />;
-      default:
-        return <NotificationIcon className="h-5 w-5" color="red" />;
+    if (role === "fm-it") {
+      switch (tipe) {
+        case "task":
+          return <CautionIcon className="h-5 w-5" color="red" />;
+        case "reminder":
+          return <ClockIcon className="h-5 w-5" color="red" />;
+        default:
+          return <NotificationIcon className="h-5 w-5" color="red" />;
+      }
+    } else {
+      switch (tipe) {
+        case "task":
+          return <CautionIcon className="h-5 w-5" color="red" />;
+        case "reminder":
+          return <ListIcon className="h-5 w-5" color="red" />;
+        default:
+          return <NotificationIcon className="h-5 w-5" color="red" />;
+      }
     }
   };
 

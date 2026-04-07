@@ -69,11 +69,17 @@ function Layout() {
         <>
           {isHomePage ? (
             <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] bg-linear-to-l from-navbar-gradient-end to-background">
-              <Header onLogoutClick={handleLogout} />
+              <Header
+                onLogoutClick={handleLogout}
+                onNotificationClick={() => navigate({ to: "/notification" })}
+              />
             </div>
           ) : (
             <div className="fixed top-0 right-0 left-0 z-30 mx-auto max-w-[412px] border-b border-border">
-              <Header onLogoutClick={handleLogout} />
+              <Header
+                onLogoutClick={handleLogout}
+                onNotificationClick={() => navigate({ to: "/notification" })}
+              />
             </div>
           )}
         </>

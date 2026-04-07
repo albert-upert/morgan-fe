@@ -14,7 +14,6 @@ import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutTicketListRouteImport } from './routes/_layout/ticket-list'
 import { Route as LayoutScanRouteImport } from './routes/_layout/scan'
-import { Route as LayoutReportSuccessRouteImport } from './routes/_layout/report-success'
 import { Route as LayoutReportHistoryRouteImport } from './routes/_layout/report-history'
 import { Route as LayoutNotificationRouteImport } from './routes/_layout/notification'
 import { Route as LayoutMyReportRouteImport } from './routes/_layout/my-report'
@@ -22,7 +21,6 @@ import { Route as LayoutChecklistDashboardRouteImport } from './routes/_layout/c
 import { Route as LayoutTicketDetailIdRouteImport } from './routes/_layout/ticket-detail.$id'
 import { Route as LayoutRoomChecklistIdRouteImport } from './routes/_layout/room-checklist.$id'
 import { Route as LayoutRoomAssetListIdRouteImport } from './routes/_layout/room-asset-list.$id'
-import { Route as LayoutReportSuccessIdRouteImport } from './routes/_layout/report-success.$id'
 import { Route as LayoutReportDetailPageIdRouteImport } from './routes/_layout/report-detail-page.$id'
 import { Route as LayoutFmItNotificationRouteImport } from './routes/_layout/fm-it/notification'
 import { Route as LayoutChecklistReportIdRouteImport } from './routes/_layout/checklist-report.$id'
@@ -49,11 +47,6 @@ const LayoutTicketListRoute = LayoutTicketListRouteImport.update({
 const LayoutScanRoute = LayoutScanRouteImport.update({
   id: '/scan',
   path: '/scan',
-  getParentRoute: () => LayoutRoute,
-} as any)
-const LayoutReportSuccessRoute = LayoutReportSuccessRouteImport.update({
-  id: '/report-success',
-  path: '/report-success',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutReportHistoryRoute = LayoutReportHistoryRouteImport.update({
@@ -92,11 +85,6 @@ const LayoutRoomAssetListIdRoute = LayoutRoomAssetListIdRouteImport.update({
   path: '/room-asset-list/$id',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutReportSuccessIdRoute = LayoutReportSuccessIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => LayoutReportSuccessRoute,
-} as any)
 const LayoutReportDetailPageIdRoute =
   LayoutReportDetailPageIdRouteImport.update({
     id: '/report-detail-page/$id',
@@ -121,13 +109,11 @@ export interface FileRoutesByFullPath {
   '/my-report': typeof LayoutMyReportRoute
   '/notification': typeof LayoutNotificationRoute
   '/report-history': typeof LayoutReportHistoryRoute
-  '/report-success': typeof LayoutReportSuccessRouteWithChildren
   '/scan': typeof LayoutScanRoute
   '/ticket-list': typeof LayoutTicketListRoute
   '/checklist-report/$id': typeof LayoutChecklistReportIdRoute
   '/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/report-detail-page/$id': typeof LayoutReportDetailPageIdRoute
-  '/report-success/$id': typeof LayoutReportSuccessIdRoute
   '/room-asset-list/$id': typeof LayoutRoomAssetListIdRoute
   '/room-checklist/$id': typeof LayoutRoomChecklistIdRoute
   '/ticket-detail/$id': typeof LayoutTicketDetailIdRoute
@@ -138,14 +124,12 @@ export interface FileRoutesByTo {
   '/my-report': typeof LayoutMyReportRoute
   '/notification': typeof LayoutNotificationRoute
   '/report-history': typeof LayoutReportHistoryRoute
-  '/report-success': typeof LayoutReportSuccessRouteWithChildren
   '/scan': typeof LayoutScanRoute
   '/ticket-list': typeof LayoutTicketListRoute
   '/': typeof LayoutIndexRoute
   '/checklist-report/$id': typeof LayoutChecklistReportIdRoute
   '/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/report-detail-page/$id': typeof LayoutReportDetailPageIdRoute
-  '/report-success/$id': typeof LayoutReportSuccessIdRoute
   '/room-asset-list/$id': typeof LayoutRoomAssetListIdRoute
   '/room-checklist/$id': typeof LayoutRoomChecklistIdRoute
   '/ticket-detail/$id': typeof LayoutTicketDetailIdRoute
@@ -158,14 +142,12 @@ export interface FileRoutesById {
   '/_layout/my-report': typeof LayoutMyReportRoute
   '/_layout/notification': typeof LayoutNotificationRoute
   '/_layout/report-history': typeof LayoutReportHistoryRoute
-  '/_layout/report-success': typeof LayoutReportSuccessRouteWithChildren
   '/_layout/scan': typeof LayoutScanRoute
   '/_layout/ticket-list': typeof LayoutTicketListRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/checklist-report/$id': typeof LayoutChecklistReportIdRoute
   '/_layout/fm-it/notification': typeof LayoutFmItNotificationRoute
   '/_layout/report-detail-page/$id': typeof LayoutReportDetailPageIdRoute
-  '/_layout/report-success/$id': typeof LayoutReportSuccessIdRoute
   '/_layout/room-asset-list/$id': typeof LayoutRoomAssetListIdRoute
   '/_layout/room-checklist/$id': typeof LayoutRoomChecklistIdRoute
   '/_layout/ticket-detail/$id': typeof LayoutTicketDetailIdRoute
@@ -179,13 +161,11 @@ export interface FileRouteTypes {
     | '/my-report'
     | '/notification'
     | '/report-history'
-    | '/report-success'
     | '/scan'
     | '/ticket-list'
     | '/checklist-report/$id'
     | '/fm-it/notification'
     | '/report-detail-page/$id'
-    | '/report-success/$id'
     | '/room-asset-list/$id'
     | '/room-checklist/$id'
     | '/ticket-detail/$id'
@@ -196,14 +176,12 @@ export interface FileRouteTypes {
     | '/my-report'
     | '/notification'
     | '/report-history'
-    | '/report-success'
     | '/scan'
     | '/ticket-list'
     | '/'
     | '/checklist-report/$id'
     | '/fm-it/notification'
     | '/report-detail-page/$id'
-    | '/report-success/$id'
     | '/room-asset-list/$id'
     | '/room-checklist/$id'
     | '/ticket-detail/$id'
@@ -215,14 +193,12 @@ export interface FileRouteTypes {
     | '/_layout/my-report'
     | '/_layout/notification'
     | '/_layout/report-history'
-    | '/_layout/report-success'
     | '/_layout/scan'
     | '/_layout/ticket-list'
     | '/_layout/'
     | '/_layout/checklist-report/$id'
     | '/_layout/fm-it/notification'
     | '/_layout/report-detail-page/$id'
-    | '/_layout/report-success/$id'
     | '/_layout/room-asset-list/$id'
     | '/_layout/room-checklist/$id'
     | '/_layout/ticket-detail/$id'
@@ -268,13 +244,6 @@ declare module '@tanstack/react-router' {
       path: '/scan'
       fullPath: '/scan'
       preLoaderRoute: typeof LayoutScanRouteImport
-      parentRoute: typeof LayoutRoute
-    }
-    '/_layout/report-success': {
-      id: '/_layout/report-success'
-      path: '/report-success'
-      fullPath: '/report-success'
-      preLoaderRoute: typeof LayoutReportSuccessRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/report-history': {
@@ -326,13 +295,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutRoomAssetListIdRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/report-success/$id': {
-      id: '/_layout/report-success/$id'
-      path: '/$id'
-      fullPath: '/report-success/$id'
-      preLoaderRoute: typeof LayoutReportSuccessIdRouteImport
-      parentRoute: typeof LayoutReportSuccessRoute
-    }
     '/_layout/report-detail-page/$id': {
       id: '/_layout/report-detail-page/$id'
       path: '/report-detail-page/$id'
@@ -357,23 +319,11 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface LayoutReportSuccessRouteChildren {
-  LayoutReportSuccessIdRoute: typeof LayoutReportSuccessIdRoute
-}
-
-const LayoutReportSuccessRouteChildren: LayoutReportSuccessRouteChildren = {
-  LayoutReportSuccessIdRoute: LayoutReportSuccessIdRoute,
-}
-
-const LayoutReportSuccessRouteWithChildren =
-  LayoutReportSuccessRoute._addFileChildren(LayoutReportSuccessRouteChildren)
-
 interface LayoutRouteChildren {
   LayoutChecklistDashboardRoute: typeof LayoutChecklistDashboardRoute
   LayoutMyReportRoute: typeof LayoutMyReportRoute
   LayoutNotificationRoute: typeof LayoutNotificationRoute
   LayoutReportHistoryRoute: typeof LayoutReportHistoryRoute
-  LayoutReportSuccessRoute: typeof LayoutReportSuccessRouteWithChildren
   LayoutScanRoute: typeof LayoutScanRoute
   LayoutTicketListRoute: typeof LayoutTicketListRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
@@ -390,7 +340,6 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutMyReportRoute: LayoutMyReportRoute,
   LayoutNotificationRoute: LayoutNotificationRoute,
   LayoutReportHistoryRoute: LayoutReportHistoryRoute,
-  LayoutReportSuccessRoute: LayoutReportSuccessRouteWithChildren,
   LayoutScanRoute: LayoutScanRoute,
   LayoutTicketListRoute: LayoutTicketListRoute,
   LayoutIndexRoute: LayoutIndexRoute,

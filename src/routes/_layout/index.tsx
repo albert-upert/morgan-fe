@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getUser } from "@/lib/auth";
-import { HomePageView } from "@/views/dashboard/HomePageView";
+import { HomePageView } from "@/views/dashboard/HomePage";
 
 export const Route = createFileRoute("/_layout/")({
   beforeLoad: async ({ location, context }) => {
